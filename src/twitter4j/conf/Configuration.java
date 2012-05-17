@@ -133,7 +133,5 @@ public interface Configuration extends HttpClientConfiguration, HttpClientWrappe
 
 	boolean isJSONStoreEnabled();
 
-	boolean isMBeanEnabled();
-
 	boolean isUserStreamRepliesAllEnabled();
 }

@@ -354,9 +354,6 @@ public final class PropertyConfiguration extends ConfigurationBase implements ja
 		if (notNull(props, prefix, JSON_STORE_ENABLED)) {
 			setJSONStoreEnabled(getBoolean(props, prefix, JSON_STORE_ENABLED));
 		}
-		if (notNull(props, prefix, MBEAN_ENABLED)) {
-			setMBeanEnabled(getBoolean(props, prefix, MBEAN_ENABLED));
-		}
 		if (notNull(props, prefix, STREAM_USER_REPLIES_ALL)) {
 			setUserStreamRepliesAllEnabled(getBoolean(props, prefix, STREAM_USER_REPLIES_ALL));
 		}

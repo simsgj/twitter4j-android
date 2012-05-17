@@ -29,278 +29,272 @@ import java.util.Properties;
  */
 public final class ConfigurationBuilder {
 
-	private ConfigurationBase configurationBean = new PropertyConfiguration();
+	private ConfigurationBase configuration = new PropertyConfiguration();
 
 	public Configuration build() {
 		checkNotBuilt();
-		configurationBean.cacheInstance();
+		configuration.cacheInstance();
 		try {
-			return configurationBean;
+			return configuration;
 		} finally {
-			configurationBean = null;
+			configuration = null;
 		}
 	}
 
 	public ConfigurationBuilder setAsyncNumThreads(int asyncNumThreads) {
 		checkNotBuilt();
-		configurationBean.setAsyncNumThreads(asyncNumThreads);
+		configuration.setAsyncNumThreads(asyncNumThreads);
 		return this;
 	}
 
 	public ConfigurationBuilder setClientURL(String clientURL) {
 		checkNotBuilt();
-		configurationBean.setClientURL(clientURL);
+		configuration.setClientURL(clientURL);
 		return this;
 	}
 
 	public ConfigurationBuilder setClientVersion(String clientVersion) {
 		checkNotBuilt();
-		configurationBean.setClientVersion(clientVersion);
+		configuration.setClientVersion(clientVersion);
 		return this;
 	}
 
 	public ConfigurationBuilder setDebugEnabled(boolean debugEnabled) {
 		checkNotBuilt();
-		configurationBean.setDebug(debugEnabled);
+		configuration.setDebug(debugEnabled);
 		return this;
 	}
 
 	public ConfigurationBuilder setDispatcherImpl(String dispatcherImpl) {
 		checkNotBuilt();
-		configurationBean.setDispatcherImpl(dispatcherImpl);
+		configuration.setDispatcherImpl(dispatcherImpl);
 		return this;
 	}
 
 	public ConfigurationBuilder setGZIPEnabled(boolean gzipEnabled) {
 		checkNotBuilt();
-		configurationBean.setGZIPEnabled(gzipEnabled);
+		configuration.setGZIPEnabled(gzipEnabled);
 		return this;
 	}
 
 	public ConfigurationBuilder setHttpConnectionTimeout(int httpConnectionTimeout) {
 		checkNotBuilt();
-		configurationBean.setHttpConnectionTimeout(httpConnectionTimeout);
+		configuration.setHttpConnectionTimeout(httpConnectionTimeout);
 		return this;
 	}
 
 	public ConfigurationBuilder setHttpDefaultMaxPerRoute(int httpDefaultMaxPerRoute) {
 		checkNotBuilt();
-		configurationBean.setHttpDefaultMaxPerRoute(httpDefaultMaxPerRoute);
+		configuration.setHttpDefaultMaxPerRoute(httpDefaultMaxPerRoute);
 		return this;
 	}
 
 	public ConfigurationBuilder setHttpMaxTotalConnections(int httpMaxConnections) {
 		checkNotBuilt();
-		configurationBean.setHttpMaxTotalConnections(httpMaxConnections);
+		configuration.setHttpMaxTotalConnections(httpMaxConnections);
 		return this;
 	}
 
 	public ConfigurationBuilder setHttpProxyHost(String httpProxyHost) {
 		checkNotBuilt();
-		configurationBean.setHttpProxyHost(httpProxyHost);
+		configuration.setHttpProxyHost(httpProxyHost);
 		return this;
 	}
 
 	public ConfigurationBuilder setHttpProxyPassword(String httpProxyPassword) {
 		checkNotBuilt();
-		configurationBean.setHttpProxyPassword(httpProxyPassword);
+		configuration.setHttpProxyPassword(httpProxyPassword);
 		return this;
 	}
 
 	public ConfigurationBuilder setHttpProxyPort(int httpProxyPort) {
 		checkNotBuilt();
-		configurationBean.setHttpProxyPort(httpProxyPort);
+		configuration.setHttpProxyPort(httpProxyPort);
 		return this;
 	}
 
 	public ConfigurationBuilder setHttpProxyUser(String httpProxyUser) {
 		checkNotBuilt();
-		configurationBean.setHttpProxyUser(httpProxyUser);
+		configuration.setHttpProxyUser(httpProxyUser);
 		return this;
 	}
 
 	public ConfigurationBuilder setHttpReadTimeout(int httpReadTimeout) {
 		checkNotBuilt();
-		configurationBean.setHttpReadTimeout(httpReadTimeout);
+		configuration.setHttpReadTimeout(httpReadTimeout);
 		return this;
 	}
 
 	public ConfigurationBuilder setHttpRetryCount(int httpRetryCount) {
 		checkNotBuilt();
-		configurationBean.setHttpRetryCount(httpRetryCount);
+		configuration.setHttpRetryCount(httpRetryCount);
 		return this;
 	}
 
 	public ConfigurationBuilder setHttpRetryIntervalSeconds(int httpRetryIntervalSeconds) {
 		checkNotBuilt();
-		configurationBean.setHttpRetryIntervalSeconds(httpRetryIntervalSeconds);
+		configuration.setHttpRetryIntervalSeconds(httpRetryIntervalSeconds);
 		return this;
 	}
 
 	public ConfigurationBuilder setHttpStreamingReadTimeout(int httpStreamingReadTimeout) {
 		checkNotBuilt();
-		configurationBean.setHttpStreamingReadTimeout(httpStreamingReadTimeout);
+		configuration.setHttpStreamingReadTimeout(httpStreamingReadTimeout);
 		return this;
 	}
 
 	public ConfigurationBuilder setIgnoreSSLError(boolean ignoreSSLError) {
 		checkNotBuilt();
-		configurationBean.setIgnoreSSLError(ignoreSSLError);
+		configuration.setIgnoreSSLError(ignoreSSLError);
 		return this;
 	}
 
 	public ConfigurationBuilder setIncludeEntitiesEnabled(boolean enabled) {
 		checkNotBuilt();
-		configurationBean.setIncludeEntitiesEnbled(enabled);
+		configuration.setIncludeEntitiesEnbled(enabled);
 		return this;
 	}
 
 	public ConfigurationBuilder setIncludeRTsEnabled(boolean enabled) {
 		checkNotBuilt();
-		configurationBean.setIncludeRTsEnbled(enabled);
+		configuration.setIncludeRTsEnbled(enabled);
 		return this;
 	}
 
 	public ConfigurationBuilder setJSONStoreEnabled(boolean enabled) {
 		checkNotBuilt();
-		configurationBean.setJSONStoreEnabled(enabled);
-		return this;
-	}
-
-	public ConfigurationBuilder setMBeanEnabled(boolean enabled) {
-		checkNotBuilt();
-		configurationBean.setMBeanEnabled(enabled);
+		configuration.setJSONStoreEnabled(enabled);
 		return this;
 	}
 
 	public ConfigurationBuilder setMediaProvider(String mediaProvider) {
 		checkNotBuilt();
-		configurationBean.setMediaProvider(mediaProvider);
+		configuration.setMediaProvider(mediaProvider);
 		return this;
 	}
 
 	public ConfigurationBuilder setMediaProviderAPIKey(String mediaProviderAPIKey) {
 		checkNotBuilt();
-		configurationBean.setMediaProviderAPIKey(mediaProviderAPIKey);
+		configuration.setMediaProviderAPIKey(mediaProviderAPIKey);
 		return this;
 	}
 
 	public ConfigurationBuilder setMediaProviderParameters(Properties props) {
 		checkNotBuilt();
-		configurationBean.setMediaProviderParameters(props);
+		configuration.setMediaProviderParameters(props);
 		return this;
 	}
 
 	public ConfigurationBuilder setOAuthAccessToken(String oAuthAccessToken) {
 		checkNotBuilt();
-		configurationBean.setOAuthAccessToken(oAuthAccessToken);
+		configuration.setOAuthAccessToken(oAuthAccessToken);
 		return this;
 	}
 
 	public ConfigurationBuilder setOAuthAccessTokenSecret(String oAuthAccessTokenSecret) {
 		checkNotBuilt();
-		configurationBean.setOAuthAccessTokenSecret(oAuthAccessTokenSecret);
+		configuration.setOAuthAccessTokenSecret(oAuthAccessTokenSecret);
 		return this;
 	}
 
 	public ConfigurationBuilder setOAuthAccessTokenURL(String oAuthAccessTokenURL) {
 		checkNotBuilt();
-		configurationBean.setOAuthAccessTokenURL(oAuthAccessTokenURL);
+		configuration.setOAuthAccessTokenURL(oAuthAccessTokenURL);
 		return this;
 	}
 
 	public ConfigurationBuilder setOAuthAuthenticationURL(String oAuthAuthenticationURL) {
 		checkNotBuilt();
-		configurationBean.setOAuthAuthenticationURL(oAuthAuthenticationURL);
+		configuration.setOAuthAuthenticationURL(oAuthAuthenticationURL);
 		return this;
 	}
 
 	public ConfigurationBuilder setOAuthAuthorizationURL(String oAuthAuthorizationURL) {
 		checkNotBuilt();
-		configurationBean.setOAuthAuthorizationURL(oAuthAuthorizationURL);
+		configuration.setOAuthAuthorizationURL(oAuthAuthorizationURL);
 		return this;
 	}
 
 	public ConfigurationBuilder setOAuthConsumerKey(String oAuthConsumerKey) {
 		checkNotBuilt();
-		configurationBean.setOAuthConsumerKey(oAuthConsumerKey);
+		configuration.setOAuthConsumerKey(oAuthConsumerKey);
 		return this;
 	}
 
 	public ConfigurationBuilder setOAuthConsumerSecret(String oAuthConsumerSecret) {
 		checkNotBuilt();
-		configurationBean.setOAuthConsumerSecret(oAuthConsumerSecret);
+		configuration.setOAuthConsumerSecret(oAuthConsumerSecret);
 		return this;
 	}
 
 	public ConfigurationBuilder setOAuthRequestTokenURL(String oAuthRequestTokenURL) {
 		checkNotBuilt();
-		configurationBean.setOAuthRequestTokenURL(oAuthRequestTokenURL);
+		configuration.setOAuthRequestTokenURL(oAuthRequestTokenURL);
 		return this;
 	}
 
 	public ConfigurationBuilder setPassword(String password) {
 		checkNotBuilt();
-		configurationBean.setPassword(password);
+		configuration.setPassword(password);
 		return this;
 	}
 
 	public ConfigurationBuilder setPrettyDebugEnabled(boolean prettyDebugEnabled) {
 		checkNotBuilt();
-		configurationBean.setPrettyDebugEnabled(prettyDebugEnabled);
+		configuration.setPrettyDebugEnabled(prettyDebugEnabled);
 		return this;
 	}
 
 	public ConfigurationBuilder setRestBaseURL(String restBaseURL) {
 		checkNotBuilt();
-		configurationBean.setRestBaseURL(restBaseURL);
+		configuration.setRestBaseURL(restBaseURL);
 		return this;
 	}
 
 	public ConfigurationBuilder setSearchBaseURL(String searchBaseURL) {
 		checkNotBuilt();
-		configurationBean.setSearchBaseURL(searchBaseURL);
+		configuration.setSearchBaseURL(searchBaseURL);
 		return this;
 	}
 
 	public ConfigurationBuilder setSiteStreamBaseURL(String siteStreamBaseURL) {
 		checkNotBuilt();
-		configurationBean.setSiteStreamBaseURL(siteStreamBaseURL);
+		configuration.setSiteStreamBaseURL(siteStreamBaseURL);
 		return this;
 	}
 
 	public ConfigurationBuilder setStreamBaseURL(String streamBaseURL) {
 		checkNotBuilt();
-		configurationBean.setStreamBaseURL(streamBaseURL);
+		configuration.setStreamBaseURL(streamBaseURL);
 		return this;
 	}
 
 	public ConfigurationBuilder setUser(String user) {
 		checkNotBuilt();
-		configurationBean.setUser(user);
+		configuration.setUser(user);
 		return this;
 	}
 
 	public ConfigurationBuilder setUserStreamBaseURL(String userStreamBaseURL) {
 		checkNotBuilt();
-		configurationBean.setUserStreamBaseURL(userStreamBaseURL);
+		configuration.setUserStreamBaseURL(userStreamBaseURL);
 		return this;
 	}
 
 	public ConfigurationBuilder setUserStreamRepliesAllEnabled(boolean enabled) {
 		checkNotBuilt();
-		configurationBean.setUserStreamRepliesAllEnabled(enabled);
+		configuration.setUserStreamRepliesAllEnabled(enabled);
 		return this;
 	}
 
 	public ConfigurationBuilder setUseSSL(boolean useSSL) {
 		checkNotBuilt();
-		configurationBean.setUseSSL(useSSL);
+		configuration.setUseSSL(useSSL);
 		return this;
 	}
 
 	private void checkNotBuilt() {
-		if (configurationBean == null)
+		if (configuration == null)
 			throw new IllegalStateException("Cannot use this builder any longer, build() has already been called");
 	}
 }

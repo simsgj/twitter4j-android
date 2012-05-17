@@ -1876,54 +1876,42 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	}
 
 	private HttpResponse delete(String url) throws TwitterException {
-		if (!conf.isMBeanEnabled())
-			return http.delete(url, auth);
-		else {
-			// intercept HTTP call for monitoring purposes
-			HttpResponse response = null;
-			long start = System.currentTimeMillis();
-			try {
-				response = http.delete(url, auth);
-			} finally {
-				long elapsedTime = System.currentTimeMillis() - start;
-				TwitterAPIMonitor.getInstance().methodCalled(url, elapsedTime, isOk(response));
-			}
-			return response;
+		// intercept HTTP call for monitoring purposes
+		HttpResponse response = null;
+		long start = System.currentTimeMillis();
+		try {
+			response = http.delete(url, auth);
+		} finally {
+			long elapsedTime = System.currentTimeMillis() - start;
+			TwitterAPIMonitor.getInstance().methodCalled(url, elapsedTime, isOk(response));
 		}
+		return response;
 	}
 
 	private HttpResponse get(String url) throws TwitterException {
-		if (!conf.isMBeanEnabled())
-			return http.get(url, auth);
-		else {
-			// intercept HTTP call for monitoring purposes
-			HttpResponse response = null;
-			long start = System.currentTimeMillis();
-			try {
-				response = http.get(url, auth);
-			} finally {
-				long elapsedTime = System.currentTimeMillis() - start;
-				TwitterAPIMonitor.getInstance().methodCalled(url, elapsedTime, isOk(response));
-			}
-			return response;
+		// intercept HTTP call for monitoring purposes
+		HttpResponse response = null;
+		long start = System.currentTimeMillis();
+		try {
+			response = http.get(url, auth);
+		} finally {
+			long elapsedTime = System.currentTimeMillis() - start;
+			TwitterAPIMonitor.getInstance().methodCalled(url, elapsedTime, isOk(response));
 		}
+		return response;
 	}
 
 	private HttpResponse get(String url, HttpParameter[] parameters) throws TwitterException {
-		if (!conf.isMBeanEnabled())
-			return http.get(url, parameters, auth);
-		else {
-			// intercept HTTP call for monitoring purposes
-			HttpResponse response = null;
-			long start = System.currentTimeMillis();
-			try {
-				response = http.get(url, parameters, auth);
-			} finally {
-				long elapsedTime = System.currentTimeMillis() - start;
-				TwitterAPIMonitor.getInstance().methodCalled(url, elapsedTime, isOk(response));
-			}
-			return response;
+		// intercept HTTP call for monitoring purposes
+		HttpResponse response = null;
+		long start = System.currentTimeMillis();
+		try {
+			response = http.get(url, parameters, auth);
+		} finally {
+			long elapsedTime = System.currentTimeMillis() - start;
+			TwitterAPIMonitor.getInstance().methodCalled(url, elapsedTime, isOk(response));
 		}
+		return response;
 	}
 
 	private boolean isOk(HttpResponse response) {
@@ -1959,37 +1947,29 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	}
 
 	private HttpResponse post(String url) throws TwitterException {
-		if (!conf.isMBeanEnabled())
-			return http.post(url, auth);
-		else {
-			// intercept HTTP call for monitoring purposes
-			HttpResponse response = null;
-			long start = System.currentTimeMillis();
-			try {
-				response = http.post(url, auth);
-			} finally {
-				long elapsedTime = System.currentTimeMillis() - start;
-				TwitterAPIMonitor.getInstance().methodCalled(url, elapsedTime, isOk(response));
-			}
-			return response;
+		// intercept HTTP call for monitoring purposes
+		HttpResponse response = null;
+		long start = System.currentTimeMillis();
+		try {
+			response = http.post(url, auth);
+		} finally {
+			long elapsedTime = System.currentTimeMillis() - start;
+			TwitterAPIMonitor.getInstance().methodCalled(url, elapsedTime, isOk(response));
 		}
+		return response;
 	}
 
 	private HttpResponse post(String url, HttpParameter[] parameters) throws TwitterException {
-		if (!conf.isMBeanEnabled())
-			return http.post(url, parameters, auth);
-		else {
-			// intercept HTTP call for monitoring purposes
-			HttpResponse response = null;
-			long start = System.currentTimeMillis();
-			try {
-				response = http.post(url, parameters, auth);
-			} finally {
-				long elapsedTime = System.currentTimeMillis() - start;
-				TwitterAPIMonitor.getInstance().methodCalled(url, elapsedTime, isOk(response));
-			}
-			return response;
+		// intercept HTTP call for monitoring purposes
+		HttpResponse response = null;
+		long start = System.currentTimeMillis();
+		try {
+			response = http.post(url, parameters, auth);
+		} finally {
+			long elapsedTime = System.currentTimeMillis() - start;
+			TwitterAPIMonitor.getInstance().methodCalled(url, elapsedTime, isOk(response));
 		}
+		return response;
 	}
 
 	private String toDateStr(Date date) {

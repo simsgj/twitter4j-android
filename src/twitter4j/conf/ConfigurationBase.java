@@ -17,12 +17,14 @@
 package twitter4j.conf;
 
 import java.io.ObjectStreamException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import twitter4j.TwitterConstants;
 import twitter4j.Version;
 
 /**
@@ -30,7 +32,7 @@ import twitter4j.Version;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-class ConfigurationBase implements Configuration, java.io.Serializable {
+class ConfigurationBase implements TwitterConstants, Configuration, Serializable {
 	private boolean debug;
 	private String userAgent;
 	private String user;
@@ -78,8 +80,6 @@ class ConfigurationBase implements Configuration, java.io.Serializable {
 
 	private boolean jsonStoreEnabled;
 
-	private boolean mbeanEnabled;
-
 	private boolean userStreamRepliesAllEnabled;
 
 	private String mediaProvider;
@@ -92,18 +92,6 @@ class ConfigurationBase implements Configuration, java.io.Serializable {
 	private String clientURL;
 
 	public static final String DALVIK = "twitter4j.dalvik";
-
-	private static final String DEFAULT_OAUTH_REQUEST_TOKEN_URL = "http://api.twitter.com/oauth/request_token";
-	private static final String DEFAULT_OAUTH_AUTHORIZATION_URL = "http://api.twitter.com/oauth/authorize";
-	private static final String DEFAULT_OAUTH_ACCESS_TOKEN_URL = "http://api.twitter.com/oauth/access_token";
-	private static final String DEFAULT_OAUTH_AUTHENTICATION_URL = "http://api.twitter.com/oauth/authenticate";
-
-	private static final String DEFAULT_REST_BASE_URL = "http://api.twitter.com/1/";
-	private static final String DEFAULT_SEARCH_BASE_URL = "http://search.twitter.com/";
-	private static final String DEFAULT_STREAM_BASE_URL = "https://stream.twitter.com/1/";
-	private static final String DEFAULT_USER_STREAM_BASE_URL = "https://userstream.twitter.com/2/";
-	private static final String DEFAULT_SITE_STREAM_BASE_URL = "https://sitestream.twitter.com/2b/";
-	private static final String DEFAULT_UPLOAD_BASE_URL = "http://upload.twitter.com/1/";
 
 	private static final long serialVersionUID = -6610497517837844232L;
 
@@ -144,8 +132,6 @@ class ConfigurationBase implements Configuration, java.io.Serializable {
 		setIncludeEntitiesEnbled(true);
 
 		setJSONStoreEnabled(false);
-
-		setMBeanEnabled(false);
 
 		setOAuthRequestTokenURL(DEFAULT_OAUTH_REQUEST_TOKEN_URL);
 		setOAuthAuthorizationURL(DEFAULT_OAUTH_AUTHORIZATION_URL);
@@ -194,7 +180,6 @@ class ConfigurationBase implements Configuration, java.io.Serializable {
 		if (includeRTsEnabled != that.includeRTsEnabled) return false;
 		if (jsonStoreEnabled != that.jsonStoreEnabled) return false;
 		if (maxTotalConnections != that.maxTotalConnections) return false;
-		if (mbeanEnabled != that.mbeanEnabled) return false;
 		if (prettyDebug != that.prettyDebug) return false;
 		if (useSSL != that.useSSL) return false;
 		if (ignoreSSLError != that.ignoreSSLError) return false;
@@ -481,7 +466,6 @@ class ConfigurationBase implements Configuration, java.io.Serializable {
 		result = 31 * result + (includeRTsEnabled ? 1 : 0);
 		result = 31 * result + (includeEntitiesEnabled ? 1 : 0);
 		result = 31 * result + (jsonStoreEnabled ? 1 : 0);
-		result = 31 * result + (mbeanEnabled ? 1 : 0);
 		result = 31 * result + (userStreamRepliesAllEnabled ? 1 : 0);
 		result = 31 * result + (mediaProvider != null ? mediaProvider.hashCode() : 0);
 		result = 31 * result + (mediaProviderAPIKey != null ? mediaProviderAPIKey.hashCode() : 0);
@@ -518,11 +502,6 @@ class ConfigurationBase implements Configuration, java.io.Serializable {
 	}
 
 	@Override
-	public boolean isMBeanEnabled() {
-		return mbeanEnabled;
-	}
-
-	@Override
 	public boolean isPrettyDebugEnabled() {
 		return prettyDebug;
 	}
@@ -552,7 +531,7 @@ class ConfigurationBase implements Configuration, java.io.Serializable {
 				+ ", siteStreamBaseURL='" + siteStreamBaseURL + '\'' + ", uploadBaseURL='" + uploadBaseURL + '\''
 				+ ", dispatcherImpl='" + dispatcherImpl + '\'' + ", asyncNumThreads=" + asyncNumThreads
 				+ ", includeRTsEnabled=" + includeRTsEnabled + ", includeEntitiesEnabled=" + includeEntitiesEnabled
-				+ ", jsonStoreEnabled=" + jsonStoreEnabled + ", mbeanEnabled=" + mbeanEnabled
+				+ ", jsonStoreEnabled=" + jsonStoreEnabled
 				+ ", userStreamRepliesAllEnabled=" + userStreamRepliesAllEnabled + ", mediaProvider='" + mediaProvider
 				+ '\'' + ", mediaProviderAPIKey='" + mediaProviderAPIKey + '\'' + ", mediaProviderParameters="
 				+ mediaProviderParameters + ", clientVersion='" + clientVersion + '\'' + ", clientURL='" + clientURL
@@ -653,10 +632,6 @@ class ConfigurationBase implements Configuration, java.io.Serializable {
 
 	protected final void setJSONStoreEnabled(boolean enabled) {
 		jsonStoreEnabled = enabled;
-	}
-
-	protected final void setMBeanEnabled(boolean enabled) {
-		mbeanEnabled = enabled;
 	}
 
 	protected final void setMediaProvider(String mediaProvider) {
