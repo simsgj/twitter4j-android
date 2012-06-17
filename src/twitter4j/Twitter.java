@@ -15,6 +15,8 @@
  */
 package twitter4j;
 
+import java.io.Serializable;
+
 import twitter4j.api.AccountMethods;
 import twitter4j.api.BlockMethods;
 import twitter4j.api.DirectMessageMethods;
@@ -43,7 +45,7 @@ import twitter4j.auth.OAuthSupport;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.2.0
  */
-public interface Twitter extends java.io.Serializable, OAuthSupport, TwitterBase, SearchMethods, TrendsMethods,
+public interface Twitter extends Serializable, OAuthSupport, TwitterBase, SearchMethods, TrendsMethods,
 		TimelineMethods, StatusMethods, UserMethods, ListMethods, ListMembersMethods, ListSubscribersMethods,
 		DirectMessageMethods, FriendshipMethods, FriendsFollowersMethods, AccountMethods, FavoriteMethods,
 		NotificationMethods, BlockMethods, SpamReportingMethods, SavedSearchesMethods, LocalTrendsMethods, GeoMethods,

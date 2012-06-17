@@ -32,7 +32,7 @@ public class HttpResponseImpl extends HttpResponse {
 	HttpResponseImpl(HttpURLConnection con, HttpClientConfiguration conf) throws IOException {
 		super(conf);
 		this.con = con;
-		if (con == null) return; 
+		if (con == null) return;
 		statusCode = con.getResponseCode();
 		if (null == (is = con.getErrorStream())) {
 			is = con.getInputStream();

@@ -30,6 +30,11 @@ import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +48,7 @@ import twitter4j.TwitterException;
 import twitter4j.conf.ConfigurationContext;
 import twitter4j.internal.logging.Logger;
 import twitter4j.internal.util.z_T4JInternalStringUtil;
+import android.net.SSLCertificateSocketFactory;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
@@ -187,9 +193,22 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 	}
 
 	private HttpURLConnection getConnection(String url) throws IOException {
-		HostnameVerifier verifier = CONF.getIgnoreSSLError() ? SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER
-				: SSLSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER;
-		HttpsURLConnection.setDefaultHostnameVerifier(verifier);
+
+		try {
+			final KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
+			trustStore.load(null, null);
+			final SSLCertificateSocketFactory sf = CONF.getIgnoreSSLError() ? new IgnoreErrorSSLSocketFactory(trustStore)
+					: new SSLCertificateSocketFactory(0);
+			final HostnameVerifier verifier = CONF.getIgnoreSSLError() ? SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER
+					: SSLSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER;
+			HttpsURLConnection.setDefaultSSLSocketFactory(sf);
+			HttpsURLConnection.setDefaultHostnameVerifier(verifier);
+		} catch (KeyManagementException e) {
+		} catch (KeyStoreException e) {
+		} catch (NoSuchAlgorithmException e) {
+		} catch (CertificateException e) {
+		}
+
 		HttpURLConnection con;
 		if (isProxyConfigured()) {
 			if (CONF.getHttpProxyUser() != null && !CONF.getHttpProxyUser().equals("")) {

@@ -531,11 +531,11 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 				+ ", siteStreamBaseURL='" + siteStreamBaseURL + '\'' + ", uploadBaseURL='" + uploadBaseURL + '\''
 				+ ", dispatcherImpl='" + dispatcherImpl + '\'' + ", asyncNumThreads=" + asyncNumThreads
 				+ ", includeRTsEnabled=" + includeRTsEnabled + ", includeEntitiesEnabled=" + includeEntitiesEnabled
-				+ ", jsonStoreEnabled=" + jsonStoreEnabled
-				+ ", userStreamRepliesAllEnabled=" + userStreamRepliesAllEnabled + ", mediaProvider='" + mediaProvider
-				+ '\'' + ", mediaProviderAPIKey='" + mediaProviderAPIKey + '\'' + ", mediaProviderParameters="
-				+ mediaProviderParameters + ", clientVersion='" + clientVersion + '\'' + ", clientURL='" + clientURL
-				+ '\'' + ", requestHeaders=" + requestHeaders + '}';
+				+ ", jsonStoreEnabled=" + jsonStoreEnabled + ", userStreamRepliesAllEnabled="
+				+ userStreamRepliesAllEnabled + ", mediaProvider='" + mediaProvider + '\'' + ", mediaProviderAPIKey='"
+				+ mediaProviderAPIKey + '\'' + ", mediaProviderParameters=" + mediaProviderParameters
+				+ ", clientVersion='" + clientVersion + '\'' + ", clientURL='" + clientURL + '\'' + ", requestHeaders="
+				+ requestHeaders + '}';
 	}
 
 	protected void cacheInstance() {

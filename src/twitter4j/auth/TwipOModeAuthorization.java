@@ -51,5 +51,4 @@ public class TwipOModeAuthorization implements Authorization, java.io.Serializab
 		return "TwipOModeAuthentication{SINGLETON}";
 	}
 
-
 }
