@@ -34,14 +34,14 @@ final class ExceptionDiagnosis implements java.io.Serializable {
 	ExceptionDiagnosis(Throwable th, String[] inclusionFilter) {
 		this.th = th;
 
-		StackTraceElement[] stackTrace = th.getStackTrace();
+		final StackTraceElement[] stackTrace = th.getStackTrace();
 		stackLineHash = 0;
 		lineNumberHash = 0;
 		for (int i = stackTrace.length - 1; i >= 0; i--) {
-			StackTraceElement line = stackTrace[i];
-			for (String filter : inclusionFilter) {
+			final StackTraceElement line = stackTrace[i];
+			for (final String filter : inclusionFilter) {
 				if (line.getClassName().startsWith(filter)) {
-					int hash = line.getClassName().hashCode() + line.getMethodName().hashCode();
+					final int hash = line.getClassName().hashCode() + line.getMethodName().hashCode();
 					stackLineHash = 31 * stackLineHash + hash;
 					lineNumberHash = 31 * lineNumberHash + line.getLineNumber();
 					break;
@@ -60,7 +60,7 @@ final class ExceptionDiagnosis implements java.io.Serializable {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		ExceptionDiagnosis that = (ExceptionDiagnosis) o;
+		final ExceptionDiagnosis that = (ExceptionDiagnosis) o;
 
 		if (lineNumberHash != that.lineNumberHash) return false;
 		if (stackLineHash != that.stackLineHash) return false;
@@ -81,7 +81,7 @@ final class ExceptionDiagnosis implements java.io.Serializable {
 	}
 
 	private String toHexString(int value) {
-		String str = "0000000" + Integer.toHexString(value);
+		final String str = "0000000" + Integer.toHexString(value);
 		return str.substring(str.length() - 8, str.length());
 	}
 

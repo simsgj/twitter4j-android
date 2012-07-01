@@ -77,7 +77,7 @@ public abstract class HttpResponse {
 				if (CONF.isPrettyDebugEnabled()) {
 					logger.debug(jsonArray.toString(1));
 				}
-			} catch (JSONException jsone) {
+			} catch (final JSONException jsone) {
 				if (logger.isDebugEnabled())
 					throw new TwitterException(jsone.getMessage() + ":" + responseAsString, jsone);
 				else
@@ -107,7 +107,7 @@ public abstract class HttpResponse {
 				if (CONF.isPrettyDebugEnabled()) {
 					logger.debug(json.toString(1));
 				}
-			} catch (JSONException jsone) {
+			} catch (final JSONException jsone) {
 				if (responseAsString == null)
 					throw new TwitterException(jsone.getMessage(), jsone);
 				else
@@ -122,7 +122,7 @@ public abstract class HttpResponse {
 	public Reader asReader() {
 		try {
 			return new BufferedReader(new InputStreamReader(is, "UTF-8"));
-		} catch (java.io.UnsupportedEncodingException uee) {
+		} catch (final java.io.UnsupportedEncodingException uee) {
 			return new InputStreamReader(is);
 		}
 	}
@@ -158,7 +158,7 @@ public abstract class HttpResponse {
 				stream = asStream();
 				if (null == stream) return null;
 				br = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
-				StringBuffer buf = new StringBuffer();
+				final StringBuffer buf = new StringBuffer();
 				String line;
 				while ((line = br.readLine()) != null) {
 					buf.append(line).append("\n");
@@ -167,19 +167,19 @@ public abstract class HttpResponse {
 				logger.debug(responseAsString);
 				stream.close();
 				streamConsumed = true;
-			} catch (IOException ioe) {
+			} catch (final IOException ioe) {
 				throw new TwitterException(ioe.getMessage(), ioe);
 			} finally {
 				if (stream != null) {
 					try {
 						stream.close();
-					} catch (IOException ignore) {
+					} catch (final IOException ignore) {
 					}
 				}
 				if (br != null) {
 					try {
 						br.close();
-					} catch (IOException ignore) {
+					} catch (final IOException ignore) {
 					}
 				}
 				disconnectForcibly();
@@ -207,7 +207,7 @@ public abstract class HttpResponse {
 	private void disconnectForcibly() {
 		try {
 			disconnect();
-		} catch (Exception ignore) {
+		} catch (final Exception ignore) {
 		}
 	}
 }

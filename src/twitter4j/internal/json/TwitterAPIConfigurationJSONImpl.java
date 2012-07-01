@@ -49,13 +49,13 @@ class TwitterAPIConfigurationJSONImpl extends TwitterResponseImpl implements Twi
 	TwitterAPIConfigurationJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
 		super(res);
 		try {
-			JSONObject json = res.asJSONObject();
+			final JSONObject json = res.asJSONObject();
 			photoSizeLimit = getInt("photo_size_limit", json);
 			shortURLLength = getInt("short_url_length", json);
 			shortURLLengthHttps = getInt("short_url_length_https", json);
 			charactersReservedPerMedia = getInt("characters_reserved_per_media", json);
 
-			JSONObject sizes = json.getJSONObject("photo_sizes");
+			final JSONObject sizes = json.getJSONObject("photo_sizes");
 			photoSizes = new HashMap<Integer, MediaEntity.Size>(4);
 			photoSizes.put(MediaEntity.Size.LARGE, new MediaEntityJSONImpl.Size(sizes.getJSONObject("large")));
 			JSONObject medium;
@@ -72,13 +72,13 @@ class TwitterAPIConfigurationJSONImpl extends TwitterResponseImpl implements Twi
 				DataObjectFactoryUtil.clearThreadLocalMap();
 				DataObjectFactoryUtil.registerJSONObject(this, res.asJSONObject());
 			}
-			JSONArray nonUsernamePathsJSONArray = json.getJSONArray("non_username_paths");
+			final JSONArray nonUsernamePathsJSONArray = json.getJSONArray("non_username_paths");
 			nonUsernamePaths = new String[nonUsernamePathsJSONArray.length()];
 			for (int i = 0; i < nonUsernamePathsJSONArray.length(); i++) {
 				nonUsernamePaths[i] = nonUsernamePathsJSONArray.getString(i);
 			}
 			maxMediaPerUpload = getInt("max_media_per_upload", json);
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
 		}
 	}
@@ -88,7 +88,7 @@ class TwitterAPIConfigurationJSONImpl extends TwitterResponseImpl implements Twi
 		if (this == o) return true;
 		if (!(o instanceof TwitterAPIConfigurationJSONImpl)) return false;
 
-		TwitterAPIConfigurationJSONImpl that = (TwitterAPIConfigurationJSONImpl) o;
+		final TwitterAPIConfigurationJSONImpl that = (TwitterAPIConfigurationJSONImpl) o;
 
 		if (charactersReservedPerMedia != that.charactersReservedPerMedia) return false;
 		if (maxMediaPerUpload != that.maxMediaPerUpload) return false;

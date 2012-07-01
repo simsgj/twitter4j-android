@@ -73,7 +73,7 @@ public final class StatusUpdate implements java.io.Serializable {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		StatusUpdate that = (StatusUpdate) o;
+		final StatusUpdate that = (StatusUpdate) o;
 
 		if (displayCoordinates != that.displayCoordinates) return false;
 		if (inReplyToStatusId != that.inReplyToStatusId) return false;
@@ -239,7 +239,7 @@ public final class StatusUpdate implements java.io.Serializable {
 	}
 
 	HttpParameter[] asHttpParameterArray(HttpParameter includeEntities) {
-		ArrayList<HttpParameter> params = new ArrayList<HttpParameter>();
+		final ArrayList<HttpParameter> params = new ArrayList<HttpParameter>();
 		appendParameter("status", status, params);
 		if (-1 != inReplyToStatusId) {
 			appendParameter("in_reply_to_status_id", inReplyToStatusId, params);
@@ -265,7 +265,7 @@ public final class StatusUpdate implements java.io.Serializable {
 			params.add(new HttpParameter("possibly_sensitive", possiblySensitive));
 		}
 
-		HttpParameter[] paramArray = new HttpParameter[params.size()];
+		final HttpParameter[] paramArray = new HttpParameter[params.size()];
 		return params.toArray(paramArray);
 	}
 

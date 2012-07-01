@@ -82,7 +82,7 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status, java.i
 
 	/* package */StatusJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
 		super(res);
-		JSONObject json = res.asJSONObject();
+		final JSONObject json = res.asJSONObject();
 		init(json);
 		if (conf.isJSONStoreEnabled()) {
 			DataObjectFactoryUtil.clearThreadLocalMap();
@@ -97,7 +97,7 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status, java.i
 
 	@Override
 	public int compareTo(Status that) {
-		long delta = id - that.getId();
+		final long delta = id - that.getId();
 		if (delta < Integer.MIN_VALUE)
 			return Integer.MIN_VALUE;
 		else if (delta > Integer.MAX_VALUE) return Integer.MAX_VALUE;
@@ -131,7 +131,7 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status, java.i
 			for (int i = 0; i < contributors.length; i++) {
 				try {
 					contributorsIDs[i] = Long.parseLong(contributors[i]);
-				} catch (NumberFormatException nfe) {
+				} catch (final NumberFormatException nfe) {
 					nfe.printStackTrace();
 					logger.warn("failed to parse contributors:" + nfe);
 				}
@@ -335,14 +335,14 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status, java.i
 			if (!json.isNull("user")) {
 				user = new UserJSONImpl(json.getJSONObject("user"));
 			}
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
 		}
 		geoLocation = z_T4JInternalJSONImplFactory.createGeoLocation(json);
 		if (!json.isNull("place")) {
 			try {
 				place = new PlaceJSONImpl(json.getJSONObject("place"));
-			} catch (JSONException ignore) {
+			} catch (final JSONException ignore) {
 				ignore.printStackTrace();
 				logger.warn("failed to parse place:" + json);
 			}
@@ -351,22 +351,22 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status, java.i
 		if (!json.isNull("retweeted_status")) {
 			try {
 				retweetedStatus = new StatusJSONImpl(json.getJSONObject("retweeted_status"));
-			} catch (JSONException ignore) {
+			} catch (final JSONException ignore) {
 				ignore.printStackTrace();
 				logger.warn("failed to parse retweeted_status:" + json);
 			}
 		}
 		if (!json.isNull("contributors")) {
 			try {
-				JSONArray contributorsArray = json.getJSONArray("contributors");
+				final JSONArray contributorsArray = json.getJSONArray("contributors");
 				contributorsIDs = new long[contributorsArray.length()];
 				for (int i = 0; i < contributorsArray.length(); i++) {
 					contributorsIDs[i] = Long.parseLong(contributorsArray.getString(i));
 				}
-			} catch (NumberFormatException ignore) {
+			} catch (final NumberFormatException ignore) {
 				ignore.printStackTrace();
 				logger.warn("failed to parse contributors:" + json);
-			} catch (JSONException ignore) {
+			} catch (final JSONException ignore) {
 				ignore.printStackTrace();
 				logger.warn("failed to parse contributors:" + json);
 			}
@@ -375,10 +375,10 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status, java.i
 		}
 		if (!json.isNull("entities")) {
 			try {
-				JSONObject entities = json.getJSONObject("entities");
+				final JSONObject entities = json.getJSONObject("entities");
 				int len;
 				if (!entities.isNull("user_mentions")) {
-					JSONArray userMentionsArray = entities.getJSONArray("user_mentions");
+					final JSONArray userMentionsArray = entities.getJSONArray("user_mentions");
 					len = userMentionsArray.length();
 					userMentionEntities = new UserMentionEntity[len];
 					for (int i = 0; i < len; i++) {
@@ -387,7 +387,7 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status, java.i
 
 				}
 				if (!entities.isNull("urls")) {
-					JSONArray urlsArray = entities.getJSONArray("urls");
+					final JSONArray urlsArray = entities.getJSONArray("urls");
 					len = urlsArray.length();
 					urlEntities = new URLEntity[len];
 					for (int i = 0; i < len; i++) {
@@ -396,7 +396,7 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status, java.i
 				}
 
 				if (!entities.isNull("hashtags")) {
-					JSONArray hashtagsArray = entities.getJSONArray("hashtags");
+					final JSONArray hashtagsArray = entities.getJSONArray("hashtags");
 					len = hashtagsArray.length();
 					hashtagEntities = new HashtagEntity[len];
 					for (int i = 0; i < len; i++) {
@@ -405,29 +405,29 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status, java.i
 				}
 
 				if (!entities.isNull("media")) {
-					JSONArray mediaArray = entities.getJSONArray("media");
+					final JSONArray mediaArray = entities.getJSONArray("media");
 					len = mediaArray.length();
 					mediaEntities = new MediaEntity[len];
 					for (int i = 0; i < len; i++) {
 						mediaEntities[i] = new MediaEntityJSONImpl(mediaArray.getJSONObject(i));
 					}
 				}
-			} catch (JSONException jsone) {
+			} catch (final JSONException jsone) {
 				throw new TwitterException(jsone);
 			}
 		}
 		if (!json.isNull("annotations")) {
 			try {
-				JSONArray annotationsArray = json.getJSONArray("annotations");
+				final JSONArray annotationsArray = json.getJSONArray("annotations");
 				annotations = new Annotations(annotationsArray);
-			} catch (JSONException ignore) {
+			} catch (final JSONException ignore) {
 			}
 		}
 		if (!json.isNull("current_user_retweet")) {
 			try {
 				myRetweetedStatus = new StatusJSONImpl(json.getJSONObject("current_user_retweet"));
 				wasRetweetedByMe = true;
-			} catch (JSONException ignore) {
+			} catch (final JSONException ignore) {
 				ignore.printStackTrace();
 				logger.warn("failed to parse current_user_retweet:" + json);
 			}
@@ -440,12 +440,12 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status, java.i
 			if (conf.isJSONStoreEnabled()) {
 				DataObjectFactoryUtil.clearThreadLocalMap();
 			}
-			JSONArray list = res.asJSONArray();
-			int size = list.length();
-			ResponseList<Status> statuses = new ResponseListImpl<Status>(size, res);
+			final JSONArray list = res.asJSONArray();
+			final int size = list.length();
+			final ResponseList<Status> statuses = new ResponseListImpl<Status>(size, res);
 			for (int i = 0; i < size; i++) {
-				JSONObject json = list.getJSONObject(i);
-				Status status = new StatusJSONImpl(json);
+				final JSONObject json = list.getJSONObject(i);
+				final Status status = new StatusJSONImpl(json);
 				if (conf.isJSONStoreEnabled()) {
 					DataObjectFactoryUtil.registerJSONObject(status, json);
 				}
@@ -455,9 +455,9 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status, java.i
 				DataObjectFactoryUtil.registerJSONObject(statuses, list);
 			}
 			return statuses;
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
-		} catch (TwitterException te) {
+		} catch (final TwitterException te) {
 			throw te;
 		}
 	}

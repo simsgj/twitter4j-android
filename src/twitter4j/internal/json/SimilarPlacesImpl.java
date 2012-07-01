@@ -53,10 +53,10 @@ public class SimilarPlacesImpl extends ResponseListImpl<Place> implements Simila
 		JSONObject json = null;
 		try {
 			json = res.asJSONObject();
-			JSONObject result = json.getJSONObject("result");
+			final JSONObject result = json.getJSONObject("result");
 			return new SimilarPlacesImpl(PlaceJSONImpl.createPlaceList(result.getJSONArray("places"), res, conf), res,
 					result.getString("token"));
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone.getMessage() + ":" + json.toString(), jsone);
 		}
 	}

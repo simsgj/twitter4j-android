@@ -81,7 +81,7 @@ public final class HttpParameter implements Comparable<HttpParameter>, java.io.S
 	@Override
 	public int compareTo(HttpParameter o) {
 		int compared;
-		HttpParameter that = o;
+		final HttpParameter that = o;
 		compared = name.compareTo(that.name);
 		if (0 == compared) {
 			compared = value.compareTo(that.value);
@@ -94,7 +94,7 @@ public final class HttpParameter implements Comparable<HttpParameter>, java.io.S
 		if (this == o) return true;
 		if (!(o instanceof HttpParameter)) return false;
 
-		HttpParameter that = (HttpParameter) o;
+		final HttpParameter that = (HttpParameter) o;
 
 		if (file != null ? !file.equals(that.file) : that.file != null) return false;
 		if (fileBody != null ? !fileBody.equals(that.fileBody) : that.fileBody != null) return false;
@@ -111,7 +111,7 @@ public final class HttpParameter implements Comparable<HttpParameter>, java.io.S
 		if (!isFile()) throw new IllegalStateException("not a file");
 		String contentType;
 		String extensions = file.getName();
-		int index = extensions.lastIndexOf(".");
+		final int index = extensions.lastIndexOf(".");
 		if (-1 == index) {
 			// no extension
 			contentType = OCTET;
@@ -182,7 +182,7 @@ public final class HttpParameter implements Comparable<HttpParameter>, java.io.S
 	public static boolean containsFile(HttpParameter[] params) {
 		boolean containsFile = false;
 		if (null == params) return false;
-		for (HttpParameter param : params) {
+		for (final HttpParameter param : params) {
 			if (param.isFile()) {
 				containsFile = true;
 				break;
@@ -206,9 +206,9 @@ public final class HttpParameter implements Comparable<HttpParameter>, java.io.S
 		String encoded = null;
 		try {
 			encoded = URLEncoder.encode(value, "UTF-8");
-		} catch (UnsupportedEncodingException ignore) {
+		} catch (final UnsupportedEncodingException ignore) {
 		}
-		StringBuffer buf = new StringBuffer(encoded.length());
+		final StringBuffer buf = new StringBuffer(encoded.length());
 		char focus;
 		for (int i = 0; i < encoded.length(); i++) {
 			focus = encoded.charAt(i);
@@ -229,7 +229,7 @@ public final class HttpParameter implements Comparable<HttpParameter>, java.io.S
 
 	public static String encodeParameters(HttpParameter[] httpParams) {
 		if (null == httpParams) return "";
-		StringBuffer buf = new StringBuffer();
+		final StringBuffer buf = new StringBuffer();
 		for (int j = 0; j < httpParams.length; j++) {
 			if (httpParams[j].isFile())
 				throw new IllegalArgumentException("parameter [" + httpParams[j].name + "]should be text");
@@ -260,7 +260,7 @@ public final class HttpParameter implements Comparable<HttpParameter>, java.io.S
 	/* package */
 	static boolean containsFile(List<HttpParameter> params) {
 		boolean containsFile = false;
-		for (HttpParameter param : params) {
+		for (final HttpParameter param : params) {
 			if (param.isFile()) {
 				containsFile = true;
 				break;

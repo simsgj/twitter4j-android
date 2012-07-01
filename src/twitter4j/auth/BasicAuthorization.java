@@ -43,7 +43,7 @@ public class BasicAuthorization implements Authorization, java.io.Serializable {
 		if (this == o) return true;
 		if (!(o instanceof BasicAuthorization)) return false;
 
-		BasicAuthorization that = (BasicAuthorization) o;
+		final BasicAuthorization that = (BasicAuthorization) o;
 
 		return basic.equals(that.basic);
 

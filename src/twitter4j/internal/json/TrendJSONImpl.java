@@ -52,7 +52,7 @@ import twitter4j.Trend;
 		if (this == o) return true;
 		if (!(o instanceof Trend)) return false;
 
-		Trend trend = (Trend) o;
+		final Trend trend = (Trend) o;
 
 		if (!name.equals(trend.getName())) return false;
 		if (query != null ? !query.equals(trend.getQuery()) : trend.getQuery() != null) return false;

@@ -78,7 +78,7 @@ public final class HttpClientWrapper implements java.io.Serializable {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		HttpClientWrapper that = (HttpClientWrapper) o;
+		final HttpClientWrapper that = (HttpClientWrapper) o;
 
 		if (!http.equals(that.http)) return false;
 		if (!requestHeaders.equals(that.requestHeaders)) return false;
@@ -148,7 +148,7 @@ public final class HttpClientWrapper implements java.io.Serializable {
 
 	public HttpResponse post(String url, HttpParameter[] parameters, Map<String, String> requestHeaders)
 			throws TwitterException {
-		Map<String, String> headers = new HashMap<String, String>(this.requestHeaders);
+		final Map<String, String> headers = new HashMap<String, String>(this.requestHeaders);
 		if (requestHeaders != null) {
 			headers.putAll(requestHeaders);
 		}
@@ -195,7 +195,7 @@ public final class HttpClientWrapper implements java.io.Serializable {
 			if (httpResponseListener != null) {
 				httpResponseListener.httpResponseReceived(new HttpResponseEvent(req, res, null));
 			}
-		} catch (TwitterException te) {
+		} catch (final TwitterException te) {
 			if (httpResponseListener != null) {
 				httpResponseListener.httpResponseReceived(new HttpResponseEvent(req, null, te));
 			}

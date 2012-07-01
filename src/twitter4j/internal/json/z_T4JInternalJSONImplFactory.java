@@ -146,7 +146,7 @@ public class z_T4JInternalJSONImplFactory implements z_T4JInternalFactory {
 	public ResponseList<Place> createPlaceList(HttpResponse res) throws TwitterException {
 		try {
 			return PlaceJSONImpl.createPlaceList(res, conf);
-		} catch (TwitterException te) {
+		} catch (final TwitterException te) {
 			if (te.getStatusCode() == 404)
 				return new ResponseListImpl<Place>(0, null);
 			else
@@ -163,7 +163,7 @@ public class z_T4JInternalJSONImplFactory implements z_T4JInternalFactory {
 	public QueryResult createQueryResult(HttpResponse res, Query query) throws TwitterException {
 		try {
 			return new QueryResultJSONImpl(res, conf);
-		} catch (TwitterException te) {
+		} catch (final TwitterException te) {
 			if (404 == te.getStatusCode())
 				return new QueryResultJSONImpl(query);
 			else
@@ -255,7 +255,7 @@ public class z_T4JInternalJSONImplFactory implements z_T4JInternalFactory {
 	public ResponseList<User> createUserListFromJSONArray_Users(HttpResponse res) throws TwitterException {
 		try {
 			return UserJSONImpl.createUserList(res.asJSONObject().getJSONArray("users"), res, conf);
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
 		}
 	}
@@ -270,7 +270,7 @@ public class z_T4JInternalJSONImplFactory implements z_T4JInternalFactory {
 		if (this == o) return true;
 		if (!(o instanceof z_T4JInternalJSONImplFactory)) return false;
 
-		z_T4JInternalJSONImplFactory that = (z_T4JInternalJSONImplFactory) o;
+		final z_T4JInternalJSONImplFactory that = (z_T4JInternalJSONImplFactory) o;
 
 		if (conf != null ? !conf.equals(that.conf) : that.conf != null) return false;
 
@@ -298,17 +298,17 @@ public class z_T4JInternalJSONImplFactory implements z_T4JInternalFactory {
 	/* package */
 	static GeoLocation[][] coordinatesAsGeoLocationArray(JSONArray coordinates) throws TwitterException {
 		try {
-			GeoLocation[][] boundingBox = new GeoLocation[coordinates.length()][];
+			final GeoLocation[][] boundingBox = new GeoLocation[coordinates.length()][];
 			for (int i = 0; i < coordinates.length(); i++) {
-				JSONArray array = coordinates.getJSONArray(i);
+				final JSONArray array = coordinates.getJSONArray(i);
 				boundingBox[i] = new GeoLocation[array.length()];
 				for (int j = 0; j < array.length(); j++) {
-					JSONArray coordinate = array.getJSONArray(j);
+					final JSONArray coordinate = array.getJSONArray(j);
 					boundingBox[i][j] = new GeoLocation(coordinate.getDouble(1), coordinate.getDouble(0));
 				}
 			}
 			return boundingBox;
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
 		}
 	}
@@ -327,10 +327,10 @@ public class z_T4JInternalJSONImplFactory implements z_T4JInternalFactory {
 			if (!json.isNull("geo")) {
 				String coordinates = json.getJSONObject("geo").getString("coordinates");
 				coordinates = coordinates.substring(1, coordinates.length() - 1);
-				String[] point = z_T4JInternalStringUtil.split(coordinates, ",");
+				final String[] point = z_T4JInternalStringUtil.split(coordinates, ",");
 				return new GeoLocation(Double.parseDouble(point[0]), Double.parseDouble(point[1]));
 			}
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
 		}
 		return null;

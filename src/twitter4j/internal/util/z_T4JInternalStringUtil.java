@@ -29,8 +29,8 @@ public class z_T4JInternalStringUtil {
 	}
 
 	public static String join(int[] follows) {
-		StringBuffer buf = new StringBuffer(11 * follows.length);
-		for (int follow : follows) {
+		final StringBuffer buf = new StringBuffer(11 * follows.length);
+		for (final int follow : follows) {
 			if (0 != buf.length()) {
 				buf.append(",");
 			}
@@ -42,8 +42,8 @@ public class z_T4JInternalStringUtil {
 	// for JDK1.4 compatibility
 
 	public static String join(long[] follows) {
-		StringBuffer buf = new StringBuffer(11 * follows.length);
-		for (long follow : follows) {
+		final StringBuffer buf = new StringBuffer(11 * follows.length);
+		for (final long follow : follows) {
 			if (0 != buf.length()) {
 				buf.append(",");
 			}
@@ -53,8 +53,8 @@ public class z_T4JInternalStringUtil {
 	}
 
 	public static String join(String[] track) {
-		StringBuffer buf = new StringBuffer(11 * track.length);
-		for (String str : track) {
+		final StringBuffer buf = new StringBuffer(11 * track.length);
+		for (final String str : track) {
 			if (0 != buf.length()) {
 				buf.append(",");
 			}
@@ -64,7 +64,7 @@ public class z_T4JInternalStringUtil {
 	}
 
 	public static String maskString(String str) {
-		StringBuffer buf = new StringBuffer(str.length());
+		final StringBuffer buf = new StringBuffer(str.length());
 		for (int i = 0; i < str.length(); i++) {
 			buf.append("*");
 		}
@@ -77,10 +77,10 @@ public class z_T4JInternalStringUtil {
 		if (index == -1) {
 			returnValue = new String[] { str };
 		} else {
-			List<String> strList = new ArrayList<String>();
+			final List<String> strList = new ArrayList<String>();
 			int oldIndex = 0;
 			while (index != -1) {
-				String subStr = str.substring(oldIndex, index);
+				final String subStr = str.substring(oldIndex, index);
 				strList.add(subStr);
 				oldIndex = index + separator.length();
 				index = str.indexOf(separator, oldIndex);

@@ -89,10 +89,16 @@ public interface Configuration extends HttpClientConfiguration, HttpClientWrappe
 	String getOAuthAccessTokenSecret();
 
 	String getOAuthAccessTokenURL();
-
 	String getOAuthAuthenticationURL();
-
 	String getOAuthAuthorizationURL();
+	String getOAuthRequestTokenURL();
+
+	String getSigningOAuthAccessTokenURL();
+	String getSigningOAuthAuthenticationURL();
+	String getSigningOAuthAuthorizationURL();
+	String getSigningOAuthRequestTokenURL();
+	
+	String getOAuthBaseURL();
 
 	@Override
 	String getOAuthConsumerKey();
@@ -100,7 +106,6 @@ public interface Configuration extends HttpClientConfiguration, HttpClientWrappe
 	@Override
 	String getOAuthConsumerSecret();
 
-	String getOAuthRequestTokenURL();
 
 	@Override
 	String getPassword();
@@ -111,6 +116,10 @@ public interface Configuration extends HttpClientConfiguration, HttpClientWrappe
 	String getRestBaseURL();
 
 	String getSearchBaseURL();
+
+	String getSigningOAuthBaseURL();
+
+	String getSigningRestBaseURL();
 
 	String getSiteStreamBaseURL();
 

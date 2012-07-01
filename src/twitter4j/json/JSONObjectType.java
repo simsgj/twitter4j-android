@@ -67,7 +67,7 @@ public final class JSONObjectType implements java.io.Serializable {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		JSONObjectType that = (JSONObjectType) o;
+		final JSONObjectType that = (JSONObjectType) o;
 
 		if (name != null ? !name.equals(that.name) : that.name != null) return false;
 
@@ -150,10 +150,10 @@ public final class JSONObjectType implements java.io.Serializable {
 				else if ("block".equals(event))
 					return BLOCK;
 				else if ("unblock".equals(event)) return UNBLOCK;
-			} catch (JSONException jsone) {
+			} catch (final JSONException jsone) {
 				try {
 					logger.warn("Failed to get event element: ", json.toString(2));
-				} catch (JSONException ignore) {
+				} catch (final JSONException ignore) {
 				}
 			}
 		}

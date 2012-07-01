@@ -94,7 +94,7 @@ public final class Paging implements java.io.Serializable {
 		if (this == o) return true;
 		if (!(o instanceof Paging)) return false;
 
-		Paging paging = (Paging) o;
+		final Paging paging = (Paging) o;
 
 		if (count != paging.count) return false;
 		if (maxId != paging.maxId) return false;
@@ -167,7 +167,7 @@ public final class Paging implements java.io.Serializable {
 	private void addPostParameter(char[] supportedParams, char paramKey, List<HttpParameter> pagingParams,
 			String paramName, long paramValue) {
 		boolean supported = false;
-		for (char supportedParam : supportedParams) {
+		for (final char supportedParam : supportedParams) {
 			if (supportedParam == paramKey) {
 				supported = true;
 				break;
@@ -182,7 +182,7 @@ public final class Paging implements java.io.Serializable {
 	}
 
 	/* package */HttpParameter[] asPostParameterArray() {
-		List<HttpParameter> list = asPostParameterList(SMCP, COUNT);
+		final List<HttpParameter> list = asPostParameterList(SMCP, COUNT);
 		if (list.size() == 0) return NULL_PARAMETER_ARRAY;
 		return list.toArray(new HttpParameter[list.size()]);
 	}
@@ -198,7 +198,7 @@ public final class Paging implements java.io.Serializable {
 	 * @return list of PostParameter
 	 */
 	/* package */HttpParameter[] asPostParameterArray(char[] supportedParams, String perPageParamName) {
-		java.util.List<HttpParameter> pagingParams = new ArrayList<HttpParameter>(supportedParams.length);
+		final java.util.List<HttpParameter> pagingParams = new ArrayList<HttpParameter>(supportedParams.length);
 		addPostParameter(supportedParams, 's', pagingParams, "since_id", getSinceId());
 		addPostParameter(supportedParams, 'm', pagingParams, "max_id", getMaxId());
 		addPostParameter(supportedParams, 'c', pagingParams, perPageParamName, getCount());
@@ -228,7 +228,7 @@ public final class Paging implements java.io.Serializable {
 	 * @return list of PostParameter
 	 */
 	/* package */List<HttpParameter> asPostParameterList(char[] supportedParams, String perPageParamName) {
-		java.util.List<HttpParameter> pagingParams = new ArrayList<HttpParameter>(supportedParams.length);
+		final java.util.List<HttpParameter> pagingParams = new ArrayList<HttpParameter>(supportedParams.length);
 		addPostParameter(supportedParams, 's', pagingParams, "since_id", getSinceId());
 		addPostParameter(supportedParams, 'm', pagingParams, "max_id", getMaxId());
 		addPostParameter(supportedParams, 'c', pagingParams, perPageParamName, getCount());

@@ -56,7 +56,7 @@ import twitter4j.internal.http.HttpResponse;
 	private static final long serialVersionUID = -9059136565234613286L;
 
 	/* package */QueryResultJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
-		JSONObject json = res.asJSONObject();
+		final JSONObject json = res.asJSONObject();
 		try {
 			sinceId = getLong("since_id", json);
 			maxId = getLong("max_id", json);
@@ -67,16 +67,16 @@ import twitter4j.internal.http.HttpResponse;
 			completedIn = getDouble("completed_in", json);
 			page = getInt("page", json);
 			query = getURLDecodedString("query", json);
-			JSONArray array = json.getJSONArray("results");
+			final JSONArray array = json.getJSONArray("results");
 			tweets = new ArrayList<Tweet>(array.length());
 			if (conf.isJSONStoreEnabled()) {
 				DataObjectFactoryUtil.clearThreadLocalMap();
 			}
 			for (int i = 0; i < array.length(); i++) {
-				JSONObject tweet = array.getJSONObject(i);
+				final JSONObject tweet = array.getJSONObject(i);
 				tweets.add(new TweetJSONImpl(tweet, conf));
 			}
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone.getMessage() + ":" + json.toString(), jsone);
 		}
 	}
@@ -94,7 +94,7 @@ import twitter4j.internal.http.HttpResponse;
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		QueryResult that = (QueryResult) o;
+		final QueryResult that = (QueryResult) o;
 
 		if (Double.compare(that.getCompletedIn(), completedIn) != 0) return false;
 		if (maxId != that.getMaxId()) return false;

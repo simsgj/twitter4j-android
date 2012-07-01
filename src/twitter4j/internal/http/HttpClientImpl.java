@@ -31,24 +31,25 @@ import java.net.Proxy;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
-
-import org.apache.http.conn.ssl.SSLSocketFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 import twitter4j.TwitterException;
 import twitter4j.conf.ConfigurationContext;
 import twitter4j.internal.logging.Logger;
 import twitter4j.internal.util.z_T4JInternalStringUtil;
-import android.net.SSLCertificateSocketFactory;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
@@ -59,9 +60,42 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 
 	private static final long serialVersionUID = -8819171414069621503L;
 
+	private static final TrustManager[] TRUST_ALL_CERTS = new TrustManager[] { new X509TrustManager() {
+		@Override
+		public void checkClientTrusted(X509Certificate[] chain, String authType) {
+		}
+
+		@Override
+		public void checkServerTrusted(X509Certificate[] chain, String authType) {
+		}
+
+		@Override
+		public X509Certificate[] getAcceptedIssuers() {
+			return new X509Certificate[] {};
+		}
+	} };
+
+	private static final SSLSocketFactory IGNORE_ERROR_SSL_FACTORY;
+
 	static {
 		System.setProperty("http.keepAlive", "false");
+		SSLSocketFactory factory = null;
+		try {
+			final SSLContext sc = SSLContext.getInstance("TLS");
+			sc.init(null, TRUST_ALL_CERTS, new SecureRandom());
+			factory = sc.getSocketFactory();
+		} catch (final KeyManagementException e) {
+		} catch (final NoSuchAlgorithmException e) {
+		}
+		IGNORE_ERROR_SSL_FACTORY = factory;
 	}
+
+	private static final HostnameVerifier ALLOW_ALL_HOSTNAME_VERIFIER = new HostnameVerifier() {
+		@Override
+		public boolean verify(String hostname, SSLSession session) {
+			return true;
+		}
+	};
 
 	private static final Map<HttpClientConfiguration, HttpClient> instanceMap = new HashMap<HttpClientConfiguration, HttpClient>(
 			1);
@@ -85,7 +119,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 	@Override
 	public HttpResponse request(HttpRequest req) throws TwitterException {
 		int retriedCount;
-		int retry = CONF.getHttpRetryCount() + 1;
+		final int retry = CONF.getHttpRetryCount() + 1;
 		HttpResponse res = null;
 		for (retriedCount = 0; retriedCount < retry; retriedCount++) {
 			int responseCode = -1;
@@ -104,14 +138,14 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 							boundary = "--" + boundary;
 							con.setDoOutput(true);
 							os = con.getOutputStream();
-							DataOutputStream out = new DataOutputStream(os);
-							for (HttpParameter param : req.getParameters()) {
+							final DataOutputStream out = new DataOutputStream(os);
+							for (final HttpParameter param : req.getParameters()) {
 								if (param.isFile()) {
 									write(out, boundary + "\r\n");
 									write(out, "Content-Disposition: form-data; name=\"" + param.getName()
 											+ "\"; filename=\"" + param.getFile().getName() + "\"\r\n");
 									write(out, "Content-Type: " + param.getContentType() + "\r\n\r\n");
-									BufferedInputStream in = new BufferedInputStream(
+									final BufferedInputStream in = new BufferedInputStream(
 											param.hasFileBody() ? param.getFileBody() : new FileInputStream(
 													param.getFile()));
 									int buff;
@@ -134,9 +168,9 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 
 						} else {
 							con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-							String postParam = HttpParameter.encodeParameters(req.getParameters());
+							final String postParam = HttpParameter.encodeParameters(req.getParameters());
 							logger.debug("Post Params: ", postParam);
-							byte[] bytes = postParam.getBytes("UTF-8");
+							final byte[] bytes = postParam.getBytes("UTF-8");
 							con.setRequestProperty("Content-Length", Integer.toString(bytes.length));
 							con.setDoOutput(true);
 							os = con.getOutputStream();
@@ -149,10 +183,10 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 					responseCode = con.getResponseCode();
 					if (logger.isDebugEnabled()) {
 						logger.debug("Response: ");
-						Map<String, List<String>> responseHeaders = con.getHeaderFields();
-						for (String key : responseHeaders.keySet()) {
-							List<String> values = responseHeaders.get(key);
-							for (String value : values) {
+						final Map<String, List<String>> responseHeaders = con.getHeaderFields();
+						for (final String key : responseHeaders.keySet()) {
+							final List<String> values = responseHeaders.get(key);
+							for (final String value : values) {
 								if (key != null) {
 									logger.debug(key + ": " + value);
 								} else {
@@ -171,10 +205,10 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 				} finally {
 					try {
 						os.close();
-					} catch (Exception ignore) {
+					} catch (final Exception ignore) {
 					}
 				}
-			} catch (IOException ioe) {
+			} catch (final IOException ioe) {
 				// connection timeout or read timeout
 				if (retriedCount == CONF.getHttpRetryCount())
 					throw new TwitterException(ioe.getMessage(), ioe, responseCode);
@@ -185,7 +219,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 				}
 				logger.debug("Sleeping " + CONF.getHttpRetryIntervalSeconds() + " seconds until the next retry.");
 				Thread.sleep(CONF.getHttpRetryIntervalSeconds() * 1000);
-			} catch (InterruptedException ignore) {
+			} catch (final InterruptedException ignore) {
 				// nothing to do
 			}
 		}
@@ -193,21 +227,6 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 	}
 
 	private HttpURLConnection getConnection(String url) throws IOException {
-
-		try {
-			final KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
-			trustStore.load(null, null);
-			final SSLCertificateSocketFactory sf = CONF.getIgnoreSSLError() ? new IgnoreErrorSSLSocketFactory(trustStore)
-					: new SSLCertificateSocketFactory(0);
-			final HostnameVerifier verifier = CONF.getIgnoreSSLError() ? SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER
-					: SSLSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER;
-			HttpsURLConnection.setDefaultSSLSocketFactory(sf);
-			HttpsURLConnection.setDefaultHostnameVerifier(verifier);
-		} catch (KeyManagementException e) {
-		} catch (KeyStoreException e) {
-		} catch (NoSuchAlgorithmException e) {
-		} catch (CertificateException e) {
-		}
 
 		HttpURLConnection con;
 		if (isProxyConfigured()) {
@@ -246,9 +265,15 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 			con.setReadTimeout(CONF.getHttpReadTimeout());
 		}
 		con.setInstanceFollowRedirects(false);
+		if (con instanceof HttpsURLConnection && CONF.getIgnoreSSLError()) {
+			((HttpsURLConnection) con).setHostnameVerifier(ALLOW_ALL_HOSTNAME_VERIFIER);
+			if (IGNORE_ERROR_SSL_FACTORY != null) {
+				((HttpsURLConnection) con).setSSLSocketFactory(IGNORE_ERROR_SSL_FACTORY);
+			}
+		}
 		return con;
 	}
-
+	
 	/**
 	 * sets HTTP headers
 	 * 
@@ -270,7 +295,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 			connection.addRequestProperty("Authorization", authorizationHeader);
 		}
 		if (req.getRequestHeaders() != null) {
-			for (String key : req.getRequestHeaders().keySet()) {
+			for (final String key : req.getRequestHeaders().keySet()) {
 				connection.addRequestProperty(key, req.getRequestHeaders().get(key));
 				logger.debug(key + ": " + req.getRequestHeaders().get(key));
 			}
@@ -280,7 +305,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 	public static String encode(String str) {
 		try {
 			return URLEncoder.encode(str, "UTF-8");
-		} catch (java.io.UnsupportedEncodingException neverHappen) {
+		} catch (final java.io.UnsupportedEncodingException neverHappen) {
 			throw new AssertionError("will never happen");
 		}
 	}

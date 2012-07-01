@@ -48,14 +48,14 @@ class AccountSettingsJSONImpl extends TwitterResponseImpl implements AccountSett
 	private AccountSettingsJSONImpl(HttpResponse res, JSONObject json) throws TwitterException {
 		super(res);
 		try {
-			JSONObject sleepTime = json.getJSONObject("sleep_time");
+			final JSONObject sleepTime = json.getJSONObject("sleep_time");
 			SLEEP_TIME_ENABLED = getBoolean("enabled", sleepTime);
 			SLEEP_START_TIME = sleepTime.getString("start_time");
 			SLEEP_END_TIME = sleepTime.getString("end_time");
 			if (json.isNull("trend_location")) {
 				TREND_LOCATION = new Location[0];
 			} else {
-				JSONArray locations = json.getJSONArray("trend_location");
+				final JSONArray locations = json.getJSONArray("trend_location");
 				TREND_LOCATION = new Location[locations.length()];
 				for (int i = 0; i < locations.length(); i++) {
 					TREND_LOCATION[i] = new LocationJSONImpl(locations.getJSONObject(i));
@@ -66,7 +66,7 @@ class AccountSettingsJSONImpl extends TwitterResponseImpl implements AccountSett
 			ALWAYS_USE_HTTPS = getBoolean("always_use_https", json);
 			DISCOVERABLE_BY_EMAIL = getBoolean("discoverable_by_email", json);
 			TIMEZONE = new TimeZoneJSONImpl(json.getJSONObject("time_zone"));
-		} catch (JSONException e) {
+		} catch (final JSONException e) {
 			throw new TwitterException(e);
 		}
 	}

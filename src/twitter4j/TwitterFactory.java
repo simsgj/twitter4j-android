@@ -92,11 +92,11 @@ public final class TwitterFactory implements java.io.Serializable {
 	 * @since Twitter4J 2.1.9
 	 */
 	public Twitter getInstance(AccessToken accessToken) {
-		String consumerKey = conf.getOAuthConsumerKey();
-		String consumerSecret = conf.getOAuthConsumerSecret();
+		final String consumerKey = conf.getOAuthConsumerKey();
+		final String consumerSecret = conf.getOAuthConsumerSecret();
 		if (null == consumerKey && null == consumerSecret)
 			throw new IllegalStateException("Consumer key and Consumer secret not supplied.");
-		OAuthAuthorization oauth = new OAuthAuthorization(conf);
+		final OAuthAuthorization oauth = new OAuthAuthorization(conf);
 		oauth.setOAuthAccessToken(accessToken);
 		return getInstance(oauth);
 	}

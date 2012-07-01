@@ -38,7 +38,7 @@ public class TimeZoneJSONImpl implements TimeZone {
 			UTC_OFFSET = getInt("utc_offset", jSONObject);
 			NAME = jSONObject.getString("name");
 			TZINFO_NAME = jSONObject.getString("tzinfo_name");
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
 		}
 	}

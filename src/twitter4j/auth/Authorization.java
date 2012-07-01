@@ -24,6 +24,7 @@ import twitter4j.internal.http.HttpRequest;
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
 public interface Authorization extends java.io.Serializable {
+	
 	String getAuthorizationHeader(HttpRequest req);
 
 	/**

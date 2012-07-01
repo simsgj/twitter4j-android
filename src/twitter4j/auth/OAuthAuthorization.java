@@ -78,7 +78,7 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
 		if (this == o) return true;
 		if (!(o instanceof OAuthSupport)) return false;
 
-		OAuthAuthorization that = (OAuthAuthorization) o;
+		final OAuthAuthorization that = (OAuthAuthorization) o;
 
 		if (consumerKey != null ? !consumerKey.equals(that.consumerKey) : that.consumerKey != null) return false;
 		if (consumerSecret != null ? !consumerSecret.equals(that.consumerSecret) : that.consumerSecret != null)
@@ -89,10 +89,10 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
 	}
 
 	public List<HttpParameter> generateOAuthSignatureHttpParams(String method, String url) {
-		long timestamp = System.currentTimeMillis() / 1000;
-		long nonce = timestamp + RAND.nextInt();
+		final long timestamp = System.currentTimeMillis() / 1000;
+		final long nonce = timestamp + RAND.nextInt();
 
-		List<HttpParameter> oauthHeaderParams = new ArrayList<HttpParameter>(5);
+		final List<HttpParameter> oauthHeaderParams = new ArrayList<HttpParameter>(5);
 		oauthHeaderParams.add(new HttpParameter("oauth_consumer_key", consumerKey));
 		oauthHeaderParams.add(OAUTH_SIGNATURE_METHOD);
 		oauthHeaderParams.add(new HttpParameter("oauth_timestamp", timestamp));
@@ -102,16 +102,16 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
 			oauthHeaderParams.add(new HttpParameter("oauth_token", oauthToken.getToken()));
 		}
 
-		List<HttpParameter> signatureBaseParams = new ArrayList<HttpParameter>(oauthHeaderParams.size());
+		final List<HttpParameter> signatureBaseParams = new ArrayList<HttpParameter>(oauthHeaderParams.size());
 		signatureBaseParams.addAll(oauthHeaderParams);
 		parseGetParameters(url, signatureBaseParams);
 
-		StringBuffer base = new StringBuffer(method).append("&").append(HttpParameter.encode(constructRequestURL(url)))
-				.append("&");
+		final StringBuffer base = new StringBuffer(method).append("&")
+				.append(HttpParameter.encode(constructRequestURL(url))).append("&");
 		base.append(HttpParameter.encode(normalizeRequestParameters(signatureBaseParams)));
 
-		String oauthBaseString = base.toString();
-		String signature = generateSignature(oauthBaseString, oauthToken);
+		final String oauthBaseString = base.toString();
+		final String signature = generateSignature(oauthBaseString, oauthToken);
 
 		oauthHeaderParams.add(new HttpParameter("oauth_signature", signature));
 
@@ -161,7 +161,19 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
 	@Override
 	public AccessToken getOAuthAccessToken(String oauthVerifier) throws TwitterException {
 		ensureTokenIsAvailable();
-		oauthToken = new AccessToken(http.post(conf.getOAuthAccessTokenURL(), new HttpParameter[] { new HttpParameter(
+		String url = conf.getOAuthAccessTokenURL();
+		if (0 == url.indexOf("http://")) {
+			// SSL is required
+			// @see https://dev.twitter.com/docs/oauth/xauth
+			url = "https://" + url.substring(7);
+		}
+		String sign_url = conf.getSigningOAuthAccessTokenURL();
+		if (0 == sign_url.indexOf("http://")) {
+			// SSL is required
+			// @see https://dev.twitter.com/docs/oauth/xauth
+			sign_url = "https://" + sign_url.substring(7);
+		}
+		oauthToken = new AccessToken(http.post(url, new HttpParameter[] { new HttpParameter(
 				"oauth_verifier", oauthVerifier) }, this));
 		return (AccessToken) oauthToken;
 	}
@@ -178,11 +190,17 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
 				// @see https://dev.twitter.com/docs/oauth/xauth
 				url = "https://" + url.substring(7);
 			}
+			String sign_url = conf.getSigningOAuthAccessTokenURL();
+			if (0 == sign_url.indexOf("http://")) {
+				// SSL is required
+				// @see https://dev.twitter.com/docs/oauth/xauth
+				sign_url = "https://" + sign_url.substring(7);
+			}
 			oauthToken = new AccessToken(http.post(url, new HttpParameter[] {
 					new HttpParameter("x_auth_username", screenName), new HttpParameter("x_auth_password", password),
 					new HttpParameter("x_auth_mode", "client_auth") }, this));
 			return (AccessToken) oauthToken;
-		} catch (TwitterException te) {
+		} catch (final TwitterException te) {
 			throw new TwitterException("The screen name / password combination seems to be invalid.", te,
 					te.getStatusCode());
 		}
@@ -210,14 +228,26 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
 	@Override
 	public RequestToken getOAuthRequestToken(String callbackURL, String xAuthAccessType) throws TwitterException {
 		if (oauthToken instanceof AccessToken) throw new IllegalStateException("Access token already available.");
-		List<HttpParameter> params = new ArrayList<HttpParameter>();
+		final List<HttpParameter> params = new ArrayList<HttpParameter>();
 		if (callbackURL != null) {
 			params.add(new HttpParameter("oauth_callback", callbackURL));
 		}
 		if (xAuthAccessType != null) {
 			params.add(new HttpParameter("x_auth_access_type", xAuthAccessType));
 		}
-		oauthToken = new RequestToken(http.post(conf.getOAuthRequestTokenURL(),
+		String url = conf.getOAuthRequestTokenURL();
+		if (0 == url.indexOf("http://")) {
+			// SSL is required
+			// @see https://dev.twitter.com/docs/oauth/xauth
+			url = "https://" + url.substring(7);
+		}
+		String sign_url = conf.getSigningOAuthRequestTokenURL();
+		if (0 == sign_url.indexOf("http://")) {
+			// SSL is required
+			// @see https://dev.twitter.com/docs/oauth/xauth
+			sign_url = "https://" + sign_url.substring(7);
+		}
+		oauthToken = new RequestToken(http.post(url,
 				params.toArray(new HttpParameter[params.size()]), this), this);
 		return (RequestToken) oauthToken;
 	}
@@ -275,12 +305,12 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
 	/* package */
 
 	private void parseGetParameters(String url, List<HttpParameter> signatureBaseParams) {
-		int queryStart = url.indexOf("?");
+		final int queryStart = url.indexOf("?");
 		if (-1 != queryStart) {
-			String[] queryStrs = z_T4JInternalStringUtil.split(url.substring(queryStart + 1), "&");
+			final String[] queryStrs = z_T4JInternalStringUtil.split(url.substring(queryStart + 1), "&");
 			try {
-				for (String query : queryStrs) {
-					String[] split = z_T4JInternalStringUtil.split(query, "=");
+				for (final String query : queryStrs) {
+					final String[] split = z_T4JInternalStringUtil.split(query, "=");
 					if (split.length == 2) {
 						signatureBaseParams.add(new HttpParameter(URLDecoder.decode(split[0], "UTF-8"), URLDecoder
 								.decode(split[1], "UTF-8")));
@@ -288,7 +318,7 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
 						signatureBaseParams.add(new HttpParameter(URLDecoder.decode(split[0], "UTF-8"), ""));
 					}
 				}
-			} catch (UnsupportedEncodingException ignore) {
+			} catch (final UnsupportedEncodingException ignore) {
 			}
 
 		}
@@ -301,8 +331,8 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
 	 *      5.4.1. Authorization Header</a>
 	 */
 	/* package */String generateAuthorizationHeader(String method, String url, HttpParameter[] params, OAuthToken token) {
-		long timestamp = System.currentTimeMillis() / 1000;
-		long nonce = timestamp + RAND.nextInt();
+		final long timestamp = System.currentTimeMillis() / 1000;
+		final long nonce = timestamp + RAND.nextInt();
 		return generateAuthorizationHeader(method, url, params, String.valueOf(nonce), String.valueOf(timestamp), token);
 	}
 
@@ -311,7 +341,7 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
 		if (null == params) {
 			params = new HttpParameter[0];
 		}
-		List<HttpParameter> oauthHeaderParams = new ArrayList<HttpParameter>(5);
+		final List<HttpParameter> oauthHeaderParams = new ArrayList<HttpParameter>(5);
 		oauthHeaderParams.add(new HttpParameter("oauth_consumer_key", consumerKey));
 		oauthHeaderParams.add(OAUTH_SIGNATURE_METHOD);
 		oauthHeaderParams.add(new HttpParameter("oauth_timestamp", timestamp));
@@ -320,18 +350,19 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
 		if (otoken != null) {
 			oauthHeaderParams.add(new HttpParameter("oauth_token", otoken.getToken()));
 		}
-		List<HttpParameter> signatureBaseParams = new ArrayList<HttpParameter>(oauthHeaderParams.size() + params.length);
+		final List<HttpParameter> signatureBaseParams = new ArrayList<HttpParameter>(oauthHeaderParams.size()
+				+ params.length);
 		signatureBaseParams.addAll(oauthHeaderParams);
 		if (!HttpParameter.containsFile(params)) {
 			signatureBaseParams.addAll(toParamList(params));
 		}
 		parseGetParameters(url, signatureBaseParams);
-		StringBuffer base = new StringBuffer(method).append("&").append(HttpParameter.encode(constructRequestURL(url)))
-				.append("&");
+		final StringBuffer base = new StringBuffer(method).append("&")
+				.append(HttpParameter.encode(constructRequestURL(url))).append("&");
 		base.append(HttpParameter.encode(normalizeRequestParameters(signatureBaseParams)));
-		String oauthBaseString = base.toString();
+		final String oauthBaseString = base.toString();
 		logger.debug("OAuth base string: ", oauthBaseString);
-		String signature = generateSignature(oauthBaseString, otoken);
+		final String signature = generateSignature(oauthBaseString, otoken);
 		logger.debug("OAuth signature: ", signature);
 
 		oauthHeaderParams.add(new HttpParameter("oauth_signature", signature));
@@ -359,15 +390,15 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
 	/* package */String generateSignature(String data, OAuthToken token) {
 		byte[] byteHMAC = null;
 		try {
-			Mac mac = Mac.getInstance(HMAC_SHA1);
+			final Mac mac = Mac.getInstance(HMAC_SHA1);
 			SecretKeySpec spec;
 			if (null == token) {
-				String oauthSignature = HttpParameter.encode(consumerSecret) + "&";
+				final String oauthSignature = HttpParameter.encode(consumerSecret) + "&";
 				spec = new SecretKeySpec(oauthSignature.getBytes(), HMAC_SHA1);
 			} else {
 				spec = token.getSecretKeySpec();
 				if (null == spec) {
-					String oauthSignature = HttpParameter.encode(consumerSecret) + "&"
+					final String oauthSignature = HttpParameter.encode(consumerSecret) + "&"
 							+ HttpParameter.encode(token.getTokenSecret());
 					spec = new SecretKeySpec(oauthSignature.getBytes(), HMAC_SHA1);
 					token.setSecretKeySpec(spec);
@@ -375,10 +406,10 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
 			}
 			mac.init(spec);
 			byteHMAC = mac.doFinal(data.getBytes());
-		} catch (InvalidKeyException ike) {
+		} catch (final InvalidKeyException ike) {
 			logger.error("Failed initialize \"Message Authentication Code\" (MAC)", ike);
 			throw new AssertionError(ike);
-		} catch (NoSuchAlgorithmException nsae) {
+		} catch (final NoSuchAlgorithmException nsae) {
 			logger.error("Failed to get HmacSHA1 \"Message Authentication Code\" (MAC)", nsae);
 			throw new AssertionError(nsae);
 		}
@@ -413,13 +444,13 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
 	 *      9.1.2. Construct Request URL</a>
 	 */
 	public static String constructRequestURL(String url) {
-		int index = url.indexOf("?");
+		final int index = url.indexOf("?");
 		if (-1 != index) {
 			url = url.substring(0, index);
 		}
-		int slashIndex = url.indexOf("/", 8);
+		final int slashIndex = url.indexOf("/", 8);
 		String baseURL = url.substring(0, slashIndex).toLowerCase();
-		int colonIndex = baseURL.indexOf(":", 8);
+		final int colonIndex = baseURL.indexOf(":", 8);
 		if (-1 != colonIndex) {
 			// url contains port number
 			if (baseURL.startsWith("http://") && baseURL.endsWith(":80")) {
@@ -448,8 +479,8 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
 	}
 
 	public static String encodeParameters(List<HttpParameter> httpParams, String splitter, boolean quot) {
-		StringBuffer buf = new StringBuffer();
-		for (HttpParameter param : httpParams) {
+		final StringBuffer buf = new StringBuffer();
+		for (final HttpParameter param : httpParams) {
 			if (!param.isFile()) {
 				if (buf.length() != 0) {
 					if (quot) {
@@ -517,7 +548,7 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
 	}
 
 	public static List<HttpParameter> toParamList(HttpParameter[] params) {
-		List<HttpParameter> paramList = new ArrayList<HttpParameter>(params.length);
+		final List<HttpParameter> paramList = new ArrayList<HttpParameter>(params.length);
 		paramList.addAll(Arrays.asList(params));
 		return paramList;
 	}

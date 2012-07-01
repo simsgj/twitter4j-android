@@ -64,14 +64,14 @@ final class DispatcherImpl implements Dispatcher {
 		while (active) {
 			synchronized (q) {
 				if (q.size() > 0) {
-					Runnable task = q.remove(0);
+					final Runnable task = q.remove(0);
 					if (task != null) return task;
 				}
 			}
 			synchronized (ticket) {
 				try {
 					ticket.wait();
-				} catch (InterruptedException ignore) {
+				} catch (final InterruptedException ignore) {
 				}
 			}
 		}
@@ -82,7 +82,7 @@ final class DispatcherImpl implements Dispatcher {
 	public synchronized void shutdown() {
 		if (active) {
 			active = false;
-			for (ExecuteThread thread : threads) {
+			for (final ExecuteThread thread : threads) {
 				thread.shutdown();
 			}
 			synchronized (ticket) {
@@ -106,11 +106,11 @@ class ExecuteThread extends Thread {
 	@Override
 	public void run() {
 		while (alive) {
-			Runnable task = q.poll();
+			final Runnable task = q.poll();
 			if (task != null) {
 				try {
 					task.run();
-				} catch (Exception ex) {
+				} catch (final Exception ex) {
 					logger.error("Got an exception while running a task:", ex);
 				}
 			}

@@ -55,7 +55,7 @@ public interface ProfileImage extends TwitterResponse, java.io.Serializable {
 			if (this == o) return true;
 			if (o == null || getClass() != o.getClass()) return false;
 
-			ImageSize imageSize = (ImageSize) o;
+			final ImageSize imageSize = (ImageSize) o;
 
 			if (!name.equals(imageSize.name)) return false;
 

@@ -116,7 +116,7 @@ public final class FilterQuery implements java.io.Serializable {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		FilterQuery that = (FilterQuery) o;
+		final FilterQuery that = (FilterQuery) o;
 
 		if (count != that.count) return false;
 		if (!Arrays.equals(follow, that.follow)) return false;
@@ -187,7 +187,7 @@ public final class FilterQuery implements java.io.Serializable {
 
 	private String toLocationsString(final double[][] keywords) {
 		final StringBuffer buf = new StringBuffer(20 * keywords.length * 2);
-		for (double[] keyword : keywords) {
+		for (final double[] keyword : keywords) {
 			if (0 != buf.length()) {
 				buf.append(",");
 			}
@@ -199,7 +199,7 @@ public final class FilterQuery implements java.io.Serializable {
 	}
 
 	/* package */HttpParameter[] asHttpParameterArray() {
-		ArrayList<HttpParameter> params = new ArrayList<HttpParameter>();
+		final ArrayList<HttpParameter> params = new ArrayList<HttpParameter>();
 
 		params.add(new HttpParameter("count", count));
 		if (follow != null && follow.length > 0) {
@@ -215,7 +215,7 @@ public final class FilterQuery implements java.io.Serializable {
 			params.add(new HttpParameter("include_entities", true));
 		}
 
-		HttpParameter[] paramArray = new HttpParameter[params.size()];
+		final HttpParameter[] paramArray = new HttpParameter[params.size()];
 		return params.toArray(paramArray);
 	}
 }

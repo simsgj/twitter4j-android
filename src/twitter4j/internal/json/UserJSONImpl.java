@@ -88,7 +88,7 @@ import twitter4j.internal.http.HttpResponse;
 		if (conf.isJSONStoreEnabled()) {
 			DataObjectFactoryUtil.clearThreadLocalMap();
 		}
-		JSONObject json = res.asJSONObject();
+		final JSONObject json = res.asJSONObject();
 		init(json);
 		if (conf.isJSONStoreEnabled()) {
 			DataObjectFactoryUtil.registerJSONObject(this, json);
@@ -223,7 +223,7 @@ import twitter4j.internal.http.HttpResponse;
 	public URL getProfileImageURL() {
 		try {
 			return new URL(profileImageUrl);
-		} catch (MalformedURLException ex) {
+		} catch (final MalformedURLException ex) {
 			return null;
 		}
 	}
@@ -236,7 +236,7 @@ import twitter4j.internal.http.HttpResponse;
 		if (null == profileImageUrlHttps) return null;
 		try {
 			return new URL(profileImageUrlHttps);
-		} catch (MalformedURLException ex) {
+		} catch (final MalformedURLException ex) {
 			return null;
 		}
 	}
@@ -309,7 +309,7 @@ import twitter4j.internal.http.HttpResponse;
 	public URL getURL() {
 		try {
 			return new URL(url);
-		} catch (MalformedURLException ex) {
+		} catch (final MalformedURLException ex) {
 			return null;
 		}
 	}
@@ -456,10 +456,10 @@ import twitter4j.internal.http.HttpResponse;
 			listedCount = getInt("listed_count", json);
 			isFollowRequestSent = getBoolean("follow_request_sent", json);
 			if (!json.isNull("status")) {
-				JSONObject statusJSON = json.getJSONObject("status");
+				final JSONObject statusJSON = json.getJSONObject("status");
 				status = new StatusJSONImpl(statusJSON);
 			}
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone.getMessage() + ":" + json.toString(), jsone);
 		}
 	}
@@ -471,14 +471,14 @@ import twitter4j.internal.http.HttpResponse;
 			if (conf.isJSONStoreEnabled()) {
 				DataObjectFactoryUtil.clearThreadLocalMap();
 			}
-			JSONObject json = res.asJSONObject();
-			JSONArray list = json.getJSONArray("users");
-			int size = list.length();
+			final JSONObject json = res.asJSONObject();
+			final JSONArray list = json.getJSONArray("users");
+			final int size = list.length();
 			@SuppressWarnings("unchecked")
-			PagableResponseList<User> users = new PagableResponseListImpl<User>(size, json, res);
+			final PagableResponseList<User> users = new PagableResponseListImpl<User>(size, json, res);
 			for (int i = 0; i < size; i++) {
-				JSONObject userJson = list.getJSONObject(i);
-				User user = new UserJSONImpl(userJson);
+				final JSONObject userJson = list.getJSONObject(i);
+				final User user = new UserJSONImpl(userJson);
 				if (conf.isJSONStoreEnabled()) {
 					DataObjectFactoryUtil.registerJSONObject(user, userJson);
 				}
@@ -488,9 +488,9 @@ import twitter4j.internal.http.HttpResponse;
 				DataObjectFactoryUtil.registerJSONObject(users, json);
 			}
 			return users;
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
-		} catch (TwitterException te) {
+		} catch (final TwitterException te) {
 			throw te;
 		}
 	}
@@ -507,11 +507,11 @@ import twitter4j.internal.http.HttpResponse;
 			if (conf.isJSONStoreEnabled()) {
 				DataObjectFactoryUtil.clearThreadLocalMap();
 			}
-			int size = list.length();
-			ResponseList<User> users = new ResponseListImpl<User>(size, res);
+			final int size = list.length();
+			final ResponseList<User> users = new ResponseListImpl<User>(size, res);
 			for (int i = 0; i < size; i++) {
-				JSONObject json = list.getJSONObject(i);
-				User user = new UserJSONImpl(json);
+				final JSONObject json = list.getJSONObject(i);
+				final User user = new UserJSONImpl(json);
 				users.add(user);
 				if (conf.isJSONStoreEnabled()) {
 					DataObjectFactoryUtil.registerJSONObject(user, json);
@@ -521,9 +521,9 @@ import twitter4j.internal.http.HttpResponse;
 				DataObjectFactoryUtil.registerJSONObject(users, list);
 			}
 			return users;
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
-		} catch (TwitterException te) {
+		} catch (final TwitterException te) {
 			throw te;
 		}
 	}

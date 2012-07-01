@@ -52,7 +52,7 @@ import twitter4j.URLEntity;
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		URLEntityJSONImpl that = (URLEntityJSONImpl) o;
+		final URLEntityJSONImpl that = (URLEntityJSONImpl) o;
 
 		if (end != that.end) return false;
 		if (start != that.start) return false;
@@ -121,25 +121,25 @@ import twitter4j.URLEntity;
 
 	private void init(JSONObject json) throws TwitterException {
 		try {
-			JSONArray indicesArray = json.getJSONArray("indices");
+			final JSONArray indicesArray = json.getJSONArray("indices");
 			start = indicesArray.getInt(0);
 			end = indicesArray.getInt(1);
 
 			try {
 				url = new URL(json.getString("url"));
-			} catch (MalformedURLException ignore) {
+			} catch (final MalformedURLException ignore) {
 			}
 
 			if (!json.isNull("expanded_url")) {
 				try {
 					expandedURL = new URL(json.getString("expanded_url"));
-				} catch (MalformedURLException ignore) {
+				} catch (final MalformedURLException ignore) {
 				}
 			}
 			if (!json.isNull("display_url")) {
 				displayURL = json.getString("display_url");
 			}
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
 		}
 	}

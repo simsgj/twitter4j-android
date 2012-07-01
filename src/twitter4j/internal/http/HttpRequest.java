@@ -70,7 +70,7 @@ public final class HttpRequest implements java.io.Serializable {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		HttpRequest that = (HttpRequest) o;
+		final HttpRequest that = (HttpRequest) o;
 
 		if (authorization != null ? !authorization.equals(that.authorization) : that.authorization != null)
 			return false;

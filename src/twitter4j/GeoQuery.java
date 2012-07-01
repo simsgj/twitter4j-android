@@ -66,7 +66,7 @@ public final class GeoQuery implements java.io.Serializable {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		GeoQuery geoQuery = (GeoQuery) o;
+		final GeoQuery geoQuery = (GeoQuery) o;
 
 		if (maxResults != geoQuery.maxResults) return false;
 		if (accuracy != null ? !accuracy.equals(geoQuery.accuracy) : geoQuery.accuracy != null) return false;
@@ -177,7 +177,7 @@ public final class GeoQuery implements java.io.Serializable {
 	}
 
 	/* package */HttpParameter[] asHttpParameterArray() {
-		ArrayList<HttpParameter> params = new ArrayList<HttpParameter>();
+		final ArrayList<HttpParameter> params = new ArrayList<HttpParameter>();
 		if (location != null) {
 			appendParameter("lat", location.getLatitude(), params);
 			appendParameter("long", location.getLongitude(), params);
@@ -190,7 +190,7 @@ public final class GeoQuery implements java.io.Serializable {
 		appendParameter("accuracy", accuracy, params);
 		appendParameter("granularity", granularity, params);
 		appendParameter("max_results", maxResults, params);
-		HttpParameter[] paramArray = new HttpParameter[params.size()];
+		final HttpParameter[] paramArray = new HttpParameter[params.size()];
 		return params.toArray(paramArray);
 	}
 }

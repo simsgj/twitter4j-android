@@ -42,7 +42,7 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 
 	/* package */IDsJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
 		super(res);
-		String json = res.asString();
+		final String json = res.asString();
 		init(json);
 		if (conf.isJSONStoreEnabled()) {
 			DataObjectFactoryUtil.clearThreadLocalMap();
@@ -59,7 +59,7 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 		if (this == o) return true;
 		if (!(o instanceof IDs)) return false;
 
-		IDs iDs = (IDs) o;
+		final IDs iDs = (IDs) o;
 
 		if (!Arrays.equals(ids, iDs.getIDs())) return false;
 
@@ -122,13 +122,13 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 		JSONArray idList;
 		try {
 			if (jsonStr.startsWith("{")) {
-				JSONObject json = new JSONObject(jsonStr);
+				final JSONObject json = new JSONObject(jsonStr);
 				idList = json.getJSONArray("ids");
 				ids = new long[idList.length()];
 				for (int i = 0; i < idList.length(); i++) {
 					try {
 						ids[i] = Long.parseLong(idList.getString(i));
-					} catch (NumberFormatException nfe) {
+					} catch (final NumberFormatException nfe) {
 						throw new TwitterException("Twitter API returned malformed response: " + json, nfe);
 					}
 				}
@@ -140,12 +140,12 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 				for (int i = 0; i < idList.length(); i++) {
 					try {
 						ids[i] = Long.parseLong(idList.getString(i));
-					} catch (NumberFormatException nfe) {
+					} catch (final NumberFormatException nfe) {
 						throw new TwitterException("Twitter API returned malformed response: " + idList, nfe);
 					}
 				}
 			}
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
 		}
 

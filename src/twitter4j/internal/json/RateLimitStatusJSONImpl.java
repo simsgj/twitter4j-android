@@ -53,7 +53,7 @@ import twitter4j.internal.http.HttpResponse;
 	}
 
 	RateLimitStatusJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
-		JSONObject json = res.asJSONObject();
+		final JSONObject json = res.asJSONObject();
 		init(json);
 		if (conf.isJSONStoreEnabled()) {
 			DataObjectFactoryUtil.clearThreadLocalMap();
@@ -70,7 +70,7 @@ import twitter4j.internal.http.HttpResponse;
 		if (this == o) return true;
 		if (!(o instanceof RateLimitStatusJSONImpl)) return false;
 
-		RateLimitStatusJSONImpl that = (RateLimitStatusJSONImpl) o;
+		final RateLimitStatusJSONImpl that = (RateLimitStatusJSONImpl) o;
 
 		if (hourlyLimit != that.hourlyLimit) return false;
 		if (remainingHits != that.remainingHits) return false;
@@ -154,19 +154,19 @@ import twitter4j.internal.http.HttpResponse;
 								// be calculated.
 		Date resetTime;// new Date("X-FeatureRateLimit-Reset")
 
-		String limit = res.getResponseHeader("X-FeatureRateLimit-Limit");
+		final String limit = res.getResponseHeader("X-FeatureRateLimit-Limit");
 		if (limit != null) {
 			hourlyLimit = Integer.parseInt(limit);
 		} else
 			return null;
-		String remaining = res.getResponseHeader("X-FeatureRateLimit-Remaining");
+		final String remaining = res.getResponseHeader("X-FeatureRateLimit-Remaining");
 		if (remaining != null) {
 			remainingHits = Integer.parseInt(remaining);
 		} else
 			return null;
-		String reset = res.getResponseHeader("X-FeatureRateLimit-Reset");
+		final String reset = res.getResponseHeader("X-FeatureRateLimit-Reset");
 		if (reset != null) {
-			long longReset = Long.parseLong(reset);
+			final long longReset = Long.parseLong(reset);
 			resetTimeInSeconds = (int) (longReset / 1000);
 			resetTime = new Date(longReset * 1000);
 		} else
@@ -182,19 +182,19 @@ import twitter4j.internal.http.HttpResponse;
 								// be calculated.
 		Date resetTime;// new Date("X-RateLimit-Reset")
 
-		String limit = res.getResponseHeader("X-RateLimit-Limit");
+		final String limit = res.getResponseHeader("X-RateLimit-Limit");
 		if (limit != null) {
 			hourlyLimit = Integer.parseInt(limit);
 		} else
 			return null;
-		String remaining = res.getResponseHeader("X-RateLimit-Remaining");
+		final String remaining = res.getResponseHeader("X-RateLimit-Remaining");
 		if (remaining != null) {
 			remainingHits = Integer.parseInt(remaining);
 		} else
 			return null;
-		String reset = res.getResponseHeader("X-RateLimit-Reset");
+		final String reset = res.getResponseHeader("X-RateLimit-Reset");
 		if (reset != null) {
-			long longReset = Long.parseLong(reset);
+			final long longReset = Long.parseLong(reset);
 			resetTimeInSeconds = (int) (longReset / 1000);
 			resetTime = new Date(longReset * 1000);
 		} else

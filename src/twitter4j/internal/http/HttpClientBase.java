@@ -20,7 +20,7 @@ public class HttpClientBase implements Serializable {
 		if (this == o) return true;
 		if (!(o instanceof HttpClientBase)) return false;
 
-		HttpClientBase that = (HttpClientBase) o;
+		final HttpClientBase that = (HttpClientBase) o;
 
 		if (!CONF.equals(that.CONF)) return false;
 

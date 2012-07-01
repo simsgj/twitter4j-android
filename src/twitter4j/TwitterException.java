@@ -77,7 +77,7 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 		if (this == o) return true;
 		if (!(o instanceof TwitterException)) return false;
 
-		TwitterException that = (TwitterException) o;
+		final TwitterException that = (TwitterException) o;
 
 		if (nested != that.nested) return false;
 		if (statusCode != that.statusCode) return false;
@@ -155,7 +155,7 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	 */
 	@Override
 	public String getMessage() {
-		StringBuffer value = new StringBuffer();
+		final StringBuffer value = new StringBuffer();
 		if (errorMessage != null && requestPath != null) {
 			value.append("error - ").append(errorMessage).append("\n");
 			value.append("request - ").append(requestPath).append("\n");
@@ -192,7 +192,7 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	public String getResponseHeader(String name) {
 		String value = null;
 		if (response != null) {
-			List<String> header = response.getResponseHeaderFields().get(name);
+			final List<String> header = response.getResponseHeaderFields().get(name);
 			if (header.size() > 0) {
 				value = header.get(0);
 			}
@@ -220,17 +220,17 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	public int getRetryAfter() {
 		int retryAfter = -1;
 		if (statusCode == 400) {
-			RateLimitStatus rateLimitStatus = getRateLimitStatus();
+			final RateLimitStatus rateLimitStatus = getRateLimitStatus();
 			if (rateLimitStatus != null) {
 				retryAfter = rateLimitStatus.getSecondsUntilReset();
 			}
 		} else if (statusCode == ENHANCE_YOUR_CLAIM) {
 			try {
-				String retryAfterStr = response.getResponseHeader("Retry-After");
+				final String retryAfterStr = response.getResponseHeader("Retry-After");
 				if (retryAfterStr != null) {
 					retryAfter = Integer.valueOf(retryAfterStr);
 				}
-			} catch (NumberFormatException ignore) {
+			} catch (final NumberFormatException ignore) {
 			}
 		}
 		return retryAfter;
@@ -296,14 +296,14 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	private void decode(String str) {
 		if (str != null && str.startsWith("{")) {
 			try {
-				JSONObject json = new JSONObject(str);
+				final JSONObject json = new JSONObject(str);
 				if (!json.isNull("error")) {
 					errorMessage = json.getString("error");
 				}
 				if (!json.isNull("request")) {
 					requestPath = json.getString("request");
 				}
-			} catch (JSONException ignore) {
+			} catch (final JSONException ignore) {
 			}
 		}
 	}

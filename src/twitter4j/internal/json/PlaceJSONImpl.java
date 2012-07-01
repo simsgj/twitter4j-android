@@ -54,7 +54,7 @@ final class PlaceJSONImpl extends TwitterResponseImpl implements Place, java.io.
 
 	/* package */PlaceJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
 		super(res);
-		JSONObject json = res.asJSONObject();
+		final JSONObject json = res.asJSONObject();
 		init(json);
 		if (conf.isJSONStoreEnabled()) {
 			DataObjectFactoryUtil.clearThreadLocalMap();
@@ -181,9 +181,9 @@ final class PlaceJSONImpl extends TwitterResponseImpl implements Place, java.io.
 			url = getRawString("url", json);
 			fullName = getRawString("full_name", json);
 			if (!json.isNull("bounding_box")) {
-				JSONObject boundingBoxJSON = json.getJSONObject("bounding_box");
+				final JSONObject boundingBoxJSON = json.getJSONObject("bounding_box");
 				boundingBoxType = getRawString("type", boundingBoxJSON);
-				JSONArray array = boundingBoxJSON.getJSONArray("coordinates");
+				final JSONArray array = boundingBoxJSON.getJSONArray("coordinates");
 				boundingBoxCoordinates = z_T4JInternalJSONImplFactory.coordinatesAsGeoLocationArray(array);
 			} else {
 				boundingBoxType = null;
@@ -191,9 +191,9 @@ final class PlaceJSONImpl extends TwitterResponseImpl implements Place, java.io.
 			}
 
 			if (!json.isNull("geometry")) {
-				JSONObject geometryJSON = json.getJSONObject("geometry");
+				final JSONObject geometryJSON = json.getJSONObject("geometry");
 				geometryType = getRawString("type", geometryJSON);
-				JSONArray array = geometryJSON.getJSONArray("coordinates");
+				final JSONArray array = geometryJSON.getJSONArray("coordinates");
 				if (geometryType.equals("Point")) {
 					geometryCoordinates = new GeoLocation[1][1];
 					geometryCoordinates[0][0] = new GeoLocation(array.getDouble(0), array.getDouble(1));
@@ -210,7 +210,7 @@ final class PlaceJSONImpl extends TwitterResponseImpl implements Place, java.io.
 			}
 
 			if (!json.isNull("contained_within")) {
-				JSONArray containedWithInJSON = json.getJSONArray("contained_within");
+				final JSONArray containedWithInJSON = json.getJSONArray("contained_within");
 				containedWithIn = new Place[containedWithInJSON.length()];
 				for (int i = 0; i < containedWithInJSON.length(); i++) {
 					containedWithIn[i] = new PlaceJSONImpl(containedWithInJSON.getJSONObject(i));
@@ -218,7 +218,7 @@ final class PlaceJSONImpl extends TwitterResponseImpl implements Place, java.io.
 			} else {
 				containedWithIn = null;
 			}
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone.getMessage() + ":" + json.toString(), jsone);
 		}
 	}
@@ -229,7 +229,7 @@ final class PlaceJSONImpl extends TwitterResponseImpl implements Place, java.io.
 		try {
 			json = res.asJSONObject();
 			return createPlaceList(json.getJSONObject("result").getJSONArray("places"), res, conf);
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone.getMessage() + ":" + json.toString(), jsone);
 		}
 	}
@@ -241,11 +241,11 @@ final class PlaceJSONImpl extends TwitterResponseImpl implements Place, java.io.
 			DataObjectFactoryUtil.clearThreadLocalMap();
 		}
 		try {
-			int size = list.length();
-			ResponseList<Place> places = new ResponseListImpl<Place>(size, res);
+			final int size = list.length();
+			final ResponseList<Place> places = new ResponseListImpl<Place>(size, res);
 			for (int i = 0; i < size; i++) {
-				JSONObject json = list.getJSONObject(i);
-				Place place = new PlaceJSONImpl(json);
+				final JSONObject json = list.getJSONObject(i);
+				final Place place = new PlaceJSONImpl(json);
 				places.add(place);
 				if (conf.isJSONStoreEnabled()) {
 					DataObjectFactoryUtil.registerJSONObject(place, json);
@@ -255,9 +255,9 @@ final class PlaceJSONImpl extends TwitterResponseImpl implements Place, java.io.
 				DataObjectFactoryUtil.registerJSONObject(places, list);
 			}
 			return places;
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
-		} catch (TwitterException te) {
+		} catch (final TwitterException te) {
 			throw te;
 		}
 	}

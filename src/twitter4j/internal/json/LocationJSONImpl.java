@@ -49,7 +49,7 @@ import twitter4j.internal.http.HttpResponse;
 			countryName = getUnescapedString("country", location);
 			countryCode = getRawString("countryCode", location);
 			if (!location.isNull("placeType")) {
-				JSONObject placeJSON = location.getJSONObject("placeType");
+				final JSONObject placeJSON = location.getJSONObject("placeType");
 				placeName = getUnescapedString("name", placeJSON);
 				placeCode = getInt("code", placeJSON);
 			} else {
@@ -58,7 +58,7 @@ import twitter4j.internal.http.HttpResponse;
 			}
 			name = getUnescapedString("name", location);
 			url = getUnescapedString("url", location);
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
 		}
 	}
@@ -68,7 +68,7 @@ import twitter4j.internal.http.HttpResponse;
 		if (this == o) return true;
 		if (!(o instanceof LocationJSONImpl)) return false;
 
-		LocationJSONImpl that = (LocationJSONImpl) o;
+		final LocationJSONImpl that = (LocationJSONImpl) o;
 
 		if (woeid != that.woeid) return false;
 
@@ -154,11 +154,11 @@ import twitter4j.internal.http.HttpResponse;
 	/* package */
 	static ResponseList<Location> createLocationList(JSONArray list, boolean storeJSON) throws TwitterException {
 		try {
-			int size = list.length();
-			ResponseList<Location> locations = new ResponseListImpl<Location>(size, null);
+			final int size = list.length();
+			final ResponseList<Location> locations = new ResponseListImpl<Location>(size, null);
 			for (int i = 0; i < size; i++) {
-				JSONObject json = list.getJSONObject(i);
-				Location location = new LocationJSONImpl(json);
+				final JSONObject json = list.getJSONObject(i);
+				final Location location = new LocationJSONImpl(json);
 				locations.add(location);
 				if (storeJSON) {
 					DataObjectFactoryUtil.registerJSONObject(location, json);
@@ -168,9 +168,9 @@ import twitter4j.internal.http.HttpResponse;
 				DataObjectFactoryUtil.registerJSONObject(locations, list);
 			}
 			return locations;
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
-		} catch (TwitterException te) {
+		} catch (final TwitterException te) {
 			throw te;
 		}
 	}

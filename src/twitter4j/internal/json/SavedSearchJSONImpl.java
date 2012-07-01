@@ -52,7 +52,7 @@ import twitter4j.internal.http.HttpResponse;
 		if (conf.isJSONStoreEnabled()) {
 			DataObjectFactoryUtil.clearThreadLocalMap();
 		}
-		JSONObject json = res.asJSONObject();
+		final JSONObject json = res.asJSONObject();
 		init(json);
 		if (conf.isJSONStoreEnabled()) {
 			DataObjectFactoryUtil.registerJSONObject(this, json);
@@ -73,7 +73,7 @@ import twitter4j.internal.http.HttpResponse;
 		if (this == o) return true;
 		if (!(o instanceof SavedSearch)) return false;
 
-		SavedSearch that = (SavedSearch) o;
+		final SavedSearch that = (SavedSearch) o;
 
 		if (id != that.getId()) return false;
 
@@ -150,13 +150,13 @@ import twitter4j.internal.http.HttpResponse;
 		if (conf.isJSONStoreEnabled()) {
 			DataObjectFactoryUtil.clearThreadLocalMap();
 		}
-		JSONArray json = res.asJSONArray();
+		final JSONArray json = res.asJSONArray();
 		ResponseList<SavedSearch> savedSearches;
 		try {
 			savedSearches = new ResponseListImpl<SavedSearch>(json.length(), res);
 			for (int i = 0; i < json.length(); i++) {
-				JSONObject savedSearchesJSON = json.getJSONObject(i);
-				SavedSearch savedSearch = new SavedSearchJSONImpl(savedSearchesJSON);
+				final JSONObject savedSearchesJSON = json.getJSONObject(i);
+				final SavedSearch savedSearch = new SavedSearchJSONImpl(savedSearchesJSON);
 				savedSearches.add(savedSearch);
 				if (conf.isJSONStoreEnabled()) {
 					DataObjectFactoryUtil.registerJSONObject(savedSearch, savedSearchesJSON);
@@ -166,7 +166,7 @@ import twitter4j.internal.http.HttpResponse;
 				DataObjectFactoryUtil.registerJSONObject(savedSearches, json);
 			}
 			return savedSearches;
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone.getMessage() + ":" + res.asString(), jsone);
 		}
 	}

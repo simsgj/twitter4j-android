@@ -18,7 +18,6 @@ package twitter4j;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import twitter4j.internal.logging.Logger;
 import twitter4j.management.APIStatistics;
 import twitter4j.management.APIStatisticsMBean;
 
@@ -31,7 +30,6 @@ import twitter4j.management.APIStatisticsMBean;
  * @since Twitter4J 2.2.1
  */
 public class TwitterAPIMonitor {
-	private static final Logger logger = Logger.getLogger();
 	// https?:\/\/[^\/]+\/([a-zA-Z_\.]*).*
 	// finds the "method" part a Twitter REST API url, ignoring member-specific
 	// resource names
@@ -56,9 +54,9 @@ public class TwitterAPIMonitor {
 	}
 
 	void methodCalled(String twitterUrl, long elapsedTime, boolean success) {
-		Matcher matcher = pattern.matcher(twitterUrl);
+		final Matcher matcher = pattern.matcher(twitterUrl);
 		if (matcher.matches() && matcher.groupCount() > 0) {
-			String method = matcher.group();
+			final String method = matcher.group();
 			STATISTICS.methodCalled(method, elapsedTime, success);
 		}
 	}

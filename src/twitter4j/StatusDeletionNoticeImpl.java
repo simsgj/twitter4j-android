@@ -40,7 +40,7 @@ class StatusDeletionNoticeImpl implements StatusDeletionNotice, java.io.Serializ
 
 	@Override
 	public int compareTo(StatusDeletionNotice that) {
-		long delta = statusId - that.getStatusId();
+		final long delta = statusId - that.getStatusId();
 		if (delta < Integer.MIN_VALUE)
 			return Integer.MIN_VALUE;
 		else if (delta > Integer.MAX_VALUE) return Integer.MAX_VALUE;
@@ -52,7 +52,7 @@ class StatusDeletionNoticeImpl implements StatusDeletionNotice, java.io.Serializ
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		StatusDeletionNoticeImpl that = (StatusDeletionNoticeImpl) o;
+		final StatusDeletionNoticeImpl that = (StatusDeletionNoticeImpl) o;
 
 		if (statusId != that.statusId) return false;
 		if (userId != that.userId) return false;

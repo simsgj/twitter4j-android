@@ -82,15 +82,15 @@ final class TweetJSONImpl implements Tweet, java.io.Serializable {
 		geoLocation = z_T4JInternalJSONImplFactory.createGeoLocation(tweet);
 		if (!tweet.isNull("annotations")) {
 			try {
-				JSONArray annotationsArray = tweet.getJSONArray("annotations");
+				final JSONArray annotationsArray = tweet.getJSONArray("annotations");
 				annotations = new Annotations(annotationsArray);
-			} catch (JSONException ignore) {
+			} catch (final JSONException ignore) {
 			}
 		}
 		if (!tweet.isNull("place")) {
 			try {
 				place = new PlaceJSONImpl(tweet.getJSONObject("place"));
-			} catch (JSONException jsone) {
+			} catch (final JSONException jsone) {
 				throw new TwitterException(jsone);
 			}
 		} else {
@@ -98,10 +98,10 @@ final class TweetJSONImpl implements Tweet, java.io.Serializable {
 		}
 		if (!tweet.isNull("entities")) {
 			try {
-				JSONObject entities = tweet.getJSONObject("entities");
+				final JSONObject entities = tweet.getJSONObject("entities");
 				int len;
 				if (!entities.isNull("user_mentions")) {
-					JSONArray userMentionsArray = entities.getJSONArray("user_mentions");
+					final JSONArray userMentionsArray = entities.getJSONArray("user_mentions");
 					len = userMentionsArray.length();
 					userMentionEntities = new UserMentionEntity[len];
 					for (int i = 0; i < len; i++) {
@@ -110,7 +110,7 @@ final class TweetJSONImpl implements Tweet, java.io.Serializable {
 
 				}
 				if (!entities.isNull("urls")) {
-					JSONArray urlsArray = entities.getJSONArray("urls");
+					final JSONArray urlsArray = entities.getJSONArray("urls");
 					len = urlsArray.length();
 					urlEntities = new URLEntity[len];
 					for (int i = 0; i < len; i++) {
@@ -119,7 +119,7 @@ final class TweetJSONImpl implements Tweet, java.io.Serializable {
 				}
 
 				if (!entities.isNull("hashtags")) {
-					JSONArray hashtagsArray = entities.getJSONArray("hashtags");
+					final JSONArray hashtagsArray = entities.getJSONArray("hashtags");
 					len = hashtagsArray.length();
 					hashtagEntities = new HashtagEntity[len];
 					for (int i = 0; i < len; i++) {
@@ -128,14 +128,14 @@ final class TweetJSONImpl implements Tweet, java.io.Serializable {
 				}
 
 				if (!entities.isNull("media")) {
-					JSONArray mediaArray = entities.getJSONArray("media");
+					final JSONArray mediaArray = entities.getJSONArray("media");
 					len = mediaArray.length();
 					mediaEntities = new MediaEntity[len];
 					for (int i = 0; i < len; i++) {
 						mediaEntities[i] = new MediaEntityJSONImpl(mediaArray.getJSONObject(i));
 					}
 				}
-			} catch (JSONException jsone) {
+			} catch (final JSONException jsone) {
 				throw new TwitterException(jsone);
 			}
 		}
@@ -150,7 +150,7 @@ final class TweetJSONImpl implements Tweet, java.io.Serializable {
 
 	@Override
 	public int compareTo(Tweet that) {
-		long delta = id - that.getId();
+		final long delta = id - that.getId();
 		if (delta < Integer.MIN_VALUE)
 			return Integer.MIN_VALUE;
 		else if (delta > Integer.MAX_VALUE) return Integer.MAX_VALUE;
@@ -162,7 +162,7 @@ final class TweetJSONImpl implements Tweet, java.io.Serializable {
 		if (this == o) return true;
 		if (!(o instanceof Tweet)) return false;
 
-		Tweet tweet = (Tweet) o;
+		final Tweet tweet = (Tweet) o;
 
 		if (id != tweet.getId()) return false;
 

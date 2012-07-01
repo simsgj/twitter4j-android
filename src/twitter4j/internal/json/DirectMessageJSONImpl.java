@@ -55,7 +55,7 @@ import twitter4j.internal.http.HttpResponse;
 
 	/* package */DirectMessageJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
 		super(res);
-		JSONObject json = res.asJSONObject();
+		final JSONObject json = res.asJSONObject();
 		init(json);
 		if (conf.isJSONStoreEnabled()) {
 			DataObjectFactoryUtil.clearThreadLocalMap();
@@ -170,7 +170,7 @@ import twitter4j.internal.http.HttpResponse;
 		try {
 			sender = new UserJSONImpl(json.getJSONObject("sender"));
 			recipient = new UserJSONImpl(json.getJSONObject("recipient"));
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
 		}
 	}
@@ -182,12 +182,12 @@ import twitter4j.internal.http.HttpResponse;
 			if (conf.isJSONStoreEnabled()) {
 				DataObjectFactoryUtil.clearThreadLocalMap();
 			}
-			JSONArray list = res.asJSONArray();
-			int size = list.length();
-			ResponseList<DirectMessage> directMessages = new ResponseListImpl<DirectMessage>(size, res);
+			final JSONArray list = res.asJSONArray();
+			final int size = list.length();
+			final ResponseList<DirectMessage> directMessages = new ResponseListImpl<DirectMessage>(size, res);
 			for (int i = 0; i < size; i++) {
-				JSONObject json = list.getJSONObject(i);
-				DirectMessage directMessage = new DirectMessageJSONImpl(json);
+				final JSONObject json = list.getJSONObject(i);
+				final DirectMessage directMessage = new DirectMessageJSONImpl(json);
 				directMessages.add(directMessage);
 				if (conf.isJSONStoreEnabled()) {
 					DataObjectFactoryUtil.registerJSONObject(directMessage, json);
@@ -197,9 +197,9 @@ import twitter4j.internal.http.HttpResponse;
 				DataObjectFactoryUtil.registerJSONObject(directMessages, list);
 			}
 			return directMessages;
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
-		} catch (TwitterException te) {
+		} catch (final TwitterException te) {
 			throw te;
 		}
 	}

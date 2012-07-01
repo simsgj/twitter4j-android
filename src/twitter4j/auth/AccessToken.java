@@ -37,7 +37,7 @@ public class AccessToken extends OAuthToken implements java.io.Serializable {
 		String sUserId;
 		try {
 			sUserId = token.substring(0, token.indexOf("-"));
-		} catch (IndexOutOfBoundsException e) {
+		} catch (final IndexOutOfBoundsException e) {
 			throw new IllegalArgumentException("Invalid access token format.");
 		}
 		if (sUserId != null) {
@@ -52,7 +52,7 @@ public class AccessToken extends OAuthToken implements java.io.Serializable {
 	AccessToken(String str) {
 		super(str);
 		screenName = getParameter("screen_name");
-		String sUserId = getParameter("user_id");
+		final String sUserId = getParameter("user_id");
 		if (sUserId != null) {
 			userId = Long.parseLong(sUserId);
 		}
@@ -64,7 +64,7 @@ public class AccessToken extends OAuthToken implements java.io.Serializable {
 		if (o == null || getClass() != o.getClass()) return false;
 		if (!super.equals(o)) return false;
 
-		AccessToken that = (AccessToken) o;
+		final AccessToken that = (AccessToken) o;
 
 		if (userId != that.userId) return false;
 		if (screenName != null ? !screenName.equals(that.screenName) : that.screenName != null) return false;

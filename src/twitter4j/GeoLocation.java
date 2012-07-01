@@ -43,7 +43,7 @@ public class GeoLocation implements java.io.Serializable {
 		if (this == o) return true;
 		if (!(o instanceof GeoLocation)) return false;
 
-		GeoLocation that = (GeoLocation) o;
+		final GeoLocation that = (GeoLocation) o;
 
 		if (Double.compare(that.getLatitude(), latitude) != 0) return false;
 		if (Double.compare(that.getLongitude(), longitude) != 0) return false;

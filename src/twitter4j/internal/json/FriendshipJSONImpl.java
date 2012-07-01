@@ -46,16 +46,16 @@ class FriendshipJSONImpl implements Friendship {
 			id = getLong("id", json);
 			name = json.getString("name");
 			screenName = json.getString("screen_name");
-			JSONArray connections = json.getJSONArray("connections");
+			final JSONArray connections = json.getJSONArray("connections");
 			for (int i = 0; i < connections.length(); i++) {
-				String connection = connections.getString(i);
+				final String connection = connections.getString(i);
 				if ("following".equals(connection)) {
 					following = true;
 				} else if ("followed_by".equals(connection)) {
 					followedBy = true;
 				}
 			}
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone.getMessage() + ":" + json.toString(), jsone);
 		}
 	}
@@ -65,7 +65,7 @@ class FriendshipJSONImpl implements Friendship {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		FriendshipJSONImpl that = (FriendshipJSONImpl) o;
+		final FriendshipJSONImpl that = (FriendshipJSONImpl) o;
 
 		if (followedBy != that.followedBy) return false;
 		if (following != that.following) return false;
@@ -123,12 +123,12 @@ class FriendshipJSONImpl implements Friendship {
 			if (conf.isJSONStoreEnabled()) {
 				DataObjectFactoryUtil.clearThreadLocalMap();
 			}
-			JSONArray list = res.asJSONArray();
-			int size = list.length();
-			ResponseList<Friendship> friendshipList = new ResponseListImpl<Friendship>(size, res);
+			final JSONArray list = res.asJSONArray();
+			final int size = list.length();
+			final ResponseList<Friendship> friendshipList = new ResponseListImpl<Friendship>(size, res);
 			for (int i = 0; i < size; i++) {
-				JSONObject json = list.getJSONObject(i);
-				Friendship friendship = new FriendshipJSONImpl(json);
+				final JSONObject json = list.getJSONObject(i);
+				final Friendship friendship = new FriendshipJSONImpl(json);
 				if (conf.isJSONStoreEnabled()) {
 					DataObjectFactoryUtil.registerJSONObject(friendship, json);
 				}
@@ -138,9 +138,9 @@ class FriendshipJSONImpl implements Friendship {
 				DataObjectFactoryUtil.registerJSONObject(friendshipList, list);
 			}
 			return friendshipList;
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
-		} catch (TwitterException te) {
+		} catch (final TwitterException te) {
 			throw te;
 		}
 	}

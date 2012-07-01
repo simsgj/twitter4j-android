@@ -46,17 +46,17 @@ public final class DispatcherFactory {
 	public Dispatcher getInstance() {
 		try {
 			return (Dispatcher) Class.forName(dispatcherImpl).getConstructor(Configuration.class).newInstance(conf);
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			throw new AssertionError(e);
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			throw new AssertionError(e);
-		} catch (ClassNotFoundException e) {
+		} catch (final ClassNotFoundException e) {
 			throw new AssertionError(e);
-		} catch (ClassCastException e) {
+		} catch (final ClassCastException e) {
 			throw new AssertionError(e);
-		} catch (NoSuchMethodException e) {
+		} catch (final NoSuchMethodException e) {
 			throw new AssertionError(e);
-		} catch (InvocationTargetException e) {
+		} catch (final InvocationTargetException e) {
 			throw new AssertionError(e);
 		}
 	}

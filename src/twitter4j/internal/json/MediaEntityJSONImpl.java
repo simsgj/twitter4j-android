@@ -47,44 +47,44 @@ public class MediaEntityJSONImpl implements MediaEntity {
 
 	public MediaEntityJSONImpl(JSONObject json) throws TwitterException {
 		try {
-			JSONArray indicesArray = json.getJSONArray("indices");
+			final JSONArray indicesArray = json.getJSONArray("indices");
 			start = indicesArray.getInt(0);
 			end = indicesArray.getInt(1);
 			id = getLong("id", json);
 
 			try {
 				url = new URL(json.getString("url"));
-			} catch (MalformedURLException ignore) {
+			} catch (final MalformedURLException ignore) {
 			}
 
 			if (!json.isNull("expanded_url")) {
 				try {
 					expandedURL = new URL(json.getString("expanded_url"));
-				} catch (MalformedURLException ignore) {
+				} catch (final MalformedURLException ignore) {
 				}
 			}
 			if (!json.isNull("media_url")) {
 				try {
 					mediaURL = new URL(json.getString("media_url"));
-				} catch (MalformedURLException ignore) {
+				} catch (final MalformedURLException ignore) {
 				}
 			}
 			if (!json.isNull("media_url_https")) {
 				try {
 					mediaURLHttps = new URL(json.getString("media_url_https"));
-				} catch (MalformedURLException ignore) {
+				} catch (final MalformedURLException ignore) {
 				}
 			}
 			if (!json.isNull("display_url")) {
 				displayURL = json.getString("display_url");
 			}
-			JSONObject sizes = json.getJSONObject("sizes");
+			final JSONObject sizes = json.getJSONObject("sizes");
 			this.sizes = new HashMap<Integer, MediaEntity.Size>(4);
 			this.sizes.put(MediaEntity.Size.LARGE, new Size(sizes.getJSONObject("large")));
 			this.sizes.put(MediaEntity.Size.MEDIUM, new Size(sizes.getJSONObject("medium")));
 			this.sizes.put(MediaEntity.Size.SMALL, new Size(sizes.getJSONObject("small")));
 			this.sizes.put(MediaEntity.Size.THUMB, new Size(sizes.getJSONObject("thumb")));
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
 		}
 
@@ -95,7 +95,7 @@ public class MediaEntityJSONImpl implements MediaEntity {
 		if (this == o) return true;
 		if (!(o instanceof MediaEntityJSONImpl)) return false;
 
-		MediaEntityJSONImpl that = (MediaEntityJSONImpl) o;
+		final MediaEntityJSONImpl that = (MediaEntityJSONImpl) o;
 
 		if (id != that.id) return false;
 
@@ -200,7 +200,7 @@ public class MediaEntityJSONImpl implements MediaEntity {
 			if (this == o) return true;
 			if (!(o instanceof Size)) return false;
 
-			Size size = (Size) o;
+			final Size size = (Size) o;
 
 			if (height != size.height) return false;
 			if (resize != size.resize) return false;

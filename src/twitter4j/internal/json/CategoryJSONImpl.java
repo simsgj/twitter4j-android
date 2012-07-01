@@ -47,7 +47,7 @@ final class CategoryJSONImpl implements Category, java.io.Serializable {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		CategoryJSONImpl that = (CategoryJSONImpl) o;
+		final CategoryJSONImpl that = (CategoryJSONImpl) o;
 
 		if (size != that.size) return false;
 		if (name != null ? !name.equals(that.name) : that.name != null) return false;
@@ -104,10 +104,10 @@ final class CategoryJSONImpl implements Category, java.io.Serializable {
 			if (conf.isJSONStoreEnabled()) {
 				DataObjectFactoryUtil.clearThreadLocalMap();
 			}
-			ResponseList<Category> categories = new ResponseListImpl<Category>(array.length(), res);
+			final ResponseList<Category> categories = new ResponseListImpl<Category>(array.length(), res);
 			for (int i = 0; i < array.length(); i++) {
-				JSONObject json = array.getJSONObject(i);
-				Category category = new CategoryJSONImpl(json);
+				final JSONObject json = array.getJSONObject(i);
+				final Category category = new CategoryJSONImpl(json);
 				categories.add(category);
 				if (conf.isJSONStoreEnabled()) {
 					DataObjectFactoryUtil.registerJSONObject(category, json);
@@ -117,7 +117,7 @@ final class CategoryJSONImpl implements Category, java.io.Serializable {
 				DataObjectFactoryUtil.registerJSONObject(categories, array);
 			}
 			return categories;
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
 		}
 	}

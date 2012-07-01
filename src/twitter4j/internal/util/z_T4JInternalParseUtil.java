@@ -53,7 +53,7 @@ public final class z_T4JInternalParseUtil {
 	}
 
 	public static boolean getBoolean(String name, JSONObject json) {
-		String str = getRawString(name, json);
+		final String str = getRawString(name, json);
 		if (null == str || "null".equals(str)) return false;
 		return Boolean.valueOf(str);
 	}
@@ -63,7 +63,7 @@ public final class z_T4JInternalParseUtil {
 	}
 
 	public static Date getDate(String name, JSONObject json, String format) throws TwitterException {
-		String dateStr = getUnescapedString(name, json);
+		final String dateStr = getUnescapedString(name, json);
 		if ("null".equals(dateStr) || null == dateStr)
 			return null;
 		else
@@ -79,13 +79,13 @@ public final class z_T4JInternalParseUtil {
 		}
 		try {
 			return sdf.parse(name);
-		} catch (ParseException pe) {
+		} catch (final ParseException pe) {
 			throw new TwitterException("Unexpected date format(" + name + ") returned from twitter.com", pe);
 		}
 	}
 
 	public static double getDouble(String name, JSONObject json) {
-		String str2 = getRawString(name, json);
+		final String str2 = getRawString(name, json);
 		if (null == str2 || "".equals(str2) || "null".equals(str2))
 			return -1;
 		else
@@ -98,7 +98,7 @@ public final class z_T4JInternalParseUtil {
 		else {
 			try {
 				return Integer.valueOf(str);
-			} catch (NumberFormatException nfe) {
+			} catch (final NumberFormatException nfe) {
 				// workaround for the API side issue
 				// http://twitter4j.org/jira/browse/TFJ-484
 				return -1;
@@ -133,7 +133,7 @@ public final class z_T4JInternalParseUtil {
 				return null;
 			else
 				return json.getString(name);
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			return null;
 		}
 	}
@@ -147,7 +147,7 @@ public final class z_T4JInternalParseUtil {
 		if (returnValue != null) {
 			try {
 				returnValue = URLDecoder.decode(returnValue, "UTF-8");
-			} catch (UnsupportedEncodingException ignore) {
+			} catch (final UnsupportedEncodingException ignore) {
 			}
 		}
 		return returnValue;
@@ -170,7 +170,7 @@ public final class z_T4JInternalParseUtil {
 
 	public static int toAccessLevel(HttpResponse res) {
 		if (null == res) return -1;
-		String xAccessLevel = res.getResponseHeader("X-Access-Level");
+		final String xAccessLevel = res.getResponseHeader("X-Access-Level");
 		int accessLevel;
 		if (null == xAccessLevel) {
 			accessLevel = TwitterResponse.NONE;

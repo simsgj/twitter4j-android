@@ -60,7 +60,7 @@ public class LanguageJSONImpl implements HelpMethods.Language {
 			code = json.getString("code");
 			status = json.getString("status");
 
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone.getMessage() + ":" + json.toString(), jsone);
 		}
 	}
@@ -77,11 +77,11 @@ public class LanguageJSONImpl implements HelpMethods.Language {
 			DataObjectFactoryUtil.clearThreadLocalMap();
 		}
 		try {
-			int size = list.length();
-			ResponseList<HelpMethods.Language> languages = new ResponseListImpl<HelpMethods.Language>(size, res);
+			final int size = list.length();
+			final ResponseList<HelpMethods.Language> languages = new ResponseListImpl<HelpMethods.Language>(size, res);
 			for (int i = 0; i < size; i++) {
-				JSONObject json = list.getJSONObject(i);
-				HelpMethods.Language language = new LanguageJSONImpl(json);
+				final JSONObject json = list.getJSONObject(i);
+				final HelpMethods.Language language = new LanguageJSONImpl(json);
 				languages.add(language);
 				if (conf.isJSONStoreEnabled()) {
 					DataObjectFactoryUtil.registerJSONObject(language, json);
@@ -91,9 +91,9 @@ public class LanguageJSONImpl implements HelpMethods.Language {
 				DataObjectFactoryUtil.registerJSONObject(languages, list);
 			}
 			return languages;
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
-		} catch (TwitterException te) {
+		} catch (final TwitterException te) {
 			throw te;
 		}
 	}

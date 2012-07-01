@@ -188,7 +188,7 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	public Place createPlace(String name, String containedWithin, String token, GeoLocation location,
 			String streetAddress) throws TwitterException {
 		ensureAuthorizationEnabled();
-		List<HttpParameter> params = new ArrayList<HttpParameter>(3);
+		final List<HttpParameter> params = new ArrayList<HttpParameter>(3);
 		params.add(new HttpParameter("name", name));
 		params.add(new HttpParameter("contained_within", containedWithin));
 		params.add(new HttpParameter("token", token));
@@ -217,7 +217,7 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	@Override
 	public UserList createUserList(String listName, boolean isPublicList, String description) throws TwitterException {
 		ensureAuthorizationEnabled();
-		List<HttpParameter> httpParams = new ArrayList<HttpParameter>();
+		final List<HttpParameter> httpParams = new ArrayList<HttpParameter>();
 		httpParams.add(new HttpParameter("name", listName));
 		httpParams.add(new HttpParameter("mode", isPublicList ? "public" : "private"));
 		if (description != null) {
@@ -394,7 +394,7 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 		if (o == null || getClass() != o.getClass()) return false;
 		if (!super.equals(o)) return false;
 
-		TwitterImpl twitter = (TwitterImpl) o;
+		final TwitterImpl twitter = (TwitterImpl) o;
 
 		if (!INCLUDE_ENTITIES.equals(twitter.INCLUDE_ENTITIES)) return false;
 		if (!INCLUDE_RTS.equals(twitter.INCLUDE_RTS)) return false;
@@ -411,7 +411,7 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 		try {
 			return -1 == get(conf.getRestBaseURL() + "blocks/exists.json?user_id=" + userId).asString().indexOf(
 					"<error>You are not blocking this user.</error>");
-		} catch (TwitterException te) {
+		} catch (final TwitterException te) {
 			if (te.getStatusCode() == 404) return false;
 			throw te;
 		}
@@ -426,7 +426,7 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 		try {
 			return -1 == get(conf.getRestBaseURL() + "blocks/exists.json?screen_name=" + screenName).asString()
 					.indexOf("You are not blocking this user.");
-		} catch (TwitterException te) {
+		} catch (final TwitterException te) {
 			if (te.getStatusCode() == 404) return false;
 			throw te;
 		}
@@ -824,7 +824,7 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	 */
 	@Override
 	public ResponseList<User> getMemberSuggestions(String categorySlug) throws TwitterException {
-		HttpResponse res = get(conf.getRestBaseURL() + "users/suggestions/" + categorySlug + "/members.json");
+		final HttpResponse res = get(conf.getRestBaseURL() + "users/suggestions/" + categorySlug + "/members.json");
 		return factory.createUserListFromJSONArray(res);
 	}
 
@@ -873,7 +873,7 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	public String getPrivacyPolicy() throws TwitterException {
 		try {
 			return get(conf.getRestBaseURL() + "legal/privacy.json").asJSONObject().getString("privacy");
-		} catch (JSONException e) {
+		} catch (final JSONException e) {
 			throw new TwitterException(e);
 		}
 	}
@@ -1103,7 +1103,7 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	@Override
 	public SimilarPlaces getSimilarPlaces(GeoLocation location, String name, String containedWithin,
 			String streetAddress) throws TwitterException {
-		List<HttpParameter> params = new ArrayList<HttpParameter>(3);
+		final List<HttpParameter> params = new ArrayList<HttpParameter>(3);
 		params.add(new HttpParameter("lat", location.getLatitude()));
 		params.add(new HttpParameter("long", location.getLongitude()));
 		params.add(new HttpParameter("name", name));
@@ -1132,7 +1132,7 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	public String getTermsOfService() throws TwitterException {
 		try {
 			return get(conf.getRestBaseURL() + "legal/tos.json").asJSONObject().getString("tos");
-		} catch (JSONException e) {
+		} catch (final JSONException e) {
 			throw new TwitterException(e);
 		}
 	}
@@ -1299,7 +1299,7 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	 */
 	@Override
 	public ResponseList<User> getUserSuggestions(String categorySlug) throws TwitterException {
-		HttpResponse res = get(conf.getRestBaseURL() + "users/suggestions/" + categorySlug + ".json");
+		final HttpResponse res = get(conf.getRestBaseURL() + "users/suggestions/" + categorySlug + ".json");
 		return factory.createUserListFromJSONArray_Users(res);
 	}
 
@@ -1464,7 +1464,7 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 		try {
 			return factory.createPlaceList(get(conf.getRestBaseURL() + "geo/reverse_geocode.json",
 					query.asHttpParameterArray()));
-		} catch (TwitterException te) {
+		} catch (final TwitterException te) {
 			if (te.getStatusCode() == 404)
 				return factory.createEmptyResponseList();
 			else
@@ -1668,7 +1668,7 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 
 		ensureAuthorizationEnabled();
 
-		List<HttpParameter> profile = new ArrayList<HttpParameter>(6);
+		final List<HttpParameter> profile = new ArrayList<HttpParameter>(6);
 		if (trend_locationWoeid != null) {
 			profile.add(new HttpParameter("trend_location_woeid", trend_locationWoeid));
 		}
@@ -1724,7 +1724,7 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	@Override
 	public User updateProfile(String name, String url, String location, String description) throws TwitterException {
 		ensureAuthorizationEnabled();
-		List<HttpParameter> profile = new ArrayList<HttpParameter>(4);
+		final List<HttpParameter> profile = new ArrayList<HttpParameter>(4);
 		addParameterToList(profile, "name", name);
 		addParameterToList(profile, "url", url);
 		addParameterToList(profile, "location", location);
@@ -1766,7 +1766,7 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	public User updateProfileColors(String profileBackgroundColor, String profileTextColor, String profileLinkColor,
 			String profileSidebarFillColor, String profileSidebarBorderColor) throws TwitterException {
 		ensureAuthorizationEnabled();
-		List<HttpParameter> colors = new ArrayList<HttpParameter>(6);
+		final List<HttpParameter> colors = new ArrayList<HttpParameter>(6);
 		addParameterToList(colors, "profile_background_color", profileBackgroundColor);
 		addParameterToList(colors, "profile_text_color", profileTextColor);
 		addParameterToList(colors, "profile_link_color", profileLinkColor);
@@ -1806,7 +1806,7 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	@Override
 	public Status updateStatus(StatusUpdate status) throws TwitterException {
 		ensureAuthorizationEnabled();
-		String url = status.isWithMedia() ? conf.getUploadBaseURL() + "statuses/update_with_media.json" : conf
+		final String url = status.isWithMedia() ? conf.getUploadBaseURL() + "statuses/update_with_media.json" : conf
 				.getRestBaseURL() + "statuses/update.json";
 		return factory.createStatus(post(url, status.asHttpParameterArray(INCLUDE_ENTITIES)));
 	}
@@ -1830,7 +1830,7 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	public UserList updateUserList(int listId, String newListName, boolean isPublicList, String newDescription)
 			throws TwitterException {
 		ensureAuthorizationEnabled();
-		List<HttpParameter> httpParams = new ArrayList<HttpParameter>();
+		final List<HttpParameter> httpParams = new ArrayList<HttpParameter>();
 		httpParams.add(new HttpParameter("list_id", listId));
 		if (newListName != null) {
 			httpParams.add(new HttpParameter("name", newListName));
@@ -1875,14 +1875,15 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 			throw new TwitterException(new IOException(image + " is not a file."));
 	}
 
+	@SuppressWarnings("unused")
 	private HttpResponse delete(String url) throws TwitterException {
 		// intercept HTTP call for monitoring purposes
 		HttpResponse response = null;
-		long start = System.currentTimeMillis();
+		final long start = System.currentTimeMillis();
 		try {
 			response = http.delete(url, auth);
 		} finally {
-			long elapsedTime = System.currentTimeMillis() - start;
+			final long elapsedTime = System.currentTimeMillis() - start;
 			TwitterAPIMonitor.getInstance().methodCalled(url, elapsedTime, isOk(response));
 		}
 		return response;
@@ -1891,11 +1892,11 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	private HttpResponse get(String url) throws TwitterException {
 		// intercept HTTP call for monitoring purposes
 		HttpResponse response = null;
-		long start = System.currentTimeMillis();
+		final long start = System.currentTimeMillis();
 		try {
 			response = http.get(url, auth);
 		} finally {
-			long elapsedTime = System.currentTimeMillis() - start;
+			final long elapsedTime = System.currentTimeMillis() - start;
 			TwitterAPIMonitor.getInstance().methodCalled(url, elapsedTime, isOk(response));
 		}
 		return response;
@@ -1904,11 +1905,11 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	private HttpResponse get(String url, HttpParameter[] parameters) throws TwitterException {
 		// intercept HTTP call for monitoring purposes
 		HttpResponse response = null;
-		long start = System.currentTimeMillis();
+		final long start = System.currentTimeMillis();
 		try {
 			response = http.get(url, parameters, auth);
 		} finally {
-			long elapsedTime = System.currentTimeMillis() - start;
+			final long elapsedTime = System.currentTimeMillis() - start;
 			TwitterAPIMonitor.getInstance().methodCalled(url, elapsedTime, isOk(response));
 		}
 		return response;
@@ -1920,7 +1921,7 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 
 	private HttpParameter[] mergeParameters(HttpParameter[] params1, HttpParameter params2) {
 		if (params1 != null && params2 != null) {
-			HttpParameter[] params = new HttpParameter[params1.length + 1];
+			final HttpParameter[] params = new HttpParameter[params1.length + 1];
 			System.arraycopy(params1, 0, params, 0, params1.length);
 			params[params.length - 1] = params2;
 			return params;
@@ -1934,7 +1935,7 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 
 	private HttpParameter[] mergeParameters(HttpParameter[] params1, HttpParameter[] params2) {
 		if (params1 != null && params2 != null) {
-			HttpParameter[] params = new HttpParameter[params1.length + params2.length];
+			final HttpParameter[] params = new HttpParameter[params1.length + params2.length];
 			System.arraycopy(params1, 0, params, 0, params1.length);
 			System.arraycopy(params2, 0, params, params1.length, params2.length);
 			return params;
@@ -1949,11 +1950,11 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	private HttpResponse post(String url) throws TwitterException {
 		// intercept HTTP call for monitoring purposes
 		HttpResponse response = null;
-		long start = System.currentTimeMillis();
+		final long start = System.currentTimeMillis();
 		try {
 			response = http.post(url, auth);
 		} finally {
-			long elapsedTime = System.currentTimeMillis() - start;
+			final long elapsedTime = System.currentTimeMillis() - start;
 			TwitterAPIMonitor.getInstance().methodCalled(url, elapsedTime, isOk(response));
 		}
 		return response;
@@ -1962,11 +1963,11 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	private HttpResponse post(String url, HttpParameter[] parameters) throws TwitterException {
 		// intercept HTTP call for monitoring purposes
 		HttpResponse response = null;
-		long start = System.currentTimeMillis();
+		final long start = System.currentTimeMillis();
 		try {
 			response = http.post(url, parameters, auth);
 		} finally {
-			long elapsedTime = System.currentTimeMillis() - start;
+			final long elapsedTime = System.currentTimeMillis() - start;
 			TwitterAPIMonitor.getInstance().methodCalled(url, elapsedTime, isOk(response));
 		}
 		return response;
@@ -1976,7 +1977,7 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 		if (null == date) {
 			date = new Date();
 		}
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		return sdf.format(date);
 	}
 }

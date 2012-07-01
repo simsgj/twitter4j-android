@@ -77,7 +77,7 @@ abstract class TwitterBaseImpl implements java.io.Serializable, OAuthSupport, Ht
 		if (this == o) return true;
 		if (!(o instanceof TwitterBaseImpl)) return false;
 
-		TwitterBaseImpl that = (TwitterBaseImpl) o;
+		final TwitterBaseImpl that = (TwitterBaseImpl) o;
 
 		if (auth != null ? !auth.equals(that.auth) : that.auth != null) return false;
 		if (!conf.equals(that.conf)) return false;
@@ -142,19 +142,19 @@ abstract class TwitterBaseImpl implements java.io.Serializable, OAuthSupport, Ht
 		Authorization auth = getAuthorization();
 		AccessToken oauthAccessToken;
 		if (auth instanceof BasicAuthorization) {
-			BasicAuthorization basicAuth = (BasicAuthorization) auth;
+			final BasicAuthorization basicAuth = (BasicAuthorization) auth;
 			auth = AuthorizationFactory.getInstance(conf);
 			if (auth instanceof OAuthAuthorization) {
 				this.auth = auth;
-				OAuthAuthorization oauthAuth = (OAuthAuthorization) auth;
+				final OAuthAuthorization oauthAuth = (OAuthAuthorization) auth;
 				oauthAccessToken = oauthAuth.getOAuthAccessToken(basicAuth.getUserId(), basicAuth.getPassword());
 			} else
 				throw new IllegalStateException("consumer key / secret combination not supplied.");
 		} else {
 			if (auth instanceof XAuthAuthorization) {
-				XAuthAuthorization xauth = (XAuthAuthorization) auth;
+				final XAuthAuthorization xauth = (XAuthAuthorization) auth;
 				this.auth = xauth;
-				OAuthAuthorization oauthAuth = new OAuthAuthorization(conf);
+				final OAuthAuthorization oauthAuth = new OAuthAuthorization(conf);
 				oauthAuth.setOAuthConsumer(xauth.getConsumerKey(), xauth.getConsumerSecret());
 				oauthAccessToken = oauthAuth.getOAuthAccessToken(xauth.getUserId(), xauth.getPassword());
 			} else {
@@ -174,8 +174,8 @@ abstract class TwitterBaseImpl implements java.io.Serializable, OAuthSupport, Ht
 	 */
 	@Override
 	public synchronized AccessToken getOAuthAccessToken(RequestToken requestToken) throws TwitterException {
-		OAuthSupport oauth = getOAuth();
-		AccessToken oauthAccessToken = oauth.getOAuthAccessToken(requestToken);
+		final OAuthSupport oauth = getOAuth();
+		final AccessToken oauthAccessToken = oauth.getOAuthAccessToken(requestToken);
 		screenName = oauthAccessToken.getScreenName();
 		return oauthAccessToken;
 	}
@@ -200,7 +200,7 @@ abstract class TwitterBaseImpl implements java.io.Serializable, OAuthSupport, Ht
 	 */
 	@Override
 	public synchronized AccessToken getOAuthAccessToken(String oauthVerifier) throws TwitterException {
-		AccessToken oauthAccessToken = getOAuth().getOAuthAccessToken(oauthVerifier);
+		final AccessToken oauthAccessToken = getOAuth().getOAuthAccessToken(oauthVerifier);
 		screenName = oauthAccessToken.getScreenName();
 		return oauthAccessToken;
 	}
@@ -276,8 +276,8 @@ abstract class TwitterBaseImpl implements java.io.Serializable, OAuthSupport, Ht
 	@Override
 	public void httpResponseReceived(HttpResponseEvent event) {
 		if (rateLimitStatusListeners.size() != 0) {
-			HttpResponse res = event.getResponse();
-			TwitterException te = event.getTwitterException();
+			final HttpResponse res = event.getResponse();
+			final TwitterException te = event.getTwitterException();
 			RateLimitStatus rateLimitStatus;
 			int statusCode;
 			if (te != null) {
@@ -288,17 +288,17 @@ abstract class TwitterBaseImpl implements java.io.Serializable, OAuthSupport, Ht
 				statusCode = res.getStatusCode();
 			}
 			if (rateLimitStatus != null) {
-				RateLimitStatusEvent statusEvent = new RateLimitStatusEvent(this, rateLimitStatus,
+				final RateLimitStatusEvent statusEvent = new RateLimitStatusEvent(this, rateLimitStatus,
 						event.isAuthenticated());
 				if (statusCode == ENHANCE_YOUR_CLAIM || statusCode == SERVICE_UNAVAILABLE) {
 					// EXCEEDED_RATE_LIMIT_QUOTA is returned by Rest API
 					// SERVICE_UNAVAILABLE is returned by Search API
-					for (RateLimitStatusListener listener : rateLimitStatusListeners) {
+					for (final RateLimitStatusListener listener : rateLimitStatusListeners) {
 						listener.onRateLimitStatus(statusEvent);
 						listener.onRateLimitReached(statusEvent);
 					}
 				} else {
-					for (RateLimitStatusListener listener : rateLimitStatusListeners) {
+					for (final RateLimitStatusListener listener : rateLimitStatusListeners) {
 						listener.onRateLimitStatus(statusEvent);
 					}
 				}
@@ -322,11 +322,11 @@ abstract class TwitterBaseImpl implements java.io.Serializable, OAuthSupport, Ht
 		if (null == consumerKey) throw new NullPointerException("consumer key is null");
 		if (null == consumerSecret) throw new NullPointerException("consumer secret is null");
 		if (auth instanceof NullAuthorization) {
-			OAuthAuthorization oauth = new OAuthAuthorization(conf);
+			final OAuthAuthorization oauth = new OAuthAuthorization(conf);
 			oauth.setOAuthConsumer(consumerKey, consumerSecret);
 			auth = oauth;
 		} else if (auth instanceof BasicAuthorization) {
-			XAuthAuthorization xauth = new XAuthAuthorization((BasicAuthorization) auth);
+			final XAuthAuthorization xauth = new XAuthAuthorization((BasicAuthorization) auth);
 			xauth.setOAuthConsumer(consumerKey, consumerSecret);
 			auth = xauth;
 		} else if (auth instanceof OAuthAuthorization)
@@ -362,7 +362,7 @@ abstract class TwitterBaseImpl implements java.io.Serializable, OAuthSupport, Ht
 
 	protected User fillInIDAndScreenName() throws TwitterException {
 		ensureAuthorizationEnabled();
-		User user = factory.createUser(http.get(conf.getRestBaseURL()
+		final User user = factory.createUser(http.get(conf.getRestBaseURL()
 				+ "account/verify_credentials.json?include_entities=" + conf.isIncludeEntitiesEnabled(), auth));
 		screenName = user.getScreenName();
 		id = user.getId();
@@ -383,13 +383,13 @@ abstract class TwitterBaseImpl implements java.io.Serializable, OAuthSupport, Ht
 		if (null == auth) {
 			// try to populate OAuthAuthorization if available in the
 			// configuration
-			String consumerKey = conf.getOAuthConsumerKey();
-			String consumerSecret = conf.getOAuthConsumerSecret();
+			final String consumerKey = conf.getOAuthConsumerKey();
+			final String consumerSecret = conf.getOAuthConsumerSecret();
 			// try to find oauth tokens in the configuration
 			if (consumerKey != null && consumerSecret != null) {
-				OAuthAuthorization oauth = new OAuthAuthorization(conf);
-				String accessToken = conf.getOAuthAccessToken();
-				String accessTokenSecret = conf.getOAuthAccessTokenSecret();
+				final OAuthAuthorization oauth = new OAuthAuthorization(conf);
+				final String accessToken = conf.getOAuthAccessToken();
+				final String accessTokenSecret = conf.getOAuthAccessTokenSecret();
 				if (accessToken != null && accessTokenSecret != null) {
 					oauth.setOAuthAccessToken(new AccessToken(accessToken, accessTokenSecret));
 				}
@@ -416,8 +416,9 @@ abstract class TwitterBaseImpl implements java.io.Serializable, OAuthSupport, Ht
 	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
 		out.writeObject(conf);
 		out.writeObject(auth);
-		List<RateLimitStatusListener> serializableRateLimitStatusListeners = new ArrayList<RateLimitStatusListener>(0);
-		for (RateLimitStatusListener listener : rateLimitStatusListeners) {
+		final List<RateLimitStatusListener> serializableRateLimitStatusListeners = new ArrayList<RateLimitStatusListener>(
+				0);
+		for (final RateLimitStatusListener listener : rateLimitStatusListeners) {
 			if (listener instanceof java.io.Serializable) {
 				serializableRateLimitStatusListeners.add(listener);
 			}

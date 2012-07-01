@@ -82,15 +82,15 @@ public class Annotation implements Comparable<Annotation>, java.io.Serializable 
 				type = null;
 			} else {
 				try {
-					JSONObject jo = jsonObject.getJSONObject(typ);
+					final JSONObject jo = jsonObject.getJSONObject(typ);
 					attrs = new LinkedHashMap<String, String>();
 					it = jo.keys();
 					while (it.hasNext()) {
-						String key = (String) it.next();
-						String value = jo.getString(key);
+						final String key = (String) it.next();
+						final String value = jo.getString(key);
 						attrs.put(key, value);
 					}
-				} catch (JSONException jsone) {
+				} catch (final JSONException jsone) {
 					// clear all
 					typ = null;
 					attrs = null;
@@ -152,16 +152,16 @@ public class Annotation implements Comparable<Annotation>, java.io.Serializable 
 		result = size().compareTo(other.size());
 		if (result != 0) return result;
 
-		Iterator<String> thisNamesIt = sortedNames().iterator();
-		Iterator<String> otherNamesIt = other.sortedNames().iterator();
+		final Iterator<String> thisNamesIt = sortedNames().iterator();
+		final Iterator<String> otherNamesIt = other.sortedNames().iterator();
 
 		while (thisNamesIt.hasNext()) {
-			String thisName = thisNamesIt.next();
-			String otherName = otherNamesIt.next();
+			final String thisName = thisNamesIt.next();
+			final String otherName = otherNamesIt.next();
 			result = thisName.compareTo(otherName);
 			if (result != 0) return result;
-			String thisValue = getAttributes().get(thisName);
-			String otherValue = other.getAttributes().get(otherName);
+			final String thisValue = getAttributes().get(thisName);
+			final String otherValue = other.getAttributes().get(otherName);
 			result = thisValue.compareTo(otherValue);
 			if (result != 0) return result;
 		}
@@ -178,7 +178,7 @@ public class Annotation implements Comparable<Annotation>, java.io.Serializable 
 		if (null == obj) return false;
 		if (this == obj) return true;
 		if (!(obj instanceof Annotation)) return false;
-		Annotation other = (Annotation) obj;
+		final Annotation other = (Annotation) obj;
 		// Map comparison ignores the order of the map entries -
 		// which is exactly what we want here for the attributes
 		return getType().equals(other.getType()) && getAttributes().equals(other.getAttributes());
@@ -242,12 +242,12 @@ public class Annotation implements Comparable<Annotation>, java.io.Serializable 
 
 	@Override
 	public String toString() {
-		StringBuffer sb = new StringBuffer("Annotation{type='");
+		final StringBuffer sb = new StringBuffer("Annotation{type='");
 		sb.append(type).append("', attributes={");
-		Iterator<String> nameIt = attributes.keySet().iterator();
+		final Iterator<String> nameIt = attributes.keySet().iterator();
 		while (nameIt.hasNext()) {
-			String name = nameIt.next();
-			String value = attributes.get(name);
+			final String name = nameIt.next();
+			final String value = attributes.get(name);
 			sb.append('\'').append(name).append("'='").append(value).append('\'');
 			if (nameIt.hasNext()) {
 				sb.append(", ");
@@ -272,7 +272,7 @@ public class Annotation implements Comparable<Annotation>, java.io.Serializable 
 	 * @return a sorted set of the attributes' names
 	 */
 	private SortedSet<String> sortedNames() {
-		SortedSet<String> names = new TreeSet<String>();
+		final SortedSet<String> names = new TreeSet<String>();
 		names.addAll(getAttributes().keySet());
 		return names;
 	}
@@ -284,10 +284,10 @@ public class Annotation implements Comparable<Annotation>, java.io.Serializable 
 	 * @return the JSON Object
 	 */
 	JSONObject asJSONObject() {
-		JSONObject jsonObject = new JSONObject();
+		final JSONObject jsonObject = new JSONObject();
 		try {
 			jsonObject.put(type, attributes);
-		} catch (JSONException ignore) {
+		} catch (final JSONException ignore) {
 		}
 		return jsonObject;
 	}

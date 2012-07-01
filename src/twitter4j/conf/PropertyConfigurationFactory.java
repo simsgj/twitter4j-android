@@ -22,6 +22,7 @@ package twitter4j.conf;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
+@Deprecated
 class PropertyConfigurationFactory implements ConfigurationFactory {
 	private static final PropertyConfiguration ROOT_CONFIGURATION;
 

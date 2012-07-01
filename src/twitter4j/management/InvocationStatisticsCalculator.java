@@ -42,7 +42,7 @@ public class InvocationStatisticsCalculator implements InvocationStatistics {
 
 	@Override
 	public synchronized long getAverageTime() {
-		int stopIndex = Math.min(Math.abs((int) callCount), times.length);
+		final int stopIndex = Math.min(Math.abs((int) callCount), times.length);
 		if (stopIndex == 0) return 0;
 
 		long totalTime = 0;
@@ -97,7 +97,7 @@ public class InvocationStatisticsCalculator implements InvocationStatistics {
 	@Override
 	public String toString() {
 		// StringBuilder is faster... do we still need to support JDK 1.4?
-		StringBuffer sb = new StringBuffer();
+		final StringBuffer sb = new StringBuffer();
 		sb.append("calls=").append(getCallCount()).append(",").append("errors=").append(getErrorCount()).append(",")
 				.append("totalTime=").append(getTotalTime()).append(",").append("avgTime=").append(getAverageTime());
 

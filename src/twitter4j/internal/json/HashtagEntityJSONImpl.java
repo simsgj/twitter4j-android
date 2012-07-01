@@ -45,7 +45,7 @@ import twitter4j.TwitterException;
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		HashtagEntityJSONImpl that = (HashtagEntityJSONImpl) o;
+		final HashtagEntityJSONImpl that = (HashtagEntityJSONImpl) o;
 
 		if (end != that.end) return false;
 		if (start != that.start) return false;
@@ -93,14 +93,14 @@ import twitter4j.TwitterException;
 
 	private void init(JSONObject json) throws TwitterException {
 		try {
-			JSONArray indicesArray = json.getJSONArray("indices");
+			final JSONArray indicesArray = json.getJSONArray("indices");
 			start = indicesArray.getInt(0);
 			end = indicesArray.getInt(1);
 
 			if (!json.isNull("text")) {
 				text = json.getString("text");
 			}
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
 		}
 	}

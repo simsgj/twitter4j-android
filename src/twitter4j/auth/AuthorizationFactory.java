@@ -32,21 +32,21 @@ public final class AuthorizationFactory {
 	 */
 	public static Authorization getInstance(Configuration conf) {
 		Authorization auth = null;
-		String consumerKey = conf.getOAuthConsumerKey();
-		String consumerSecret = conf.getOAuthConsumerSecret();
+		final String consumerKey = conf.getOAuthConsumerKey();
+		final String consumerSecret = conf.getOAuthConsumerSecret();
 
 		if (consumerKey != null && consumerSecret != null) {
 			OAuthAuthorization oauth;
 			oauth = new OAuthAuthorization(conf);
-			String accessToken = conf.getOAuthAccessToken();
-			String accessTokenSecret = conf.getOAuthAccessTokenSecret();
+			final String accessToken = conf.getOAuthAccessToken();
+			final String accessTokenSecret = conf.getOAuthAccessTokenSecret();
 			if (accessToken != null && accessTokenSecret != null) {
 				oauth.setOAuthAccessToken(new AccessToken(accessToken, accessTokenSecret));
 			}
 			auth = oauth;
 		} else {
-			String screenName = conf.getUser();
-			String password = conf.getPassword();
+			final String screenName = conf.getUser();
+			final String password = conf.getPassword();
 			if (screenName != null && password != null) {
 				auth = new BasicAuthorization(screenName, password);
 			}

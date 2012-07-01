@@ -40,7 +40,7 @@ public final class HttpResponseEvent {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		HttpResponseEvent that = (HttpResponseEvent) o;
+		final HttpResponseEvent that = (HttpResponseEvent) o;
 
 		if (request != null ? !request.equals(that.request) : that.request != null) return false;
 		if (response != null ? !response.equals(that.response) : that.response != null) return false;

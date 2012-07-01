@@ -51,7 +51,7 @@ abstract class OAuthToken implements java.io.Serializable {
 		if (this == o) return true;
 		if (!(o instanceof OAuthToken)) return false;
 
-		OAuthToken that = (OAuthToken) o;
+		final OAuthToken that = (OAuthToken) o;
 
 		if (!token.equals(that.token)) return false;
 		if (!tokenSecret.equals(that.tokenSecret)) return false;
@@ -61,7 +61,7 @@ abstract class OAuthToken implements java.io.Serializable {
 
 	public String getParameter(String parameter) {
 		String value = null;
-		for (String str : responseStr) {
+		for (final String str : responseStr) {
 			if (str.startsWith(parameter + '=')) {
 				value = z_T4JInternalStringUtil.split(str, "=")[1].trim();
 				break;

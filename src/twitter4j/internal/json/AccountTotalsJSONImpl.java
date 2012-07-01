@@ -62,7 +62,7 @@ class AccountTotalsJSONImpl extends TwitterResponseImpl implements AccountTotals
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		AccountTotalsJSONImpl that = (AccountTotalsJSONImpl) o;
+		final AccountTotalsJSONImpl that = (AccountTotalsJSONImpl) o;
 
 		if (favorites != that.favorites) return false;
 		if (followers != that.followers) return false;

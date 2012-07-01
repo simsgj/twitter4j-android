@@ -137,9 +137,9 @@ public final class DataObjectFactory {
 			accountTotalsConstructor = (Constructor<AccountTotals>) Class.forName(
 					"twitter4j.internal.json.AccountTotalsJSONImpl").getDeclaredConstructor(JSONObject.class);
 			accountTotalsConstructor.setAccessible(true);
-		} catch (NoSuchMethodException e) {
+		} catch (final NoSuchMethodException e) {
 			throw new ExceptionInInitializerError(e);
-		} catch (ClassNotFoundException e) {
+		} catch (final ClassNotFoundException e) {
 			throw new ExceptionInInitializerError(e);
 		}
 	}
@@ -178,15 +178,15 @@ public final class DataObjectFactory {
 	 */
 	public static AccountTotals createAccountTotals(String rawJSON) throws TwitterException {
 		try {
-			JSONObject json = new JSONObject(rawJSON);
+			final JSONObject json = new JSONObject(rawJSON);
 			return accountTotalsConstructor.newInstance(json);
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			throw new TwitterException(e);
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			throw new AssertionError(e);
-		} catch (InvocationTargetException e) {
+		} catch (final InvocationTargetException e) {
 			throw new TwitterException(e);
-		} catch (JSONException e) {
+		} catch (final JSONException e) {
 			throw new TwitterException(e);
 		}
 	}
@@ -201,15 +201,15 @@ public final class DataObjectFactory {
 	 */
 	public static Category createCategory(String rawJSON) throws TwitterException {
 		try {
-			JSONObject json = new JSONObject(rawJSON);
+			final JSONObject json = new JSONObject(rawJSON);
 			return categoryConstructor.newInstance(json);
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			throw new TwitterException(e);
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			throw new AssertionError(e);
-		} catch (InvocationTargetException e) {
+		} catch (final InvocationTargetException e) {
 			throw new TwitterException(e);
-		} catch (JSONException e) {
+		} catch (final JSONException e) {
 			throw new TwitterException(e);
 		}
 	}
@@ -224,15 +224,15 @@ public final class DataObjectFactory {
 	 */
 	public static DirectMessage createDirectMessage(String rawJSON) throws TwitterException {
 		try {
-			JSONObject json = new JSONObject(rawJSON);
+			final JSONObject json = new JSONObject(rawJSON);
 			return directMessageConstructor.newInstance(json);
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			throw new TwitterException(e);
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			throw new AssertionError(e);
-		} catch (InvocationTargetException e) {
+		} catch (final InvocationTargetException e) {
 			throw new TwitterException(e);
-		} catch (JSONException e) {
+		} catch (final JSONException e) {
 			throw new TwitterException(e);
 		}
 	}
@@ -248,11 +248,11 @@ public final class DataObjectFactory {
 	public static IDs createIDs(String rawJSON) throws TwitterException {
 		try {
 			return IDsConstructor.newInstance(rawJSON);
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			throw new TwitterException(e);
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			throw new AssertionError(e);
-		} catch (InvocationTargetException e) {
+		} catch (final InvocationTargetException e) {
 			throw new TwitterException(e);
 		}
 	}
@@ -267,15 +267,15 @@ public final class DataObjectFactory {
 	 */
 	public static Location createLocation(String rawJSON) throws TwitterException {
 		try {
-			JSONObject json = new JSONObject(rawJSON);
+			final JSONObject json = new JSONObject(rawJSON);
 			return locationConstructor.newInstance(json);
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			throw new TwitterException(e);
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			throw new AssertionError(e);
-		} catch (InvocationTargetException e) {
+		} catch (final InvocationTargetException e) {
 			throw new TwitterException(e);
-		} catch (JSONException e) {
+		} catch (final JSONException e) {
 			throw new TwitterException(e);
 		}
 	}
@@ -301,8 +301,8 @@ public final class DataObjectFactory {
 	 */
 	public static Object createObject(String rawJSON) throws TwitterException {
 		try {
-			JSONObject json = new JSONObject(rawJSON);
-			JSONObjectType jsonObjectType = JSONObjectType.determine(json);
+			final JSONObject json = new JSONObject(rawJSON);
+			final JSONObjectType jsonObjectType = JSONObjectType.determine(json);
 			if (JSONObjectType.SENDER == jsonObjectType)
 				return registerJSONObject(directMessageConstructor.newInstance(json.getJSONObject("direct_message")),
 						json);
@@ -330,13 +330,13 @@ public final class DataObjectFactory {
 			else
 				// The object type is unrecognized...just return the json
 				return json;
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			throw new TwitterException(e);
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			throw new AssertionError(e);
-		} catch (InvocationTargetException e) {
+		} catch (final InvocationTargetException e) {
 			throw new TwitterException(e);
-		} catch (JSONException e) {
+		} catch (final JSONException e) {
 			throw new TwitterException(e);
 		}
 	}
@@ -351,15 +351,15 @@ public final class DataObjectFactory {
 	 */
 	public static Place createPlace(String rawJSON) throws TwitterException {
 		try {
-			JSONObject json = new JSONObject(rawJSON);
+			final JSONObject json = new JSONObject(rawJSON);
 			return placeConstructor.newInstance(json);
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			throw new TwitterException(e);
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			throw new AssertionError(e);
-		} catch (InvocationTargetException e) {
+		} catch (final InvocationTargetException e) {
 			throw new TwitterException(e);
-		} catch (JSONException e) {
+		} catch (final JSONException e) {
 			throw new TwitterException(e);
 		}
 	}
@@ -374,15 +374,15 @@ public final class DataObjectFactory {
 	 */
 	public static RateLimitStatus createRateLimitStatus(String rawJSON) throws TwitterException {
 		try {
-			JSONObject json = new JSONObject(rawJSON);
+			final JSONObject json = new JSONObject(rawJSON);
 			return rateLimitStatusConstructor.newInstance(json);
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			throw new TwitterException(e);
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			throw new AssertionError(e);
-		} catch (InvocationTargetException e) {
+		} catch (final InvocationTargetException e) {
 			throw new TwitterException(e);
-		} catch (JSONException e) {
+		} catch (final JSONException e) {
 			throw new TwitterException(e);
 		}
 	}
@@ -397,15 +397,15 @@ public final class DataObjectFactory {
 	 */
 	public static RelatedResults createRelatedResults(String rawJSON) throws TwitterException {
 		try {
-			JSONArray json = new JSONArray(rawJSON);
+			final JSONArray json = new JSONArray(rawJSON);
 			return relatedResultsConstructor.newInstance(json);
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			throw new TwitterException(e);
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			throw new AssertionError(e);
-		} catch (InvocationTargetException e) {
+		} catch (final InvocationTargetException e) {
 			throw new TwitterException(e);
-		} catch (JSONException e) {
+		} catch (final JSONException e) {
 			throw new TwitterException(e);
 		}
 	}
@@ -420,15 +420,15 @@ public final class DataObjectFactory {
 	 */
 	public static Relationship createRelationship(String rawJSON) throws TwitterException {
 		try {
-			JSONObject json = new JSONObject(rawJSON);
+			final JSONObject json = new JSONObject(rawJSON);
 			return relationshipConstructor.newInstance(json);
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			throw new TwitterException(e);
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			throw new AssertionError(e);
-		} catch (InvocationTargetException e) {
+		} catch (final InvocationTargetException e) {
 			throw new TwitterException(e);
-		} catch (JSONException e) {
+		} catch (final JSONException e) {
 			throw new TwitterException(e);
 		}
 	}
@@ -443,15 +443,15 @@ public final class DataObjectFactory {
 	 */
 	public static SavedSearch createSavedSearch(String rawJSON) throws TwitterException {
 		try {
-			JSONObject json = new JSONObject(rawJSON);
+			final JSONObject json = new JSONObject(rawJSON);
 			return savedSearchConstructor.newInstance(json);
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			throw new TwitterException(e);
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			throw new AssertionError(e);
-		} catch (InvocationTargetException e) {
+		} catch (final InvocationTargetException e) {
 			throw new TwitterException(e);
-		} catch (JSONException e) {
+		} catch (final JSONException e) {
 			throw new TwitterException(e);
 		}
 	}
@@ -466,15 +466,15 @@ public final class DataObjectFactory {
 	 */
 	public static Status createStatus(String rawJSON) throws TwitterException {
 		try {
-			JSONObject json = new JSONObject(rawJSON);
+			final JSONObject json = new JSONObject(rawJSON);
 			return statusConstructor.newInstance(json);
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			throw new TwitterException(e);
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			throw new AssertionError(e);
-		} catch (InvocationTargetException e) {
+		} catch (final InvocationTargetException e) {
 			throw new TwitterException(e);
-		} catch (JSONException e) {
+		} catch (final JSONException e) {
 			throw new TwitterException(e);
 		}
 	}
@@ -489,15 +489,15 @@ public final class DataObjectFactory {
 	 */
 	public static Trend createTrend(String rawJSON) throws TwitterException {
 		try {
-			JSONObject json = new JSONObject(rawJSON);
+			final JSONObject json = new JSONObject(rawJSON);
 			return trendConstructor.newInstance(json);
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			throw new TwitterException(e);
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			throw new AssertionError(e);
-		} catch (InvocationTargetException e) {
+		} catch (final InvocationTargetException e) {
 			throw new TwitterException(e);
-		} catch (JSONException e) {
+		} catch (final JSONException e) {
 			throw new TwitterException(e);
 		}
 	}
@@ -513,11 +513,11 @@ public final class DataObjectFactory {
 	public static Trends createTrends(String rawJSON) throws TwitterException {
 		try {
 			return trendsConstructor.newInstance(rawJSON);
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			throw new TwitterException(e);
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			throw new TwitterException(e);
-		} catch (InvocationTargetException e) {
+		} catch (final InvocationTargetException e) {
 			throw new AssertionError(e);
 		}
 	}
@@ -532,15 +532,15 @@ public final class DataObjectFactory {
 	 */
 	public static Tweet createTweet(String rawJSON) throws TwitterException {
 		try {
-			JSONObject json = new JSONObject(rawJSON);
+			final JSONObject json = new JSONObject(rawJSON);
 			return tweetConstructor.newInstance(json);
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			throw new TwitterException(e);
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			throw new AssertionError(e);
-		} catch (InvocationTargetException e) {
+		} catch (final InvocationTargetException e) {
 			throw new TwitterException(e);
-		} catch (JSONException e) {
+		} catch (final JSONException e) {
 			throw new TwitterException(e);
 		}
 	}
@@ -555,15 +555,15 @@ public final class DataObjectFactory {
 	 */
 	public static User createUser(String rawJSON) throws TwitterException {
 		try {
-			JSONObject json = new JSONObject(rawJSON);
+			final JSONObject json = new JSONObject(rawJSON);
 			return userConstructor.newInstance(json);
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			throw new TwitterException(e);
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			throw new AssertionError(e);
-		} catch (InvocationTargetException e) {
+		} catch (final InvocationTargetException e) {
 			throw new TwitterException(e);
-		} catch (JSONException e) {
+		} catch (final JSONException e) {
 			throw new TwitterException(e);
 		}
 	}
@@ -578,15 +578,15 @@ public final class DataObjectFactory {
 	 */
 	public static UserList createUserList(String rawJSON) throws TwitterException {
 		try {
-			JSONObject json = new JSONObject(rawJSON);
+			final JSONObject json = new JSONObject(rawJSON);
 			return userListConstructor.newInstance(json);
-		} catch (InstantiationException e) {
+		} catch (final InstantiationException e) {
 			throw new TwitterException(e);
-		} catch (IllegalAccessException e) {
+		} catch (final IllegalAccessException e) {
 			throw new AssertionError(e);
-		} catch (InvocationTargetException e) {
+		} catch (final InvocationTargetException e) {
 			throw new TwitterException(e);
-		} catch (JSONException e) {
+		} catch (final JSONException e) {
 			throw new TwitterException(e);
 		}
 	}
@@ -602,7 +602,7 @@ public final class DataObjectFactory {
 	 * @since Twitter4J 2.1.7
 	 */
 	public static String getRawJSON(Object obj) {
-		Object json = rawJsonMap.get().get(obj);
+		final Object json = rawJsonMap.get().get(obj);
 		if (json instanceof String)
 			return (String) json;
 		else if (json != null) // object must be instance of JSONObject

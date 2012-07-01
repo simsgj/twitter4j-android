@@ -25,14 +25,14 @@ public final class HTMLEntity {
 	private static Map<String, String> escapeEntityMap = new HashMap<String, String>();
 
 	static {
-		String[][] entities = { { "&nbsp;", "&#160;"/*
-													 * no-break space =
-													 * non-breaking space
-													 */, "\u00A0" }, { "&iexcl;", "&#161;"/*
-																						 * inverted
-																						 * exclamation
-																						 * mark
-																						 */, "\u00A1" },
+		final String[][] entities = { { "&nbsp;", "&#160;"/*
+														 * no-break space =
+														 * non-breaking space
+														 */, "\u00A0" }, { "&iexcl;", "&#161;"/*
+																							 * inverted
+																							 * exclamation
+																							 * mark
+																							 */, "\u00A1" },
 				{ "&cent;", "&#162;"/* cent sign */, "\u00A2" }, { "&pound;", "&#163;"/*
 																					 * pound
 																					 * sign
@@ -719,7 +719,7 @@ public final class HTMLEntity {
 										 */, "\u203A" }
 				/* rsaquo is proposed but not yet ISO standardized */
 				, { "&euro;", "&#8364;" /* euro sign */, "\u20AC" } };
-		for (String[] entity : entities) {
+		for (final String[] entity : entities) {
 			entityEscapeMap.put(entity[2], entity[0]);
 			escapeEntityMap.put(entity[0], entity[2]);
 			escapeEntityMap.put(entity[1], entity[2]);
@@ -727,7 +727,7 @@ public final class HTMLEntity {
 	}
 
 	public static String escape(String original) {
-		StringBuffer buf = new StringBuffer(original);
+		final StringBuffer buf = new StringBuffer(original);
 		escape(buf);
 		return buf.toString();
 	}
@@ -749,7 +749,7 @@ public final class HTMLEntity {
 	public static String unescape(String original) {
 		String returnValue = null;
 		if (original != null) {
-			StringBuffer buf = new StringBuffer(original);
+			final StringBuffer buf = new StringBuffer(original);
 			unescape(buf);
 			returnValue = buf.toString();
 		}

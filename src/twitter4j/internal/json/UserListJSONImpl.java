@@ -60,7 +60,7 @@ import twitter4j.internal.http.HttpResponse;
 		if (conf.isJSONStoreEnabled()) {
 			DataObjectFactoryUtil.clearThreadLocalMap();
 		}
-		JSONObject json = res.asJSONObject();
+		final JSONObject json = res.asJSONObject();
 		init(json);
 		if (conf.isJSONStoreEnabled()) {
 			DataObjectFactoryUtil.registerJSONObject(this, json);
@@ -147,7 +147,7 @@ import twitter4j.internal.http.HttpResponse;
 	public URI getURI() {
 		try {
 			return new URI(uri);
-		} catch (URISyntaxException ex) {
+		} catch (final URISyntaxException ex) {
 			return null;
 		}
 	}
@@ -205,7 +205,7 @@ import twitter4j.internal.http.HttpResponse;
 			if (!json.isNull("user")) {
 				user = new UserJSONImpl(json.getJSONObject("user"));
 			}
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone.getMessage() + ":" + json.toString(), jsone);
 		}
 	}
@@ -217,14 +217,14 @@ import twitter4j.internal.http.HttpResponse;
 			if (conf.isJSONStoreEnabled()) {
 				DataObjectFactoryUtil.clearThreadLocalMap();
 			}
-			JSONObject json = res.asJSONObject();
-			JSONArray list = json.getJSONArray("lists");
-			int size = list.length();
+			final JSONObject json = res.asJSONObject();
+			final JSONArray list = json.getJSONArray("lists");
+			final int size = list.length();
 			@SuppressWarnings("unchecked")
-			PagableResponseList<UserList> users = new PagableResponseListImpl<UserList>(size, json, res);
+			final PagableResponseList<UserList> users = new PagableResponseListImpl<UserList>(size, json, res);
 			for (int i = 0; i < size; i++) {
-				JSONObject userListJson = list.getJSONObject(i);
-				UserList userList = new UserListJSONImpl(userListJson);
+				final JSONObject userListJson = list.getJSONObject(i);
+				final UserList userList = new UserListJSONImpl(userListJson);
 				users.add(userList);
 				if (conf.isJSONStoreEnabled()) {
 					DataObjectFactoryUtil.registerJSONObject(userList, userListJson);
@@ -234,9 +234,9 @@ import twitter4j.internal.http.HttpResponse;
 				DataObjectFactoryUtil.registerJSONObject(users, json);
 			}
 			return users;
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
-		} catch (TwitterException te) {
+		} catch (final TwitterException te) {
 			throw te;
 		}
 	}
@@ -247,12 +247,12 @@ import twitter4j.internal.http.HttpResponse;
 			if (conf.isJSONStoreEnabled()) {
 				DataObjectFactoryUtil.clearThreadLocalMap();
 			}
-			JSONArray list = res.asJSONArray();
-			int size = list.length();
-			ResponseList<UserList> users = new ResponseListImpl<UserList>(size, res);
+			final JSONArray list = res.asJSONArray();
+			final int size = list.length();
+			final ResponseList<UserList> users = new ResponseListImpl<UserList>(size, res);
 			for (int i = 0; i < size; i++) {
-				JSONObject userListJson = list.getJSONObject(i);
-				UserList userList = new UserListJSONImpl(userListJson);
+				final JSONObject userListJson = list.getJSONObject(i);
+				final UserList userList = new UserListJSONImpl(userListJson);
 				users.add(userList);
 				if (conf.isJSONStoreEnabled()) {
 					DataObjectFactoryUtil.registerJSONObject(userList, userListJson);
@@ -262,9 +262,9 @@ import twitter4j.internal.http.HttpResponse;
 				DataObjectFactoryUtil.registerJSONObject(users, list);
 			}
 			return users;
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
-		} catch (TwitterException te) {
+		} catch (final TwitterException te) {
 			throw te;
 		}
 	}

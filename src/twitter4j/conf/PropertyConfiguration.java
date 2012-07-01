@@ -31,6 +31,7 @@ import twitter4j.internal.util.z_T4JInternalStringUtil;
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
+@Deprecated
 public final class PropertyConfiguration extends ConfigurationBase implements java.io.Serializable {
 
 	public static final String DEBUG = "debug";
@@ -94,7 +95,7 @@ public final class PropertyConfiguration extends ConfigurationBase implements ja
 
 	public PropertyConfiguration(InputStream is) {
 		super();
-		Properties props = new Properties();
+		final Properties props = new Properties();
 		loadProperties(props, is);
 		setFieldsWithTreePath(props, "/");
 	}
@@ -123,7 +124,7 @@ public final class PropertyConfiguration extends ConfigurationBase implements ja
 		try {
 			props = (Properties) System.getProperties().clone();
 			normalize(props);
-		} catch (SecurityException ignore) {
+		} catch (final SecurityException ignore) {
 			// Unsigned applets are not allowed to access System properties
 			props = new Properties();
 		}
@@ -138,23 +139,23 @@ public final class PropertyConfiguration extends ConfigurationBase implements ja
 		// for Google App Engine
 		try {
 			loadProperties(props, new FileInputStream("WEB-INF/" + TWITTER4J_PROPERTIES));
-		} catch (SecurityException ignore) {
-		} catch (FileNotFoundException ignore) {
+		} catch (final SecurityException ignore) {
+		} catch (final FileNotFoundException ignore) {
 		}
 
 		setFieldsWithTreePath(props, treePath);
 	}
 
 	protected boolean getBoolean(Properties props, String prefix, String name) {
-		String value = props.getProperty(prefix + name);
+		final String value = props.getProperty(prefix + name);
 		return Boolean.valueOf(value);
 	}
 
 	protected int getIntProperty(Properties props, String prefix, String name) {
-		String value = props.getProperty(prefix + name);
+		final String value = props.getProperty(prefix + name);
 		try {
 			return Integer.parseInt(value);
-		} catch (NumberFormatException nfe) {
+		} catch (final NumberFormatException nfe) {
 			return -1;
 		}
 	}
@@ -174,7 +175,7 @@ public final class PropertyConfiguration extends ConfigurationBase implements ja
 			props.load(is);
 			normalize(props);
 			return true;
-		} catch (Exception ignore) {
+		} catch (final Exception ignore) {
 		}
 		return false;
 	}
@@ -182,20 +183,20 @@ public final class PropertyConfiguration extends ConfigurationBase implements ja
 	private boolean loadProperties(Properties props, String path) {
 		FileInputStream fis = null;
 		try {
-			File file = new File(path);
+			final File file = new File(path);
 			if (file.exists() && file.isFile()) {
 				fis = new FileInputStream(file);
 				props.load(fis);
 				normalize(props);
 				return true;
 			}
-		} catch (Exception ignore) {
+		} catch (final Exception ignore) {
 		} finally {
 			try {
 				if (fis != null) {
 					fis.close();
 				}
-			} catch (IOException ignore) {
+			} catch (final IOException ignore) {
 
 			}
 		}
@@ -204,18 +205,18 @@ public final class PropertyConfiguration extends ConfigurationBase implements ja
 
 	private void normalize(Properties props) {
 		@SuppressWarnings("rawtypes")
-		Set keys = props.keySet();
-		ArrayList<String> toBeNormalized = new ArrayList<String>(10);
-		for (Object key : keys) {
-			String keyStr = (String) key;
+		final Set keys = props.keySet();
+		final ArrayList<String> toBeNormalized = new ArrayList<String>(10);
+		for (final Object key : keys) {
+			final String keyStr = (String) key;
 			if (-1 != keyStr.indexOf("twitter4j.")) {
 				toBeNormalized.add(keyStr);
 			}
 		}
-		for (String keyStr : toBeNormalized) {
-			String property = props.getProperty(keyStr);
-			int index = keyStr.indexOf("twitter4j.");
-			String newKey = keyStr.substring(0, index) + keyStr.substring(index + 10);
+		for (final String keyStr : toBeNormalized) {
+			final String property = props.getProperty(keyStr);
+			final int index = keyStr.indexOf("twitter4j.");
+			final String newKey = keyStr.substring(0, index) + keyStr.substring(index + 10);
 			props.setProperty(newKey, property);
 		}
 	}
@@ -364,10 +365,11 @@ public final class PropertyConfiguration extends ConfigurationBase implements ja
 			setMediaProviderAPIKey(getString(props, prefix, MEDIA_PROVIDER_API_KEY));
 		}
 		if (notNull(props, prefix, MEDIA_PROVIDER_PARAMETERS)) {
-			String[] propsAry = z_T4JInternalStringUtil.split(getString(props, prefix, MEDIA_PROVIDER_PARAMETERS), "&");
-			Properties p = new Properties();
-			for (String str : propsAry) {
-				String[] parameter = z_T4JInternalStringUtil.split(str, "=");
+			final String[] propsAry = z_T4JInternalStringUtil.split(
+					getString(props, prefix, MEDIA_PROVIDER_PARAMETERS), "&");
+			final Properties p = new Properties();
+			for (final String str : propsAry) {
+				final String[] parameter = z_T4JInternalStringUtil.split(str, "=");
 				p.setProperty(parameter[0], parameter[1]);
 			}
 			setMediaProviderParameters(p);
@@ -386,9 +388,9 @@ public final class PropertyConfiguration extends ConfigurationBase implements ja
 	 */
 	private void setFieldsWithTreePath(Properties props, String treePath) {
 		setFieldsWithPrefix(props, "");
-		String[] splitArray = z_T4JInternalStringUtil.split(treePath, "/");
+		final String[] splitArray = z_T4JInternalStringUtil.split(treePath, "/");
 		String prefix = null;
-		for (String split : splitArray) {
+		for (final String split : splitArray) {
 			if (!"".equals(split)) {
 				if (null == prefix) {
 					prefix = split + ".";

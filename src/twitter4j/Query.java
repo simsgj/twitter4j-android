@@ -76,7 +76,7 @@ public final class Query implements java.io.Serializable {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
-		Query query1 = (Query) o;
+		final Query query1 = (Query) o;
 
 		if (maxId != query1.maxId) return false;
 		if (page != query1.page) return false;
@@ -505,7 +505,7 @@ public final class Query implements java.io.Serializable {
 	}
 
 	/* package */HttpParameter[] asHttpParameterArray(HttpParameter includeEntities) {
-		ArrayList<HttpParameter> params = new ArrayList<HttpParameter>();
+		final ArrayList<HttpParameter> params = new ArrayList<HttpParameter>();
 		appendParameter("q", query, params);
 		appendParameter("lang", lang, params);
 		appendParameter("locale", locale, params);
@@ -519,7 +519,7 @@ public final class Query implements java.io.Serializable {
 		appendParameter("result_type", resultType, params);
 		params.add(WITH_TWITTER_USER_ID);
 		params.add(includeEntities);
-		HttpParameter[] paramArray = new HttpParameter[params.size()];
+		final HttpParameter[] paramArray = new HttpParameter[params.size()];
 		return params.toArray(paramArray);
 	}
 }

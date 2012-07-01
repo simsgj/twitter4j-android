@@ -59,7 +59,7 @@ public class Annotations implements java.io.Serializable {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				addAnnotation(new Annotation(jsonArray.getJSONObject(i)));
 			}
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			// malformed JSONObject - just empty the list of Annotations
 			annotations.clear();
 		}
@@ -166,7 +166,7 @@ public class Annotations implements java.io.Serializable {
 	 */
 	@Override
 	public String toString() {
-		StringBuffer sb = new StringBuffer("Annotations{");
+		final StringBuffer sb = new StringBuffer("Annotations{");
 		for (int i = 0; i < size(); i++) {
 			if (i > 0) {
 				sb.append(", ");
@@ -184,7 +184,7 @@ public class Annotations implements java.io.Serializable {
 	private List<Annotation> getSortedAnnotations() {
 		// create a new list - we do not want to change the order in the
 		// original one
-		List<Annotation> sortedAnnotations = new ArrayList<Annotation>(size());
+		final List<Annotation> sortedAnnotations = new ArrayList<Annotation>(size());
 		sortedAnnotations.addAll(annotations);
 		Collections.sort(sortedAnnotations);
 		return sortedAnnotations;
@@ -196,8 +196,8 @@ public class Annotations implements java.io.Serializable {
 	 * @return the JSON String representation of this
 	 */
 	String asParameterValue() {
-		JSONArray jsonArray = new JSONArray();
-		for (Annotation annotation : annotations) {
+		final JSONArray jsonArray = new JSONArray();
+		for (final Annotation annotation : annotations) {
 			jsonArray.put(annotation.asJSONObject());
 		}
 		return jsonArray.toString();

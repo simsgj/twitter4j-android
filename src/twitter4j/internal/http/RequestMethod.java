@@ -45,7 +45,7 @@ public final class RequestMethod implements java.io.Serializable {
 		if (this == o) return true;
 		if (!(o instanceof RequestMethod)) return false;
 
-		RequestMethod that = (RequestMethod) o;
+		final RequestMethod that = (RequestMethod) o;
 
 		if (!name.equals(that.name)) return false;
 

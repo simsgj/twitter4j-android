@@ -33,18 +33,18 @@ public final class ConfigurationContext {
 		String CONFIG_IMPL;
 		try {
 			CONFIG_IMPL = System.getProperty(CONFIGURATION_IMPL, DEFAULT_CONFIGURATION_FACTORY);
-		} catch (SecurityException ignore) {
+		} catch (final SecurityException ignore) {
 			// Unsigned applets are not allowed to access System properties
 			CONFIG_IMPL = DEFAULT_CONFIGURATION_FACTORY;
 		}
 
 		try {
 			factory = (ConfigurationFactory) Class.forName(CONFIG_IMPL).newInstance();
-		} catch (ClassNotFoundException cnfe) {
+		} catch (final ClassNotFoundException cnfe) {
 			throw new AssertionError(cnfe);
-		} catch (InstantiationException ie) {
+		} catch (final InstantiationException ie) {
 			throw new AssertionError(ie);
-		} catch (IllegalAccessException iae) {
+		} catch (final IllegalAccessException iae) {
 			throw new AssertionError(iae);
 		}
 	}
