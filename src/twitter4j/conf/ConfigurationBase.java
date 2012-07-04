@@ -61,20 +61,20 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 	private String oAuthAccessToken;
 	private String oAuthAccessTokenSecret;
 
-	private String oAuthRequestTokenURL = DEFAULT_OAUTH_REQUEST_TOKEN_URL;
-	private String oAuthAuthorizationURL = DEFAULT_OAUTH_AUTHORIZATION_URL;
-	private String oAuthAccessTokenURL = DEFAULT_OAUTH_ACCESS_TOKEN_URL;
-	private String oAuthAuthenticationURL = DEFAULT_OAUTH_AUTHENTICATION_URL;
+	private String oAuthRequestTokenURL;
+	private String oAuthAuthorizationURL;
+	private String oAuthAccessTokenURL;
+	private String oAuthAuthenticationURL;
 	
-	private String signingOAuthRequestTokenURL = DEFAULT_SIGNING_OAUTH_REQUEST_TOKEN_URL;
-	private String signingOAuthAuthorizationURL = DEFAULT_SIGNING_OAUTH_AUTHORIZATION_URL;
-	private String signingOAuthAccessTokenURL = DEFAULT_SIGNING_OAUTH_ACCESS_TOKEN_URL;
-	private String signingOAuthAuthenticationURL = DEFAULT_SIGNING_OAUTH_AUTHENTICATION_URL;
+	private String signingOAuthRequestTokenURL;
+	private String signingOAuthAuthorizationURL;
+	private String signingOAuthAccessTokenURL;
+	private String signingOAuthAuthenticationURL;
 
 	private String oAuthBaseURL = DEFAULT_OAUTH_BASE_URL;
 
-	private String signingOAuthBaseURL = DEFAULT_SIGNING_OAUTH_BASE_URL;
-	private String signingRestBaseURL = DEFAULT_SIGNING_REST_BASE_URL;
+	private String signingOAuthBaseURL;
+	private String signingRestBaseURL;
 
 	private String restBaseURL;
 	private String searchBaseURL;
@@ -343,7 +343,7 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 	}
 
 	@Override
-	public final boolean getIgnoreSSLError() {
+	public final boolean isSSLErrorIgnored() {
 		return ignoreSSLError;
 	}
 
@@ -763,6 +763,13 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 	protected final void setOAuthBaseURL(String oAuthBaseURL) {
 		if (isNullOrEmpty(oAuthBaseURL)) oAuthBaseURL = DEFAULT_OAUTH_BASE_URL;
 		this.oAuthBaseURL = fixURLSlash(oAuthBaseURL);
+
+		oAuthAccessTokenURL = oAuthBaseURL + PATH_SEGMENT_ACCESS_TOKEN};
+		oAuthAuthenticationURL = oAuthBaseURL + PATH_SEGMENT_AUTHENTICATION;
+		oAuthAuthorizationURL = oAuthBaseURL + PATH_SEGMENT_AUTHORIZATION;
+		oAuthRequestTokenURL = oAuthBaseURL + PATH_SEGMENT_REQUEST_TOKEN;
+	
+		setSigningOAuthBaseURL(oAuthBaseURL);
 		fixRestBaseURL();
 	}
 
@@ -799,6 +806,12 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 	protected final void setSigningOAuthBaseURL(String signingOAuthBaseURL) {
 		if (isNullOrEmpty(signingOAuthBaseURL)) signingOAuthBaseURL = DEFAULT_SIGNING_OAUTH_BASE_URL;
 		this.signingOAuthBaseURL = fixURLSlash(signingOAuthBaseURL);
+		
+		signingOAuthAccessTokenURL = signingOAuthBaseURL + PATH_SEGMENT_ACCESS_TOKEN};
+		signingOAuthAuthenticationURL = signingOAuthBaseURL + PATH_SEGMENT_AUTHENTICATION;
+		signingOAuthAuthorizationURL = signingOAuthBaseURL + PATH_SEGMENT_AUTHORIZATION;
+		signingOAuthRequestTokenURL = signingOAuthBaseURL + PATH_SEGMENT_REQUEST_TOKEN;
+		
 		fixRestBaseURL();
 	}
 
@@ -896,7 +909,7 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 		}
 	}
 
-	private String fixURLSlash(String urlOrig) {
+	static String fixURLSlash(String urlOrig) {
 		if (urlOrig == null) return null;
 		if (!urlOrig.endsWith("/")) return urlOrig + "/";
 		return urlOrig;
