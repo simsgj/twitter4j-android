@@ -32,6 +32,8 @@ public interface Configuration extends HttpClientConfiguration, HttpClientWrappe
 	int getAsyncNumThreads();
 
 	String getClientURL();
+	
+	String getClientName();
 
 	String getClientVersion();
 
@@ -72,7 +74,7 @@ public interface Configuration extends HttpClientConfiguration, HttpClientWrappe
 	int getHttpStreamingReadTimeout();
 
 	@Override
-	boolean getIgnoreSSLError();
+	boolean isSSLErrorIgnored();
 
 	// oauth related setter/getters
 

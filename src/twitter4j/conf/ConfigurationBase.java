@@ -103,6 +103,7 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 	// hidden portion
 	private String clientVersion;
 	private String clientURL;
+	private String clientName;
 
 	private static final long serialVersionUID = -6610497517837844232L;
 
@@ -134,6 +135,7 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 		setOAuthAccessToken(null);
 		setOAuthAccessTokenSecret(null);
 		setAsyncNumThreads(1);
+		setClientName("Twitter4J");
 		setClientVersion(Version.getVersion());
 		setClientURL("http://twitter4j.org/en/twitter4j-" + Version.getVersion() + ".xml");
 		setUserAgent("twitter4j http://twitter4j.org/ /" + Version.getVersion());
@@ -273,6 +275,11 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 	@Override
 	public final String getClientURL() {
 		return clientURL;
+	}
+	
+	@Override
+	public final String getClientName() {
+		return clientName;
 	}
 
 	@Override
@@ -605,6 +612,11 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 		this.clientURL = clientURL;
 		initRequestHeaders();
 	}
+	
+	protected final void setClientName(String clientName) {
+		this.clientName = clientName;
+		initRequestHeaders();
+	}
 
 	protected final void setClientVersion(String clientVersion) {
 		this.clientVersion = clientVersion;
@@ -764,7 +776,7 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 		if (isNullOrEmpty(oAuthBaseURL)) oAuthBaseURL = DEFAULT_OAUTH_BASE_URL;
 		this.oAuthBaseURL = fixURLSlash(oAuthBaseURL);
 
-		oAuthAccessTokenURL = oAuthBaseURL + PATH_SEGMENT_ACCESS_TOKEN};
+		oAuthAccessTokenURL = oAuthBaseURL + PATH_SEGMENT_ACCESS_TOKEN;
 		oAuthAuthenticationURL = oAuthBaseURL + PATH_SEGMENT_AUTHENTICATION;
 		oAuthAuthorizationURL = oAuthBaseURL + PATH_SEGMENT_AUTHORIZATION;
 		oAuthRequestTokenURL = oAuthBaseURL + PATH_SEGMENT_REQUEST_TOKEN;
@@ -807,7 +819,7 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 		if (isNullOrEmpty(signingOAuthBaseURL)) signingOAuthBaseURL = DEFAULT_SIGNING_OAUTH_BASE_URL;
 		this.signingOAuthBaseURL = fixURLSlash(signingOAuthBaseURL);
 		
-		signingOAuthAccessTokenURL = signingOAuthBaseURL + PATH_SEGMENT_ACCESS_TOKEN};
+		signingOAuthAccessTokenURL = signingOAuthBaseURL + PATH_SEGMENT_ACCESS_TOKEN;
 		signingOAuthAuthenticationURL = signingOAuthBaseURL + PATH_SEGMENT_AUTHENTICATION;
 		signingOAuthAuthorizationURL = signingOAuthBaseURL + PATH_SEGMENT_AUTHORIZATION;
 		signingOAuthRequestTokenURL = signingOAuthBaseURL + PATH_SEGMENT_REQUEST_TOKEN;
@@ -915,17 +927,19 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 		return urlOrig;
 	}
 
+	//FIXME "Socket is closed" error
 	private void initRequestHeaders() {
 		requestHeaders = new HashMap<String, String>();
 		requestHeaders.put("X-Twitter-Client-Version", getClientVersion());
 		requestHeaders.put("X-Twitter-Client-URL", getClientURL());
-		requestHeaders.put("X-Twitter-Client", "Twitter4J");
+		requestHeaders.put("X-Twitter-Client", getClientName());
 
 		requestHeaders.put("User-Agent", getUserAgent());
 		if (gzipEnabled) {
 			requestHeaders.put("Accept-Encoding", "gzip");
 		}
-		requestHeaders.put("Connection", "close");
+		//I found this may cause "Socket is closed" error in Android, so I commented it out.
+		requestHeaders.put("Connection", "keep-alive");
 	}
 
 	private static void cacheInstance(ConfigurationBase conf) {

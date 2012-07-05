@@ -228,7 +228,8 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 
 	private HttpURLConnection getConnection(String url) throws IOException {
 
-		HttpURLConnection con;
+		final HttpURLConnection con;
+		final Proxy proxy;
 		if (isProxyConfigured()) {
 			if (CONF.getHttpProxyUser() != null && !CONF.getHttpProxyUser().equals("")) {
 				if (logger.isDebugEnabled()) {
@@ -248,16 +249,16 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 					}
 				});
 			}
-			final Proxy proxy = new Proxy(Proxy.Type.HTTP, InetSocketAddress.createUnresolved(CONF.getHttpProxyHost(),
+			proxy = new Proxy(Proxy.Type.HTTP, InetSocketAddress.createUnresolved(CONF.getHttpProxyHost(),
 					CONF.getHttpProxyPort()));
 			if (logger.isDebugEnabled()) {
 				logger.debug("Opening proxied connection(" + CONF.getHttpProxyHost() + ":" + CONF.getHttpProxyPort()
 						+ ")");
 			}
-			con = (HttpURLConnection) new URL(url).openConnection(proxy);
 		} else {
-			con = (HttpURLConnection) new URL(url).openConnection();
+			proxy = Proxy.NO_PROXY;
 		}
+		con = (HttpURLConnection) new URL(url).openConnection(proxy);
 		if (CONF.getHttpConnectionTimeout() > 0) {
 			con.setConnectTimeout(CONF.getHttpConnectionTimeout());
 		}
@@ -265,7 +266,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 			con.setReadTimeout(CONF.getHttpReadTimeout());
 		}
 		con.setInstanceFollowRedirects(false);
-		if (con instanceof HttpsURLConnection && CONF.getIgnoreSSLError()) {
+		if (con instanceof HttpsURLConnection && CONF.isSSLErrorIgnored()) {
 			((HttpsURLConnection) con).setHostnameVerifier(ALLOW_ALL_HOSTNAME_VERIFIER);
 			if (IGNORE_ERROR_SSL_FACTORY != null) {
 				((HttpsURLConnection) con).setSSLSocketFactory(IGNORE_ERROR_SSL_FACTORY);
@@ -294,8 +295,10 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 			}
 			connection.addRequestProperty("Authorization", authorizationHeader);
 		}
-		if (req.getRequestHeaders() != null) {
-			for (final String key : req.getRequestHeaders().keySet()) {
+		final Map<String, String> req_headers = req.getRequestHeaders();
+		if (req_headers != null) {
+			for (final String key : req_headers.keySet()) {
+				//FIXME "Socket is closed" error if properties added here
 				connection.addRequestProperty(key, req.getRequestHeaders().get(key));
 				logger.debug(key + ": " + req.getRequestHeaders().get(key));
 			}
