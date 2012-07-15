@@ -16,11 +16,13 @@
 
 package twitter4j;
 
+import java.io.Serializable;
+
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.9
  */
-public interface AccountSettings extends TwitterResponse, java.io.Serializable {
+public interface AccountSettings extends TwitterResponse, Serializable {
 	/**
 	 * Returns the language used to render Twitter's UII for this user.
 	 * 

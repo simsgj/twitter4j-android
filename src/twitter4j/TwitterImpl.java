@@ -97,22 +97,6 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public User checkUserListMembership(String listOwnerScreenName, int listId, long userId) throws TwitterException {
-		return showUserListMembership(listId, userId);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public User checkUserListSubscription(String listOwnerScreenName, int listId, long userId) throws TwitterException {
-		return showUserListSubscription(listId, userId);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public User createBlock(long userId) throws TwitterException {
 		ensureAuthorizationEnabled();
 		return factory.createUser(post(conf.getRestBaseURL() + "blocks/create.json?include_entities="
@@ -139,8 +123,6 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 				+ conf.isIncludeEntitiesEnabled()));
 	}
 
-	/* Status Methods */
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -160,6 +142,8 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 		return factory.createUser(post(conf.getRestBaseURL() + "friendships/create.json?include_entities="
 				+ conf.isIncludeEntitiesEnabled() + "&user_id=" + userId + "&follow=" + follow));
 	}
+
+	/* Status Methods */
 
 	/**
 	 * {@inheritDoc}
@@ -491,8 +475,6 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 		return factory.createLocationList(get(conf.getRestBaseURL() + "trends/available.json"));
 	}
 
-	/* User Methods */
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -638,8 +620,6 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 		return factory.createIDs(get(conf.getRestBaseURL() + "followers/ids.json?cursor=" + cursor));
 	}
 
-	/* List Methods */
-
 	/**
 	 * {@inheritDoc}
 	 */
@@ -656,33 +636,6 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	public IDs getFollowersIDs(String screenName, long cursor) throws TwitterException {
 		return factory.createIDs(get(conf.getRestBaseURL() + "followers/ids.json?screen_name=" + screenName
 				+ "&cursor=" + cursor));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public PagableResponseList<User> getFollowersStatuses(long cursor) throws TwitterException {
-		return factory.createPagableUserList(get(conf.getRestBaseURL() + "statuses/followers.json?include_entities="
-				+ conf.isIncludeEntitiesEnabled() + "&cursor=" + cursor));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public PagableResponseList<User> getFollowersStatuses(long userId, long cursor) throws TwitterException {
-		return factory.createPagableUserList(get(conf.getRestBaseURL() + "statuses/followers.json?include_entities="
-				+ conf.isIncludeEntitiesEnabled() + "&user_id=" + userId + "&cursor=" + cursor));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public PagableResponseList<User> getFollowersStatuses(String screenName, long cursor) throws TwitterException {
-		return factory.createPagableUserList(get(conf.getRestBaseURL() + "statuses/followers.json?include_entities="
-				+ conf.isIncludeEntitiesEnabled() + "&screen_name=" + screenName + "&cursor=" + cursor));
 	}
 
 	/**
@@ -709,56 +662,6 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	public IDs getFriendsIDs(String screenName, long cursor) throws TwitterException {
 		return factory.createIDs(get(conf.getRestBaseURL() + "friends/ids.json?screen_name=" + screenName + "&cursor="
 				+ cursor));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public PagableResponseList<User> getFriendsStatuses(long cursor) throws TwitterException {
-		return factory.createPagableUserList(get(conf.getRestBaseURL() + "statuses/friends.json?include_entities="
-				+ conf.isIncludeEntitiesEnabled() + "&cursor=" + cursor));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public PagableResponseList<User> getFriendsStatuses(long userId, long cursor) throws TwitterException {
-		return factory.createPagableUserList(get(conf.getRestBaseURL() + "statuses/friends.json?include_entities="
-				+ conf.isIncludeEntitiesEnabled() + "&user_id=" + userId + "&cursor=" + cursor));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public PagableResponseList<User> getFriendsStatuses(String screenName, long cursor) throws TwitterException {
-		return factory.createPagableUserList(get(conf.getRestBaseURL() + "statuses/friends.json?include_entities="
-				+ conf.isIncludeEntitiesEnabled() + "&screen_name=" + screenName + "&cursor=" + cursor));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public ResponseList<Status> getFriendsTimeline() throws TwitterException {
-		ensureAuthorizationEnabled();
-		return factory.createStatusList(get(conf.getRestBaseURL()
-				+ "statuses/friends_timeline.json?include_my_retweet=1&include_entities="
-				+ conf.isIncludeEntitiesEnabled() + "&include_rts=" + conf.isIncludeRTsEnabled()));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public ResponseList<Status> getFriendsTimeline(Paging paging) throws TwitterException {
-		ensureAuthorizationEnabled();
-		return factory.createStatusList(get(
-				conf.getRestBaseURL() + "statuses/friends_timeline.json",
-				mergeParameters(new HttpParameter[] { INCLUDE_RTS, INCLUDE_ENTITIES, INCLUDE_MY_RETWEET },
-						paging.asPostParameterArray())));
 	}
 
 	/**
@@ -887,17 +790,7 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 				+ ".json?size=" + size.getName()));
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public ResponseList<Status> getPublicTimeline() throws TwitterException {
-		return factory.createStatusList(get(conf.getRestBaseURL()
-				+ "statuses/public_timeline.json?include_my_retweet=1&include_entities="
-				+ conf.isIncludeEntitiesEnabled() + "&include_rts=" + conf.isIncludeRTsEnabled()));
-	}
-
-	/* List Subscribers Methods */
+	/* Direct Message Methods */
 
 	/**
 	 * {@inheritDoc}
@@ -1146,23 +1039,7 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 				+ "&include_entities=" + conf.isIncludeEntitiesEnabled() + "&cursor=" + cursor));
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public PagableResponseList<User> getUserListMembers(long listOwnerId, int listId, long cursor)
-			throws TwitterException {
-		return getUserListMembers(listId, cursor);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public PagableResponseList<User> getUserListMembers(String listOwnerScreenName, int listId, long cursor)
-			throws TwitterException {
-		return getUserListMembers(listId, cursor);
-	}
+	/* Social Graph Methods */
 
 	/**
 	 * {@inheritDoc}
@@ -1253,35 +1130,9 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public ResponseList<Status> getUserListStatuses(long listOwnerId, int id, Paging paging) throws TwitterException {
-		return getUserListStatuses(id, paging);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public ResponseList<Status> getUserListStatuses(String listOwnerScreenName, int id, Paging paging)
-			throws TwitterException {
-		return getUserListStatuses(id, paging);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public PagableResponseList<User> getUserListSubscribers(int listId, long cursor) throws TwitterException {
 		return factory.createPagableUserList(get(conf.getRestBaseURL() + "lists/subscribers.json?list_id=" + listId
 				+ "&include_entities=" + conf.isIncludeEntitiesEnabled() + "&cursor=" + cursor));
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public PagableResponseList<User> getUserListSubscribers(String listOwnerScreenName, int listId, long cursor)
-			throws TwitterException {
-		return getUserListSubscribers(listId, cursor);
 	}
 
 	/**
@@ -1600,21 +1451,11 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public UserList showUserList(String listOwnerScreenName, int id) throws TwitterException {
-		return showUserList(id);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public User showUserListMembership(int listId, long userId) throws TwitterException {
 		ensureAuthorizationEnabled();
 		return factory.createUser(get(conf.getRestBaseURL() + "lists/members/show.json?list_id=" + listId + "&user_id="
 				+ userId + "&include_entities=" + conf.isIncludeEntitiesEnabled()));
 	}
-
-	/* Spam Reporting Methods */
 
 	/**
 	 * {@inheritDoc}
@@ -1630,18 +1471,6 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public UserList subscribeUserList(String listOwnerScreenName, int listId) throws TwitterException {
-		ensureAuthorizationEnabled();
-		return factory.createAUserList(post(conf.getRestBaseURL() + listOwnerScreenName + "/" + listId
-				+ "/subscribers.json"));
-	}
-
-	/* Saved Searches Methods */
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public boolean test() throws TwitterException {
 		return -1 != get(conf.getRestBaseURL() + "help/test.json").asString().indexOf("ok");
 	}
@@ -1649,14 +1478,6 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	@Override
 	public String toString() {
 		return "TwitterImpl{" + "INCLUDE_ENTITIES=" + INCLUDE_ENTITIES + ", INCLUDE_RTS=" + INCLUDE_RTS + '}';
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public UserList unsubscribeUserList(String listOwnerScreenName, int listId) throws TwitterException {
-		return destroyUserListSubscription(listId);
 	}
 
 	/**

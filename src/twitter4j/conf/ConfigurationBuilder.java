@@ -219,41 +219,6 @@ public final class ConfigurationBuilder {
 		return this;
 	}
 
-	@Deprecated
-	public ConfigurationBuilder setOAuthRequestTokenURL(String oAuthRequestTokenURL) {
-		checkNotBuilt();
-		configuration.setOAuthRequestTokenURL(oAuthRequestTokenURL);
-		return this;
-	}
-	
-	@Deprecated
-	public ConfigurationBuilder setSigningOAuthAccessTokenURL(String oAuthAccessTokenURL) {
-		checkNotBuilt();
-		configuration.setSigningOAuthAccessTokenURL(oAuthAccessTokenURL);
-		return this;
-	}
-
-	@Deprecated
-	public ConfigurationBuilder setSigningOAuthAuthenticationURL(String oAuthAuthenticationURL) {
-		checkNotBuilt();
-		configuration.setSigningOAuthAuthenticationURL(oAuthAuthenticationURL);
-		return this;
-	}
-
-	@Deprecated
-	public ConfigurationBuilder setSigningOAuthAuthorizationURL(String oAuthAuthorizationURL) {
-		checkNotBuilt();
-		configuration.setSigningOAuthAuthorizationURL(oAuthAuthorizationURL);
-		return this;
-	}
-
-	@Deprecated
-	public ConfigurationBuilder setSigningOAuthRequestTokenURL(String oAuthRequestTokenURL) {
-		checkNotBuilt();
-		configuration.setSigningOAuthRequestTokenURL(oAuthRequestTokenURL);
-		return this;
-	}
-	
 	public ConfigurationBuilder setOAuthBaseURL(String oAuthBaseURL) {
 		checkNotBuilt();
 		configuration.setOAuthBaseURL(oAuthBaseURL);
@@ -272,6 +237,12 @@ public final class ConfigurationBuilder {
 		return this;
 	}
 
+	@Deprecated
+	public ConfigurationBuilder setOAuthRequestTokenURL(String oAuthRequestTokenURL) {
+		checkNotBuilt();
+		configuration.setOAuthRequestTokenURL(oAuthRequestTokenURL);
+		return this;
+	}
 
 	public ConfigurationBuilder setPassword(String password) {
 		checkNotBuilt();
@@ -297,9 +268,37 @@ public final class ConfigurationBuilder {
 		return this;
 	}
 
+	@Deprecated
+	public ConfigurationBuilder setSigningOAuthAccessTokenURL(String oAuthAccessTokenURL) {
+		checkNotBuilt();
+		configuration.setSigningOAuthAccessTokenURL(oAuthAccessTokenURL);
+		return this;
+	}
+
+	@Deprecated
+	public ConfigurationBuilder setSigningOAuthAuthenticationURL(String oAuthAuthenticationURL) {
+		checkNotBuilt();
+		configuration.setSigningOAuthAuthenticationURL(oAuthAuthenticationURL);
+		return this;
+	}
+
+	@Deprecated
+	public ConfigurationBuilder setSigningOAuthAuthorizationURL(String oAuthAuthorizationURL) {
+		checkNotBuilt();
+		configuration.setSigningOAuthAuthorizationURL(oAuthAuthorizationURL);
+		return this;
+	}
+
 	public ConfigurationBuilder setSigningOAuthBaseURL(String signingOAuthBaseURL) {
 		checkNotBuilt();
 		configuration.setSigningOAuthBaseURL(signingOAuthBaseURL);
+		return this;
+	}
+
+	@Deprecated
+	public ConfigurationBuilder setSigningOAuthRequestTokenURL(String oAuthRequestTokenURL) {
+		checkNotBuilt();
+		configuration.setSigningOAuthRequestTokenURL(oAuthRequestTokenURL);
 		return this;
 	}
 

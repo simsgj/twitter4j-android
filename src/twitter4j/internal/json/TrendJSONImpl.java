@@ -18,6 +18,8 @@ package twitter4j.internal.json;
 
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
 
+import java.io.Serializable;
+
 import org.json.JSONObject;
 
 import twitter4j.Trend;
@@ -28,7 +30,7 @@ import twitter4j.Trend;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.0.2
  */
-/* package */final class TrendJSONImpl implements Trend, java.io.Serializable {
+/* package */final class TrendJSONImpl implements Trend, Serializable {
 	private String name;
 	private String url = null;
 	private String query = null;

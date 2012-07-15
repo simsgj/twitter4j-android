@@ -1,10 +1,12 @@
 package twitter4j;
 
+import java.io.Serializable;
+
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.1
  */
-public interface Place extends TwitterResponse, Comparable<Place>, java.io.Serializable {
+public interface Place extends TwitterResponse, Comparable<Place>, Serializable {
 	GeoLocation[][] getBoundingBoxCoordinates();
 
 	String getBoundingBoxType();

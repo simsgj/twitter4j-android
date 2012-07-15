@@ -65,7 +65,7 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 	private String oAuthAuthorizationURL;
 	private String oAuthAccessTokenURL;
 	private String oAuthAuthenticationURL;
-	
+
 	private String signingOAuthRequestTokenURL;
 	private String signingOAuthAuthorizationURL;
 	private String signingOAuthAccessTokenURL;
@@ -233,10 +233,10 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 				: that.oAuthAuthorizationURL != null) return false;
 		if (signingOAuthAccessTokenURL != null ? !signingOAuthAccessTokenURL.equals(that.signingOAuthAccessTokenURL)
 				: that.signingOAuthAccessTokenURL != null) return false;
-		if (signingOAuthAuthenticationURL != null ? !signingOAuthAuthenticationURL.equals(that.signingOAuthAuthenticationURL)
-				: that.signingOAuthAuthenticationURL != null) return false;
-		if (signingOAuthAuthorizationURL != null ? !signingOAuthAuthorizationURL.equals(that.signingOAuthAuthorizationURL)
-				: that.signingOAuthAuthorizationURL != null) return false;
+		if (signingOAuthAuthenticationURL != null ? !signingOAuthAuthenticationURL
+				.equals(that.signingOAuthAuthenticationURL) : that.signingOAuthAuthenticationURL != null) return false;
+		if (signingOAuthAuthorizationURL != null ? !signingOAuthAuthorizationURL
+				.equals(that.signingOAuthAuthorizationURL) : that.signingOAuthAuthorizationURL != null) return false;
 		if (oAuthConsumerKey != null ? !oAuthConsumerKey.equals(that.oAuthConsumerKey) : that.oAuthConsumerKey != null)
 			return false;
 		if (oAuthConsumerSecret != null ? !oAuthConsumerSecret.equals(that.oAuthConsumerSecret)
@@ -273,13 +273,13 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 	}
 
 	@Override
-	public final String getClientURL() {
-		return clientURL;
-	}
-	
-	@Override
 	public final String getClientName() {
 		return clientName;
+	}
+
+	@Override
+	public final String getClientURL() {
+		return clientURL;
 	}
 
 	@Override
@@ -347,11 +347,6 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 	@Override
 	public int getHttpStreamingReadTimeout() {
 		return httpStreamingReadTimeout;
-	}
-
-	@Override
-	public final boolean isSSLErrorIgnored() {
-		return ignoreSSLError;
 	}
 
 	@Override
@@ -435,9 +430,31 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 	}
 
 	@Override
+	public String getSigningOAuthAccessTokenURL() {
+		return signingOAuthAccessTokenURL;
+	}
+
+	@Override
+	public String getSigningOAuthAuthenticationURL() {
+		return signingOAuthAuthenticationURL;
+	}
+
+	@Override
+	public String getSigningOAuthAuthorizationURL() {
+		return signingOAuthAuthorizationURL;
+	}
+
+	@Override
 	public String getSigningOAuthBaseURL() {
 		return signingOAuthBaseURL;
 	}
+
+	@Override
+	public String getSigningOAuthRequestTokenURL() {
+		return signingOAuthRequestTokenURL;
+	}
+
+	// oauth related setter/getters
 
 	@Override
 	public String getSigningRestBaseURL() {
@@ -453,8 +470,6 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 	public String getStreamBaseURL() {
 		return streamBaseURL;
 	}
-
-	// oauth related setter/getters
 
 	@Override
 	public String getUploadBaseURL() {
@@ -564,6 +579,11 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 	}
 
 	@Override
+	public final boolean isSSLErrorIgnored() {
+		return ignoreSSLError;
+	}
+
+	@Override
 	public boolean isUserStreamRepliesAllEnabled() {
 		return userStreamRepliesAllEnabled;
 	}
@@ -608,13 +628,13 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 		this.asyncNumThreads = asyncNumThreads;
 	}
 
-	protected final void setClientURL(String clientURL) {
-		this.clientURL = clientURL;
-		initRequestHeaders();
-	}
-	
 	protected final void setClientName(String clientName) {
 		this.clientName = clientName;
+		initRequestHeaders();
+	}
+
+	protected final void setClientURL(String clientURL) {
+		this.clientURL = clientURL;
 		initRequestHeaders();
 	}
 
@@ -718,69 +738,42 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 
 	@Deprecated
 	protected final void setOAuthAccessTokenURL(String oAuthAccessTokenURL) {
-		if (isNullOrEmpty(oAuthAccessTokenURL)) oAuthAccessTokenURL = DEFAULT_OAUTH_ACCESS_TOKEN_URL;
+		if (isNullOrEmpty(oAuthAccessTokenURL)) {
+			oAuthAccessTokenURL = DEFAULT_OAUTH_ACCESS_TOKEN_URL;
+		}
 		this.oAuthAccessTokenURL = oAuthAccessTokenURL;
 		fixRestBaseURL();
 	}
 
 	@Deprecated
 	protected final void setOAuthAuthenticationURL(String oAuthAuthenticationURL) {
-		if (isNullOrEmpty(oAuthAuthenticationURL)) oAuthAuthenticationURL = DEFAULT_OAUTH_AUTHENTICATION_URL;
+		if (isNullOrEmpty(oAuthAuthenticationURL)) {
+			oAuthAuthenticationURL = DEFAULT_OAUTH_AUTHENTICATION_URL;
+		}
 		this.oAuthAuthenticationURL = oAuthAuthenticationURL;
 		fixRestBaseURL();
 	}
 
 	@Deprecated
 	protected final void setOAuthAuthorizationURL(String oAuthAuthorizationURL) {
-		if (isNullOrEmpty(oAuthAuthorizationURL)) oAuthAuthorizationURL = DEFAULT_OAUTH_AUTHORIZATION_URL;
+		if (isNullOrEmpty(oAuthAuthorizationURL)) {
+			oAuthAuthorizationURL = DEFAULT_OAUTH_AUTHORIZATION_URL;
+		}
 		this.oAuthAuthorizationURL = oAuthAuthorizationURL;
-		fixRestBaseURL();
-	}
-	
-	@Deprecated
-	protected final void setOAuthRequestTokenURL(String oAuthRequestTokenURL) {
-		if (isNullOrEmpty(oAuthRequestTokenURL)) oAuthRequestTokenURL = DEFAULT_OAUTH_REQUEST_TOKEN_URL;
-		this.oAuthRequestTokenURL = oAuthRequestTokenURL;
-		fixRestBaseURL();
-	}
-	
-	@Deprecated
-	protected final void setSigningOAuthAccessTokenURL(String signingOAuthAccessTokenURL) {
-		if (isNullOrEmpty(signingOAuthAccessTokenURL)) signingOAuthAccessTokenURL = DEFAULT_SIGNING_OAUTH_ACCESS_TOKEN_URL;
-		this.signingOAuthAccessTokenURL = signingOAuthAccessTokenURL;
-		fixRestBaseURL();
-	}
-
-	@Deprecated
-	protected final void setSigningOAuthAuthenticationURL(String signingOAuthAuthenticationURL) {
-		if (isNullOrEmpty(signingOAuthAuthenticationURL)) signingOAuthAuthenticationURL = DEFAULT_SIGNING_OAUTH_AUTHENTICATION_URL;
-		this.signingOAuthAuthenticationURL = signingOAuthAuthenticationURL;
-		fixRestBaseURL();
-	}
-
-	@Deprecated
-	protected final void setSigningOAuthAuthorizationURL(String signingOAuthAuthorizationURL) {
-		if (isNullOrEmpty(signingOAuthAuthorizationURL)) signingOAuthAuthorizationURL = DEFAULT_SIGNING_OAUTH_AUTHORIZATION_URL;
-		this.signingOAuthAuthorizationURL = signingOAuthAuthorizationURL;
-		fixRestBaseURL();
-	}
-	
-	@Deprecated
-	protected final void setSigningOAuthRequestTokenURL(String signingOAuthRequestTokenURL) {
-		if (isNullOrEmpty(signingOAuthRequestTokenURL)) signingOAuthRequestTokenURL = DEFAULT_SIGNING_OAUTH_REQUEST_TOKEN_URL;
-		this.signingOAuthRequestTokenURL = signingOAuthRequestTokenURL;
 		fixRestBaseURL();
 	}
 
 	protected final void setOAuthBaseURL(String oAuthBaseURL) {
-		if (isNullOrEmpty(oAuthBaseURL)) oAuthBaseURL = DEFAULT_OAUTH_BASE_URL;
+		if (isNullOrEmpty(oAuthBaseURL)) {
+			oAuthBaseURL = DEFAULT_OAUTH_BASE_URL;
+		}
 		this.oAuthBaseURL = fixURLSlash(oAuthBaseURL);
 
 		oAuthAccessTokenURL = oAuthBaseURL + PATH_SEGMENT_ACCESS_TOKEN;
 		oAuthAuthenticationURL = oAuthBaseURL + PATH_SEGMENT_AUTHENTICATION;
 		oAuthAuthorizationURL = oAuthBaseURL + PATH_SEGMENT_AUTHORIZATION;
 		oAuthRequestTokenURL = oAuthBaseURL + PATH_SEGMENT_REQUEST_TOKEN;
-	
+
 		setSigningOAuthBaseURL(oAuthBaseURL);
 		fixRestBaseURL();
 	}
@@ -795,6 +788,14 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 		fixRestBaseURL();
 	}
 
+	@Deprecated
+	protected final void setOAuthRequestTokenURL(String oAuthRequestTokenURL) {
+		if (isNullOrEmpty(oAuthRequestTokenURL)) {
+			oAuthRequestTokenURL = DEFAULT_OAUTH_REQUEST_TOKEN_URL;
+		}
+		this.oAuthRequestTokenURL = oAuthRequestTokenURL;
+		fixRestBaseURL();
+	}
 
 	protected final void setPassword(String password) {
 		this.password = password;
@@ -805,46 +806,96 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 	}
 
 	protected final void setRestBaseURL(String restBaseURL) {
-		if (isNullOrEmpty(restBaseURL)) restBaseURL = DEFAULT_REST_BASE_URL;
+		if (isNullOrEmpty(restBaseURL)) {
+			restBaseURL = DEFAULT_REST_BASE_URL;
+		}
 		this.restBaseURL = fixURLSlash(restBaseURL);
 		fixRestBaseURL();
 	}
 
 	protected final void setSearchBaseURL(String searchBaseURL) {
-		if (isNullOrEmpty(searchBaseURL)) searchBaseURL = DEFAULT_SEARCH_BASE_URL;
+		if (isNullOrEmpty(searchBaseURL)) {
+			searchBaseURL = DEFAULT_SEARCH_BASE_URL;
+		}
 		this.searchBaseURL = fixURLSlash(searchBaseURL);
 	}
 
+	@Deprecated
+	protected final void setSigningOAuthAccessTokenURL(String signingOAuthAccessTokenURL) {
+		if (isNullOrEmpty(signingOAuthAccessTokenURL)) {
+			signingOAuthAccessTokenURL = DEFAULT_SIGNING_OAUTH_ACCESS_TOKEN_URL;
+		}
+		this.signingOAuthAccessTokenURL = signingOAuthAccessTokenURL;
+		fixRestBaseURL();
+	}
+
+	@Deprecated
+	protected final void setSigningOAuthAuthenticationURL(String signingOAuthAuthenticationURL) {
+		if (isNullOrEmpty(signingOAuthAuthenticationURL)) {
+			signingOAuthAuthenticationURL = DEFAULT_SIGNING_OAUTH_AUTHENTICATION_URL;
+		}
+		this.signingOAuthAuthenticationURL = signingOAuthAuthenticationURL;
+		fixRestBaseURL();
+	}
+
+	@Deprecated
+	protected final void setSigningOAuthAuthorizationURL(String signingOAuthAuthorizationURL) {
+		if (isNullOrEmpty(signingOAuthAuthorizationURL)) {
+			signingOAuthAuthorizationURL = DEFAULT_SIGNING_OAUTH_AUTHORIZATION_URL;
+		}
+		this.signingOAuthAuthorizationURL = signingOAuthAuthorizationURL;
+		fixRestBaseURL();
+	}
+
 	protected final void setSigningOAuthBaseURL(String signingOAuthBaseURL) {
-		if (isNullOrEmpty(signingOAuthBaseURL)) signingOAuthBaseURL = DEFAULT_SIGNING_OAUTH_BASE_URL;
+		if (isNullOrEmpty(signingOAuthBaseURL)) {
+			signingOAuthBaseURL = DEFAULT_SIGNING_OAUTH_BASE_URL;
+		}
 		this.signingOAuthBaseURL = fixURLSlash(signingOAuthBaseURL);
-		
+
 		signingOAuthAccessTokenURL = signingOAuthBaseURL + PATH_SEGMENT_ACCESS_TOKEN;
 		signingOAuthAuthenticationURL = signingOAuthBaseURL + PATH_SEGMENT_AUTHENTICATION;
 		signingOAuthAuthorizationURL = signingOAuthBaseURL + PATH_SEGMENT_AUTHORIZATION;
 		signingOAuthRequestTokenURL = signingOAuthBaseURL + PATH_SEGMENT_REQUEST_TOKEN;
-		
+
+		fixRestBaseURL();
+	}
+
+	@Deprecated
+	protected final void setSigningOAuthRequestTokenURL(String signingOAuthRequestTokenURL) {
+		if (isNullOrEmpty(signingOAuthRequestTokenURL)) {
+			signingOAuthRequestTokenURL = DEFAULT_SIGNING_OAUTH_REQUEST_TOKEN_URL;
+		}
+		this.signingOAuthRequestTokenURL = signingOAuthRequestTokenURL;
 		fixRestBaseURL();
 	}
 
 	protected final void setSigningRestBaseURL(String signingRestBaseURL) {
-		if (isNullOrEmpty(signingRestBaseURL)) signingRestBaseURL = DEFAULT_SIGNING_REST_BASE_URL;
+		if (isNullOrEmpty(signingRestBaseURL)) {
+			signingRestBaseURL = DEFAULT_SIGNING_REST_BASE_URL;
+		}
 		this.signingRestBaseURL = fixURLSlash(signingRestBaseURL);
 		fixRestBaseURL();
 	}
 
 	protected final void setSiteStreamBaseURL(String siteStreamBaseURL) {
-		if (isNullOrEmpty(siteStreamBaseURL)) siteStreamBaseURL = DEFAULT_SITE_STREAM_BASE_URL;
+		if (isNullOrEmpty(siteStreamBaseURL)) {
+			siteStreamBaseURL = DEFAULT_SITE_STREAM_BASE_URL;
+		}
 		this.siteStreamBaseURL = siteStreamBaseURL;
 	}
 
 	protected final void setStreamBaseURL(String streamBaseURL) {
-		if (isNullOrEmpty(streamBaseURL)) streamBaseURL = DEFAULT_STREAM_BASE_URL;
+		if (isNullOrEmpty(streamBaseURL)) {
+			streamBaseURL = DEFAULT_STREAM_BASE_URL;
+		}
 		this.streamBaseURL = streamBaseURL;
 	}
 
 	protected final void setUploadBaseURL(String uploadBaseURL) {
-		if (isNullOrEmpty(uploadBaseURL)) uploadBaseURL = DEFAULT_UPLOAD_BASE_URL;
+		if (isNullOrEmpty(uploadBaseURL)) {
+			uploadBaseURL = DEFAULT_UPLOAD_BASE_URL;
+		}
 		this.uploadBaseURL = fixURLSlash(uploadBaseURL);
 		fixUploadBaseURL();
 	}
@@ -878,36 +929,48 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 		if (restBaseURL != null && restBaseURL.equals(fixURL(DEFAULT_USE_SSL, signingRestBaseURL))) {
 			signingRestBaseURL = fixURL(useSSL, signingRestBaseURL);
 		}
-		//TODO
+		// TODO
 		if (DEFAULT_OAUTH_BASE_URL.equals(fixURL(DEFAULT_USE_SSL, oAuthBaseURL))) {
 			oAuthBaseURL = fixURL(useSSL, oAuthBaseURL);
 		}
-		//TODO
+		// TODO
 		if (oAuthBaseURL != null && oAuthBaseURL.equals(fixURL(DEFAULT_USE_SSL, signingOAuthBaseURL))) {
 			signingOAuthBaseURL = fixURL(useSSL, signingOAuthBaseURL);
 		}
-		if (oAuthBaseURL != null && (oAuthBaseURL+PATH_SEGMENT_ACCESS_TOKEN).equals(fixURL(DEFAULT_USE_SSL, oAuthAccessTokenURL))) {
+		if (oAuthBaseURL != null
+				&& (oAuthBaseURL + PATH_SEGMENT_ACCESS_TOKEN).equals(fixURL(DEFAULT_USE_SSL, oAuthAccessTokenURL))) {
 			oAuthAccessTokenURL = fixURL(useSSL, oAuthAccessTokenURL);
 		}
-		if (oAuthBaseURL != null && (oAuthBaseURL+PATH_SEGMENT_AUTHENTICATION).equals(fixURL(DEFAULT_USE_SSL, oAuthAuthenticationURL))) {
+		if (oAuthBaseURL != null
+				&& (oAuthBaseURL + PATH_SEGMENT_AUTHENTICATION).equals(fixURL(DEFAULT_USE_SSL, oAuthAuthenticationURL))) {
 			oAuthAuthenticationURL = fixURL(useSSL, oAuthAuthenticationURL);
 		}
-		if (oAuthBaseURL != null && (oAuthBaseURL+PATH_SEGMENT_AUTHORIZATION).equals(fixURL(DEFAULT_USE_SSL, oAuthAuthorizationURL))) {
+		if (oAuthBaseURL != null
+				&& (oAuthBaseURL + PATH_SEGMENT_AUTHORIZATION).equals(fixURL(DEFAULT_USE_SSL, oAuthAuthorizationURL))) {
 			oAuthAuthorizationURL = fixURL(useSSL, oAuthAuthorizationURL);
 		}
-		if (oAuthBaseURL != null && (oAuthBaseURL+PATH_SEGMENT_REQUEST_TOKEN).equals(fixURL(DEFAULT_USE_SSL, oAuthRequestTokenURL))) {
+		if (oAuthBaseURL != null
+				&& (oAuthBaseURL + PATH_SEGMENT_REQUEST_TOKEN).equals(fixURL(DEFAULT_USE_SSL, oAuthRequestTokenURL))) {
 			oAuthRequestTokenURL = fixURL(useSSL, oAuthRequestTokenURL);
 		}
-		if (signingOAuthBaseURL != null && (signingOAuthBaseURL+PATH_SEGMENT_ACCESS_TOKEN).equals(fixURL(DEFAULT_USE_SSL, signingOAuthAccessTokenURL))) {
+		if (signingOAuthBaseURL != null
+				&& (signingOAuthBaseURL + PATH_SEGMENT_ACCESS_TOKEN).equals(fixURL(DEFAULT_USE_SSL,
+						signingOAuthAccessTokenURL))) {
 			signingOAuthAccessTokenURL = fixURL(useSSL, signingOAuthAccessTokenURL);
 		}
-		if (signingOAuthBaseURL != null && (signingOAuthBaseURL+PATH_SEGMENT_ACCESS_TOKEN).equals(fixURL(DEFAULT_USE_SSL, signingOAuthAuthenticationURL))) {
+		if (signingOAuthBaseURL != null
+				&& (signingOAuthBaseURL + PATH_SEGMENT_ACCESS_TOKEN).equals(fixURL(DEFAULT_USE_SSL,
+						signingOAuthAuthenticationURL))) {
 			signingOAuthAuthenticationURL = fixURL(useSSL, signingOAuthAuthenticationURL);
 		}
-		if (signingOAuthBaseURL != null && (signingOAuthBaseURL+PATH_SEGMENT_ACCESS_TOKEN).equals(fixURL(DEFAULT_USE_SSL, signingOAuthAuthorizationURL))) {
+		if (signingOAuthBaseURL != null
+				&& (signingOAuthBaseURL + PATH_SEGMENT_ACCESS_TOKEN).equals(fixURL(DEFAULT_USE_SSL,
+						signingOAuthAuthorizationURL))) {
 			signingOAuthAuthorizationURL = fixURL(useSSL, signingOAuthAuthorizationURL);
 		}
-		if (signingOAuthBaseURL != null && (signingOAuthBaseURL+PATH_SEGMENT_ACCESS_TOKEN).equals(fixURL(DEFAULT_USE_SSL, signingOAuthRequestTokenURL))) {
+		if (signingOAuthBaseURL != null
+				&& (signingOAuthBaseURL + PATH_SEGMENT_ACCESS_TOKEN).equals(fixURL(DEFAULT_USE_SSL,
+						signingOAuthRequestTokenURL))) {
 			signingOAuthRequestTokenURL = fixURL(useSSL, signingOAuthRequestTokenURL);
 		}
 		if (DEFAULT_SEARCH_BASE_URL.equals(fixURL(DEFAULT_USE_SSL, searchBaseURL))) {
@@ -921,13 +984,7 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 		}
 	}
 
-	static String fixURLSlash(String urlOrig) {
-		if (urlOrig == null) return null;
-		if (!urlOrig.endsWith("/")) return urlOrig + "/";
-		return urlOrig;
-	}
-
-	//FIXME "Socket is closed" error
+	// FIXME "Socket is closed" error
 	private void initRequestHeaders() {
 		requestHeaders = new HashMap<String, String>();
 		requestHeaders.put("X-Twitter-Client-Version", getClientVersion());
@@ -938,7 +995,8 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 		if (gzipEnabled) {
 			requestHeaders.put("Accept-Encoding", "gzip");
 		}
-		//I found this may cause "Socket is closed" error in Android, so I commented it out.
+		// I found this may cause "Socket is closed" error in Android, so I
+		// commented it out.
 		requestHeaders.put("Connection", "keep-alive");
 	}
 
@@ -957,12 +1015,6 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 			return instances.get(index);
 	}
 
-	static boolean isNullOrEmpty(String string) {
-		if (string == null) return true;
-		if (string.length() == 0) return true;
-		return false;
-	}
-	
 	static String fixURL(boolean useSSL, String url) {
 		if (null == url) return null;
 		if (!url.startsWith("http://") || !url.startsWith("https://")) {
@@ -977,24 +1029,16 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 			return "http://" + hostAndLater;
 	}
 
-	@Override
-	public String getSigningOAuthAccessTokenURL() {
-		return signingOAuthAccessTokenURL;
+	static String fixURLSlash(String urlOrig) {
+		if (urlOrig == null) return null;
+		if (!urlOrig.endsWith("/")) return urlOrig + "/";
+		return urlOrig;
 	}
 
-	@Override
-	public String getSigningOAuthAuthenticationURL() {
-		return signingOAuthAuthenticationURL;
-	}
-
-	@Override
-	public String getSigningOAuthAuthorizationURL() {
-		return signingOAuthAuthorizationURL;
-	}
-
-	@Override
-	public String getSigningOAuthRequestTokenURL() {
-		return signingOAuthRequestTokenURL;
+	static boolean isNullOrEmpty(String string) {
+		if (string == null) return true;
+		if (string.length() == 0) return true;
+		return false;
 	}
 
 }

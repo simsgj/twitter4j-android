@@ -16,6 +16,8 @@
 
 package twitter4j.auth;
 
+import java.io.Serializable;
+
 import twitter4j.internal.http.BASE64Encoder;
 import twitter4j.internal.http.HttpRequest;
 
@@ -24,7 +26,7 @@ import twitter4j.internal.http.HttpRequest;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-public class BasicAuthorization implements Authorization, java.io.Serializable {
+public class BasicAuthorization implements Authorization, Serializable {
 
 	private String userId;
 

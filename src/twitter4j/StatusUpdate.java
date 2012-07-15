@@ -27,7 +27,6 @@ import twitter4j.internal.http.HttpParameter;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.1
  */
-@SuppressWarnings("deprecation")
 public final class StatusUpdate implements java.io.Serializable {
 
 	private String status;
@@ -238,7 +237,7 @@ public final class StatusUpdate implements java.io.Serializable {
 		}
 	}
 
-	HttpParameter[] asHttpParameterArray(HttpParameter includeEntities) {
+	/* package */HttpParameter[] asHttpParameterArray(HttpParameter includeEntities) {
 		final ArrayList<HttpParameter> params = new ArrayList<HttpParameter>();
 		appendParameter("status", status, params);
 		if (-1 != inReplyToStatusId) {
@@ -269,7 +268,7 @@ public final class StatusUpdate implements java.io.Serializable {
 		return params.toArray(paramArray);
 	}
 
-	boolean isWithMedia() {
+	/* package */boolean isWithMedia() {
 		return mediaFile != null || mediaName != null;
 	}
 }

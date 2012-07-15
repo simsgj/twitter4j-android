@@ -118,7 +118,6 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 	}
 
 	private void init(String jsonStr) throws TwitterException {
-
 		JSONArray idList;
 		try {
 			if (jsonStr.startsWith("{")) {
@@ -148,6 +147,5 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
 		}
-
 	}
 }

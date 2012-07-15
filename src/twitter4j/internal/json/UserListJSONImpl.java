@@ -20,6 +20,7 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.getBoolean;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getInt;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
 
+import java.io.Serializable;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -40,7 +41,7 @@ import twitter4j.internal.http.HttpResponse;
  * 
  * @author Dan Checkoway - dcheckoway at gmail.com
  */
-/* package */class UserListJSONImpl extends TwitterResponseImpl implements UserList, java.io.Serializable {
+/* package */class UserListJSONImpl extends TwitterResponseImpl implements UserList, Serializable {
 
 	private int id;
 	private String name;
@@ -220,7 +221,6 @@ import twitter4j.internal.http.HttpResponse;
 			final JSONObject json = res.asJSONObject();
 			final JSONArray list = json.getJSONArray("lists");
 			final int size = list.length();
-			@SuppressWarnings("unchecked")
 			final PagableResponseList<UserList> users = new PagableResponseListImpl<UserList>(size, json, res);
 			for (int i = 0; i < size; i++) {
 				final JSONObject userListJson = list.getJSONObject(i);

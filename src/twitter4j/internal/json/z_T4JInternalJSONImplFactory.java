@@ -26,6 +26,7 @@ import twitter4j.Category;
 import twitter4j.DirectMessage;
 import twitter4j.Friendship;
 import twitter4j.GeoLocation;
+import twitter4j.HashtagEntity;
 import twitter4j.IDs;
 import twitter4j.Location;
 import twitter4j.PagableResponseList;
@@ -43,8 +44,10 @@ import twitter4j.Status;
 import twitter4j.Trends;
 import twitter4j.TwitterAPIConfiguration;
 import twitter4j.TwitterException;
+import twitter4j.URLEntity;
 import twitter4j.User;
 import twitter4j.UserList;
+import twitter4j.UserMentionEntity;
 import twitter4j.api.HelpMethods;
 import twitter4j.conf.Configuration;
 import twitter4j.internal.http.HttpResponse;
@@ -291,8 +294,38 @@ public class z_T4JInternalJSONImplFactory implements z_T4JInternalFactory {
 		return RateLimitStatusJSONImpl.createFeatureSpecificRateLimitStatusFromResponseHeader(res);
 	}
 
+	/**
+	 * static factory method for twitter-text-java
+	 * 
+	 * @return hashtag entity
+	 * @since Twitter4J 2.2.6
+	 */
+	public static HashtagEntity createHashtagEntity(int start, int end, String text) {
+		return new HashtagEntityJSONImpl(start, end, text);
+	}
+
 	public static RateLimitStatus createRateLimitStatusFromResponseHeader(HttpResponse res) {
 		return RateLimitStatusJSONImpl.createFromResponseHeader(res);
+	}
+
+	/**
+	 * static factory method for twitter-text-java
+	 * 
+	 * @return url entity
+	 * @since Twitter4J 2.2.6
+	 */
+	public static URLEntity createUrlEntity(int start, int end, String url, String expandedURL, String displayURL) {
+		return new URLEntityJSONImpl(start, end, url, expandedURL, displayURL);
+	}
+
+	/**
+	 * static factory method for twitter-text-java
+	 * 
+	 * @return user mention entity
+	 * @since Twitter4J 2.2.6
+	 */
+	public static UserMentionEntity createUserMentionEntity(int start, int end, String name, String screenName, long id) {
+		return new UserMentionEntityJSONImpl(start, end, name, screenName, id);
 	}
 
 	/* package */

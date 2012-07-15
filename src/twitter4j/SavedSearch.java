@@ -16,6 +16,7 @@
 
 package twitter4j;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -24,7 +25,7 @@ import java.util.Date;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.0.8
  */
-public interface SavedSearch extends Comparable<SavedSearch>, TwitterResponse, java.io.Serializable {
+public interface SavedSearch extends Comparable<SavedSearch>, TwitterResponse, Serializable {
 	Date getCreatedAt();
 
 	int getId();

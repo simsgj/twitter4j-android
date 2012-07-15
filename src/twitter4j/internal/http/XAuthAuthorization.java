@@ -16,6 +16,8 @@
 
 package twitter4j.internal.http;
 
+import java.io.Serializable;
+
 import twitter4j.auth.Authorization;
 import twitter4j.auth.BasicAuthorization;
 
@@ -23,7 +25,7 @@ import twitter4j.auth.BasicAuthorization;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.3
  */
-public class XAuthAuthorization implements Authorization, java.io.Serializable {
+public class XAuthAuthorization implements Authorization, Serializable {
 	private BasicAuthorization basic;
 
 	private String consumerKey;

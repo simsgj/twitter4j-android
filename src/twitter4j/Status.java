@@ -16,6 +16,7 @@
 
 package twitter4j;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -23,7 +24,7 @@ import java.util.Date;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-public interface Status extends Comparable<Status>, TwitterResponse, EntitySupport, java.io.Serializable {
+public interface Status extends Comparable<Status>, TwitterResponse, EntitySupport, Twt, Serializable {
 	/**
 	 * Returns the annotations, or null if no annotations are associated with
 	 * this status.
@@ -50,7 +51,7 @@ public interface Status extends Comparable<Status>, TwitterResponse, EntitySuppo
 	 * @return created_at
 	 * @since Twitter4J 1.1.0
 	 */
-
+	@Override
 	Date getCreatedAt();
 
 	/**
@@ -60,6 +61,7 @@ public interface Status extends Comparable<Status>, TwitterResponse, EntitySuppo
 	 *         be null)
 	 * @since Twitter4J 2.1.0
 	 */
+	@Override
 	GeoLocation getGeoLocation();
 
 	/**
@@ -67,6 +69,7 @@ public interface Status extends Comparable<Status>, TwitterResponse, EntitySuppo
 	 * 
 	 * @return the id
 	 */
+	@Override
 	long getId();
 
 	/**
@@ -83,6 +86,7 @@ public interface Status extends Comparable<Status>, TwitterResponse, EntitySuppo
 	 * @return the in_reply_tostatus_id
 	 * @since Twitter4J 1.0.4
 	 */
+	@Override
 	long getInReplyToStatusId();
 
 	/**
@@ -99,6 +103,7 @@ public interface Status extends Comparable<Status>, TwitterResponse, EntitySuppo
 	 * @return The place attached to this status
 	 * @since Twitter4J 2.1.1
 	 */
+	@Override
 	Place getPlace();
 
 	/**
@@ -120,6 +125,7 @@ public interface Status extends Comparable<Status>, TwitterResponse, EntitySuppo
 	 * @return the source
 	 * @since Twitter4J 1.0.4
 	 */
+	@Override
 	String getSource();
 
 	/**
@@ -127,6 +133,7 @@ public interface Status extends Comparable<Status>, TwitterResponse, EntitySuppo
 	 * 
 	 * @return the text
 	 */
+	@Override
 	String getText();
 
 	/**

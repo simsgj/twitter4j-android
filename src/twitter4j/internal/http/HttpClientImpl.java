@@ -23,6 +23,7 @@ import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
@@ -55,7 +56,7 @@ import twitter4j.internal.util.z_T4JInternalStringUtil;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.2
  */
-public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpResponseCode, java.io.Serializable {
+public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpResponseCode, Serializable {
 	private static final Logger logger = Logger.getLogger();
 
 	private static final long serialVersionUID = -8819171414069621503L;
@@ -274,7 +275,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 		}
 		return con;
 	}
-	
+
 	/**
 	 * sets HTTP headers
 	 * 
@@ -298,7 +299,6 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 		final Map<String, String> req_headers = req.getRequestHeaders();
 		if (req_headers != null) {
 			for (final String key : req_headers.keySet()) {
-				//FIXME "Socket is closed" error if properties added here
 				connection.addRequestProperty(key, req.getRequestHeaders().get(key));
 				logger.debug(key + ": " + req.getRequestHeaders().get(key));
 			}

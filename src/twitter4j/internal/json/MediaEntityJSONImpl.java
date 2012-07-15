@@ -44,6 +44,7 @@ public class MediaEntityJSONImpl implements MediaEntity {
 	private URL expandedURL;
 	private String displayURL;
 	private Map<Integer, MediaEntity.Size> sizes;
+	private String type;
 
 	public MediaEntityJSONImpl(JSONObject json) throws TwitterException {
 		try {
@@ -80,13 +81,21 @@ public class MediaEntityJSONImpl implements MediaEntity {
 			}
 			final JSONObject sizes = json.getJSONObject("sizes");
 			this.sizes = new HashMap<Integer, MediaEntity.Size>(4);
-			this.sizes.put(MediaEntity.Size.LARGE, new Size(sizes.getJSONObject("large")));
-			this.sizes.put(MediaEntity.Size.MEDIUM, new Size(sizes.getJSONObject("medium")));
-			this.sizes.put(MediaEntity.Size.SMALL, new Size(sizes.getJSONObject("small")));
-			this.sizes.put(MediaEntity.Size.THUMB, new Size(sizes.getJSONObject("thumb")));
+			// thumbworkarounding API side issue
+			addMediaEntitySizeIfNotNull(this.sizes, sizes, MediaEntity.Size.LARGE, "large");
+			addMediaEntitySizeIfNotNull(this.sizes, sizes, MediaEntity.Size.MEDIUM, "medium");
+			addMediaEntitySizeIfNotNull(this.sizes, sizes, MediaEntity.Size.SMALL, "small");
+			addMediaEntitySizeIfNotNull(this.sizes, sizes, MediaEntity.Size.THUMB, "thumb");
+			if (!json.isNull("type")) {
+				type = json.getString("type");
+			}
 		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
 		}
+	}
+
+	/* For serialization purposes only. */
+	/* package */MediaEntityJSONImpl() {
 
 	}
 
@@ -167,6 +176,14 @@ public class MediaEntityJSONImpl implements MediaEntity {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public URL getURL() {
 		return url;
 	}
@@ -180,7 +197,15 @@ public class MediaEntityJSONImpl implements MediaEntity {
 	public String toString() {
 		return "MediaEntityJSONImpl{" + "id=" + id + ", start=" + start + ", end=" + end + ", url=" + url
 				+ ", mediaURL=" + mediaURL + ", mediaURLHttps=" + mediaURLHttps + ", expandedURL=" + expandedURL
-				+ ", displayURL='" + displayURL + '\'' + ", sizes=" + sizes + '}';
+				+ ", displayURL='" + displayURL + '\'' + ", sizes=" + sizes + ", type=" + type + '}';
+	}
+
+	private void addMediaEntitySizeIfNotNull(Map<Integer, MediaEntity.Size> sizes, JSONObject sizes_json, Integer size,
+			String key) throws JSONException {
+		final JSONObject size_json = sizes_json.optJSONObject(key);
+		if (size_json != null) {
+			sizes.put(size, new Size(size_json));
+		}
 	}
 
 	static class Size implements MediaEntity.Size {

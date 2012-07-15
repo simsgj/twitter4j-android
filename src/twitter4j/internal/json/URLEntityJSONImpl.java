@@ -42,6 +42,34 @@ import twitter4j.URLEntity;
 
 	private static final long serialVersionUID = 1165188478018146676L;
 
+	/* For serialization purposes only. */
+	/* package */URLEntityJSONImpl() {
+
+	}
+
+	/* package */URLEntityJSONImpl(int start, int end, String url, String expandedURL, String displayURL) {
+		super();
+		this.start = start;
+		this.end = end;
+		try {
+			this.url = new URL(url);
+		} catch (final MalformedURLException e) {
+			try {
+				this.url = new URL("http://example.com/");
+			} catch (final MalformedURLException ignore) {
+			}
+		}
+		try {
+			this.expandedURL = new URL(expandedURL);
+		} catch (final MalformedURLException e) {
+			try {
+				this.expandedURL = new URL("http://example.com/");
+			} catch (final MalformedURLException ignore) {
+			}
+		}
+		this.displayURL = displayURL;
+	}
+
 	/* package */URLEntityJSONImpl(JSONObject json) throws TwitterException {
 		super();
 		init(json);
@@ -57,8 +85,9 @@ import twitter4j.URLEntity;
 		if (end != that.end) return false;
 		if (start != that.start) return false;
 		if (displayURL != null ? !displayURL.equals(that.displayURL) : that.displayURL != null) return false;
-		if (expandedURL != null ? !expandedURL.equals(that.expandedURL) : that.expandedURL != null) return false;
-		if (url != null ? !url.equals(that.url) : that.url != null) return false;
+		if (expandedURL != null ? !expandedURL.toString().equalsIgnoreCase(that.expandedURL.toString())
+				: that.expandedURL != null) return false;
+		if (url != null ? !url.toString().equalsIgnoreCase(that.url.toString()) : that.url != null) return false;
 
 		return true;
 	}
@@ -107,8 +136,8 @@ import twitter4j.URLEntity;
 	public int hashCode() {
 		int result = start;
 		result = 31 * result + end;
-		result = 31 * result + (url != null ? url.hashCode() : 0);
-		result = 31 * result + (expandedURL != null ? expandedURL.hashCode() : 0);
+		result = 31 * result + (url != null ? url.toString().hashCode() : 0);
+		result = 31 * result + (expandedURL != null ? expandedURL.toString().hashCode() : 0);
 		result = 31 * result + (displayURL != null ? displayURL.hashCode() : 0);
 		return result;
 	}

@@ -16,6 +16,8 @@
 
 package twitter4j;
 
+import java.io.Serializable;
+
 /**
  * A data class representing Status deletionNotice<br>
  * Clients are urged to honor deletionNotice requests and discard deleted
@@ -26,7 +28,7 @@ package twitter4j;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.0
  */
-public interface StatusDeletionNotice extends Comparable<StatusDeletionNotice>, java.io.Serializable {
+public interface StatusDeletionNotice extends Comparable<StatusDeletionNotice>, Serializable {
 	long getStatusId();
 
 	long getUserId();

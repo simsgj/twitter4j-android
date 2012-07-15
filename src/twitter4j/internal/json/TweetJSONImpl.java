@@ -21,6 +21,7 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.getLong;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -45,16 +46,19 @@ import twitter4j.conf.Configuration;
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
 @SuppressWarnings("deprecation")
-final class TweetJSONImpl implements Tweet, java.io.Serializable {
+final class TweetJSONImpl implements Tweet, Serializable {
 	private static final long serialVersionUID = 3019285230338056113L;
 	private String text;
 	private long toUserId = -1;
 	private String toUser = null;
-	private String fromUser;
+	private String toUserName = null;
+	private String fromUser = null;
+	private String fromUserName = null;
 	private long id;
 	private long fromUserId;
 	private String isoLanguageCode = null;
 	private String source;
+	private long inReplyToStatusId = -1;
 	private String profileImageUrl;
 	private Date createdAt;
 	private String location;
@@ -71,11 +75,14 @@ final class TweetJSONImpl implements Tweet, java.io.Serializable {
 		text = getUnescapedString("text", tweet);
 		toUserId = getLong("to_user_id", tweet);
 		toUser = getRawString("to_user", tweet);
+		toUserName = getRawString("to_user_name", tweet);
 		fromUser = getRawString("from_user", tweet);
+		fromUserName = getRawString("from_user_name", tweet);
 		id = getLong("id", tweet);
 		fromUserId = getLong("from_user_id", tweet);
 		isoLanguageCode = getRawString("iso_language_code", tweet);
 		source = getUnescapedString("source", tweet);
+		inReplyToStatusId = getLong("in_reply_to_status_id", tweet);
 		profileImageUrl = getUnescapedString("profile_image_url", tweet);
 		createdAt = getDate("created_at", tweet, "EEE, dd MMM yyyy HH:mm:ss z");
 		location = getRawString("location", tweet);
@@ -205,6 +212,14 @@ final class TweetJSONImpl implements Tweet, java.io.Serializable {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public String getFromUserName() {
+		return fromUserName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public GeoLocation getGeoLocation() {
 		return geoLocation;
 	}
@@ -223,6 +238,14 @@ final class TweetJSONImpl implements Tweet, java.io.Serializable {
 	@Override
 	public long getId() {
 		return id;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public long getInReplyToStatusId() {
+		return inReplyToStatusId;
 	}
 
 	/**
@@ -301,6 +324,14 @@ final class TweetJSONImpl implements Tweet, java.io.Serializable {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public String getToUserName() {
+		return toUserName;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public URLEntity[] getURLEntities() {
 		return urlEntities;
 	}
@@ -318,11 +349,14 @@ final class TweetJSONImpl implements Tweet, java.io.Serializable {
 		int result = text != null ? text.hashCode() : 0;
 		result = 31 * result + (int) (toUserId ^ toUserId >>> 32);
 		result = 31 * result + (toUser != null ? toUser.hashCode() : 0);
+		result = 31 * result + (toUserName != null ? toUserName.hashCode() : 0);
 		result = 31 * result + (fromUser != null ? fromUser.hashCode() : 0);
+		result = 31 * result + (fromUserName != null ? fromUserName.hashCode() : 0);
 		result = 31 * result + (int) (id ^ id >>> 32);
 		result = 31 * result + (int) (fromUserId ^ fromUserId >>> 32);
 		result = 31 * result + (isoLanguageCode != null ? isoLanguageCode.hashCode() : 0);
 		result = 31 * result + (source != null ? source.hashCode() : 0);
+		result = 31 * result + (int) (inReplyToStatusId ^ inReplyToStatusId >>> 32);
 		result = 31 * result + (profileImageUrl != null ? profileImageUrl.hashCode() : 0);
 		result = 31 * result + (createdAt != null ? createdAt.hashCode() : 0);
 		result = 31 * result + (location != null ? location.hashCode() : 0);
@@ -339,10 +373,12 @@ final class TweetJSONImpl implements Tweet, java.io.Serializable {
 	@Override
 	public String toString() {
 		return "TweetJSONImpl{" + "text='" + text + '\'' + ", toUserId=" + toUserId + ", toUser='" + toUser + '\''
-				+ ", fromUser='" + fromUser + '\'' + ", id=" + id + ", fromUserId=" + fromUserId
-				+ ", isoLanguageCode='" + isoLanguageCode + '\'' + ", source='" + source + '\'' + ", profileImageUrl='"
-				+ profileImageUrl + '\'' + ", createdAt=" + createdAt + ", location='" + location + '\'' + ", place="
-				+ place + ", geoLocation=" + geoLocation + ", annotations=" + annotations + ", userMentionEntities="
+				+ ", toUserName='" + toUserName + '\'' + ", fromUser='" + fromUser + '\'' + ", fromUserName='"
+				+ fromUserName + '\'' + ", id=" + id + ", fromUserId=" + fromUserId + ", isoLanguageCode='"
+				+ isoLanguageCode + '\'' + ", source='" + source + '\'' + ", inReplyToStatusId=" + inReplyToStatusId
+				+ ", profileImageUrl='" + profileImageUrl + '\'' + ", createdAt=" + createdAt + ", location='"
+				+ location + '\'' + ", place=" + place + ", geoLocation=" + geoLocation + ", annotations="
+				+ annotations + ", userMentionEntities="
 				+ (userMentionEntities == null ? null : Arrays.asList(userMentionEntities)) + ", urlEntities="
 				+ (urlEntities == null ? null : Arrays.asList(urlEntities)) + ", hashtagEntities="
 				+ (hashtagEntities == null ? null : Arrays.asList(hashtagEntities)) + ", mediaEntities="

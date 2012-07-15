@@ -17,6 +17,7 @@
 package twitter4j;
 
 import java.io.ObjectStreamException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +25,7 @@ import java.util.Map;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.7
  */
-public interface ProfileImage extends TwitterResponse, java.io.Serializable {
+public interface ProfileImage extends TwitterResponse, Serializable {
 	ImageSize BIGGER = new ImageSize("bigger");
 
 	ImageSize NORMAL = new ImageSize("normal");

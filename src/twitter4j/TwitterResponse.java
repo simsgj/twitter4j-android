@@ -16,6 +16,8 @@
 
 package twitter4j;
 
+import java.io.Serializable;
+
 /**
  * Super interface of Twitter Response data interfaces which indicates that rate
  * limit status is avaialble.
@@ -25,7 +27,7 @@ package twitter4j;
  * @see twitter4j.Status
  * @see twitter4j.User
  */
-public interface TwitterResponse extends java.io.Serializable {
+public interface TwitterResponse extends Serializable {
 	int NONE = 0;
 
 	int READ = 1;

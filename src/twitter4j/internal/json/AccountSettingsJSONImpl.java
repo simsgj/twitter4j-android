@@ -18,6 +18,8 @@ package twitter4j.internal.json;
 
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getBoolean;
 
+import java.io.Serializable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,7 +35,7 @@ import twitter4j.internal.http.HttpResponse;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.9
  */
-class AccountSettingsJSONImpl extends TwitterResponseImpl implements AccountSettings, java.io.Serializable {
+class AccountSettingsJSONImpl extends TwitterResponseImpl implements AccountSettings, Serializable {
 	private static final long serialVersionUID = 7983363611306383416L;
 	private final boolean SLEEP_TIME_ENABLED;
 	private final String SLEEP_START_TIME;

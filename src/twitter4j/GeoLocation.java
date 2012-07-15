@@ -38,6 +38,11 @@ public class GeoLocation implements java.io.Serializable {
 		this.longitude = longitude;
 	}
 
+	/* For serialization purposes only. */
+	/* package */GeoLocation() {
+
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

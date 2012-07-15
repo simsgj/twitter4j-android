@@ -38,6 +38,20 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 	private String screenName;
 	private long id;
 
+	/* For serialization purposes only. */
+	/* package */UserMentionEntityJSONImpl() {
+
+	}
+
+	/* package */UserMentionEntityJSONImpl(int start, int end, String name, String screenName, long id) {
+		super();
+		this.start = start;
+		this.end = end;
+		this.name = name;
+		this.screenName = screenName;
+		this.id = id;
+	}
+
 	/* package */UserMentionEntityJSONImpl(JSONObject json) throws TwitterException {
 		super();
 		init(json);

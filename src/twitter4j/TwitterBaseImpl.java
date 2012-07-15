@@ -403,7 +403,6 @@ abstract class TwitterBaseImpl implements java.io.Serializable, OAuthSupport, Ht
 		setFactory();
 	}
 
-	@SuppressWarnings("unchecked")
 	private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
 		conf = (Configuration) stream.readObject();
 		auth = (Authorization) stream.readObject();

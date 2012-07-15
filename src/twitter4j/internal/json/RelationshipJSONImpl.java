@@ -20,6 +20,8 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.getBoolean;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getLong;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
 
+import java.io.Serializable;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,7 +41,7 @@ import twitter4j.internal.http.HttpResponse;
  *      friendships/show | Twitter Developers</a>
  * @since Twitter4J 2.1.0
  */
-/* package */class RelationshipJSONImpl extends TwitterResponseImpl implements Relationship, java.io.Serializable {
+/* package */class RelationshipJSONImpl extends TwitterResponseImpl implements Relationship, Serializable {
 
 	private static final long serialVersionUID = 7725021608907856360L;
 	private final long targetUserId;

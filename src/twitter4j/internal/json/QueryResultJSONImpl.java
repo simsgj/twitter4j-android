@@ -23,6 +23,7 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getURLDecodedString;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +43,7 @@ import twitter4j.internal.http.HttpResponse;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-/* package */final class QueryResultJSONImpl implements QueryResult, java.io.Serializable {
+/* package */final class QueryResultJSONImpl implements QueryResult, Serializable {
 
 	private long sinceId;
 	private long maxId;

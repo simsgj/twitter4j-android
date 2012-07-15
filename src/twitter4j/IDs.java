@@ -16,12 +16,14 @@
 
 package twitter4j;
 
+import java.io.Serializable;
+
 /**
  * A data interface representing array of numeric IDs.
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-public interface IDs extends TwitterResponse, CursorSupport, java.io.Serializable {
+public interface IDs extends TwitterResponse, CursorSupport, Serializable {
 	long[] getIDs();
 
 	@Override

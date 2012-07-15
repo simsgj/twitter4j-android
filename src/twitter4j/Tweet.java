@@ -16,6 +16,7 @@
 
 package twitter4j;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -23,8 +24,7 @@ import java.util.Date;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-@SuppressWarnings("deprecation")
-public interface Tweet extends Comparable<Tweet>, EntitySupport, java.io.Serializable {
+public interface Tweet extends Comparable<Tweet>, EntitySupport, Twt, Serializable {
 	/**
 	 * Returns the annotations of the tweet. At the moment this code is written
 	 * (2010-08-18), Twitter Search API does not support annotations yet (so
@@ -41,6 +41,7 @@ public interface Tweet extends Comparable<Tweet>, EntitySupport, java.io.Seriali
 	 * 
 	 * @return the created_at
 	 */
+	@Override
 	Date getCreatedAt();
 
 	/**
@@ -68,12 +69,21 @@ public interface Tweet extends Comparable<Tweet>, EntitySupport, java.io.Seriali
 	long getFromUserId();
 
 	/**
+	 * returns the from_user_name
+	 * 
+	 * @return the from_user_name
+	 * @since Twitter4J 2.2.6
+	 */
+	String getFromUserName();
+
+	/**
 	 * Returns The location that this tweet refers to if available.
 	 * 
 	 * @return returns The location that this tweet refers to if available (can
 	 *         be null)
 	 * @since Twitter4J 2.1.0
 	 */
+	@Override
 	GeoLocation getGeoLocation();
 
 	/**
@@ -81,7 +91,17 @@ public interface Tweet extends Comparable<Tweet>, EntitySupport, java.io.Seriali
 	 * 
 	 * @return the status id
 	 */
+	@Override
 	long getId();
+
+	/**
+	 * Returns the in_reply_tostatus_id
+	 * 
+	 * @return the in_reply_tostatus_id
+	 * @since Twitter4J 2.2.6
+	 */
+	@Override
+	long getInReplyToStatusId();
 
 	/**
 	 * returns the iso language code of the tweet
@@ -105,6 +125,7 @@ public interface Tweet extends Comparable<Tweet>, EntitySupport, java.io.Seriali
 	 * 
 	 * @return The place associated with the post
 	 */
+	@Override
 	Place getPlace();
 
 	/**
@@ -119,6 +140,7 @@ public interface Tweet extends Comparable<Tweet>, EntitySupport, java.io.Seriali
 	 * 
 	 * @return the source of the tweet
 	 */
+	@Override
 	String getSource();
 
 	/**
@@ -126,6 +148,7 @@ public interface Tweet extends Comparable<Tweet>, EntitySupport, java.io.Seriali
 	 * 
 	 * @return the text
 	 */
+	@Override
 	String getText();
 
 	/**
@@ -143,5 +166,13 @@ public interface Tweet extends Comparable<Tweet>, EntitySupport, java.io.Seriali
 	 *         tweet
 	 */
 	long getToUserId();
+
+	/**
+	 * returns the to_user_name
+	 * 
+	 * @return the to_user_name value or null if to_user is not specified by the
+	 *         tweet
+	 */
+	String getToUserName();
 
 }

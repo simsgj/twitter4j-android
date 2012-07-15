@@ -16,6 +16,7 @@
 
 package twitter4j.conf;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Properties;
 
@@ -27,13 +28,13 @@ import twitter4j.internal.http.HttpClientWrapperConfiguration;
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
 public interface Configuration extends HttpClientConfiguration, HttpClientWrapperConfiguration,
-		AuthorizationConfiguration, java.io.Serializable {
+		AuthorizationConfiguration, Serializable {
 
 	int getAsyncNumThreads();
 
-	String getClientURL();
-	
 	String getClientName();
+
+	String getClientURL();
 
 	String getClientVersion();
 
@@ -73,12 +74,9 @@ public interface Configuration extends HttpClientConfiguration, HttpClientWrappe
 
 	int getHttpStreamingReadTimeout();
 
-	@Override
-	boolean isSSLErrorIgnored();
+	String getMediaProvider();
 
 	// oauth related setter/getters
-
-	String getMediaProvider();
 
 	String getMediaProviderAPIKey();
 
@@ -91,15 +89,11 @@ public interface Configuration extends HttpClientConfiguration, HttpClientWrappe
 	String getOAuthAccessTokenSecret();
 
 	String getOAuthAccessTokenURL();
-	String getOAuthAuthenticationURL();
-	String getOAuthAuthorizationURL();
-	String getOAuthRequestTokenURL();
 
-	String getSigningOAuthAccessTokenURL();
-	String getSigningOAuthAuthenticationURL();
-	String getSigningOAuthAuthorizationURL();
-	String getSigningOAuthRequestTokenURL();
-	
+	String getOAuthAuthenticationURL();
+
+	String getOAuthAuthorizationURL();
+
 	String getOAuthBaseURL();
 
 	@Override
@@ -108,6 +102,7 @@ public interface Configuration extends HttpClientConfiguration, HttpClientWrappe
 	@Override
 	String getOAuthConsumerSecret();
 
+	String getOAuthRequestTokenURL();
 
 	@Override
 	String getPassword();
@@ -119,7 +114,15 @@ public interface Configuration extends HttpClientConfiguration, HttpClientWrappe
 
 	String getSearchBaseURL();
 
+	String getSigningOAuthAccessTokenURL();
+
+	String getSigningOAuthAuthenticationURL();
+
+	String getSigningOAuthAuthorizationURL();
+
 	String getSigningOAuthBaseURL();
+
+	String getSigningOAuthRequestTokenURL();
 
 	String getSigningRestBaseURL();
 
@@ -143,6 +146,9 @@ public interface Configuration extends HttpClientConfiguration, HttpClientWrappe
 	boolean isIncludeRTsEnabled();
 
 	boolean isJSONStoreEnabled();
+
+	@Override
+	boolean isSSLErrorIgnored();
 
 	boolean isUserStreamRepliesAllEnabled();
 }

@@ -41,9 +41,9 @@ public interface HttpClientConfiguration {
 
 	int getHttpRetryIntervalSeconds();
 
-	boolean isSSLErrorIgnored();
-
 	boolean isGZIPEnabled();
 
 	boolean isPrettyDebugEnabled();
+
+	boolean isSSLErrorIgnored();
 }

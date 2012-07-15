@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.List;
 import java.util.Map;
-import java.util.zip.GZIPInputStream;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
@@ -39,7 +38,7 @@ public class HttpResponseImpl extends HttpResponse {
 		}
 		if (is != null && "gzip".equals(con.getContentEncoding())) {
 			// the response is gzipped
-			is = new GZIPInputStream(is);
+			is = new StreamingGZIPInputStream(is);
 		}
 	}
 

@@ -15,6 +15,7 @@
  */
 package twitter4j;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.util.Map;
 
@@ -51,7 +52,14 @@ public interface MediaEntity extends URLEntity {
 	 */
 	Map<Integer, Size> getSizes();
 
-	interface Size extends java.io.Serializable {
+	/**
+	 * Returns the media type ("photo").
+	 * 
+	 * @return the media type ("photo").
+	 */
+	String getType();
+
+	interface Size extends Serializable {
 		Integer THUMB = 0;
 		Integer SMALL = 1;
 		Integer MEDIUM = 2;
@@ -65,4 +73,5 @@ public interface MediaEntity extends URLEntity {
 
 		int getWidth();
 	}
+
 }

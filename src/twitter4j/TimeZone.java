@@ -16,10 +16,12 @@
 
 package twitter4j;
 
+import java.io.Serializable;
+
 /**
  * @author Alessandro Bahgat - ale.bahgat at gmail.com
  */
-public interface TimeZone extends java.io.Serializable {
+public interface TimeZone extends Serializable {
 	String getName();
 
 	String tzinfoName();

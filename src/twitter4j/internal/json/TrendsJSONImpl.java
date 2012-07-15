@@ -18,6 +18,7 @@ package twitter4j.internal.json;
 
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getDate;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -42,7 +43,7 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.0.2
  */
-/* package */final class TrendsJSONImpl extends TwitterResponseImpl implements Trends, java.io.Serializable {
+/* package */final class TrendsJSONImpl extends TwitterResponseImpl implements Trends, Serializable {
 	private Date asOf;
 	private Date trendAt;
 	private Trend[] trends;
@@ -195,7 +196,6 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 			final JSONObject trendsJson = json.getJSONObject("trends");
 			final Location location = extractLocation(json, storeJSON);
 			trends = new ResponseListImpl<Trends>(trendsJson.length(), res);
-			@SuppressWarnings("rawtypes")
 			final Iterator ite = trendsJson.keys();
 			while (ite.hasNext()) {
 				final String key = (String) ite.next();

@@ -16,6 +16,7 @@
 
 package twitter4j;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -23,7 +24,7 @@ import java.util.List;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-public interface QueryResult extends java.io.Serializable {
+public interface QueryResult extends Serializable {
 	double getCompletedIn();
 
 	long getMaxId();

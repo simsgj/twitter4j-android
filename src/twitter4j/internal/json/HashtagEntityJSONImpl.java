@@ -35,6 +35,18 @@ import twitter4j.TwitterException;
 	private int end = -1;
 	private String text;
 
+	/* For serialization purposes only. */
+	/* package */HashtagEntityJSONImpl() {
+
+	}
+
+	/* package */HashtagEntityJSONImpl(int start, int end, String text) {
+		super();
+		this.start = start;
+		this.end = end;
+		this.text = text;
+	}
+
 	/* package */HashtagEntityJSONImpl(JSONObject json) throws TwitterException {
 		super();
 		init(json);

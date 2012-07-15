@@ -16,6 +16,8 @@
 
 package twitter4j;
 
+import java.io.Serializable;
+
 /**
  * A data interface that has detailed information about a relationship between
  * two users
@@ -25,7 +27,7 @@ package twitter4j;
  *      friendships/show | Twitter Developers</a>
  * @since Twitter4J 2.1.0
  */
-public interface Relationship extends TwitterResponse, java.io.Serializable {
+public interface Relationship extends TwitterResponse, Serializable {
 	/**
 	 * Returns the source user id
 	 * 

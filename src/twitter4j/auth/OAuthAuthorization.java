@@ -16,6 +16,7 @@
 
 package twitter4j.auth;
 
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.security.InvalidKeyException;
@@ -42,7 +43,7 @@ import twitter4j.internal.util.z_T4JInternalStringUtil;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @see <a href="http://oauth.net/core/1.0a/">OAuth Core 1.0a</a>
  */
-public class OAuthAuthorization implements Authorization, java.io.Serializable, OAuthSupport {
+public class OAuthAuthorization implements Authorization, Serializable, OAuthSupport {
 	private final Configuration conf;
 	private transient static HttpClientWrapper http;
 
@@ -173,8 +174,8 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
 			// @see https://dev.twitter.com/docs/oauth/xauth
 			sign_url = "https://" + sign_url.substring(7);
 		}
-		oauthToken = new AccessToken(http.post(url, new HttpParameter[] { new HttpParameter(
-				"oauth_verifier", oauthVerifier) }, this));
+		oauthToken = new AccessToken(http.post(url, new HttpParameter[] { new HttpParameter("oauth_verifier",
+				oauthVerifier) }, this));
 		return (AccessToken) oauthToken;
 	}
 
@@ -247,8 +248,7 @@ public class OAuthAuthorization implements Authorization, java.io.Serializable, 
 			// @see https://dev.twitter.com/docs/oauth/xauth
 			sign_url = "https://" + sign_url.substring(7);
 		}
-		oauthToken = new RequestToken(http.post(url,
-				params.toArray(new HttpParameter[params.size()]), this), this);
+		oauthToken = new RequestToken(http.post(url, params.toArray(new HttpParameter[params.size()]), this), this);
 		return (RequestToken) oauthToken;
 	}
 
