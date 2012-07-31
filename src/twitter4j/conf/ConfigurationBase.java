@@ -579,6 +579,16 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 	}
 
 	@Override
+	public boolean isProxyConfigured() {
+		return (getHttpProxyHost() != null || "".equals(getHttpProxyHost())) && getHttpProxyPort() > 0;
+	}
+
+	@Override
+	public boolean isSSLEnabled() {
+		return getRestBaseURL() != null && getRestBaseURL().startsWith("https://");
+	}
+
+	@Override
 	public final boolean isSSLErrorIgnored() {
 		return ignoreSSLError;
 	}
@@ -670,6 +680,7 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 
 	protected final void setHttpProxyHost(String proxyHost) {
 		httpProxyHost = proxyHost;
+		initRequestHeaders();
 	}
 
 	protected final void setHttpProxyPassword(String proxyPassword) {
@@ -678,6 +689,7 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 
 	protected final void setHttpProxyPort(int proxyPort) {
 		httpProxyPort = proxyPort;
+		initRequestHeaders();
 	}
 
 	protected final void setHttpProxyUser(String proxyUser) {
@@ -702,6 +714,7 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 
 	protected final void setIgnoreSSLError(boolean ignoreSSLError) {
 		this.ignoreSSLError = ignoreSSLError;
+		initRequestHeaders();
 	}
 
 	protected final void setIncludeEntitiesEnbled(boolean enabled) {
@@ -976,6 +989,7 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 		if (DEFAULT_SEARCH_BASE_URL.equals(fixURL(DEFAULT_USE_SSL, searchBaseURL))) {
 			searchBaseURL = fixURL(useSSL, searchBaseURL);
 		}
+		initRequestHeaders();
 	}
 
 	private void fixUploadBaseURL() {
@@ -984,7 +998,6 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 		}
 	}
 
-	// FIXME "Socket is closed" error
 	private void initRequestHeaders() {
 		requestHeaders = new HashMap<String, String>();
 		requestHeaders.put("X-Twitter-Client-Version", getClientVersion());
@@ -997,7 +1010,7 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 		}
 		// I found this may cause "Socket is closed" error in Android, so I
 		// commented it out.
-		requestHeaders.put("Connection", "keep-alive");
+		requestHeaders.put("Connection", isSSLEnabled() && isProxyConfigured() ? "keep-alive" : "close");
 	}
 
 	private static void cacheInstance(ConfigurationBase conf) {

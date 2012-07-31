@@ -147,6 +147,10 @@ public interface Configuration extends HttpClientConfiguration, HttpClientWrappe
 
 	boolean isJSONStoreEnabled();
 
+	boolean isProxyConfigured();
+
+	boolean isSSLEnabled();
+
 	@Override
 	boolean isSSLErrorIgnored();
 

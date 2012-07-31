@@ -213,6 +213,8 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 				// connection timeout or read timeout
 				if (retriedCount == CONF.getHttpRetryCount())
 					throw new TwitterException(ioe.getMessage(), ioe, responseCode);
+			} catch (OutOfMemoryError e) {
+				throw new TwitterException(e.getMessage(), e);
 			}
 			try {
 				if (logger.isDebugEnabled() && res != null) {
