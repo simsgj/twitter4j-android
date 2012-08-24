@@ -34,12 +34,12 @@ import twitter4j.conf.ConfigurationContext;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-public final class HttpClientWrapper implements java.io.Serializable {
+public final class HttpClientWrapper {
 	private final HttpClientWrapperConfiguration wrapperConf;
 	private HttpClient http;
 
 	private final Map<String, String> requestHeaders;
-	private static final long serialVersionUID = -6511977105603119379L;
+	
 	private HttpResponseListener httpResponseListener;
 
 	// never used with this project. Just for handiness for those using this
@@ -130,30 +130,34 @@ public final class HttpClientWrapper implements java.io.Serializable {
 	}
 
 	public HttpResponse post(String url, String sign_url) throws TwitterException {
-		return put(url, sign_url, null, null);
+		return post(url, sign_url, null, null, null);
 	}
 
 	public HttpResponse post(String url, String sign_url, Authorization authorization) throws TwitterException {
-		return put(url, sign_url, null, authorization);
+		return post(url, sign_url, null, authorization, null);
 	}
 
 	public HttpResponse post(String url, String sign_url, HttpParameter[] parameters) throws TwitterException {
-		return put(url, sign_url, parameters, null);
+		return post(url, sign_url, parameters, null, null);
 	}
 
 	public HttpResponse post(String url, String sign_url, HttpParameter[] parameters, Authorization authorization)
 			throws TwitterException {
-		return put(url, sign_url, parameters, authorization);
+		return post(url, sign_url, parameters, authorization, null);
+	}
+	
+	public HttpResponse post(String url, String sign_url, HttpParameter[] parameters, Map<String, String> requestHeaders)
+			throws TwitterException {
+		return post(url, sign_url, parameters, null, requestHeaders);
 	}
 
-	public HttpResponse post(String url, String sign_url, HttpParameter[] parameters, Map<String, String> requestHeaders)
+	public HttpResponse post(String url, String sign_url, HttpParameter[] parameters, Authorization authorization, Map<String, String> requestHeaders)
 			throws TwitterException {
 		final Map<String, String> headers = new HashMap<String, String>(this.requestHeaders);
 		if (requestHeaders != null) {
 			headers.putAll(requestHeaders);
 		}
-
-		return request(new HttpRequest(POST, url, sign_url, parameters, null, headers));
+		return request(new HttpRequest(POST, url, sign_url, parameters, authorization, headers));
 	}
 
 	public HttpResponse put(String url, String sign_url) throws TwitterException {

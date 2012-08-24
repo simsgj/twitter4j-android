@@ -17,7 +17,7 @@
 package twitter4j.auth;
 
 import java.io.ObjectStreamException;
-import java.io.Serializable;
+
 
 import twitter4j.internal.http.HttpRequest;
 
@@ -26,9 +26,9 @@ import twitter4j.internal.http.HttpRequest;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-public class NullAuthorization implements Authorization, Serializable {
+public class NullAuthorization implements Authorization {
 	private static NullAuthorization SINGLETON = new NullAuthorization();
-	private static final long serialVersionUID = -8748173338942663960L;
+	
 
 	private NullAuthorization() {
 

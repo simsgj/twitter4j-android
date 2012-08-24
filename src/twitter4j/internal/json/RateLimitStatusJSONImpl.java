@@ -19,7 +19,7 @@ package twitter4j.internal.json;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getDate;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getInt;
 
-import java.io.Serializable;
+
 import java.util.Date;
 
 import org.json.JSONObject;
@@ -36,14 +36,14 @@ import twitter4j.internal.http.HttpResponse;
  * @see <a href="https://dev.twitter.com/docs/rate-limiting">Rate Limiting |
  *      Twitter Developers</a>
  */
-/* package */final class RateLimitStatusJSONImpl implements RateLimitStatus, Serializable {
+/* package */final class RateLimitStatusJSONImpl implements RateLimitStatus {
 
 	private int remainingHits;
 	private int hourlyLimit;
 	private int resetTimeInSeconds;
 	private int secondsUntilReset;
 	private Date resetTime;
-	private static final long serialVersionUID = 832355052293658614L;
+	
 
 	private RateLimitStatusJSONImpl(int hourlyLimit, int remainingHits, int resetTimeInSeconds, Date resetTime) {
 		this.hourlyLimit = hourlyLimit;

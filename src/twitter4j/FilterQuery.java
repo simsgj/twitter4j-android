@@ -26,8 +26,8 @@ import twitter4j.internal.util.z_T4JInternalStringUtil;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.2
  */
-public final class FilterQuery implements java.io.Serializable {
-	private static final long serialVersionUID = 430966623248982833L;
+public final class FilterQuery {
+	
 	private int count;
 	private long[] follow;
 	private String[] track;

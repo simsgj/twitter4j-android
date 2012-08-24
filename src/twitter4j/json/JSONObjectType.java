@@ -25,7 +25,7 @@ import twitter4j.internal.logging.Logger;
  * @author Dan Checkoway - dcheckoway at gmail.com
  * @since Twitter4J 2.1.9
  */
-public final class JSONObjectType implements java.io.Serializable {
+public final class JSONObjectType {
 	private static final Logger logger = Logger.getLogger();
 
 	public static final JSONObjectType SENDER = new JSONObjectType("SENDER");
@@ -50,7 +50,7 @@ public final class JSONObjectType implements java.io.Serializable {
 	public static final JSONObjectType USER_UPDATE = new JSONObjectType("USER_UPDATE");
 	public static final JSONObjectType BLOCK = new JSONObjectType("BLOCK");
 	public static final JSONObjectType UNBLOCK = new JSONObjectType("UNBLOCK");
-	private static final long serialVersionUID = -4487565183481849892L;
+	
 
 	private final String name;
 

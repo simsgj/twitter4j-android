@@ -16,7 +16,7 @@
 
 package twitter4j.auth;
 
-import java.io.Serializable;
+
 
 import twitter4j.internal.http.HttpRequest;
 
@@ -25,8 +25,8 @@ import twitter4j.internal.http.HttpRequest;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-public class TwipOModeAuthorization implements Authorization, Serializable {
-	private static final long serialVersionUID = -3712332792193298459L;
+public class TwipOModeAuthorization implements Authorization {
+	
 	private static TwipOModeAuthorization SINGLETON = new TwipOModeAuthorization();
 
 	public TwipOModeAuthorization() {

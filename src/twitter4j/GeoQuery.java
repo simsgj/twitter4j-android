@@ -25,7 +25,7 @@ import twitter4j.internal.http.HttpParameter;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.1
  */
-public final class GeoQuery implements java.io.Serializable {
+public final class GeoQuery {
 
 	private GeoLocation location;
 	private String ip;
@@ -34,7 +34,7 @@ public final class GeoQuery implements java.io.Serializable {
 	private int maxResults;
 	public static final String NEIGHBORHOOD = "neighborhood";
 	public static final String CITY = "city";
-	private static final long serialVersionUID = 927081526936169802L;
+	
 
 	/**
 	 * Creates a GeoQuery with the specified location

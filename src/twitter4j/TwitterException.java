@@ -34,8 +34,10 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
 public class TwitterException extends Exception implements TwitterResponse, HttpResponseCode {
+	private static final long serialVersionUID = 5876311940770455282L;
+
 	private int statusCode = -1;
-	private static final long serialVersionUID = -2623309261327598087L;
+	
 	private ExceptionDiagnosis exceptionDiagnosis = null;
 	private HttpResponse response;
 	private String errorMessage = null;

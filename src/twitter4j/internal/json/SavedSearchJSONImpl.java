@@ -45,7 +45,7 @@ import twitter4j.internal.http.HttpResponse;
 	private int position;
 	private String name;
 	private int id;
-	private static final long serialVersionUID = 3083819860391598212L;
+	
 
 	/* package */SavedSearchJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
 		super(res);

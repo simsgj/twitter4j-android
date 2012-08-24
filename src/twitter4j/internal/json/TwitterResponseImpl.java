@@ -16,7 +16,7 @@
 
 package twitter4j.internal.json;
 
-import java.io.Serializable;
+
 
 import twitter4j.RateLimitStatus;
 import twitter4j.TwitterResponse;
@@ -32,10 +32,10 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
  * @see twitter4j.Status
  * @see twitter4j.User
  */
-/* package */abstract class TwitterResponseImpl implements TwitterResponse, Serializable {
+/* package */abstract class TwitterResponseImpl implements TwitterResponse {
 
 	private transient RateLimitStatus rateLimitStatus = null;
-	private static final long serialVersionUID = -7284708239736552059L;
+	
 	private transient int accessLevel;
 
 	public TwitterResponseImpl() {

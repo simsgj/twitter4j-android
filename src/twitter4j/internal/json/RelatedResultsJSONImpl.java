@@ -35,13 +35,12 @@ import twitter4j.internal.http.HttpResponse;
  * 
  * @author Mocel - mocel at guma.jp
  */
-/* package */final class RelatedResultsJSONImpl extends TwitterResponseImpl implements RelatedResults,
-		java.io.Serializable {
+/* package */final class RelatedResultsJSONImpl extends TwitterResponseImpl implements RelatedResults {
 
 	private static final String TWEETS_WITH_CONVERSATION = "TweetsWithConversation";
 	private static final String TWEETS_WITH_REPLY = "TweetsWithReply";
 	private static final String TWEETS_FROM_USER = "TweetsFromUser";
-	private static final long serialVersionUID = -7417061781993004083L;
+	
 
 	private Map<String, ResponseList<Status>> tweetsMap;
 

@@ -22,9 +22,8 @@ import twitter4j.TwitterException;
 import twitter4j.internal.http.HttpResponse;
 import twitter4j.internal.util.z_T4JInternalStringUtil;
 
-abstract class OAuthToken implements java.io.Serializable {
+abstract class OAuthToken {
 
-	private static final long serialVersionUID = 3891133932519746686L;
 	private String token;
 	private String tokenSecret;
 

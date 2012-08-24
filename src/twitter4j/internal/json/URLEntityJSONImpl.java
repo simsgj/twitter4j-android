@@ -40,7 +40,7 @@ import twitter4j.URLEntity;
 	private URL expandedURL;
 	private String displayURL;
 
-	private static final long serialVersionUID = 1165188478018146676L;
+	
 
 	/* For serialization purposes only. */
 	/* package */URLEntityJSONImpl() {

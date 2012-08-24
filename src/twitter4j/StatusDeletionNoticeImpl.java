@@ -16,7 +16,7 @@
 
 package twitter4j;
 
-import java.io.Serializable;
+
 
 import org.json.JSONObject;
 
@@ -29,11 +29,11 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.2
  */
-class StatusDeletionNoticeImpl implements StatusDeletionNotice, Serializable {
+class StatusDeletionNoticeImpl implements StatusDeletionNotice {
 
 	private long statusId;
 	private long userId;
-	private static final long serialVersionUID = 1723338404242596062L;
+	
 
 	/* package */StatusDeletionNoticeImpl(JSONObject status) {
 		statusId = z_T4JInternalParseUtil.getLong("id", status);

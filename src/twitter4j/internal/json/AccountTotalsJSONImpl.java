@@ -18,7 +18,7 @@ package twitter4j.internal.json;
 
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getInt;
 
-import java.io.Serializable;
+
 
 import org.json.JSONObject;
 
@@ -31,9 +31,9 @@ import twitter4j.internal.http.HttpResponse;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.9
  */
-class AccountTotalsJSONImpl extends TwitterResponseImpl implements AccountTotals, Serializable {
+class AccountTotalsJSONImpl extends TwitterResponseImpl implements AccountTotals {
 
-	private static final long serialVersionUID = -2291419345865627123L;
+	
 	private final int updates;
 	private final int followers;
 	private final int favorites;

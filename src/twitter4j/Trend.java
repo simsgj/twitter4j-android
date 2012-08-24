@@ -16,7 +16,7 @@
 
 package twitter4j;
 
-import java.io.Serializable;
+
 
 /**
  * A data interface representing Trend.
@@ -24,7 +24,7 @@ import java.io.Serializable;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.0.2
  */
-public interface Trend extends Serializable {
+public interface Trend {
 	String getName();
 
 	String getQuery();

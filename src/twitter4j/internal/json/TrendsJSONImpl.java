@@ -18,7 +18,7 @@ package twitter4j.internal.json;
 
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getDate;
 
-import java.io.Serializable;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -43,12 +43,12 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.0.2
  */
-/* package */final class TrendsJSONImpl extends TwitterResponseImpl implements Trends, Serializable {
+/* package */final class TrendsJSONImpl extends TwitterResponseImpl implements Trends {
 	private Date asOf;
 	private Date trendAt;
 	private Trend[] trends;
 	private Location location;
-	private static final long serialVersionUID = -7151479143843312309L;
+	
 
 	/* package */TrendsJSONImpl(Date asOf, Location location, Date trendAt, Trend[] trends) {
 		this.asOf = asOf;

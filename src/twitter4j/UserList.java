@@ -16,7 +16,7 @@
 
 package twitter4j;
 
-import java.io.Serializable;
+
 import java.net.URI;
 
 /**
@@ -24,7 +24,7 @@ import java.net.URI;
  * 
  * @author Dan Checkoway - dcheckoway at gmail.com
  */
-public interface UserList extends Comparable<UserList>, TwitterResponse, Serializable {
+public interface UserList extends Comparable<UserList>, TwitterResponse {
 	/**
 	 * Returns the description of the list
 	 * 

@@ -20,7 +20,7 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.getBoolean;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getInt;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
 
-import java.io.Serializable;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -41,7 +41,7 @@ import twitter4j.internal.http.HttpResponse;
  * 
  * @author Dan Checkoway - dcheckoway at gmail.com
  */
-/* package */class UserListJSONImpl extends TwitterResponseImpl implements UserList, Serializable {
+/* package */class UserListJSONImpl extends TwitterResponseImpl implements UserList {
 
 	private int id;
 	private String name;
@@ -54,7 +54,7 @@ import twitter4j.internal.http.HttpResponse;
 	private boolean mode;
 	private User user;
 	private boolean following;
-	private static final long serialVersionUID = -6345893237975349030L;
+	
 
 	/* package */UserListJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
 		super(res);

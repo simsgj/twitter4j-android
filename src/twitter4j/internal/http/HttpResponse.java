@@ -169,7 +169,7 @@ public abstract class HttpResponse {
 				streamConsumed = true;
 			} catch (final IOException ioe) {
 				throw new TwitterException(ioe.getMessage(), ioe);
-			} catch (OutOfMemoryError e) {
+			} catch (final OutOfMemoryError e) {
 				throw new TwitterException(e.getMessage(), e);
 			} finally {
 				if (stream != null) {

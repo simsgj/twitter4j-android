@@ -33,7 +33,7 @@ import twitter4j.internal.http.HttpParameter;
  * @see <a href="http://search.twitter.com/operators">Twitter API / Search
  *      Operators</a>
  */
-public final class Query implements java.io.Serializable {
+public final class Query {
 	private String query = null;
 	private String lang = null;
 	private String locale = null;
@@ -45,7 +45,7 @@ public final class Query implements java.io.Serializable {
 	private String geocode = null;
 	private String until = null;
 	private String resultType = null;
-	private static final long serialVersionUID = -8108425822233599808L;
+	
 
 	public static final String MILES = "mi";
 

@@ -28,10 +28,11 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
  * @since Twitter4J 2.1.3
  */
 class ResponseListImpl<T> extends ArrayList<T> implements ResponseList<T> {
+	private static final long serialVersionUID = -7789068763212377625L;
 	private transient RateLimitStatus rateLimitStatus = null;
 	private transient RateLimitStatus featureSpecificRateLimitStatus = null;
 	private transient int accessLevel;
-	private static final long serialVersionUID = 5646617841989265312L;
+	
 
 	ResponseListImpl(HttpResponse res) {
 		super();

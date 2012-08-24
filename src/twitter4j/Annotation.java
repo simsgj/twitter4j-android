@@ -16,7 +16,7 @@
 
 package twitter4j;
 
-import java.io.Serializable;
+
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -38,8 +38,8 @@ import org.json.JSONObject;
  *             >Annotations - Twitter Development Talk | Google Groups</a>
  */
 @Deprecated
-public class Annotation implements Comparable<Annotation>, Serializable {
-	private static final long serialVersionUID = -6515375141284988754L;
+public class Annotation implements Comparable<Annotation> {
+	
 	private String type = null;
 	private Map<String, String> attributes = null;
 

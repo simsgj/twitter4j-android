@@ -41,7 +41,7 @@ import twitter4j.internal.http.HttpResponse;
 	private final int placeCode;
 	private final String name;
 	private final String url;
-	private static final long serialVersionUID = 7095092358530897222L;
+	
 
 	/* package */LocationJSONImpl(JSONObject location) throws TwitterException {
 		try {

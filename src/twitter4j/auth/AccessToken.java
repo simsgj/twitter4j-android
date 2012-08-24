@@ -27,8 +27,7 @@ import twitter4j.internal.http.HttpResponse;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-public class AccessToken extends OAuthToken implements java.io.Serializable {
-	private static final long serialVersionUID = -8344528374458826291L;
+public class AccessToken extends OAuthToken {
 	private String screenName;
 	private long userId;
 

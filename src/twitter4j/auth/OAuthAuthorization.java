@@ -16,7 +16,7 @@
 
 package twitter4j.auth;
 
-import java.io.Serializable;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.security.InvalidKeyException;
@@ -43,14 +43,14 @@ import twitter4j.internal.util.z_T4JInternalStringUtil;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @see <a href="http://oauth.net/core/1.0a/">OAuth Core 1.0a</a>
  */
-public class OAuthAuthorization implements Authorization, Serializable, OAuthSupport {
+public class OAuthAuthorization implements Authorization, OAuthSupport {
 	private final Configuration conf;
 	private transient static HttpClientWrapper http;
 
 	private static final String HMAC_SHA1 = "HmacSHA1";
 	private static final HttpParameter OAUTH_SIGNATURE_METHOD = new HttpParameter("oauth_signature_method", "HMAC-SHA1");
 	private static final Logger logger = Logger.getLogger();
-	private static final long serialVersionUID = -4368426677157998618L;
+	
 	private String consumerKey = "";
 	private String consumerSecret;
 
@@ -134,7 +134,8 @@ public class OAuthAuthorization implements Authorization, Serializable, OAuthSup
 	public AccessToken getOAuthAccessToken() throws TwitterException {
 		ensureTokenIsAvailable();
 		if (oauthToken instanceof AccessToken) return (AccessToken) oauthToken;
-		oauthToken = new AccessToken(http.post(conf.getOAuthAccessTokenURL(), conf.getSigningOAuthAccessTokenURL(), this));
+		oauthToken = new AccessToken(http.post(conf.getOAuthAccessTokenURL(), conf.getSigningOAuthAccessTokenURL(),
+				this));
 		return (AccessToken) oauthToken;
 	}
 
@@ -248,7 +249,8 @@ public class OAuthAuthorization implements Authorization, Serializable, OAuthSup
 			// @see https://dev.twitter.com/docs/oauth/xauth
 			sign_url = "https://" + sign_url.substring(7);
 		}
-		oauthToken = new RequestToken(http.post(url, sign_url, params.toArray(new HttpParameter[params.size()]), this), this);
+		oauthToken = new RequestToken(conf, http.post(url, sign_url, params.toArray(new HttpParameter[params.size()]), this),
+				this);
 		return (RequestToken) oauthToken;
 	}
 
@@ -330,14 +332,16 @@ public class OAuthAuthorization implements Authorization, Serializable, OAuthSup
 	 * @see <a href="http://oauth.net/core/1.0a/#rfc.section.5.4.1">OAuth Core -
 	 *      5.4.1. Authorization Header</a>
 	 */
-	/* package */String generateAuthorizationHeader(String method, String sign_url, HttpParameter[] params, OAuthToken token) {
+	/* package */String generateAuthorizationHeader(String method, String sign_url, HttpParameter[] params,
+			OAuthToken token) {
 		final long timestamp = System.currentTimeMillis() / 1000;
 		final long nonce = timestamp + RAND.nextInt();
-		return generateAuthorizationHeader(method, sign_url, params, String.valueOf(nonce), String.valueOf(timestamp), token);
+		return generateAuthorizationHeader(method, sign_url, params, String.valueOf(nonce), String.valueOf(timestamp),
+				token);
 	}
 
-	/* package */String generateAuthorizationHeader(String method, String sign_url, HttpParameter[] params, String nonce,
-			String timestamp, OAuthToken otoken) {
+	/* package */String generateAuthorizationHeader(String method, String sign_url, HttpParameter[] params,
+			String nonce, String timestamp, OAuthToken otoken) {
 		if (null == params) {
 			params = new HttpParameter[0];
 		}

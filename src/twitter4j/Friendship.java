@@ -16,13 +16,13 @@
 
 package twitter4j;
 
-import java.io.Serializable;
+
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.9
  */
-public interface Friendship extends Serializable {
+public interface Friendship {
 	long getId();
 
 	String getName();

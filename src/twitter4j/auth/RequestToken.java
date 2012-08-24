@@ -26,26 +26,40 @@ import twitter4j.internal.http.HttpResponse;
  *         Token which is passed to the service provider when acquiring the
  *         authorized Access Token
  */
-public final class RequestToken extends OAuthToken implements java.io.Serializable {
+public final class RequestToken extends OAuthToken {
 	private final Configuration conf;
-	private OAuthSupport oauth;
-	private static final long serialVersionUID = -8214365845469757952L;
-
+	
+	public RequestToken(Configuration conf, String token, String tokenSecret) {
+		super(token, tokenSecret);
+		this.conf = conf;
+	}
+	
+	@Deprecated
 	public RequestToken(String token, String tokenSecret) {
 		super(token, tokenSecret);
 		conf = ConfigurationContext.getInstance();
 	}
 
+	RequestToken(Configuration conf, HttpResponse res, OAuthSupport oauth) throws TwitterException {
+		super(res);
+		this.conf = conf;
+	}
+	
+	@Deprecated
 	RequestToken(HttpResponse res, OAuthSupport oauth) throws TwitterException {
 		super(res);
 		conf = ConfigurationContext.getInstance();
-		this.oauth = oauth;
 	}
 
+	RequestToken(Configuration conf, String token, String tokenSecret, OAuthSupport oauth) {
+		super(token, tokenSecret);
+		this.conf = conf;
+	}
+	
+	@Deprecated
 	RequestToken(String token, String tokenSecret, OAuthSupport oauth) {
 		super(token, tokenSecret);
 		conf = ConfigurationContext.getInstance();
-		this.oauth = oauth;
 	}
 
 	/**

@@ -23,7 +23,7 @@ import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.Serializable;
+
 import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
@@ -56,10 +56,10 @@ import twitter4j.internal.util.z_T4JInternalStringUtil;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.2
  */
-public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpResponseCode, Serializable {
+public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpResponseCode {
 	private static final Logger logger = Logger.getLogger();
 
-	private static final long serialVersionUID = -8819171414069621503L;
+	
 
 	private static final TrustManager[] TRUST_ALL_CERTS = new TrustManager[] { new X509TrustManager() {
 		@Override
@@ -213,7 +213,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 				// connection timeout or read timeout
 				if (retriedCount == CONF.getHttpRetryCount())
 					throw new TwitterException(ioe.getMessage(), ioe, responseCode);
-			} catch (OutOfMemoryError e) {
+			} catch (final OutOfMemoryError e) {
 				throw new TwitterException(e.getMessage(), e);
 			}
 			try {

@@ -16,7 +16,7 @@
 
 package twitter4j;
 
-import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -24,7 +24,7 @@ import java.util.Date;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-public interface Tweet extends Comparable<Tweet>, EntitySupport, Twt, Serializable {
+public interface Tweet extends Comparable<Tweet>, EntitySupport, Twt {
 	/**
 	 * Returns the annotations of the tweet. At the moment this code is written
 	 * (2010-08-18), Twitter Search API does not support annotations yet (so

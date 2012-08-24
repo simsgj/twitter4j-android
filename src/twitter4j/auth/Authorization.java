@@ -16,7 +16,7 @@
 
 package twitter4j.auth;
 
-import java.io.Serializable;
+
 
 import twitter4j.internal.http.HttpRequest;
 
@@ -25,7 +25,7 @@ import twitter4j.internal.http.HttpRequest;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-public interface Authorization extends Serializable {
+public interface Authorization {
 
 	String getAuthorizationHeader(HttpRequest req);
 

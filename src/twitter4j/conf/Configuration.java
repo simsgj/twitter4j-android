@@ -16,8 +16,7 @@
 
 package twitter4j.conf;
 
-import java.io.Serializable;
-import java.util.Map;
+
 import java.util.Properties;
 
 import twitter4j.auth.AuthorizationConfiguration;
@@ -28,9 +27,7 @@ import twitter4j.internal.http.HttpClientWrapperConfiguration;
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
 public interface Configuration extends HttpClientConfiguration, HttpClientWrapperConfiguration,
-		AuthorizationConfiguration, Serializable {
-
-	int getAsyncNumThreads();
+		AuthorizationConfiguration {
 
 	String getClientName();
 
@@ -38,55 +35,13 @@ public interface Configuration extends HttpClientConfiguration, HttpClientWrappe
 
 	String getClientVersion();
 
-	String getDispatcherImpl();
-
-	@Override
-	int getHttpConnectionTimeout();
-
-	// methods for HttpClientConfiguration
-
-	@Override
-	int getHttpDefaultMaxPerRoute();
-
-	@Override
-	int getHttpMaxTotalConnections();
-
-	@Override
-	String getHttpProxyHost();
-
-	@Override
-	String getHttpProxyPassword();
-
-	@Override
-	int getHttpProxyPort();
-
-	@Override
-	String getHttpProxyUser();
-
-	@Override
-	int getHttpReadTimeout();
-
-	@Override
-	int getHttpRetryCount();
-
-	@Override
-	int getHttpRetryIntervalSeconds();
-
 	int getHttpStreamingReadTimeout();
 
 	String getMediaProvider();
 
-	// oauth related setter/getters
-
 	String getMediaProviderAPIKey();
 
 	Properties getMediaProviderParameters();
-
-	@Override
-	String getOAuthAccessToken();
-
-	@Override
-	String getOAuthAccessTokenSecret();
 
 	String getOAuthAccessTokenURL();
 
@@ -96,19 +51,7 @@ public interface Configuration extends HttpClientConfiguration, HttpClientWrappe
 
 	String getOAuthBaseURL();
 
-	@Override
-	String getOAuthConsumerKey();
-
-	@Override
-	String getOAuthConsumerSecret();
-
 	String getOAuthRequestTokenURL();
-
-	@Override
-	String getPassword();
-
-	@Override
-	Map<String, String> getRequestHeaders();
 
 	String getRestBaseURL();
 
@@ -125,19 +68,14 @@ public interface Configuration extends HttpClientConfiguration, HttpClientWrappe
 	String getSigningOAuthRequestTokenURL();
 
 	String getSigningRestBaseURL();
+	
+	String getSigningSearchBaseURL();
 
-	String getSiteStreamBaseURL();
-
-	String getStreamBaseURL();
+	String getSigningUploadBaseURL();
 
 	String getUploadBaseURL();
 
-	@Override
-	String getUser();
-
 	String getUserAgent();
-
-	String getUserStreamBaseURL();
 
 	boolean isDebugEnabled();
 
@@ -151,8 +89,4 @@ public interface Configuration extends HttpClientConfiguration, HttpClientWrappe
 
 	boolean isSSLEnabled();
 
-	@Override
-	boolean isSSLErrorIgnored();
-
-	boolean isUserStreamRepliesAllEnabled();
 }

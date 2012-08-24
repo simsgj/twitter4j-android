@@ -23,7 +23,7 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getURLDecodedString;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
 
-import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +43,7 @@ import twitter4j.internal.http.HttpResponse;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-/* package */final class QueryResultJSONImpl implements QueryResult, Serializable {
+/* package */final class QueryResultJSONImpl implements QueryResult {
 
 	private long sinceId;
 	private long maxId;
@@ -54,7 +54,7 @@ import twitter4j.internal.http.HttpResponse;
 	private int page;
 	private String query;
 	private List<Tweet> tweets;
-	private static final long serialVersionUID = -9059136565234613286L;
+	
 
 	/* package */QueryResultJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
 		final JSONObject json = res.asJSONObject();

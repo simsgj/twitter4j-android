@@ -16,13 +16,13 @@
 
 package twitter4j;
 
-import java.io.Serializable;
+
 
 /**
  * @author Mocel - mocel at guma.jp
  * @since Twitter4J 2.1.8
  */
-public interface RelatedResults extends TwitterResponse, Serializable {
+public interface RelatedResults extends TwitterResponse {
 
 	/**
 	 * Return the 3 or less latest statuses from the user who sent the origin

@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * @author Dan Checkoway - dcheckoway at gmail.com
  */
-public final class RequestMethod implements java.io.Serializable {
+public final class RequestMethod {
 	private final String name;
 	private static final Map<String, RequestMethod> instances = new HashMap<String, RequestMethod>(5);
 
@@ -33,7 +33,7 @@ public final class RequestMethod implements java.io.Serializable {
 	public static final RequestMethod HEAD = new RequestMethod("HEAD");
 	public static final RequestMethod PUT = new RequestMethod("PUT");
 
-	private static final long serialVersionUID = -4399222582680270381L;
+	
 
 	private RequestMethod(String name) {
 		this.name = name;

@@ -29,8 +29,7 @@ import java.util.Properties;
  */
 public final class ConfigurationBuilder {
 
-	@SuppressWarnings("deprecation")
-	private ConfigurationBase configuration = new PropertyConfiguration();
+	private ConfigurationBase configuration = new ConfigurationBase();
 
 	public Configuration build() {
 		checkNotBuilt();
@@ -42,12 +41,6 @@ public final class ConfigurationBuilder {
 		}
 	}
 
-	public ConfigurationBuilder setAsyncNumThreads(int asyncNumThreads) {
-		checkNotBuilt();
-		configuration.setAsyncNumThreads(asyncNumThreads);
-		return this;
-	}
-	
 	public ConfigurationBuilder setClientName(String clientName) {
 		checkNotBuilt();
 		configuration.setClientName(clientName);
@@ -69,12 +62,6 @@ public final class ConfigurationBuilder {
 	public ConfigurationBuilder setDebugEnabled(boolean debugEnabled) {
 		checkNotBuilt();
 		configuration.setDebug(debugEnabled);
-		return this;
-	}
-
-	public ConfigurationBuilder setDispatcherImpl(String dispatcherImpl) {
-		checkNotBuilt();
-		configuration.setDispatcherImpl(dispatcherImpl);
 		return this;
 	}
 
@@ -204,27 +191,6 @@ public final class ConfigurationBuilder {
 		return this;
 	}
 
-	@Deprecated
-	public ConfigurationBuilder setOAuthAccessTokenURL(String oAuthAccessTokenURL) {
-		checkNotBuilt();
-		configuration.setOAuthAccessTokenURL(oAuthAccessTokenURL);
-		return this;
-	}
-
-	@Deprecated
-	public ConfigurationBuilder setOAuthAuthenticationURL(String oAuthAuthenticationURL) {
-		checkNotBuilt();
-		configuration.setOAuthAuthenticationURL(oAuthAuthenticationURL);
-		return this;
-	}
-
-	@Deprecated
-	public ConfigurationBuilder setOAuthAuthorizationURL(String oAuthAuthorizationURL) {
-		checkNotBuilt();
-		configuration.setOAuthAuthorizationURL(oAuthAuthorizationURL);
-		return this;
-	}
-
 	public ConfigurationBuilder setOAuthBaseURL(String oAuthBaseURL) {
 		checkNotBuilt();
 		configuration.setOAuthBaseURL(oAuthBaseURL);
@@ -240,13 +206,6 @@ public final class ConfigurationBuilder {
 	public ConfigurationBuilder setOAuthConsumerSecret(String oAuthConsumerSecret) {
 		checkNotBuilt();
 		configuration.setOAuthConsumerSecret(oAuthConsumerSecret);
-		return this;
-	}
-
-	@Deprecated
-	public ConfigurationBuilder setOAuthRequestTokenURL(String oAuthRequestTokenURL) {
-		checkNotBuilt();
-		configuration.setOAuthRequestTokenURL(oAuthRequestTokenURL);
 		return this;
 	}
 
@@ -274,37 +233,9 @@ public final class ConfigurationBuilder {
 		return this;
 	}
 
-	@Deprecated
-	public ConfigurationBuilder setSigningOAuthAccessTokenURL(String oAuthAccessTokenURL) {
-		checkNotBuilt();
-		configuration.setSigningOAuthAccessTokenURL(oAuthAccessTokenURL);
-		return this;
-	}
-
-	@Deprecated
-	public ConfigurationBuilder setSigningOAuthAuthenticationURL(String oAuthAuthenticationURL) {
-		checkNotBuilt();
-		configuration.setSigningOAuthAuthenticationURL(oAuthAuthenticationURL);
-		return this;
-	}
-
-	@Deprecated
-	public ConfigurationBuilder setSigningOAuthAuthorizationURL(String oAuthAuthorizationURL) {
-		checkNotBuilt();
-		configuration.setSigningOAuthAuthorizationURL(oAuthAuthorizationURL);
-		return this;
-	}
-
 	public ConfigurationBuilder setSigningOAuthBaseURL(String signingOAuthBaseURL) {
 		checkNotBuilt();
 		configuration.setSigningOAuthBaseURL(signingOAuthBaseURL);
-		return this;
-	}
-
-	@Deprecated
-	public ConfigurationBuilder setSigningOAuthRequestTokenURL(String oAuthRequestTokenURL) {
-		checkNotBuilt();
-		configuration.setSigningOAuthRequestTokenURL(oAuthRequestTokenURL);
 		return this;
 	}
 
@@ -314,18 +245,18 @@ public final class ConfigurationBuilder {
 		return this;
 	}
 
-	public ConfigurationBuilder setSiteStreamBaseURL(String siteStreamBaseURL) {
+	public ConfigurationBuilder setSigningUploadBaseURL(String signingUploadURL) {
 		checkNotBuilt();
-		configuration.setSiteStreamBaseURL(siteStreamBaseURL);
+		configuration.setSigningUploadBaseURL(signingUploadURL);
 		return this;
 	}
 
-	public ConfigurationBuilder setStreamBaseURL(String streamBaseURL) {
+	public ConfigurationBuilder setSigningSearchBaseURL(String signingSearchBaseURL) {
 		checkNotBuilt();
-		configuration.setStreamBaseURL(streamBaseURL);
+		configuration.setSigningSearchBaseURL(signingSearchBaseURL);
 		return this;
 	}
-
+	
 	public ConfigurationBuilder setUploadBaseURL(String uploadURL) {
 		checkNotBuilt();
 		configuration.setUploadBaseURL(uploadURL);
@@ -341,18 +272,6 @@ public final class ConfigurationBuilder {
 	public ConfigurationBuilder setUserAgent(String userAgent) {
 		checkNotBuilt();
 		configuration.setUserAgent(userAgent);
-		return this;
-	}
-	
-	public ConfigurationBuilder setUserStreamBaseURL(String userStreamBaseURL) {
-		checkNotBuilt();
-		configuration.setUserStreamBaseURL(userStreamBaseURL);
-		return this;
-	}
-
-	public ConfigurationBuilder setUserStreamRepliesAllEnabled(boolean enabled) {
-		checkNotBuilt();
-		configuration.setUserStreamRepliesAllEnabled(enabled);
 		return this;
 	}
 

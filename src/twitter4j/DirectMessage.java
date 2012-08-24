@@ -16,7 +16,7 @@
 
 package twitter4j;
 
-import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -24,7 +24,7 @@ import java.util.Date;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-public interface DirectMessage extends TwitterResponse, Serializable {
+public interface DirectMessage extends TwitterResponse {
 
 	/**
 	 * @return created_at

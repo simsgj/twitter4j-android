@@ -16,7 +16,7 @@
 
 package twitter4j;
 
-import java.io.Serializable;
+
 import java.net.URL;
 
 /**
@@ -25,7 +25,7 @@ import java.net.URL;
  * @author Mocel - mocel at guma.jp
  * @since Twitter4J 2.1.9
  */
-public interface URLEntity extends Serializable {
+public interface URLEntity {
 
 	/**
 	 * Returns the display URL if mentioned URL is shorten.

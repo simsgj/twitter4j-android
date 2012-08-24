@@ -16,7 +16,7 @@
  */
 package twitter4j.internal.json;
 
-import java.io.Serializable;
+
 
 import org.json.JSONObject;
 
@@ -51,7 +51,7 @@ import twitter4j.internal.http.HttpResponse;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.2.4
  */
-public interface z_T4JInternalFactory extends Serializable {
+public interface z_T4JInternalFactory {
 	AccountSettings createAccountSettings(HttpResponse res) throws TwitterException;
 
 	AccountTotals createAccountTotals(HttpResponse res) throws TwitterException;

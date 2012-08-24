@@ -15,14 +15,14 @@
  */
 package twitter4j;
 
-import java.io.Serializable;
+
 import java.util.Map;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.2.3
  */
-public interface TwitterAPIConfiguration extends TwitterResponse, Serializable {
+public interface TwitterAPIConfiguration extends TwitterResponse {
 	int getCharactersReservedPerMedia();
 
 	int getMaxMediaPerUpload();

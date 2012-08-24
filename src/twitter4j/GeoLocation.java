@@ -21,11 +21,11 @@ package twitter4j;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-public class GeoLocation implements java.io.Serializable {
+public class GeoLocation {
 
 	protected double latitude;
 	protected double longitude;
-	private static final long serialVersionUID = -4847567157651889935L;
+	
 
 	/**
 	 * Creates a GeoLocation instance

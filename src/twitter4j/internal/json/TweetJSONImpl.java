@@ -21,7 +21,7 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.getLong;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
 
-import java.io.Serializable;
+
 import java.util.Arrays;
 import java.util.Date;
 
@@ -46,8 +46,8 @@ import twitter4j.conf.Configuration;
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
 @SuppressWarnings("deprecation")
-final class TweetJSONImpl implements Tweet, Serializable {
-	private static final long serialVersionUID = 3019285230338056113L;
+final class TweetJSONImpl implements Tweet {
+	
 	private String text;
 	private long toUserId = -1;
 	private String toUser = null;

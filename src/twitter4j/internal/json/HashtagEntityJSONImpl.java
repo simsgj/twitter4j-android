@@ -30,7 +30,7 @@ import twitter4j.TwitterException;
  * @since Twitter4J 2.1.9
  */
 /* package */class HashtagEntityJSONImpl implements HashtagEntity {
-	private static final long serialVersionUID = 4068992372784813200L;
+	
 	private int start = -1;
 	private int end = -1;
 	private String text;

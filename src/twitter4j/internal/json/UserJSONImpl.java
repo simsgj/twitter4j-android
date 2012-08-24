@@ -22,7 +22,7 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.getInt;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getLong;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
 
-import java.io.Serializable;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
@@ -44,7 +44,7 @@ import twitter4j.internal.http.HttpResponse;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-/* package */final class UserJSONImpl extends TwitterResponseImpl implements User, Serializable {
+/* package */final class UserJSONImpl extends TwitterResponseImpl implements User {
 
 	private long id;
 	private String name;
@@ -82,7 +82,7 @@ import twitter4j.internal.http.HttpResponse;
 	private boolean translator;
 	private int listedCount;
 	private boolean isFollowRequestSent;
-	private static final long serialVersionUID = -6345893237975349030L;
+	
 
 	/* Only for serialization purposes. */
 	/* package */UserJSONImpl() {

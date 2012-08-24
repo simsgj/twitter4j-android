@@ -27,7 +27,7 @@ import twitter4j.internal.http.HttpParameter;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.1
  */
-public final class StatusUpdate implements java.io.Serializable {
+public final class StatusUpdate {
 
 	private String status;
 	private long inReplyToStatusId = -1l;
@@ -39,7 +39,7 @@ public final class StatusUpdate implements java.io.Serializable {
 	private String mediaName;
 	private transient InputStream mediaBody;
 	private File mediaFile;
-	private static final long serialVersionUID = -3595502688477609916L;
+	
 
 	public StatusUpdate(String status) {
 		this.status = status;

@@ -16,7 +16,7 @@
 
 package twitter4j.internal.json;
 
-import java.io.Serializable;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,12 +33,12 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.1
  */
-final class CategoryJSONImpl implements Category, Serializable {
+final class CategoryJSONImpl implements Category {
 
 	private String name;
 	private String slug;
 	private int size;
-	private static final long serialVersionUID = -6703617743623288566L;
+	
 
 	CategoryJSONImpl(JSONObject json) throws JSONException {
 		init(json);

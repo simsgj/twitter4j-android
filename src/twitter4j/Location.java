@@ -16,12 +16,12 @@
 
 package twitter4j;
 
-import java.io.Serializable;
+
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-public interface Location extends Serializable {
+public interface Location {
 	String getCountryCode();
 
 	String getCountryName();

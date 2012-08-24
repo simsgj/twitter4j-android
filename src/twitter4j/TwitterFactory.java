@@ -31,12 +31,12 @@ import twitter4j.conf.ConfigurationContext;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.0
  */
-public final class TwitterFactory implements java.io.Serializable {
+public final class TwitterFactory {
 	/* AsyncTwitterFactory and TWitterStream will access this field */
 	static final Authorization DEFAULT_AUTHORIZATION = AuthorizationFactory.getInstance(ConfigurationContext
 			.getInstance());
 	private static final Twitter SINGLETON;
-	private static final long serialVersionUID = 5193900138477709155L;
+	
 	private final Configuration conf;
 
 	static {
@@ -59,15 +59,6 @@ public final class TwitterFactory implements java.io.Serializable {
 	public TwitterFactory(Configuration conf) {
 		if (conf == null) throw new NullPointerException("configuration cannot be null");
 		this.conf = conf;
-	}
-
-	/**
-	 * Creates a TwitterFactory with a specified config tree
-	 * 
-	 * @param configTreePath the path
-	 */
-	public TwitterFactory(String configTreePath) {
-		this(ConfigurationContext.getInstance(configTreePath));
 	}
 
 	/**

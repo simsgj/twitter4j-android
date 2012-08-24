@@ -16,7 +16,7 @@
 
 package twitter4j;
 
-import java.io.Serializable;
+
 
 /**
  * Super interface of Twitter Response data interfaces which indicates that rate
@@ -27,7 +27,7 @@ import java.io.Serializable;
  * @see twitter4j.Status
  * @see twitter4j.User
  */
-public interface TwitterResponse extends Serializable {
+public interface TwitterResponse {
 	int NONE = 0;
 
 	int READ = 1;

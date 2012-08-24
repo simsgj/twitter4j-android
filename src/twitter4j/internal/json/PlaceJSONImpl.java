@@ -19,7 +19,7 @@ package twitter4j.internal.json;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
 
-import java.io.Serializable;
+
 import java.util.Arrays;
 
 import org.json.JSONArray;
@@ -37,7 +37,7 @@ import twitter4j.internal.http.HttpResponse;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.1
  */
-final class PlaceJSONImpl extends TwitterResponseImpl implements Place, Serializable {
+final class PlaceJSONImpl extends TwitterResponseImpl implements Place {
 	private String name;
 	private String streetAddress;
 	private String countryCode;
@@ -51,7 +51,7 @@ final class PlaceJSONImpl extends TwitterResponseImpl implements Place, Serializ
 	private String geometryType;
 	private GeoLocation[][] geometryCoordinates;
 	private Place[] containedWithIn;
-	private static final long serialVersionUID = -2873364341474633812L;
+	
 
 	/* For serialization purposes only. */
 	PlaceJSONImpl() {

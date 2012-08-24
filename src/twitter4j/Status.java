@@ -16,7 +16,7 @@
 
 package twitter4j;
 
-import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -24,7 +24,7 @@ import java.util.Date;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-public interface Status extends Comparable<Status>, TwitterResponse, EntitySupport, Twt, Serializable {
+public interface Status extends Comparable<Status>, TwitterResponse, EntitySupport, Twt {
 	/**
 	 * Returns the annotations, or null if no annotations are associated with
 	 * this status.

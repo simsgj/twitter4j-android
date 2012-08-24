@@ -30,12 +30,12 @@ import twitter4j.internal.http.HttpParameter;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-public final class Paging implements java.io.Serializable {
+public final class Paging {
 	private int page = -1;
 	private int count = -1;
 	private long sinceId = -1;
 	private long maxId = -1;
-	private static final long serialVersionUID = -3285857427993796670L;
+	
 
 	// since only
 	static char[] S = new char[] { 's' };

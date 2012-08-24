@@ -18,7 +18,7 @@ package twitter4j.internal.http;
 
 import java.io.File;
 import java.io.InputStream;
-import java.io.Serializable;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
@@ -28,12 +28,12 @@ import java.util.List;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-public final class HttpParameter implements Comparable<HttpParameter>, Serializable {
+public final class HttpParameter implements Comparable<HttpParameter> {
 	private String name = null;
 	private String value = null;
 	private File file = null;
 	private InputStream fileBody = null;
-	private static final long serialVersionUID = -8708108746980739212L;
+	
 
 	private static final String JPEG = "image/jpeg";
 

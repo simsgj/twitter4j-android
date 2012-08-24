@@ -17,17 +17,16 @@
 package twitter4j.conf;
 
 /**
- * ConfigurationFactory implementation for PropertyConfiguration. Currently
+ * ConfigurationFactory implementation for ConfigurationBase. Currently
  * getInstance calls concrete constructor each time. No caching at all.
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-@Deprecated
-class PropertyConfigurationFactory implements ConfigurationFactory {
-	private static final PropertyConfiguration ROOT_CONFIGURATION;
+class BaseConfigurationFactory implements ConfigurationFactory {
+	private static final ConfigurationBase ROOT_CONFIGURATION;
 
 	static {
-		ROOT_CONFIGURATION = new PropertyConfiguration();
+		ROOT_CONFIGURATION = new ConfigurationBase();
 	}
 
 	/**
@@ -48,11 +47,4 @@ class PropertyConfigurationFactory implements ConfigurationFactory {
 		return ROOT_CONFIGURATION;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Configuration getInstance(String configTreePath) {
-		return new PropertyConfiguration(configTreePath);
-	}
 }

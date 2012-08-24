@@ -29,9 +29,10 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
  */
 @SuppressWarnings("rawtypes")
 class PagableResponseListImpl<T> extends ResponseListImpl implements PagableResponseList {
+	private static final long serialVersionUID = 9098876089678648404L;
 	private final long previousCursor;
 	private final long nextCursor;
-	private static final long serialVersionUID = 1531950333538983361L;
+	
 
 	PagableResponseListImpl(int size, JSONObject json, HttpResponse res) {
 		super(size, res);

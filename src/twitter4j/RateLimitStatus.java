@@ -16,7 +16,7 @@
 
 package twitter4j;
 
-import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -26,7 +26,7 @@ import java.util.Date;
  * @see <a href="https://dev.twitter.com/docs/rate-limiting">Rate Limiting |
  *      Twitter Developers</a>
  */
-public interface RateLimitStatus extends Serializable {
+public interface RateLimitStatus {
 	/**
 	 * Returns the current limit in effect<br>
 	 * This value is identical to the &quot;X-RateLimit-Limit&quot; response

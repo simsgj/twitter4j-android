@@ -16,13 +16,13 @@
 
 package twitter4j;
 
-import java.io.Serializable;
+
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.9
  */
-public interface AccountTotals extends TwitterResponse, Serializable {
+public interface AccountTotals extends TwitterResponse {
 	/**
 	 * Returns the number of total favorites.
 	 * 

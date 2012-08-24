@@ -31,7 +31,7 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
  * @since Twitter4J 2.1.9
  */
 /* package */class UserMentionEntityJSONImpl implements UserMentionEntity {
-	private static final long serialVersionUID = 6580431141350059702L;
+	
 	private int start = -1;
 	private int end = -1;
 	private String name;

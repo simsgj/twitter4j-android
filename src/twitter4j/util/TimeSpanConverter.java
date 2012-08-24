@@ -16,7 +16,7 @@
 
 package twitter4j.util;
 
-import java.io.Serializable;
+
 import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,11 +27,11 @@ import java.util.Locale;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.0
  */
-public final class TimeSpanConverter implements Serializable {
+public final class TimeSpanConverter {
 	private static final int ONE_HOUR_IN_SECONDS = 60 * 60;
 	private static final int ONE_DAY_IN_SECONDS = 24 * ONE_HOUR_IN_SECONDS;
 	private static final int ONE_MONTH_IN_SECONDS = 30 * ONE_DAY_IN_SECONDS;
-	private static final long serialVersionUID = 3557748591604361946L;
+	
 	private final MessageFormat[] formats = new MessageFormat[6];
 	private final SimpleDateFormat dateMonth;
 	private final SimpleDateFormat dateMonthYear;

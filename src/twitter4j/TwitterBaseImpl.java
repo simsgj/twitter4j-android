@@ -21,6 +21,8 @@ import static twitter4j.internal.http.HttpResponseCode.SERVICE_UNAVAILABLE;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +48,7 @@ import twitter4j.internal.json.z_T4JInternalJSONImplFactory;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-abstract class TwitterBaseImpl implements java.io.Serializable, OAuthSupport, HttpResponseListener {
+abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 	protected Configuration conf;
 	protected transient String screenName = null;
 	protected transient long id = 0;
@@ -57,7 +59,7 @@ abstract class TwitterBaseImpl implements java.io.Serializable, OAuthSupport, Ht
 	protected z_T4JInternalFactory factory;
 
 	protected Authorization auth;
-	private static final long serialVersionUID = -3812176145960812140L;
+	
 
 	/* package */TwitterBaseImpl(Configuration conf, Authorization auth) {
 		this.conf = conf;
@@ -362,10 +364,11 @@ abstract class TwitterBaseImpl implements java.io.Serializable, OAuthSupport, Ht
 
 	protected User fillInIDAndScreenName() throws TwitterException {
 		ensureAuthorizationEnabled();
-		final User user = factory.createUser(http.get(conf.getRestBaseURL()
-				+ "account/verify_credentials.json?include_entities=" + conf.isIncludeEntitiesEnabled(),
-				conf.getSigningRestBaseURL() + "account/verify_credentials.json?include_entities=" 
-				+ conf.isIncludeEntitiesEnabled(), auth));
+		final User user = factory.createUser(http.get(
+				conf.getRestBaseURL() + "account/verify_credentials.json?include_entities="
+						+ conf.isIncludeEntitiesEnabled(),
+				conf.getSigningRestBaseURL() + "account/verify_credentials.json?include_entities="
+						+ conf.isIncludeEntitiesEnabled(), auth));
 		screenName = user.getScreenName();
 		id = user.getId();
 		return user;
@@ -414,13 +417,13 @@ abstract class TwitterBaseImpl implements java.io.Serializable, OAuthSupport, Ht
 		setFactory();
 	}
 
-	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+	private void writeObject(ObjectOutputStream out) throws IOException {
 		out.writeObject(conf);
 		out.writeObject(auth);
 		final List<RateLimitStatusListener> serializableRateLimitStatusListeners = new ArrayList<RateLimitStatusListener>(
 				0);
 		for (final RateLimitStatusListener listener : rateLimitStatusListeners) {
-			if (listener instanceof java.io.Serializable) {
+			if (listener instanceof Serializable) {
 				serializableRateLimitStatusListeners.add(listener);
 			}
 		}

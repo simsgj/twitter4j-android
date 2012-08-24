@@ -20,12 +20,12 @@ package twitter4j;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.3
  */
-final class ExceptionDiagnosis implements java.io.Serializable {
+final class ExceptionDiagnosis {
 	int stackLineHash;
 	int lineNumberHash;
 	String hexString = "";
 	Throwable th;
-	private static final long serialVersionUID = 453958937114285988L;
+	
 
 	ExceptionDiagnosis(Throwable th) {
 		this(th, new String[] {});

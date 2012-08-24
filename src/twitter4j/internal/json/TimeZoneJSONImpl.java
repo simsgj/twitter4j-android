@@ -28,7 +28,7 @@ import twitter4j.TwitterException;
  * @author Alessandro Bahgat - ale.bahgat at gmail.com
  */
 public class TimeZoneJSONImpl implements TimeZone {
-	private static final long serialVersionUID = 4715603575648656436L;
+	
 	private final String NAME;
 	private final String TZINFO_NAME;
 	private final int UTC_OFFSET;

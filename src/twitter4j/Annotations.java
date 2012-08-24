@@ -35,8 +35,8 @@ import org.json.JSONException;
  *             >Annotations - Twitter Development Talk | Google Groups</a>
  */
 @Deprecated
-public class Annotations implements java.io.Serializable {
-	private static final long serialVersionUID = 7928827620306593741L;
+public class Annotations {
+	
 	public static final int lengthLimit = 512;
 	private List<Annotation> annotations = null;
 

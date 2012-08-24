@@ -21,7 +21,7 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.getDate;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getLong;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
 
-import java.io.Serializable;
+
 import java.util.Arrays;
 import java.util.Date;
 
@@ -50,9 +50,9 @@ import twitter4j.internal.logging.Logger;
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
 @SuppressWarnings("deprecation")
-final class StatusJSONImpl extends TwitterResponseImpl implements Status, Serializable {
+final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 	private static final Logger logger = Logger.getLogger();
-	private static final long serialVersionUID = 7548618898682727465L;
+	
 
 	private Date createdAt;
 	private long id;
