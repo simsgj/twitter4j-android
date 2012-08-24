@@ -47,6 +47,12 @@ public final class ConfigurationBuilder {
 		configuration.setAsyncNumThreads(asyncNumThreads);
 		return this;
 	}
+	
+	public ConfigurationBuilder setClientName(String clientName) {
+		checkNotBuilt();
+		configuration.setClientName(clientName);
+		return this;
+	}
 
 	public ConfigurationBuilder setClientURL(String clientURL) {
 		checkNotBuilt();
@@ -332,6 +338,12 @@ public final class ConfigurationBuilder {
 		return this;
 	}
 
+	public ConfigurationBuilder setUserAgent(String userAgent) {
+		checkNotBuilt();
+		configuration.setUserAgent(userAgent);
+		return this;
+	}
+	
 	public ConfigurationBuilder setUserStreamBaseURL(String userStreamBaseURL) {
 		checkNotBuilt();
 		configuration.setUserStreamBaseURL(userStreamBaseURL);

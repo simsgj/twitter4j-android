@@ -109,12 +109,12 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 		super(conf);
 	}
 
-	public HttpResponse get(String url) throws TwitterException {
-		return request(new HttpRequest(RequestMethod.GET, url, null, null, null));
+	public HttpResponse get(String url, String sign_url) throws TwitterException {
+		return request(new HttpRequest(RequestMethod.GET, url, sign_url, null, null, null));
 	}
 
-	public HttpResponse post(String url, HttpParameter[] params) throws TwitterException {
-		return request(new HttpRequest(RequestMethod.POST, url, params, null, null));
+	public HttpResponse post(String url, String sign_url, HttpParameter[] params) throws TwitterException {
+		return request(new HttpRequest(RequestMethod.POST, url, sign_url, params, null, null));
 	}
 
 	@Override

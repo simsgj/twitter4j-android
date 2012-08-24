@@ -30,7 +30,7 @@ public final class HttpRequest implements java.io.Serializable {
 
 	private final RequestMethod method;
 
-	private final String url;
+	private final String url, sign_url;
 
 	private final HttpParameter[] parameters;
 
@@ -51,14 +51,17 @@ public final class HttpRequest implements java.io.Serializable {
 	 *            NullAuthentication are supported.
 	 * @param requestHeaders
 	 */
-	public HttpRequest(RequestMethod method, String url, HttpParameter[] parameters, Authorization authorization,
+	public HttpRequest(RequestMethod method, String url, String sign_url, HttpParameter[] parameters, Authorization authorization,
 			Map<String, String> requestHeaders) {
 		this.method = method;
 		if (method != RequestMethod.POST && parameters != null && parameters.length != 0) {
-			this.url = url + "?" + HttpParameter.encodeParameters(parameters);
+ 			final String param_string = HttpParameter.encodeParameters(parameters);
+			this.url = url + "?" + param_string;
+ 			this.sign_url = sign_url + "?" + param_string;
 			this.parameters = NULL_PARAMETERS;
 		} else {
-			this.url = url;
+ 			this.url = url;
+ 			this.sign_url = sign_url;
 			this.parameters = parameters;
 		}
 		this.authorization = authorization;
@@ -101,6 +104,10 @@ public final class HttpRequest implements java.io.Serializable {
 
 	public String getURL() {
 		return url;
+	}
+	
+	public String getSignURL() {
+		return sign_url != null ? sign_url : url;
 	}
 
 	@Override
