@@ -1009,6 +1009,8 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 			requestHeaders.put("Accept-Encoding", "gzip");
 		}
 		// I found this may cause "Socket is closed" error in Android, so I
+		// changed it to "keep-alive".
+		requestHeaders.put("Connection", "keep-alive");
 	}
 
 	private static void cacheInstance(ConfigurationBase conf) {
