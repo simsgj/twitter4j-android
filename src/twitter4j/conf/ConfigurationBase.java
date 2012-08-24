@@ -431,34 +431,32 @@ class ConfigurationBase implements TwitterConstants, Configuration, Serializable
 
 	@Override
 	public String getSigningOAuthAccessTokenURL() {
-		return signingOAuthAccessTokenURL;
+		return signingOAuthAccessTokenURL != null ? signingOAuthAccessTokenURL : oAuthAccessTokenURL;
 	}
 
 	@Override
 	public String getSigningOAuthAuthenticationURL() {
-		return signingOAuthAuthenticationURL;
+		return signingOAuthAuthenticationURL != null ? signingOAuthAuthenticationURL : oAuthAuthenticationURL;
 	}
 
 	@Override
 	public String getSigningOAuthAuthorizationURL() {
-		return signingOAuthAuthorizationURL;
+		return signingOAuthAuthorizationURL != null ? signingOAuthAuthorizationURL : oAuthAuthorizationURL;
 	}
 
 	@Override
 	public String getSigningOAuthBaseURL() {
-		return signingOAuthBaseURL;
+		return signingOAuthBaseURL != null ? signingOAuthBaseURL : oAuthBaseURL;
 	}
 
 	@Override
 	public String getSigningOAuthRequestTokenURL() {
-		return signingOAuthRequestTokenURL;
+		return signingOAuthRequestTokenURL != null ? signingOAuthRequestTokenURL : oAuthRequestTokenURL;
 	}
-
-	// oauth related setter/getters
 
 	@Override
 	public String getSigningRestBaseURL() {
-		return signingRestBaseURL;
+		return signingRestBaseURL != null ? signingRestBaseURL : restBaseURL;
 	}
 
 	@Override
