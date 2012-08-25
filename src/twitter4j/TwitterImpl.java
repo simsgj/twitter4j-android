@@ -1935,7 +1935,7 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	}
 
 	private HttpResponse post(String url, String sign_url) throws TwitterException {
-		return get(url, sign_url, null);
+		return post(url, sign_url, null);
 	}
 
 	private HttpResponse post(String url, String sign_url, HttpParameter[] parameters) throws TwitterException {
