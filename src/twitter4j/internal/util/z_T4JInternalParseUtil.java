@@ -63,7 +63,7 @@ public final class z_T4JInternalParseUtil {
 	}
 
 	public static Date getDate(String name, JSONObject json, String format) throws TwitterException {
-		final String dateStr = getUnescapedString(name, json);
+		final String dateStr = getRawString(name, json);
 		if ("null".equals(dateStr) || null == dateStr)
 			return null;
 		else
@@ -138,6 +138,8 @@ public final class z_T4JInternalParseUtil {
 		}
 	}
 
+	@Deprecated
+	// This is useless in Android, and will cause errors.
 	public static String getUnescapedString(String str, JSONObject json) {
 		return HTMLEntity.unescape(getRawString(str, json));
 	}

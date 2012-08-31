@@ -18,7 +18,7 @@ package twitter4j.internal.json;
 
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getDate;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getInt;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
+import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
 
 import java.util.Date;
 
@@ -45,7 +45,6 @@ import twitter4j.internal.http.HttpResponse;
 	private int position;
 	private String name;
 	private int id;
-	
 
 	/* package */SavedSearchJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
 		super(res);
@@ -138,9 +137,9 @@ import twitter4j.internal.http.HttpResponse;
 
 	private void init(JSONObject savedSearch) throws TwitterException {
 		createdAt = getDate("created_at", savedSearch, "EEE MMM dd HH:mm:ss z yyyy");
-		query = getUnescapedString("query", savedSearch);
+		query = getRawString("query", savedSearch);
 		position = getInt("position", savedSearch);
-		name = getUnescapedString("name", savedSearch);
+		name = getRawString("name", savedSearch);
 		id = getInt("id", savedSearch);
 	}
 

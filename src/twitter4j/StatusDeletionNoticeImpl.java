@@ -16,8 +16,6 @@
 
 package twitter4j;
 
-
-
 import org.json.JSONObject;
 
 import twitter4j.internal.util.z_T4JInternalParseUtil;
@@ -33,7 +31,6 @@ class StatusDeletionNoticeImpl implements StatusDeletionNotice {
 
 	private long statusId;
 	private long userId;
-	
 
 	/* package */StatusDeletionNoticeImpl(JSONObject status) {
 		statusId = z_T4JInternalParseUtil.getLong("id", status);

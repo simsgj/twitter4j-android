@@ -58,7 +58,7 @@ import twitter4j.internal.util.z_T4JInternalStringUtil;
  * @since Twitter4J 2.2.4
  */
 public class z_T4JInternalJSONImplFactory implements z_T4JInternalFactory {
-	
+
 	private Configuration conf;
 
 	public z_T4JInternalJSONImplFactory(Configuration conf) {

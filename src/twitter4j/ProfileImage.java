@@ -17,7 +17,6 @@
 package twitter4j;
 
 import java.io.ObjectStreamException;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,8 +36,6 @@ public interface ProfileImage extends TwitterResponse {
 	static class ImageSize {
 
 		private static final Map<String, ImageSize> instances = new HashMap<String, ImageSize>();
-
-		
 
 		private final String name;
 

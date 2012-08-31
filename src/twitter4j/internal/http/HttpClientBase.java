@@ -3,11 +3,10 @@ package twitter4j.internal.http;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-
 import twitter4j.internal.logging.Logger;
 
 public class HttpClientBase {
-	
+
 	private static final Logger logger = Logger.getLogger();
 	protected final HttpClientConfiguration CONF;
 

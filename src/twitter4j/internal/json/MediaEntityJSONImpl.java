@@ -34,7 +34,7 @@ import twitter4j.TwitterException;
  * @since Twitter4J 2.2.3
  */
 public class MediaEntityJSONImpl implements MediaEntity {
-	
+
 	private long id;
 	private int start = -1;
 	private int end = -1;
@@ -209,7 +209,7 @@ public class MediaEntityJSONImpl implements MediaEntity {
 	}
 
 	static class Size implements MediaEntity.Size {
-		
+
 		int width;
 		int height;
 		int resize;

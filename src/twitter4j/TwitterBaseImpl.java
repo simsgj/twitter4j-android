@@ -59,7 +59,6 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 	protected z_T4JInternalFactory factory;
 
 	protected Authorization auth;
-	
 
 	/* package */TwitterBaseImpl(Configuration conf, Authorization auth) {
 		this.conf = conf;
@@ -408,6 +407,7 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 		setFactory();
 	}
 
+	@SuppressWarnings("unchecked")
 	private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
 		conf = (Configuration) stream.readObject();
 		auth = (Authorization) stream.readObject();

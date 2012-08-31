@@ -30,7 +30,6 @@ public final class RateLimitStatusEvent extends java.util.EventObject {
 	private RateLimitStatus rateLimitStatus;
 
 	private boolean isAccountRateLimitStatus;
-	
 
 	RateLimitStatusEvent(Object source, RateLimitStatus rateLimitStatus, boolean isAccountRateLimitStatus) {
 		super(source);

@@ -34,7 +34,6 @@ public final class GeoQuery {
 	private int maxResults;
 	public static final String NEIGHBORHOOD = "neighborhood";
 	public static final String CITY = "city";
-	
 
 	/**
 	 * Creates a GeoQuery with the specified location

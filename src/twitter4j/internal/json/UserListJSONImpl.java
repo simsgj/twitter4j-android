@@ -20,7 +20,6 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.getBoolean;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getInt;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
 
-
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -54,7 +53,6 @@ import twitter4j.internal.http.HttpResponse;
 	private boolean mode;
 	private User user;
 	private boolean following;
-	
 
 	/* package */UserListJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
 		super(res);
@@ -221,6 +219,7 @@ import twitter4j.internal.http.HttpResponse;
 			final JSONObject json = res.asJSONObject();
 			final JSONArray list = json.getJSONArray("lists");
 			final int size = list.length();
+			@SuppressWarnings("unchecked")
 			final PagableResponseList<UserList> users = new PagableResponseListImpl<UserList>(size, json, res);
 			for (int i = 0; i < size; i++) {
 				final JSONObject userListJson = list.getJSONObject(i);

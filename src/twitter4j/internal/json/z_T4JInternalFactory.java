@@ -16,8 +16,6 @@
  */
 package twitter4j.internal.json;
 
-
-
 import org.json.JSONObject;
 
 import twitter4j.AccountSettings;

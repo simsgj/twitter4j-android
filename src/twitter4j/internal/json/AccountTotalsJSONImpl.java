@@ -18,8 +18,6 @@ package twitter4j.internal.json;
 
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getInt;
 
-
-
 import org.json.JSONObject;
 
 import twitter4j.AccountTotals;
@@ -33,7 +31,6 @@ import twitter4j.internal.http.HttpResponse;
  */
 class AccountTotalsJSONImpl extends TwitterResponseImpl implements AccountTotals {
 
-	
 	private final int updates;
 	private final int followers;
 	private final int favorites;

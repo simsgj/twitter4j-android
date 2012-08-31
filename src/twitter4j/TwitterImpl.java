@@ -46,7 +46,6 @@ import twitter4j.internal.util.z_T4JInternalStringUtil;
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
 class TwitterImpl extends TwitterBaseImpl implements Twitter {
-	
 
 	private final HttpParameter INCLUDE_ENTITIES;
 
@@ -1565,7 +1564,8 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	@Override
 	public SavedSearch showSavedSearch(int id) throws TwitterException {
 		ensureAuthorizationEnabled();
-		return factory.createSavedSearch(get(conf.getRestBaseURL() + "saved_searches/show/" + id + ".json", conf.getSigningRestBaseURL() + "saved_searches/show/" + id + ".json"));
+		return factory.createSavedSearch(get(conf.getRestBaseURL() + "saved_searches/show/" + id + ".json",
+				conf.getSigningRestBaseURL() + "saved_searches/show/" + id + ".json"));
 	}
 
 	/**
@@ -1574,8 +1574,8 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	@Override
 	public Status showStatus(long id) throws TwitterException {
 		return factory.createStatus(get(conf.getRestBaseURL() + "statuses/show/" + id + ".json?include_entities="
-				+ conf.isIncludeEntitiesEnabled(), conf.getSigningRestBaseURL() + "statuses/show/" + id + ".json?include_entities="
-						+ conf.isIncludeEntitiesEnabled()));
+				+ conf.isIncludeEntitiesEnabled(), conf.getSigningRestBaseURL() + "statuses/show/" + id
+				+ ".json?include_entities=" + conf.isIncludeEntitiesEnabled()));
 	}
 
 	/**
@@ -1583,8 +1583,9 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	 */
 	@Override
 	public User showUser(long userId) throws TwitterException {
-		return factory.createUser(get(conf.getRestBaseURL() + "users/show.json?include_entities="
-				+ conf.isIncludeEntitiesEnabled() + "&user_id=" + userId, conf.getSigningRestBaseURL() + "users/show.json?include_entities="
+		return factory.createUser(get(
+				conf.getRestBaseURL() + "users/show.json?include_entities=" + conf.isIncludeEntitiesEnabled()
+						+ "&user_id=" + userId, conf.getSigningRestBaseURL() + "users/show.json?include_entities="
 						+ conf.isIncludeEntitiesEnabled() + "&user_id=" + userId));
 	}
 
@@ -1593,9 +1594,11 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	 */
 	@Override
 	public User showUser(String screenName) throws TwitterException {
-		return factory.createUser(get(conf.getRestBaseURL() + "users/show.json?include_entities="
-				+ conf.isIncludeEntitiesEnabled() + "&screen_name=" + screenName, conf.getSigningRestBaseURL() + "users/show.json?include_entities="
-						+ conf.isIncludeEntitiesEnabled() + "&screen_name=" + screenName));
+		return factory.createUser(get(
+				conf.getRestBaseURL() + "users/show.json?include_entities=" + conf.isIncludeEntitiesEnabled()
+						+ "&screen_name=" + screenName, conf.getSigningRestBaseURL()
+						+ "users/show.json?include_entities=" + conf.isIncludeEntitiesEnabled() + "&screen_name="
+						+ screenName));
 	}
 
 	/**
@@ -1603,7 +1606,8 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	 */
 	@Override
 	public UserList showUserList(int listId) throws TwitterException {
-		return factory.createAUserList(get(conf.getRestBaseURL() + "lists/show.json?list_id=" + listId, conf.getSigningRestBaseURL() + "lists/show.json?list_id=" + listId));
+		return factory.createAUserList(get(conf.getRestBaseURL() + "lists/show.json?list_id=" + listId,
+				conf.getSigningRestBaseURL() + "lists/show.json?list_id=" + listId));
 	}
 
 	/**
@@ -1613,8 +1617,9 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	public User showUserListMembership(int listId, long userId) throws TwitterException {
 		ensureAuthorizationEnabled();
 		return factory.createUser(get(conf.getRestBaseURL() + "lists/members/show.json?list_id=" + listId + "&user_id="
-				+ userId + "&include_entities=" + conf.isIncludeEntitiesEnabled(), conf.getSigningRestBaseURL() + "lists/members/show.json?list_id=" + listId + "&user_id="
-						+ userId + "&include_entities=" + conf.isIncludeEntitiesEnabled()));
+				+ userId + "&include_entities=" + conf.isIncludeEntitiesEnabled(),
+				conf.getSigningRestBaseURL() + "lists/members/show.json?list_id=" + listId + "&user_id=" + userId
+						+ "&include_entities=" + conf.isIncludeEntitiesEnabled()));
 	}
 
 	/**
@@ -1624,8 +1629,9 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	public User showUserListSubscription(int listId, long userId) throws TwitterException {
 		ensureAuthorizationEnabled();
 		return factory.createUser(get(conf.getRestBaseURL() + "lists/subscribers/show.json?list_id=" + listId
-				+ "&user_id=" + userId + "&include_entities=" + conf.isIncludeEntitiesEnabled(), conf.getSigningRestBaseURL() + "lists/subscribers/show.json?list_id=" + listId
-				+ "&user_id=" + userId + "&include_entities=" + conf.isIncludeEntitiesEnabled()));
+				+ "&user_id=" + userId + "&include_entities=" + conf.isIncludeEntitiesEnabled(),
+				conf.getSigningRestBaseURL() + "lists/subscribers/show.json?list_id=" + listId + "&user_id=" + userId
+						+ "&include_entities=" + conf.isIncludeEntitiesEnabled()));
 	}
 
 	/**
@@ -1633,7 +1639,8 @@ class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	 */
 	@Override
 	public boolean test() throws TwitterException {
-		return -1 != get(conf.getRestBaseURL() + "help/test.json", conf.getSigningRestBaseURL() + "help/test.json").asString().indexOf("ok");
+		return -1 != get(conf.getRestBaseURL() + "help/test.json", conf.getSigningRestBaseURL() + "help/test.json")
+				.asString().indexOf("ok");
 	}
 
 	@Override

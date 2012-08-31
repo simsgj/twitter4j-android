@@ -40,7 +40,6 @@ import twitter4j.internal.http.HttpResponse;
 	private static final String TWEETS_WITH_CONVERSATION = "TweetsWithConversation";
 	private static final String TWEETS_WITH_REPLY = "TweetsWithReply";
 	private static final String TWEETS_FROM_USER = "TweetsFromUser";
-	
 
 	private Map<String, ResponseList<Status>> tweetsMap;
 

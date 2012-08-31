@@ -18,8 +18,6 @@ package twitter4j.internal.json;
 
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getBoolean;
 
-
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,7 +34,7 @@ import twitter4j.internal.http.HttpResponse;
  * @since Twitter4J 2.1.9
  */
 class AccountSettingsJSONImpl extends TwitterResponseImpl implements AccountSettings {
-	
+
 	private final boolean SLEEP_TIME_ENABLED;
 	private final String SLEEP_START_TIME;
 	private final String SLEEP_END_TIME;

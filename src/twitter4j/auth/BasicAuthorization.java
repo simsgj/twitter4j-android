@@ -16,8 +16,6 @@
 
 package twitter4j.auth;
 
-
-
 import twitter4j.internal.http.BASE64Encoder;
 import twitter4j.internal.http.HttpRequest;
 
@@ -32,7 +30,6 @@ public class BasicAuthorization implements Authorization {
 
 	private String password;
 	private String basic;
-	
 
 	public BasicAuthorization(String userId, String password) {
 		this.userId = userId;

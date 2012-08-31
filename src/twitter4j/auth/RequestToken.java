@@ -28,12 +28,12 @@ import twitter4j.internal.http.HttpResponse;
  */
 public final class RequestToken extends OAuthToken {
 	private final Configuration conf;
-	
+
 	public RequestToken(Configuration conf, String token, String tokenSecret) {
 		super(token, tokenSecret);
 		this.conf = conf;
 	}
-	
+
 	@Deprecated
 	public RequestToken(String token, String tokenSecret) {
 		super(token, tokenSecret);
@@ -44,18 +44,18 @@ public final class RequestToken extends OAuthToken {
 		super(res);
 		this.conf = conf;
 	}
-	
+
+	RequestToken(Configuration conf, String token, String tokenSecret, OAuthSupport oauth) {
+		super(token, tokenSecret);
+		this.conf = conf;
+	}
+
 	@Deprecated
 	RequestToken(HttpResponse res, OAuthSupport oauth) throws TwitterException {
 		super(res);
 		conf = ConfigurationContext.getInstance();
 	}
 
-	RequestToken(Configuration conf, String token, String tokenSecret, OAuthSupport oauth) {
-		super(token, tokenSecret);
-		this.conf = conf;
-	}
-	
 	@Deprecated
 	RequestToken(String token, String tokenSecret, OAuthSupport oauth) {
 		super(token, tokenSecret);

@@ -16,7 +16,6 @@
 
 package twitter4j.auth;
 
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.security.InvalidKeyException;
@@ -50,7 +49,7 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 	private static final String HMAC_SHA1 = "HmacSHA1";
 	private static final HttpParameter OAUTH_SIGNATURE_METHOD = new HttpParameter("oauth_signature_method", "HMAC-SHA1");
 	private static final Logger logger = Logger.getLogger();
-	
+
 	private String consumerKey = "";
 	private String consumerSecret;
 
@@ -163,17 +162,17 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 	@Override
 	public AccessToken getOAuthAccessToken(String oauthVerifier) throws TwitterException {
 		ensureTokenIsAvailable();
-		String url = conf.getOAuthAccessTokenURL();
+		final String url = conf.getOAuthAccessTokenURL();
 		if (0 == url.indexOf("http://")) {
 			// SSL is required
 			// @see https://dev.twitter.com/docs/oauth/xauth
-			url = "https://" + url.substring(7);
+			// url = "https://" + url.substring(7);
 		}
-		String sign_url = conf.getSigningOAuthAccessTokenURL();
+		final String sign_url = conf.getSigningOAuthAccessTokenURL();
 		if (0 == sign_url.indexOf("http://")) {
 			// SSL is required
 			// @see https://dev.twitter.com/docs/oauth/xauth
-			sign_url = "https://" + sign_url.substring(7);
+			// sign_url = "https://" + sign_url.substring(7);
 		}
 		oauthToken = new AccessToken(http.post(url, sign_url, new HttpParameter[] { new HttpParameter("oauth_verifier",
 				oauthVerifier) }, this));
@@ -186,17 +185,17 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 	@Override
 	public AccessToken getOAuthAccessToken(String screenName, String password) throws TwitterException {
 		try {
-			String url = conf.getOAuthAccessTokenURL();
+			final String url = conf.getOAuthAccessTokenURL();
 			if (0 == url.indexOf("http://")) {
 				// SSL is required
 				// @see https://dev.twitter.com/docs/oauth/xauth
-				url = "https://" + url.substring(7);
+				// url = "https://" + url.substring(7);
 			}
-			String sign_url = conf.getSigningOAuthAccessTokenURL();
+			final String sign_url = conf.getSigningOAuthAccessTokenURL();
 			if (0 == sign_url.indexOf("http://")) {
 				// SSL is required
 				// @see https://dev.twitter.com/docs/oauth/xauth
-				sign_url = "https://" + sign_url.substring(7);
+				// sign_url = "https://" + sign_url.substring(7);
 			}
 			oauthToken = new AccessToken(http.post(url, sign_url, new HttpParameter[] {
 					new HttpParameter("x_auth_username", screenName), new HttpParameter("x_auth_password", password),
@@ -237,20 +236,20 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 		if (xAuthAccessType != null) {
 			params.add(new HttpParameter("x_auth_access_type", xAuthAccessType));
 		}
-		String url = conf.getOAuthRequestTokenURL();
+		final String url = conf.getOAuthRequestTokenURL();
 		if (0 == url.indexOf("http://")) {
 			// SSL is required
 			// @see https://dev.twitter.com/docs/oauth/xauth
-			url = "https://" + url.substring(7);
+			// url = "https://" + url.substring(7);
 		}
-		String sign_url = conf.getSigningOAuthRequestTokenURL();
+		final String sign_url = conf.getSigningOAuthRequestTokenURL();
 		if (0 == sign_url.indexOf("http://")) {
 			// SSL is required
 			// @see https://dev.twitter.com/docs/oauth/xauth
-			sign_url = "https://" + sign_url.substring(7);
+			// sign_url = "https://" + sign_url.substring(7);
 		}
-		oauthToken = new RequestToken(conf, http.post(url, sign_url, params.toArray(new HttpParameter[params.size()]), this),
-				this);
+		oauthToken = new RequestToken(conf, http.post(url, sign_url, params.toArray(new HttpParameter[params.size()]),
+				this), this);
 		return (RequestToken) oauthToken;
 	}
 

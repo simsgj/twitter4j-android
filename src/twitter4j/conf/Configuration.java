@@ -16,9 +16,6 @@
 
 package twitter4j.conf;
 
-
-import java.util.Properties;
-
 import twitter4j.auth.AuthorizationConfiguration;
 import twitter4j.internal.http.HttpClientConfiguration;
 import twitter4j.internal.http.HttpClientWrapperConfiguration;
@@ -36,12 +33,6 @@ public interface Configuration extends HttpClientConfiguration, HttpClientWrappe
 	String getClientVersion();
 
 	int getHttpStreamingReadTimeout();
-
-	String getMediaProvider();
-
-	String getMediaProviderAPIKey();
-
-	Properties getMediaProviderParameters();
 
 	String getOAuthAccessTokenURL();
 
@@ -68,7 +59,7 @@ public interface Configuration extends HttpClientConfiguration, HttpClientWrappe
 	String getSigningOAuthRequestTokenURL();
 
 	String getSigningRestBaseURL();
-	
+
 	String getSigningSearchBaseURL();
 
 	String getSigningUploadBaseURL();

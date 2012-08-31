@@ -16,8 +16,6 @@
 
 package twitter4j;
 
-
-
 /**
  * A data interface that has detailed information about a relationship between
  * two users

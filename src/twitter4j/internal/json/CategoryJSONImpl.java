@@ -16,8 +16,6 @@
 
 package twitter4j.internal.json;
 
-
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,7 +36,6 @@ final class CategoryJSONImpl implements Category {
 	private String name;
 	private String slug;
 	private int size;
-	
 
 	CategoryJSONImpl(JSONObject json) throws JSONException {
 		init(json);

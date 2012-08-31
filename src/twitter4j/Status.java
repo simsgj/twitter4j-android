@@ -16,7 +16,6 @@
 
 package twitter4j;
 
-
 import java.util.Date;
 
 /**
@@ -96,6 +95,8 @@ public interface Status extends Comparable<Status>, TwitterResponse, EntitySuppo
 	 * @since Twitter4J 1.0.4
 	 */
 	long getInReplyToUserId();
+
+	Status getMyRetweetedStatus();
 
 	/**
 	 * Returns the place attached to this status

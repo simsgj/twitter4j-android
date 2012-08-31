@@ -31,7 +31,7 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
  * @since Twitter4J 2.1.9
  */
 /* package */class UserMentionEntityJSONImpl implements UserMentionEntity {
-	
+
 	private int start = -1;
 	private int end = -1;
 	private String name;

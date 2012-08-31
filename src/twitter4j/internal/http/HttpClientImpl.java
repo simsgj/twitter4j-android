@@ -23,7 +23,6 @@ import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-
 import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
@@ -58,8 +57,6 @@ import twitter4j.internal.util.z_T4JInternalStringUtil;
  */
 public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpResponseCode {
 	private static final Logger logger = Logger.getLogger();
-
-	
 
 	private static final TrustManager[] TRUST_ALL_CERTS = new TrustManager[] { new X509TrustManager() {
 		@Override

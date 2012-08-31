@@ -100,7 +100,7 @@ public abstract class HttpResponse {
 		if (json == null) {
 			try {
 				if (responseAsString == null) {
-					json = new JSONObject(new JSONTokener(asString()));
+					json = new JSONObject(asString());
 				} else {
 					json = new JSONObject(responseAsString);
 				}

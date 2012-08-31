@@ -17,12 +17,10 @@
 package twitter4j.conf;
 
 import java.io.ObjectStreamException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 import twitter4j.TwitterConstants;
 import twitter4j.Version;
@@ -88,17 +86,10 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 
 	private boolean jsonStoreEnabled;
 
-	private String mediaProvider;
-
-	private String mediaProviderAPIKey;
-
-	private Properties mediaProviderParameters;
 	// hidden portion
 	private String clientVersion;
 	private String clientURL;
 	private String clientName;
-
-	
 
 	// method for HttpRequestFactoryConfiguration
 	Map<String, String> requestHeaders;
@@ -149,10 +140,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		setSigningUploadBaseURL(DEFAULT_SIGNING_UPLOAD_BASE_URL);
 
 		setIncludeRTsEnbled(true);
-
-		setMediaProvider("TWITTER");
-		setMediaProviderAPIKey(null);
-		setMediaProviderParameters(null);
 	}
 
 	@Override
@@ -187,12 +174,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 				: that.httpProxyPassword != null) return false;
 		if (httpProxyUser != null ? !httpProxyUser.equals(that.httpProxyUser) : that.httpProxyUser != null)
 			return false;
-		if (mediaProvider != null ? !mediaProvider.equals(that.mediaProvider) : that.mediaProvider != null)
-			return false;
-		if (mediaProviderAPIKey != null ? !mediaProviderAPIKey.equals(that.mediaProviderAPIKey)
-				: that.mediaProviderAPIKey != null) return false;
-		if (mediaProviderParameters != null ? !mediaProviderParameters.equals(that.mediaProviderParameters)
-				: that.mediaProviderParameters != null) return false;
 		if (oAuthAccessToken != null ? !oAuthAccessToken.equals(that.oAuthAccessToken) : that.oAuthAccessToken != null)
 			return false;
 		if (oAuthAccessTokenSecret != null ? !oAuthAccessTokenSecret.equals(that.oAuthAccessTokenSecret)
@@ -228,12 +209,12 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 				: that.signingRestBaseURL != null) return false;
 		if (searchBaseURL != null ? !searchBaseURL.equals(that.searchBaseURL) : that.searchBaseURL != null)
 			return false;
-		if (signingSearchBaseURL != null ? !signingSearchBaseURL.equals(that.signingSearchBaseURL) : that.signingSearchBaseURL != null)
-			return false;
+		if (signingSearchBaseURL != null ? !signingSearchBaseURL.equals(that.signingSearchBaseURL)
+				: that.signingSearchBaseURL != null) return false;
 		if (uploadBaseURL != null ? !uploadBaseURL.equals(that.uploadBaseURL) : that.uploadBaseURL != null)
 			return false;
-		if (signingUploadBaseURL != null ? !signingUploadBaseURL.equals(that.signingUploadBaseURL) : that.signingUploadBaseURL != null)
-			return false;
+		if (signingUploadBaseURL != null ? !signingUploadBaseURL.equals(that.signingUploadBaseURL)
+				: that.signingUploadBaseURL != null) return false;
 		if (user != null ? !user.equals(that.user) : that.user != null) return false;
 		if (userAgent != null ? !userAgent.equals(that.userAgent) : that.userAgent != null) return false;
 
@@ -310,21 +291,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 	@Override
 	public int getHttpStreamingReadTimeout() {
 		return httpStreamingReadTimeout;
-	}
-
-	@Override
-	public String getMediaProvider() {
-		return mediaProvider;
-	}
-
-	@Override
-	public String getMediaProviderAPIKey() {
-		return mediaProviderAPIKey;
-	}
-
-	@Override
-	public Properties getMediaProviderParameters() {
-		return mediaProviderParameters;
 	}
 
 	@Override
@@ -423,6 +389,16 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 	}
 
 	@Override
+	public String getSigningSearchBaseURL() {
+		return signingSearchBaseURL != null ? signingSearchBaseURL : searchBaseURL;
+	}
+
+	@Override
+	public String getSigningUploadBaseURL() {
+		return signingUploadBaseURL != null ? signingUploadBaseURL : uploadBaseURL;
+	}
+
+	@Override
 	public String getUploadBaseURL() {
 		return uploadBaseURL;
 	}
@@ -481,9 +457,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		result = 31 * result + (includeRTsEnabled ? 1 : 0);
 		result = 31 * result + (includeEntitiesEnabled ? 1 : 0);
 		result = 31 * result + (jsonStoreEnabled ? 1 : 0);
-		result = 31 * result + (mediaProvider != null ? mediaProvider.hashCode() : 0);
-		result = 31 * result + (mediaProviderAPIKey != null ? mediaProviderAPIKey.hashCode() : 0);
-		result = 31 * result + (mediaProviderParameters != null ? mediaProviderParameters.hashCode() : 0);
 		result = 31 * result + (clientVersion != null ? clientVersion.hashCode() : 0);
 		result = 31 * result + (clientURL != null ? clientURL.hashCode() : 0);
 		result = 31 * result + (requestHeaders != null ? requestHeaders.hashCode() : 0);
@@ -551,10 +524,8 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 				+ ", oAuthAuthorizationURL='" + oAuthAuthorizationURL + '\'' + ", oAuthAccessTokenURL='"
 				+ oAuthAccessTokenURL + '\'' + ", oAuthAuthenticationURL='" + oAuthAuthenticationURL + '\''
 				+ ", restBaseURL='" + restBaseURL + '\'' + ", searchBaseURL='" + searchBaseURL + '\''
-				+ ", uploadBaseURL='" + uploadBaseURL + '\''
-				+ ", includeRTsEnabled=" + includeRTsEnabled + ", includeEntitiesEnabled=" + includeEntitiesEnabled
-				+ ", jsonStoreEnabled=" + jsonStoreEnabled + ", mediaProvider='" + mediaProvider + '\'' + ", mediaProviderAPIKey='"
-				+ mediaProviderAPIKey + '\'' + ", mediaProviderParameters=" + mediaProviderParameters
+				+ ", uploadBaseURL='" + uploadBaseURL + '\'' + ", includeRTsEnabled=" + includeRTsEnabled
+				+ ", includeEntitiesEnabled=" + includeEntitiesEnabled + ", jsonStoreEnabled=" + jsonStoreEnabled
 				+ ", clientVersion='" + clientVersion + '\'' + ", clientURL='" + clientURL + '\'' + ", requestHeaders="
 				+ requestHeaders + '}';
 	}
@@ -655,18 +626,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		jsonStoreEnabled = enabled;
 	}
 
-	protected final void setMediaProvider(String mediaProvider) {
-		this.mediaProvider = mediaProvider;
-	}
-
-	protected final void setMediaProviderAPIKey(String mediaProviderAPIKey) {
-		this.mediaProviderAPIKey = mediaProviderAPIKey;
-	}
-
-	protected final void setMediaProviderParameters(Properties props) {
-		mediaProviderParameters = props;
-	}
-
 	protected final void setOAuthAccessToken(String oAuthAccessToken) {
 		this.oAuthAccessToken = oAuthAccessToken;
 	}
@@ -723,14 +682,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		this.searchBaseURL = fixURLSlash(searchBaseURL);
 		fixSearchBaseURL();
 	}
-	
-	protected final void setSigningSearchBaseURL(String signingSearchBaseURL) {
-		if (isNullOrEmpty(signingSearchBaseURL)) {
-			signingSearchBaseURL = DEFAULT_SIGNING_SEARCH_BASE_URL;
-		}
-		this.signingSearchBaseURL = fixURLSlash(signingSearchBaseURL);
-		fixSearchBaseURL();
-	}
 
 	protected final void setSigningOAuthBaseURL(String signingOAuthBaseURL) {
 		if (isNullOrEmpty(signingOAuthBaseURL)) {
@@ -754,19 +705,27 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		fixRestBaseURL();
 	}
 
-	protected final void setUploadBaseURL(String uploadBaseURL) {
-		if (isNullOrEmpty(uploadBaseURL)) {
-			uploadBaseURL = DEFAULT_UPLOAD_BASE_URL;
+	protected final void setSigningSearchBaseURL(String signingSearchBaseURL) {
+		if (isNullOrEmpty(signingSearchBaseURL)) {
+			signingSearchBaseURL = DEFAULT_SIGNING_SEARCH_BASE_URL;
 		}
-		this.uploadBaseURL = fixURLSlash(uploadBaseURL);
-		fixUploadBaseURL();
+		this.signingSearchBaseURL = fixURLSlash(signingSearchBaseURL);
+		fixSearchBaseURL();
 	}
-	
+
 	protected final void setSigningUploadBaseURL(String signingUploadBaseURL) {
 		if (isNullOrEmpty(signingUploadBaseURL)) {
 			signingUploadBaseURL = DEFAULT_SIGNING_UPLOAD_BASE_URL;
 		}
 		this.signingUploadBaseURL = fixURLSlash(signingUploadBaseURL);
+		fixUploadBaseURL();
+	}
+
+	protected final void setUploadBaseURL(String uploadBaseURL) {
+		if (isNullOrEmpty(uploadBaseURL)) {
+			uploadBaseURL = DEFAULT_UPLOAD_BASE_URL;
+		}
+		this.uploadBaseURL = fixURLSlash(uploadBaseURL);
 		fixUploadBaseURL();
 	}
 
@@ -784,16 +743,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		fixRestBaseURL();
 	}
 
-	private void fixRestBaseURL() {
-		if (DEFAULT_REST_BASE_URL.equals(fixURL(DEFAULT_USE_SSL, restBaseURL))) {
-			restBaseURL = fixURL(useSSL, restBaseURL);
-		}
-		if (restBaseURL != null && restBaseURL.equals(fixURL(DEFAULT_USE_SSL, signingRestBaseURL))) {
-			signingRestBaseURL = fixURL(useSSL, signingRestBaseURL);
-		}
-		initRequestHeaders();
-	}
-	
 	private void fixOAuthBaseURL() {
 		if (DEFAULT_OAUTH_BASE_URL.equals(fixURL(DEFAULT_USE_SSL, oAuthBaseURL))) {
 			oAuthBaseURL = fixURL(useSSL, oAuthBaseURL);
@@ -840,6 +789,16 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		initRequestHeaders();
 	}
 
+	private void fixRestBaseURL() {
+		if (DEFAULT_REST_BASE_URL.equals(fixURL(DEFAULT_USE_SSL, restBaseURL))) {
+			restBaseURL = fixURL(useSSL, restBaseURL);
+		}
+		if (restBaseURL != null && restBaseURL.equals(fixURL(DEFAULT_USE_SSL, signingRestBaseURL))) {
+			signingRestBaseURL = fixURL(useSSL, signingRestBaseURL);
+		}
+		initRequestHeaders();
+	}
+
 	private void fixSearchBaseURL() {
 		if (DEFAULT_SEARCH_BASE_URL.equals(fixURL(DEFAULT_USE_SSL, searchBaseURL))) {
 			searchBaseURL = fixURL(useSSL, searchBaseURL);
@@ -849,7 +808,7 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		}
 		initRequestHeaders();
 	}
-	
+
 	private void fixUploadBaseURL() {
 		if (DEFAULT_UPLOAD_BASE_URL.equals(fixURL(DEFAULT_USE_SSL, uploadBaseURL))) {
 			uploadBaseURL = fixURL(useSSL, uploadBaseURL);
@@ -914,16 +873,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		if (string == null) return true;
 		if (string.length() == 0) return true;
 		return false;
-	}
-
-	@Override
-	public String getSigningSearchBaseURL() {
-		return signingSearchBaseURL != null ? signingSearchBaseURL : searchBaseURL;
-	}
-
-	@Override
-	public String getSigningUploadBaseURL() {
-		return signingUploadBaseURL != null ? signingUploadBaseURL : uploadBaseURL;
 	}
 
 }

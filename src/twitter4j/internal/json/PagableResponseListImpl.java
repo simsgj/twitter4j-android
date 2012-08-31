@@ -32,7 +32,6 @@ class PagableResponseListImpl<T> extends ResponseListImpl implements PagableResp
 	private static final long serialVersionUID = 9098876089678648404L;
 	private final long previousCursor;
 	private final long nextCursor;
-	
 
 	PagableResponseListImpl(int size, JSONObject json, HttpResponse res) {
 		super(size, res);

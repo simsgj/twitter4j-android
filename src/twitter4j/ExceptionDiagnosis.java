@@ -25,7 +25,6 @@ final class ExceptionDiagnosis {
 	int lineNumberHash;
 	String hexString = "";
 	Throwable th;
-	
 
 	ExceptionDiagnosis(Throwable th) {
 		this(th, new String[] {});

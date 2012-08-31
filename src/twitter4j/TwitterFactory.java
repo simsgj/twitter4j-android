@@ -36,7 +36,7 @@ public final class TwitterFactory {
 	static final Authorization DEFAULT_AUTHORIZATION = AuthorizationFactory.getInstance(ConfigurationContext
 			.getInstance());
 	private static final Twitter SINGLETON;
-	
+
 	private final Configuration conf;
 
 	static {

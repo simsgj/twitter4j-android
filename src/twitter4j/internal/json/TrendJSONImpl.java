@@ -18,8 +18,6 @@ package twitter4j.internal.json;
 
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
 
-
-
 import org.json.JSONObject;
 
 import twitter4j.Trend;
@@ -34,7 +32,6 @@ import twitter4j.Trend;
 	private String name;
 	private String url = null;
 	private String query = null;
-	
 
 	/* package */TrendJSONImpl(JSONObject json) {
 		this(json, false);

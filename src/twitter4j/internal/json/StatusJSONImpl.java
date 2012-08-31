@@ -19,8 +19,7 @@ package twitter4j.internal.json;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getBoolean;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getDate;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getLong;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
-
+import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -52,7 +51,6 @@ import twitter4j.internal.logging.Logger;
 @SuppressWarnings("deprecation")
 final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 	private static final Logger logger = Logger.getLogger();
-	
 
 	private Date createdAt;
 	private long id;
@@ -215,6 +213,14 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public Status getMyRetweetedStatus() {
+		return myRetweetedStatus;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public Place getPlace() {
 		return place;
 	}
@@ -328,14 +334,14 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 
 	private void init(JSONObject json) throws TwitterException {
 		id = getLong("id", json);
-		text = getUnescapedString("text", json);
-		source = getUnescapedString("source", json);
+		text = getRawString("text", json);
+		source = getRawString("source", json);
 		createdAt = getDate("created_at", json);
 		isTruncated = getBoolean("truncated", json);
 		inReplyToStatusId = getLong("in_reply_to_status_id", json);
 		inReplyToUserId = getLong("in_reply_to_user_id", json);
 		isFavorited = getBoolean("favorited", json);
-		inReplyToScreenName = getUnescapedString("in_reply_to_screen_name", json);
+		inReplyToScreenName = getRawString("in_reply_to_screen_name", json);
 		retweetCount = getLong("retweet_count", json);
 		try {
 			if (!json.isNull("user")) {

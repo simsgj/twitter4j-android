@@ -50,7 +50,6 @@ public final class JSONObjectType {
 	public static final JSONObjectType USER_UPDATE = new JSONObjectType("USER_UPDATE");
 	public static final JSONObjectType BLOCK = new JSONObjectType("BLOCK");
 	public static final JSONObjectType UNBLOCK = new JSONObjectType("UNBLOCK");
-	
 
 	private final String name;
 

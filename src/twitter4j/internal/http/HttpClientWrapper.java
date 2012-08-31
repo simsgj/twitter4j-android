@@ -39,7 +39,7 @@ public final class HttpClientWrapper {
 	private HttpClient http;
 
 	private final Map<String, String> requestHeaders;
-	
+
 	private HttpResponseListener httpResponseListener;
 
 	// never used with this project. Just for handiness for those using this
@@ -145,19 +145,19 @@ public final class HttpClientWrapper {
 			throws TwitterException {
 		return post(url, sign_url, parameters, authorization, null);
 	}
-	
-	public HttpResponse post(String url, String sign_url, HttpParameter[] parameters, Map<String, String> requestHeaders)
-			throws TwitterException {
-		return post(url, sign_url, parameters, null, requestHeaders);
-	}
 
-	public HttpResponse post(String url, String sign_url, HttpParameter[] parameters, Authorization authorization, Map<String, String> requestHeaders)
-			throws TwitterException {
+	public HttpResponse post(String url, String sign_url, HttpParameter[] parameters, Authorization authorization,
+			Map<String, String> requestHeaders) throws TwitterException {
 		final Map<String, String> headers = new HashMap<String, String>(this.requestHeaders);
 		if (requestHeaders != null) {
 			headers.putAll(requestHeaders);
 		}
 		return request(new HttpRequest(POST, url, sign_url, parameters, authorization, headers));
+	}
+
+	public HttpResponse post(String url, String sign_url, HttpParameter[] parameters, Map<String, String> requestHeaders)
+			throws TwitterException {
+		return post(url, sign_url, parameters, null, requestHeaders);
 	}
 
 	public HttpResponse put(String url, String sign_url) throws TwitterException {

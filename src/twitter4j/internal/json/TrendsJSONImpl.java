@@ -18,7 +18,6 @@ package twitter4j.internal.json;
 
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getDate;
 
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -48,7 +47,6 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 	private Date trendAt;
 	private Trend[] trends;
 	private Location location;
-	
 
 	/* package */TrendsJSONImpl(Date asOf, Location location, Date trendAt, Trend[] trends) {
 		this.asOf = asOf;
@@ -196,9 +194,10 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 			final JSONObject trendsJson = json.getJSONObject("trends");
 			final Location location = extractLocation(json, storeJSON);
 			trends = new ResponseListImpl<Trends>(trendsJson.length(), res);
-			final Iterator ite = trendsJson.keys();
+			@SuppressWarnings("unchecked")
+			final Iterator<String> ite = trendsJson.keys();
 			while (ite.hasNext()) {
-				final String key = (String) ite.next();
+				final String key = ite.next();
 				final JSONArray array = trendsJson.getJSONArray(key);
 				final Trend[] trendsArray = jsonArrayToTrendArray(array, storeJSON);
 				if (key.length() == 19) {

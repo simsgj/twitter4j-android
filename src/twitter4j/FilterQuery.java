@@ -27,7 +27,7 @@ import twitter4j.internal.util.z_T4JInternalStringUtil;
  * @since Twitter4J 2.1.2
  */
 public final class FilterQuery {
-	
+
 	private int count;
 	private long[] follow;
 	private String[] track;

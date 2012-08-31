@@ -19,7 +19,6 @@ package twitter4j.internal.json;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getDate;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getInt;
 
-
 import java.util.Date;
 
 import org.json.JSONObject;
@@ -43,7 +42,6 @@ import twitter4j.internal.http.HttpResponse;
 	private int resetTimeInSeconds;
 	private int secondsUntilReset;
 	private Date resetTime;
-	
 
 	private RateLimitStatusJSONImpl(int hourlyLimit, int remainingHits, int resetTimeInSeconds, Date resetTime) {
 		this.hourlyLimit = hourlyLimit;

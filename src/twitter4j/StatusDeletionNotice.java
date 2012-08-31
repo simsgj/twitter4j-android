@@ -16,8 +16,6 @@
 
 package twitter4j;
 
-
-
 /**
  * A data class representing Status deletionNotice<br>
  * Clients are urged to honor deletionNotice requests and discard deleted

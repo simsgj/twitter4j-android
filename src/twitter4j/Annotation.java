@@ -16,7 +16,6 @@
 
 package twitter4j;
 
-
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -39,7 +38,7 @@ import org.json.JSONObject;
  */
 @Deprecated
 public class Annotation implements Comparable<Annotation> {
-	
+
 	private String type = null;
 	private Map<String, String> attributes = null;
 
@@ -70,12 +69,13 @@ public class Annotation implements Comparable<Annotation> {
 	 * 
 	 * @param jsonObject - the JSON Object
 	 */
+	@SuppressWarnings("unchecked")
 	Annotation(JSONObject jsonObject) {
 		String typ = null;
 		Map<String, String> attrs = null;
-		Iterator it = jsonObject.keys();
+		Iterator<String> it = jsonObject.keys();
 		if (it.hasNext()) {
-			typ = (String) it.next();
+			typ = it.next();
 			// we expect only one key - the type; if there are more it's a
 			// malformed JSON object
 			if (it.hasNext()) {
@@ -86,7 +86,7 @@ public class Annotation implements Comparable<Annotation> {
 					attrs = new LinkedHashMap<String, String>();
 					it = jo.keys();
 					while (it.hasNext()) {
-						final String key = (String) it.next();
+						final String key = it.next();
 						final String value = jo.getString(key);
 						attrs.put(key, value);
 					}

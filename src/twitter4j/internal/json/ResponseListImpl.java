@@ -32,7 +32,6 @@ class ResponseListImpl<T> extends ArrayList<T> implements ResponseList<T> {
 	private transient RateLimitStatus rateLimitStatus = null;
 	private transient RateLimitStatus featureSpecificRateLimitStatus = null;
 	private transient int accessLevel;
-	
 
 	ResponseListImpl(HttpResponse res) {
 		super();

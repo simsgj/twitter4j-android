@@ -35,7 +35,6 @@ public final class Paging {
 	private int count = -1;
 	private long sinceId = -1;
 	private long maxId = -1;
-	
 
 	// since only
 	static char[] S = new char[] { 's' };

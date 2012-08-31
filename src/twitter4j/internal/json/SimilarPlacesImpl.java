@@ -31,7 +31,7 @@ import twitter4j.internal.http.HttpResponse;
  * @since Twitter4J 2.1.7
  */
 public class SimilarPlacesImpl extends ResponseListImpl<Place> implements SimilarPlaces {
-	
+
 	private static final long serialVersionUID = -5530218831645947540L;
 	private final String token;
 

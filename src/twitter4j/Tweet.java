@@ -16,7 +16,6 @@
 
 package twitter4j;
 
-
 import java.util.Date;
 
 /**
@@ -34,6 +33,7 @@ public interface Tweet extends Comparable<Tweet>, EntitySupport, Twt {
 	 * @return the annotations
 	 * @since Twitter4J 2.1.4
 	 */
+	@Deprecated
 	Annotations getAnnotations();
 
 	/**

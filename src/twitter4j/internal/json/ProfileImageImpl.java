@@ -24,7 +24,7 @@ import twitter4j.internal.http.HttpResponse;
  * @since Twitter4J 2.1.7
  */
 class ProfileImageImpl extends TwitterResponseImpl implements ProfileImage {
-	
+
 	private String url;
 
 	ProfileImageImpl(HttpResponse res) {

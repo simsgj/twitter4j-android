@@ -40,8 +40,6 @@ import twitter4j.URLEntity;
 	private URL expandedURL;
 	private String displayURL;
 
-	
-
 	/* For serialization purposes only. */
 	/* package */URLEntityJSONImpl() {
 

@@ -18,7 +18,6 @@ package twitter4j.internal.http;
 
 import java.io.File;
 import java.io.InputStream;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
@@ -33,7 +32,6 @@ public final class HttpParameter implements Comparable<HttpParameter> {
 	private String value = null;
 	private File file = null;
 	private InputStream fileBody = null;
-	
 
 	private static final String JPEG = "image/jpeg";
 

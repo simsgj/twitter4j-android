@@ -19,8 +19,6 @@ package twitter4j.internal.json;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getDate;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getLong;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
-
 
 import java.util.Arrays;
 import java.util.Date;
@@ -47,7 +45,7 @@ import twitter4j.conf.Configuration;
  */
 @SuppressWarnings("deprecation")
 final class TweetJSONImpl implements Tweet {
-	
+
 	private String text;
 	private long toUserId = -1;
 	private String toUser = null;
@@ -72,7 +70,7 @@ final class TweetJSONImpl implements Tweet {
 	private MediaEntity[] mediaEntities;
 
 	/* package */TweetJSONImpl(JSONObject tweet) throws TwitterException {
-		text = getUnescapedString("text", tweet);
+		text = getRawString("text", tweet);
 		toUserId = getLong("to_user_id", tweet);
 		toUser = getRawString("to_user", tweet);
 		toUserName = getRawString("to_user_name", tweet);
@@ -81,9 +79,9 @@ final class TweetJSONImpl implements Tweet {
 		id = getLong("id", tweet);
 		fromUserId = getLong("from_user_id", tweet);
 		isoLanguageCode = getRawString("iso_language_code", tweet);
-		source = getUnescapedString("source", tweet);
+		source = getRawString("source", tweet);
 		inReplyToStatusId = getLong("in_reply_to_status_id", tweet);
-		profileImageUrl = getUnescapedString("profile_image_url", tweet);
+		profileImageUrl = getRawString("profile_image_url", tweet);
 		createdAt = getDate("created_at", tweet, "EEE, dd MMM yyyy HH:mm:ss z");
 		location = getRawString("location", tweet);
 		geoLocation = z_T4JInternalJSONImplFactory.createGeoLocation(tweet);

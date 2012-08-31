@@ -25,7 +25,6 @@ public class GeoLocation {
 
 	protected double latitude;
 	protected double longitude;
-	
 
 	/**
 	 * Creates a GeoLocation instance

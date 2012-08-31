@@ -15,7 +15,6 @@
  */
 package twitter4j;
 
-
 import java.net.URL;
 import java.util.Map;
 

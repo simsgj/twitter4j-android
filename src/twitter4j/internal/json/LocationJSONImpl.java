@@ -18,7 +18,6 @@ package twitter4j.internal.json;
 
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getInt;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,23 +40,22 @@ import twitter4j.internal.http.HttpResponse;
 	private final int placeCode;
 	private final String name;
 	private final String url;
-	
 
 	/* package */LocationJSONImpl(JSONObject location) throws TwitterException {
 		try {
 			woeid = getInt("woeid", location);
-			countryName = getUnescapedString("country", location);
+			countryName = getRawString("country", location);
 			countryCode = getRawString("countryCode", location);
 			if (!location.isNull("placeType")) {
 				final JSONObject placeJSON = location.getJSONObject("placeType");
-				placeName = getUnescapedString("name", placeJSON);
+				placeName = getRawString("name", placeJSON);
 				placeCode = getInt("code", placeJSON);
 			} else {
 				placeName = null;
 				placeCode = -1;
 			}
-			name = getUnescapedString("name", location);
-			url = getUnescapedString("url", location);
+			name = getRawString("name", location);
+			url = getRawString("url", location);
 		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
 		}

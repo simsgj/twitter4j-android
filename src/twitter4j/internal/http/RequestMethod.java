@@ -33,8 +33,6 @@ public final class RequestMethod {
 	public static final RequestMethod HEAD = new RequestMethod("HEAD");
 	public static final RequestMethod PUT = new RequestMethod("PUT");
 
-	
-
 	private RequestMethod(String name) {
 		this.name = name;
 		instances.put(name, this);

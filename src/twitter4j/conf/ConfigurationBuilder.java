@@ -16,8 +16,6 @@
 
 package twitter4j.conf;
 
-import java.util.Properties;
-
 /**
  * A builder that can be used to construct a twitter4j configuration with
  * desired settings. This builder has sensible defaults such that
@@ -161,24 +159,6 @@ public final class ConfigurationBuilder {
 		return this;
 	}
 
-	public ConfigurationBuilder setMediaProvider(String mediaProvider) {
-		checkNotBuilt();
-		configuration.setMediaProvider(mediaProvider);
-		return this;
-	}
-
-	public ConfigurationBuilder setMediaProviderAPIKey(String mediaProviderAPIKey) {
-		checkNotBuilt();
-		configuration.setMediaProviderAPIKey(mediaProviderAPIKey);
-		return this;
-	}
-
-	public ConfigurationBuilder setMediaProviderParameters(Properties props) {
-		checkNotBuilt();
-		configuration.setMediaProviderParameters(props);
-		return this;
-	}
-
 	public ConfigurationBuilder setOAuthAccessToken(String oAuthAccessToken) {
 		checkNotBuilt();
 		configuration.setOAuthAccessToken(oAuthAccessToken);
@@ -245,18 +225,18 @@ public final class ConfigurationBuilder {
 		return this;
 	}
 
+	public ConfigurationBuilder setSigningSearchBaseURL(String signingSearchBaseURL) {
+		checkNotBuilt();
+		configuration.setSigningSearchBaseURL(signingSearchBaseURL);
+		return this;
+	}
+
 	public ConfigurationBuilder setSigningUploadBaseURL(String signingUploadURL) {
 		checkNotBuilt();
 		configuration.setSigningUploadBaseURL(signingUploadURL);
 		return this;
 	}
 
-	public ConfigurationBuilder setSigningSearchBaseURL(String signingSearchBaseURL) {
-		checkNotBuilt();
-		configuration.setSigningSearchBaseURL(signingSearchBaseURL);
-		return this;
-	}
-	
 	public ConfigurationBuilder setUploadBaseURL(String uploadURL) {
 		checkNotBuilt();
 		configuration.setUploadBaseURL(uploadURL);

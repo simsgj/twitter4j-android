@@ -16,8 +16,6 @@
 
 package twitter4j;
 
-
-
 /**
  * @author Alessandro Bahgat - ale.bahgat at gmail.com
  */

@@ -16,8 +16,6 @@
 
 package twitter4j.internal.http;
 
-
-
 import twitter4j.auth.Authorization;
 import twitter4j.auth.BasicAuthorization;
 
@@ -30,7 +28,6 @@ public class XAuthAuthorization implements Authorization {
 
 	private String consumerKey;
 	private String consumerSecret;
-	
 
 	public XAuthAuthorization(BasicAuthorization basic) {
 		this.basic = basic;

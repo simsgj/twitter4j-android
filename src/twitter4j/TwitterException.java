@@ -37,7 +37,7 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	private static final long serialVersionUID = 5876311940770455282L;
 
 	private int statusCode = -1;
-	
+
 	private ExceptionDiagnosis exceptionDiagnosis = null;
 	private HttpResponse response;
 	private String errorMessage = null;
@@ -165,7 +165,7 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 			value.append(super.getMessage());
 		}
 		if (statusCode != -1)
-			return getCause(statusCode) + "\n" + value.toString();
+			return errorMessage != null ? errorMessage : getCause(statusCode) + "\n" + value.toString();
 		else
 			return value.toString();
 	}
@@ -285,14 +285,7 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 
 	@Override
 	public String toString() {
-		return getMessage()
-				+ (nested ? "" : "Relevant discussions can be found on the Internet at:\n"
-						+ "\thttp://www.google.com/search?q=" + getExceptionDiagnosis().getStackLineHashAsHex()
-						+ " or\n\thttp://www.google.com/search?q=" + getExceptionDiagnosis().getLineNumberHashAsHex())
-				+ "\nTwitterException{" + (nested ? "" : "exceptionCode=[" + getExceptionCode() + "], ")
-				+ "statusCode=" + statusCode + ", retryAfter=" + getRetryAfter() + ", rateLimitStatus="
-				+ getRateLimitStatus() + ", featureSpecificRateLimitStatus=" + getFeatureSpecificRateLimitStatus()
-				+ ", version=" + Version.getVersion() + '}';
+		return getMessage();
 	}
 
 	private void decode(String str) {

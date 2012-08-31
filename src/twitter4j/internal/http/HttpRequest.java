@@ -38,8 +38,6 @@ public final class HttpRequest {
 
 	private Map<String, String> requestHeaders;
 
-	
-
 	private static final HttpParameter[] NULL_PARAMETERS = new HttpParameter[0];
 
 	/**

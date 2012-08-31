@@ -16,8 +16,6 @@
 
 package twitter4j;
 
-
-
 /**
  * A data interface representing array of numeric IDs.
  * 

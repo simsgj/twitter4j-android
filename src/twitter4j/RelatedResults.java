@@ -16,8 +16,6 @@
 
 package twitter4j;
 
-
-
 /**
  * @author Mocel - mocel at guma.jp
  * @since Twitter4J 2.1.8

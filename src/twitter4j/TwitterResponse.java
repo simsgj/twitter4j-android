@@ -16,8 +16,6 @@
 
 package twitter4j;
 
-
-
 /**
  * Super interface of Twitter Response data interfaces which indicates that rate
  * limit status is avaialble.

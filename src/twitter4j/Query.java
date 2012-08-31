@@ -45,7 +45,6 @@ public final class Query {
 	private String geocode = null;
 	private String until = null;
 	private String resultType = null;
-	
 
 	public static final String MILES = "mi";
 

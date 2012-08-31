@@ -16,8 +16,6 @@
 
 package twitter4j;
 
-
-
 /**
  * A data interface representing one single user mention entity.
  * 

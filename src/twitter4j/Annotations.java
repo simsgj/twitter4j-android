@@ -36,7 +36,7 @@ import org.json.JSONException;
  */
 @Deprecated
 public class Annotations {
-	
+
 	public static final int lengthLimit = 512;
 	private List<Annotation> annotations = null;
 

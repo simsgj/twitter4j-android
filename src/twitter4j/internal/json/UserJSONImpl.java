@@ -22,7 +22,6 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.getInt;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getLong;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
 
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
@@ -82,7 +81,6 @@ import twitter4j.internal.http.HttpResponse;
 	private boolean translator;
 	private int listedCount;
 	private boolean isFollowRequestSent;
-	
 
 	/* Only for serialization purposes. */
 	/* package */UserJSONImpl() {
@@ -480,6 +478,7 @@ import twitter4j.internal.http.HttpResponse;
 			final JSONObject json = res.asJSONObject();
 			final JSONArray list = json.getJSONArray("users");
 			final int size = list.length();
+			@SuppressWarnings("unchecked")
 			final PagableResponseList<User> users = new PagableResponseListImpl<User>(size, json, res);
 			for (int i = 0; i < size; i++) {
 				final JSONObject userJson = list.getJSONObject(i);

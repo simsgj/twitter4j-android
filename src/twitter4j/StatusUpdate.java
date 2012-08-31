@@ -34,17 +34,18 @@ public final class StatusUpdate {
 	private GeoLocation location = null;
 	private String placeId = null;
 	private boolean displayCoordinates = true;
+	@Deprecated
 	private Annotations annotations = null;
 	private boolean possiblySensitive;
 	private String mediaName;
 	private transient InputStream mediaBody;
 	private File mediaFile;
-	
 
 	public StatusUpdate(String status) {
 		this.status = status;
 	}
 
+	@Deprecated
 	public void addAnnotation(Annotation annotation) {
 		if (null == annotations) {
 			annotations = new Annotations();
@@ -52,11 +53,13 @@ public final class StatusUpdate {
 		annotations.addAnnotation(annotation);
 	}
 
+	@Deprecated
 	public StatusUpdate annotation(Annotation annotation) {
 		addAnnotation(annotation);
 		return this;
 	}
 
+	@Deprecated
 	public StatusUpdate annotations(Annotations annotations) {
 		setAnnotations(annotations);
 		return this;
@@ -67,6 +70,7 @@ public final class StatusUpdate {
 		return this;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -88,6 +92,7 @@ public final class StatusUpdate {
 		return true;
 	}
 
+	@Deprecated
 	public Annotations getAnnotations() {
 		return annotations;
 	}
@@ -108,6 +113,7 @@ public final class StatusUpdate {
 		return status;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public int hashCode() {
 		int result = status != null ? status.hashCode() : 0;
@@ -173,6 +179,7 @@ public final class StatusUpdate {
 		return this;
 	}
 
+	@Deprecated
 	public void setAnnotations(Annotations annotations) {
 		this.annotations = annotations;
 	}
@@ -237,6 +244,7 @@ public final class StatusUpdate {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	/* package */HttpParameter[] asHttpParameterArray(HttpParameter includeEntities) {
 		final ArrayList<HttpParameter> params = new ArrayList<HttpParameter>();
 		appendParameter("status", status, params);

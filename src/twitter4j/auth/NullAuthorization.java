@@ -18,7 +18,6 @@ package twitter4j.auth;
 
 import java.io.ObjectStreamException;
 
-
 import twitter4j.internal.http.HttpRequest;
 
 /**
@@ -28,7 +27,6 @@ import twitter4j.internal.http.HttpRequest;
  */
 public class NullAuthorization implements Authorization {
 	private static NullAuthorization SINGLETON = new NullAuthorization();
-	
 
 	private NullAuthorization() {
 

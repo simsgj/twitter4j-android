@@ -15,7 +15,6 @@
  */
 package twitter4j;
 
-
 import java.util.Map;
 
 /**

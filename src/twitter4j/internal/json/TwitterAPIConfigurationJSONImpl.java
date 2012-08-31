@@ -36,7 +36,7 @@ import twitter4j.internal.http.HttpResponse;
  * @since Twitter4J 2.2.3
  */
 class TwitterAPIConfigurationJSONImpl extends TwitterResponseImpl implements TwitterAPIConfiguration {
-	
+
 	private int photoSizeLimit;
 	private int shortURLLength;
 	private int shortURLLengthHttps;

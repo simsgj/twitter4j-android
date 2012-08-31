@@ -16,8 +16,6 @@
 
 package twitter4j.internal.json;
 
-
-
 import twitter4j.RateLimitStatus;
 import twitter4j.TwitterResponse;
 import twitter4j.internal.http.HttpResponse;
@@ -35,7 +33,7 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 /* package */abstract class TwitterResponseImpl implements TwitterResponse {
 
 	private transient RateLimitStatus rateLimitStatus = null;
-	
+
 	private transient int accessLevel;
 
 	public TwitterResponseImpl() {
