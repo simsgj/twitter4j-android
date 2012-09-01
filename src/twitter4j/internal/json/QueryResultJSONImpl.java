@@ -21,6 +21,7 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.getInt;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getLong;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getURLDecodedString;
+import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +59,7 @@ import twitter4j.internal.http.HttpResponse;
 		try {
 			sinceId = getLong("since_id", json);
 			maxId = getLong("max_id", json);
-			refreshUrl = getRawString("refresh_url", json);
+			refreshUrl = getUnescapedString("refresh_url", json);
 
 			resultsPerPage = getInt("results_per_page", json);
 			warning = getRawString("warning", json);

@@ -16,25 +16,12 @@
 
 package twitter4j;
 
-import java.util.Date;
-
 /**
  * A data interface representing one single status of a user.
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
 public interface Status extends Comparable<Status>, TwitterResponse, EntitySupport, Twt {
-	/**
-	 * Returns the annotations, or null if no annotations are associated with
-	 * this status.
-	 * 
-	 * @since Twitter4J 2.1.4
-	 * @deprecated Annotations is not available for now. <a href=
-	 *             "http://groups.google.com/group/twitter-development-talk/browse_thread/thread/4d5ff2ec4d2ce4a7"
-	 *             >Annotations - Twitter Development Talk | Google Groups</a>
-	 */
-	@Deprecated
-	Annotations getAnnotations();
 
 	/**
 	 * Returns an array of contributors, or null if no contributor is associated
@@ -45,48 +32,12 @@ public interface Status extends Comparable<Status>, TwitterResponse, EntitySuppo
 	long[] getContributors();
 
 	/**
-	 * Return the created_at
-	 * 
-	 * @return created_at
-	 * @since Twitter4J 1.1.0
-	 */
-	@Override
-	Date getCreatedAt();
-
-	/**
-	 * Returns The location that this tweet refers to if available.
-	 * 
-	 * @return returns The location that this tweet refers to if available (can
-	 *         be null)
-	 * @since Twitter4J 2.1.0
-	 */
-	@Override
-	GeoLocation getGeoLocation();
-
-	/**
-	 * Returns the id of the status
-	 * 
-	 * @return the id
-	 */
-	@Override
-	long getId();
-
-	/**
 	 * Returns the in_reply_to_screen_name
 	 * 
 	 * @return the in_in_reply_to_screen_name
 	 * @since Twitter4J 2.0.4
 	 */
 	String getInReplyToScreenName();
-
-	/**
-	 * Returns the in_reply_tostatus_id
-	 * 
-	 * @return the in_reply_tostatus_id
-	 * @since Twitter4J 1.0.4
-	 */
-	@Override
-	long getInReplyToStatusId();
 
 	/**
 	 * Returns the in_reply_user_id
@@ -98,14 +49,7 @@ public interface Status extends Comparable<Status>, TwitterResponse, EntitySuppo
 
 	Status getMyRetweetedStatus();
 
-	/**
-	 * Returns the place attached to this status
-	 * 
-	 * @return The place attached to this status
-	 * @since Twitter4J 2.1.1
-	 */
-	@Override
-	Place getPlace();
+	String getRawText();
 
 	/**
 	 * Returns the number of times this tweet has been retweeted, or -1 when the
@@ -119,23 +63,6 @@ public interface Status extends Comparable<Status>, TwitterResponse, EntitySuppo
 	 * @since Twitter4J 2.1.0
 	 */
 	Status getRetweetedStatus();
-
-	/**
-	 * Returns the source
-	 * 
-	 * @return the source
-	 * @since Twitter4J 1.0.4
-	 */
-	@Override
-	String getSource();
-
-	/**
-	 * Returns the text of the status
-	 * 
-	 * @return the text
-	 */
-	@Override
-	String getText();
 
 	/**
 	 * Return the user associated with the status.<br>

@@ -17,6 +17,7 @@
 package twitter4j.internal.json;
 
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
+import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
 
 import java.util.Arrays;
 
@@ -171,8 +172,8 @@ final class PlaceJSONImpl extends TwitterResponseImpl implements Place {
 
 	private void init(JSONObject json) throws TwitterException {
 		try {
-			name = getRawString("name", json);
-			streetAddress = getRawString("street_address", json);
+			name = getUnescapedString("name", json);
+			streetAddress = getUnescapedString("street_address", json);
 			countryCode = getRawString("country_code", json);
 			id = getRawString("id", json);
 			country = getRawString("country", json);

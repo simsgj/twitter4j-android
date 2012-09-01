@@ -16,33 +16,12 @@
 
 package twitter4j;
 
-import java.util.Date;
-
 /**
  * A data class representing a Tweet in the search response
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
 public interface Tweet extends Comparable<Tweet>, EntitySupport, Twt {
-	/**
-	 * Returns the annotations of the tweet. At the moment this code is written
-	 * (2010-08-18), Twitter Search API does not support annotations yet (so
-	 * even annotated tweets are returned without the annotations). This method
-	 * is included here for completeness and for future use.
-	 * 
-	 * @return the annotations
-	 * @since Twitter4J 2.1.4
-	 */
-	@Deprecated
-	Annotations getAnnotations();
-
-	/**
-	 * returns the created_at
-	 * 
-	 * @return the created_at
-	 */
-	@Override
-	Date getCreatedAt();
 
 	/**
 	 * returns the from_user
@@ -77,33 +56,6 @@ public interface Tweet extends Comparable<Tweet>, EntitySupport, Twt {
 	String getFromUserName();
 
 	/**
-	 * Returns The location that this tweet refers to if available.
-	 * 
-	 * @return returns The location that this tweet refers to if available (can
-	 *         be null)
-	 * @since Twitter4J 2.1.0
-	 */
-	@Override
-	GeoLocation getGeoLocation();
-
-	/**
-	 * returns the status id of the tweet
-	 * 
-	 * @return the status id
-	 */
-	@Override
-	long getId();
-
-	/**
-	 * Returns the in_reply_tostatus_id
-	 * 
-	 * @return the in_reply_tostatus_id
-	 * @since Twitter4J 2.2.6
-	 */
-	@Override
-	long getInReplyToStatusId();
-
-	/**
 	 * returns the iso language code of the tweet
 	 * 
 	 * @return the iso language code of the tweet or null if iso_language_code
@@ -121,35 +73,11 @@ public interface Tweet extends Comparable<Tweet>, EntitySupport, Twt {
 	String getLocation();
 
 	/**
-	 * Returns the place associated with the post.
-	 * 
-	 * @return The place associated with the post
-	 */
-	@Override
-	Place getPlace();
-
-	/**
 	 * returns the profile_image_url
 	 * 
 	 * @return the profile_image_url
 	 */
 	String getProfileImageUrl();
-
-	/**
-	 * returns the source of the tweet
-	 * 
-	 * @return the source of the tweet
-	 */
-	@Override
-	String getSource();
-
-	/**
-	 * returns the text
-	 * 
-	 * @return the text
-	 */
-	@Override
-	String getText();
 
 	/**
 	 * returns the to_user

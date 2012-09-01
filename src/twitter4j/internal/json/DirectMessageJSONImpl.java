@@ -18,7 +18,7 @@ package twitter4j.internal.json;
 
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getDate;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getLong;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
+import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
 
 import java.util.Date;
 
@@ -160,12 +160,12 @@ import twitter4j.internal.http.HttpResponse;
 
 	private void init(JSONObject json) throws TwitterException {
 		id = getLong("id", json);
-		text = getRawString("text", json);
+		text = getUnescapedString("text", json);
 		senderId = getLong("sender_id", json);
 		recipientId = getLong("recipient_id", json);
 		createdAt = getDate("created_at", json);
-		senderScreenName = getRawString("sender_screen_name", json);
-		recipientScreenName = getRawString("recipient_screen_name", json);
+		senderScreenName = getUnescapedString("sender_screen_name", json);
+		recipientScreenName = getUnescapedString("recipient_screen_name", json);
 		try {
 			sender = new UserJSONImpl(json.getJSONObject("sender"));
 			recipient = new UserJSONImpl(json.getJSONObject("recipient"));

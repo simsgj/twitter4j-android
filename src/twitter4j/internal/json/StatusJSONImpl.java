@@ -20,6 +20,7 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.getBoolean;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getDate;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getLong;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
+import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -55,6 +56,7 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 	private Date createdAt;
 	private long id;
 	private String text;
+	private String rawText;
 	private String source;
 	private boolean isTruncated;
 	private long inReplyToStatusId;
@@ -78,11 +80,6 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 	private Status myRetweetedStatus;
 
 	private User user = null;
-
-	/* Only for serialization purposes. */
-	/* package */StatusJSONImpl() {
-
-	}
 
 	/* package */StatusJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
 		super(res);
@@ -209,9 +206,6 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 		return mediaEntities;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public Status getMyRetweetedStatus() {
 		return myRetweetedStatus;
@@ -223,6 +217,11 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 	@Override
 	public Place getPlace() {
 		return place;
+	}
+
+	@Override
+	public String getRawText() {
+		return rawText;
 	}
 
 	/**
@@ -334,14 +333,15 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 
 	private void init(JSONObject json) throws TwitterException {
 		id = getLong("id", json);
-		text = getRawString("text", json);
-		source = getRawString("source", json);
+		text = getUnescapedString("text", json);
+		rawText = getRawString("text", json);
+		source = getUnescapedString("source", json);
 		createdAt = getDate("created_at", json);
 		isTruncated = getBoolean("truncated", json);
 		inReplyToStatusId = getLong("in_reply_to_status_id", json);
 		inReplyToUserId = getLong("in_reply_to_user_id", json);
 		isFavorited = getBoolean("favorited", json);
-		inReplyToScreenName = getRawString("in_reply_to_screen_name", json);
+		inReplyToScreenName = getUnescapedString("in_reply_to_screen_name", json);
 		retweetCount = getLong("retweet_count", json);
 		try {
 			if (!json.isNull("user")) {

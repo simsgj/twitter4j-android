@@ -19,6 +19,7 @@ package twitter4j.internal.json;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getDate;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getLong;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
+import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -47,6 +48,7 @@ import twitter4j.conf.Configuration;
 final class TweetJSONImpl implements Tweet {
 
 	private String text;
+	private String rawText;
 	private long toUserId = -1;
 	private String toUser = null;
 	private String toUserName = null;
@@ -70,7 +72,8 @@ final class TweetJSONImpl implements Tweet {
 	private MediaEntity[] mediaEntities;
 
 	/* package */TweetJSONImpl(JSONObject tweet) throws TwitterException {
-		text = getRawString("text", tweet);
+		text = getUnescapedString("text", tweet);
+		rawText = getRawString("text", tweet);
 		toUserId = getLong("to_user_id", tweet);
 		toUser = getRawString("to_user", tweet);
 		toUserName = getRawString("to_user_name", tweet);
@@ -79,9 +82,9 @@ final class TweetJSONImpl implements Tweet {
 		id = getLong("id", tweet);
 		fromUserId = getLong("from_user_id", tweet);
 		isoLanguageCode = getRawString("iso_language_code", tweet);
-		source = getRawString("source", tweet);
+		source = getUnescapedString("source", tweet);
 		inReplyToStatusId = getLong("in_reply_to_status_id", tweet);
-		profileImageUrl = getRawString("profile_image_url", tweet);
+		profileImageUrl = getUnescapedString("profile_image_url", tweet);
 		createdAt = getDate("created_at", tweet, "EEE, dd MMM yyyy HH:mm:ss z");
 		location = getRawString("location", tweet);
 		geoLocation = z_T4JInternalJSONImplFactory.createGeoLocation(tweet);
@@ -381,5 +384,10 @@ final class TweetJSONImpl implements Tweet {
 				+ (urlEntities == null ? null : Arrays.asList(urlEntities)) + ", hashtagEntities="
 				+ (hashtagEntities == null ? null : Arrays.asList(hashtagEntities)) + ", mediaEntities="
 				+ (mediaEntities == null ? null : Arrays.asList(mediaEntities)) + '}';
+	}
+
+	@Override
+	public String getRawText() {
+		return rawText;
 	}
 }

@@ -82,11 +82,6 @@ import twitter4j.internal.http.HttpResponse;
 	private int listedCount;
 	private boolean isFollowRequestSent;
 
-	/* Only for serialization purposes. */
-	/* package */UserJSONImpl() {
-
-	}
-
 	/* package */UserJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
 		super(res);
 		if (conf.isJSONStoreEnabled()) {

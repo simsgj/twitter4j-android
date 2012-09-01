@@ -22,6 +22,19 @@ import java.util.Date;
  * @since Twitter4J 2.2.6
  */
 public interface Twt {
+	
+	/**
+	 * Returns the annotations of the tweet. At the moment this code is written
+	 * (2010-08-18), Twitter Search API does not support annotations yet (so
+	 * even annotated tweets are returned without the annotations). This method
+	 * is included here for completeness and for future use.
+	 * 
+	 * @return the annotations
+	 * @since Twitter4J 2.1.4
+	 */
+	@Deprecated
+	Annotations getAnnotations();
+	
 	/**
 	 * returns the created_at
 	 * 
@@ -71,4 +84,11 @@ public interface Twt {
 	 * @return the text
 	 */
 	String getText();
+	
+	/**
+	 * returns the raw text
+	 * 
+	 * @return the raw text
+	 */
+	String getRawText();
 }
