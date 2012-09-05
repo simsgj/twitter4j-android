@@ -71,6 +71,11 @@ public class z_T4JInternalStringUtil {
 		return buf.toString();
 	}
 
+	public static String replaceLast(String text, String regex, String replacement) {
+		if (text == null || regex == null || replacement == null) return text;
+		return text.replaceFirst("(?s)" + regex + "(?!.*?" + regex + ")", replacement);
+	}
+	
 	public static String[] split(String str, String separator) {
 		String[] returnValue;
 		int index = str.indexOf(separator);

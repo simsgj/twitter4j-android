@@ -44,6 +44,7 @@ import twitter4j.User;
 import twitter4j.UserList;
 import twitter4j.api.HelpMethods;
 import twitter4j.internal.http.HttpResponse;
+import twitter4j.Activity;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
@@ -123,4 +124,6 @@ public interface z_T4JInternalFactory {
 	ResponseList<User> createUserListFromJSONArray_Users(HttpResponse res) throws TwitterException;
 
 	ResponseList<UserList> createUserListList(HttpResponse res) throws TwitterException;
+	
+	ResponseList<Activity> createActivityList(HttpResponse res) throws TwitterException;
 }

@@ -52,6 +52,7 @@ import twitter4j.api.HelpMethods;
 import twitter4j.conf.Configuration;
 import twitter4j.internal.http.HttpResponse;
 import twitter4j.internal.util.z_T4JInternalStringUtil;
+import twitter4j.Activity;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
@@ -288,6 +289,11 @@ public class z_T4JInternalJSONImplFactory implements z_T4JInternalFactory {
 	@Override
 	public String toString() {
 		return "JSONImplFactory{" + "conf=" + conf + '}';
+	}
+	
+	@Override
+	public ResponseList<Activity> createActivityList(HttpResponse res) throws TwitterException {
+		return ActivityJSONImpl.createActivityList(res, conf);
 	}
 
 	public static RateLimitStatus createFeatureSpecificRateLimitStatusFromResponseHeader(HttpResponse res) {

@@ -16,6 +16,7 @@
 package twitter4j;
 
 import twitter4j.api.AccountMethods;
+import twitter4j.api.ActivityMethods;
 import twitter4j.api.BlockMethods;
 import twitter4j.api.DirectMessageMethods;
 import twitter4j.api.FavoriteMethods;
@@ -47,5 +48,5 @@ public interface Twitter extends OAuthSupport, TwitterBase, SearchMethods, Trend
 		StatusMethods, UserMethods, ListMethods, ListMembersMethods, ListSubscribersMethods, DirectMessageMethods,
 		FriendshipMethods, FriendsFollowersMethods, AccountMethods, FavoriteMethods, NotificationMethods, BlockMethods,
 		SpamReportingMethods, SavedSearchesMethods, LocalTrendsMethods, GeoMethods, LegalResources, NewTwitterMethods,
-		HelpMethods {
+		HelpMethods, ActivityMethods {
 }

@@ -18,6 +18,7 @@
 package twitter4j;
 
 import static twitter4j.internal.http.HttpParameter.getParameterArray;
+import static twitter4j.internal.util.z_T4JInternalStringUtil.replaceLast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,6 +47,36 @@ import twitter4j.internal.util.z_T4JInternalStringUtil;
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
 class TwitterImpl extends TwitterBaseImpl implements Twitter {
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public ResponseList<Activity> getActivitiesByFriends() throws TwitterException {
+		ensureAuthorizationEnabled();
+		final String rest_base = conf.getRestBaseURL();
+		final String sign_rest_base = conf.getSigningRestBaseURL();
+		final String activity_base = rest_base.endsWith("/1/") ? replaceLast(rest_base, "\\/1\\/", "/i/")  : rest_base + "i/";
+		final String sign_activity_base = sign_rest_base.endsWith("/1/") ? replaceLast(sign_rest_base, "\\/1\\/", "/i/") : sign_rest_base + "i/";
+		return factory.createActivityList(get(activity_base + "activity/by_friends.json?include_entities="
+											  + conf.isIncludeEntitiesEnabled(), sign_activity_base
+											  + "activity/by_friends.json?include_entities=" + conf.isIncludeEntitiesEnabled()));
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public ResponseList<Activity> getActivitiesAboutMe() throws TwitterException {
+		ensureAuthorizationEnabled();
+		final String rest_base = conf.getRestBaseURL();
+		final String sign_rest_base = conf.getSigningRestBaseURL();
+		final String activity_base = rest_base.endsWith("/1/") ? replaceLast(rest_base, "\\/1\\/", "/i/")  : rest_base + "i/";
+		final String sign_activity_base = sign_rest_base.endsWith("/1/") ? replaceLast(sign_rest_base, "\\/1\\/", "/i/") : sign_rest_base + "i/";
+		return factory.createActivityList(get(activity_base + "activity/about_me.json?include_entities="
+											+ conf.isIncludeEntitiesEnabled(), sign_activity_base
+											+ "activity/about_me.json?include_entities=" + conf.isIncludeEntitiesEnabled()));
+	}
+
 
 	private final HttpParameter INCLUDE_ENTITIES;
 

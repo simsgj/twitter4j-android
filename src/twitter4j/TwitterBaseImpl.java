@@ -18,7 +18,7 @@ package twitter4j;
 
 import static twitter4j.internal.http.HttpResponseCode.ENHANCE_YOUR_CLAIM;
 import static twitter4j.internal.http.HttpResponseCode.SERVICE_UNAVAILABLE;
-
+ 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
