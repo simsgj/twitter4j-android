@@ -50,6 +50,7 @@ import twitter4j.TwitterException;
 import twitter4j.conf.ConfigurationContext;
 import twitter4j.internal.logging.Logger;
 import twitter4j.internal.util.z_T4JInternalStringUtil;
+import twitter4j.HostAddressResolver;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
@@ -226,7 +227,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 		return res;
 	}
 
-	private HttpURLConnection getConnection(String url) throws IOException {
+	private HttpURLConnection getConnection(String url_string) throws IOException {
 
 		final HttpURLConnection con;
 		final Proxy proxy;
@@ -258,7 +259,16 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 		} else {
 			proxy = Proxy.NO_PROXY;
 		}
-		con = (HttpURLConnection) new URL(url).openConnection(proxy);
+		final HostAddressResolver resolver = CONF.getHostAddressResolver();
+		
+		final URL url_orig = new URL(url_string);
+		final String host = url_orig.getHost();
+		final String resolved_host = resolver != null ? resolver.resolve(host) : null;
+		con = (HttpURLConnection) new URL(resolved_host != null ? url_string.replace("://" + host, "://" + resolved_host) 
+			: url_string).openConnection(proxy);
+		if (resolved_host != null) {
+			con.setRequestProperty("Host", host);
+		}
 		if (CONF.getHttpConnectionTimeout() > 0) {
 			con.setConnectTimeout(CONF.getHttpConnectionTimeout());
 		}

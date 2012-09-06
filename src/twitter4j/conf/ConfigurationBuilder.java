@@ -15,6 +15,8 @@
  */
 
 package twitter4j.conf;
+ 
+import twitter4j.HostAddressResolver;
 
 /**
  * A builder that can be used to construct a twitter4j configuration with
@@ -260,7 +262,13 @@ public final class ConfigurationBuilder {
 		configuration.setUseSSL(useSSL);
 		return this;
 	}
-
+	
+	public ConfigurationBuilder setHostAddressResolver(HostAddressResolver resolver) {
+		checkNotBuilt();
+		configuration.setHostAddressResolver(resolver);
+		return this;
+	}
+	
 	private void checkNotBuilt() {
 		if (configuration == null)
 			throw new IllegalStateException("Cannot use this builder any longer, build() has already been called");

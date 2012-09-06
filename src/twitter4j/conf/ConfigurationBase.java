@@ -24,6 +24,7 @@ import java.util.Map;
 
 import twitter4j.TwitterConstants;
 import twitter4j.Version;
+import twitter4j.HostAddressResolver;
 
 /**
  * Configuration base class with default settings.
@@ -90,6 +91,8 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 	private String clientVersion;
 	private String clientURL;
 	private String clientName;
+	
+	private HostAddressResolver hostAddressResolver;
 
 	// method for HttpRequestFactoryConfiguration
 	Map<String, String> requestHeaders;
@@ -140,6 +143,14 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		setSigningUploadBaseURL(DEFAULT_SIGNING_UPLOAD_BASE_URL);
 
 		setIncludeRTsEnbled(true);
+	}
+
+	public void setHostAddressResolver(HostAddressResolver resolver) {
+		hostAddressResolver = resolver;
+	}
+
+	public HostAddressResolver getHostAddressResolver() {
+		return hostAddressResolver;
 	}
 
 	@Override

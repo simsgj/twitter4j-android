@@ -317,19 +317,19 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 		return isTruncated;
 	}
 
-	@Override
-	public String toString() {
-		return "StatusJSONImpl{" + "createdAt=" + createdAt + ", id=" + id + ", text='" + text + '\'' + ", source='"
-				+ source + '\'' + ", isTruncated=" + isTruncated + ", inReplyToStatusId=" + inReplyToStatusId
-				+ ", inReplyToUserId=" + inReplyToUserId + ", isFavorited=" + isFavorited + ", inReplyToScreenName='"
-				+ inReplyToScreenName + '\'' + ", geoLocation=" + geoLocation + ", place=" + place + ", retweetCount="
-				+ retweetCount + ", wasRetweetedByMe=" + wasRetweetedByMe + ", contributors="
-				+ (contributorsIDs == null ? null : Arrays.asList(contributorsIDs)) + ", annotations=" + annotations
-				+ ", retweetedStatus=" + retweetedStatus + ", userMentionEntities="
-				+ (userMentionEntities == null ? null : Arrays.asList(userMentionEntities)) + ", urlEntities="
-				+ (urlEntities == null ? null : Arrays.asList(urlEntities)) + ", hashtagEntities="
-				+ (hashtagEntities == null ? null : Arrays.asList(hashtagEntities)) + ", user=" + user + '}';
-	}
+//	@Override
+//	public String toString() {
+//		return "StatusJSONImpl{" + "createdAt=" + createdAt + ", id=" + id + ", text='" + text + '\'' + ", source='"
+//				+ source + '\'' + ", isTruncated=" + isTruncated + ", inReplyToStatusId=" + inReplyToStatusId
+//				+ ", inReplyToUserId=" + inReplyToUserId + ", isFavorited=" + isFavorited + ", inReplyToScreenName='"
+//				+ inReplyToScreenName + '\'' + ", geoLocation=" + geoLocation + ", place=" + place + ", retweetCount="
+//				+ retweetCount + ", wasRetweetedByMe=" + wasRetweetedByMe + ", contributors="
+//				+ (contributorsIDs == null ? null : Arrays.asList(contributorsIDs)) + ", annotations=" + annotations
+//				+ ", retweetedStatus=" + retweetedStatus + ", userMentionEntities="
+//				+ (userMentionEntities == null ? null : Arrays.asList(userMentionEntities)) + ", urlEntities="
+//				+ (urlEntities == null ? null : Arrays.asList(urlEntities)) + ", hashtagEntities="
+//				+ (hashtagEntities == null ? null : Arrays.asList(hashtagEntities)) + ", user=" + user + '}';
+//	}
 
 	private void init(JSONObject json) throws TwitterException {
 		id = getLong("id", json);

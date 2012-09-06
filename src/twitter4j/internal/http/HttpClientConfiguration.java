@@ -16,6 +16,8 @@
 
 package twitter4j.internal.http;
 
+import twitter4j.HostAddressResolver;
+
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
@@ -46,4 +48,6 @@ public interface HttpClientConfiguration {
 	boolean isPrettyDebugEnabled();
 
 	boolean isSSLErrorIgnored();
+	
+	HostAddressResolver getHostAddressResolver();
 }
