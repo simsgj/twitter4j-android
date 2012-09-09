@@ -25,6 +25,10 @@ import twitter4j.internal.http.HttpResponse;
  */
 class ProfileImageImpl extends TwitterResponseImpl implements ProfileImage {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 519484877188098901L;
 	private String url;
 
 	ProfileImageImpl(HttpResponse res) {

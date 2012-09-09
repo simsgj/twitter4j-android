@@ -40,6 +40,10 @@ import twitter4j.internal.http.HttpResponse;
  */
 /* package */final class DirectMessageJSONImpl extends TwitterResponseImpl implements DirectMessage {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8809144846145143089L;
 	private long id;
 	private String text;
 	private long senderId;

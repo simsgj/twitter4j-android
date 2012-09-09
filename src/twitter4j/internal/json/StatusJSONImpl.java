@@ -22,7 +22,6 @@ import static twitter4j.internal.util.z_T4JInternalParseUtil.getLong;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
 
-import java.util.Arrays;
 import java.util.Date;
 
 import org.json.JSONArray;
@@ -51,6 +50,11 @@ import twitter4j.internal.logging.Logger;
  */
 @SuppressWarnings("deprecation")
 final class StatusJSONImpl extends TwitterResponseImpl implements Status {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8982739445731837548L;
+
 	private static final Logger logger = Logger.getLogger();
 
 	private Date createdAt;
@@ -317,19 +321,28 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 		return isTruncated;
 	}
 
-//	@Override
-//	public String toString() {
-//		return "StatusJSONImpl{" + "createdAt=" + createdAt + ", id=" + id + ", text='" + text + '\'' + ", source='"
-//				+ source + '\'' + ", isTruncated=" + isTruncated + ", inReplyToStatusId=" + inReplyToStatusId
-//				+ ", inReplyToUserId=" + inReplyToUserId + ", isFavorited=" + isFavorited + ", inReplyToScreenName='"
-//				+ inReplyToScreenName + '\'' + ", geoLocation=" + geoLocation + ", place=" + place + ", retweetCount="
-//				+ retweetCount + ", wasRetweetedByMe=" + wasRetweetedByMe + ", contributors="
-//				+ (contributorsIDs == null ? null : Arrays.asList(contributorsIDs)) + ", annotations=" + annotations
-//				+ ", retweetedStatus=" + retweetedStatus + ", userMentionEntities="
-//				+ (userMentionEntities == null ? null : Arrays.asList(userMentionEntities)) + ", urlEntities="
-//				+ (urlEntities == null ? null : Arrays.asList(urlEntities)) + ", hashtagEntities="
-//				+ (hashtagEntities == null ? null : Arrays.asList(hashtagEntities)) + ", user=" + user + '}';
-//	}
+	// @Override
+	// public String toString() {
+	// return "StatusJSONImpl{" + "createdAt=" + createdAt + ", id=" + id +
+	// ", text='" + text + '\'' + ", source='"
+	// + source + '\'' + ", isTruncated=" + isTruncated + ", inReplyToStatusId="
+	// + inReplyToStatusId
+	// + ", inReplyToUserId=" + inReplyToUserId + ", isFavorited=" + isFavorited
+	// + ", inReplyToScreenName='"
+	// + inReplyToScreenName + '\'' + ", geoLocation=" + geoLocation +
+	// ", place=" + place + ", retweetCount="
+	// + retweetCount + ", wasRetweetedByMe=" + wasRetweetedByMe +
+	// ", contributors="
+	// + (contributorsIDs == null ? null : Arrays.asList(contributorsIDs)) +
+	// ", annotations=" + annotations
+	// + ", retweetedStatus=" + retweetedStatus + ", userMentionEntities="
+	// + (userMentionEntities == null ? null :
+	// Arrays.asList(userMentionEntities)) + ", urlEntities="
+	// + (urlEntities == null ? null : Arrays.asList(urlEntities)) +
+	// ", hashtagEntities="
+	// + (hashtagEntities == null ? null : Arrays.asList(hashtagEntities)) +
+	// ", user=" + user + '}';
+	// }
 
 	private void init(JSONObject json) throws TwitterException {
 		id = getLong("id", json);

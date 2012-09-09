@@ -37,6 +37,10 @@ import twitter4j.internal.http.HttpResponse;
  */
 class TwitterAPIConfigurationJSONImpl extends TwitterResponseImpl implements TwitterAPIConfiguration {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6112937720837291428L;
 	private int photoSizeLimit;
 	private int shortURLLength;
 	private int shortURLLengthHttps;

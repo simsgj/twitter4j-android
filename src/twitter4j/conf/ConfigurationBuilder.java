@@ -15,7 +15,7 @@
  */
 
 package twitter4j.conf;
- 
+
 import twitter4j.HostAddressResolver;
 
 /**
@@ -68,6 +68,12 @@ public final class ConfigurationBuilder {
 	public ConfigurationBuilder setGZIPEnabled(boolean gzipEnabled) {
 		checkNotBuilt();
 		configuration.setGZIPEnabled(gzipEnabled);
+		return this;
+	}
+
+	public ConfigurationBuilder setHostAddressResolver(HostAddressResolver resolver) {
+		checkNotBuilt();
+		configuration.setHostAddressResolver(resolver);
 		return this;
 	}
 
@@ -262,13 +268,7 @@ public final class ConfigurationBuilder {
 		configuration.setUseSSL(useSSL);
 		return this;
 	}
-	
-	public ConfigurationBuilder setHostAddressResolver(HostAddressResolver resolver) {
-		checkNotBuilt();
-		configuration.setHostAddressResolver(resolver);
-		return this;
-	}
-	
+
 	private void checkNotBuilt() {
 		if (configuration == null)
 			throw new IllegalStateException("Cannot use this builder any longer, build() has already been called");

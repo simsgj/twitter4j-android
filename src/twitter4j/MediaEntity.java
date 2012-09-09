@@ -15,6 +15,7 @@
  */
 package twitter4j;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.util.Map;
 
@@ -22,7 +23,7 @@ import java.util.Map;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.2.3
  */
-public interface MediaEntity extends URLEntity {
+public interface MediaEntity extends URLEntity, Serializable {
 	/**
 	 * Returns the id of the media.
 	 * 
@@ -58,7 +59,7 @@ public interface MediaEntity extends URLEntity {
 	 */
 	String getType();
 
-	interface Size {
+	interface Size extends Serializable {
 		Integer THUMB = 0;
 		Integer SMALL = 1;
 		Integer MEDIUM = 2;

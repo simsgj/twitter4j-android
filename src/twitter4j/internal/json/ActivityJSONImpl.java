@@ -1,6 +1,5 @@
 package twitter4j.internal.json;
 
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getBoolean;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getDate;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getInt;
 import static twitter4j.internal.util.z_T4JInternalParseUtil.getLong;
@@ -22,66 +21,131 @@ import twitter4j.internal.http.HttpResponse;
 
 public final class ActivityJSONImpl extends TwitterResponseImpl implements Activity {
 
-	public Status[] getTargetObjects() {
-		return targetObjects;
-	}
-
-	public User[] getSources() {
-		return sources;
-	}
-
-	public User[] getTargets() {
-		return targets;
-	}
-
-	public Activity.Action getAction() {
-		return action;
-	}
-
-	public Date getCreatedAt() {
-		return createdAt;
-	}
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8200474717252861878L;
 
 	private Action action;
-	private Date createdAt;
-	private User[] sources, targets;
-	private Status[] targetObjects;
 
+	private Date createdAt;
+
+	private User[] sources, targetUsers;
+
+	private Status[] targetObjects, targetStatuses;
+
+	private long maxPosition, minPosition;
+
+	private int targetObjectsSize, targetsSize, sourcesSize;
 
 	/* package */ActivityJSONImpl(JSONObject json) throws TwitterException {
 		super();
 		init(json);
 	}
 
+	@Override
+	public int compareTo(Activity another) {
+		if (another == null) return 0;
+		final Date this_date = getCreatedAt(), that_date = another.getCreatedAt();
+		if (this_date == null || that_date == null) return 0;
+		return -this_date.compareTo(that_date);
+	}
+
+	@Override
+	public Activity.Action getAction() {
+		return action;
+	}
+
+	@Override
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	@Override
+	public long getMaxPosition() {
+		return maxPosition;
+	}
+
+	@Override
+	public long getMinPosition() {
+		return minPosition;
+	}
+
+	@Override
+	public User[] getSources() {
+		return sources;
+	}
+
+	@Override
+	public int getSourcesSize() {
+		return sourcesSize;
+	}
+
+	@Override
+	public Status[] getTargetObjects() {
+		return targetObjects;
+	}
+
+	@Override
+	public int getTargetObjectsSize() {
+		return targetObjectsSize;
+	}
+
+	@Override
+	public int getTargetsSize() {
+		return targetsSize;
+	}
+
+	@Override
+	public Status[] getTargetStatuses() {
+		return targetStatuses;
+	}
+
+	@Override
+	public User[] getTargetUsers() {
+		return targetUsers;
+	}
+
 	final void init(JSONObject json) throws TwitterException {
 		try {
 			action = Action.fromString(getRawString("action", json));
+			maxPosition = getLong("max_position", json);
+			minPosition = getLong("min_position", json);
 			createdAt = getDate("created_at", json, "EEE MMM dd HH:mm:ss z yyyy");
+			sourcesSize = getInt("sources_size", json);
+			targetsSize = getInt("targets_size", json);
 			final JSONArray sources_array = json.getJSONArray("sources");
-			final int sources_size = sources_array.length();
-			sources = new User[sources_size];
-			for (int i = 0;i < sources_size;i++) {
-				sources[i] = new UserJSONImpl(sources_array.getJSONObject(i));
-			}
 			final JSONArray targets_array = json.getJSONArray("targets");
+			final int sources_size = sources_array.length();
 			final int targets_size = targets_array.length();
-			targets = new User[targets_size];
-			for (int i = 0;i < targets_size;i++) {
-				targets[i] = new UserJSONImpl(targets_array.getJSONObject(i));
+			if (action == Action.FOLLOW || action == Action.MENTION) {
+				targetUsers = new User[targets_size];
+				for (int i = 0; i < targets_size; i++) {
+					targetUsers[i] = new UserJSONImpl(targets_array.getJSONObject(i));
+				}
+			} else {
+				targetStatuses = new Status[targets_size];
+				for (int i = 0; i < targets_size; i++) {
+					targetStatuses[i] = new StatusJSONImpl(targets_array.getJSONObject(i));
+				}
+			}
+			sources = new User[sources_size];
+			for (int i = 0; i < sources_size; i++) {
+				sources[i] = new UserJSONImpl(sources_array.getJSONObject(i));
 			}
 			final JSONArray target_objects_array = json.getJSONArray("target_objects");
 			final int target_objects_size = target_objects_array.length();
 			targetObjects = new Status[target_objects_size];
-			for (int i = 0;i < target_objects_size;i++) {
-				targetObjects[i] = new StatusJSONImpl(targets_array.getJSONObject(i));
+			for (int i = 0; i < target_objects_size; i++) {
+				targetObjects[i] = new StatusJSONImpl(target_objects_array.getJSONObject(i));
 			}
-		} catch (TwitterException te) {
+			targetObjectsSize = getInt("target_objects_size", json);
+		} catch (final TwitterException te) {
 			throw te;
-		} catch (JSONException jsone) {
+		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
 		}
 	}
-
 
 	/* package */
 	static ResponseList<Activity> createActivityList(HttpResponse res, Configuration conf) throws TwitterException {
@@ -90,7 +154,7 @@ public final class ActivityJSONImpl extends TwitterResponseImpl implements Activ
 
 	/* package */
 	static ResponseList<Activity> createActivityList(JSONArray list, HttpResponse res, Configuration conf)
-	throws TwitterException {
+			throws TwitterException {
 		try {
 			if (conf.isJSONStoreEnabled()) {
 				DataObjectFactoryUtil.clearThreadLocalMap();

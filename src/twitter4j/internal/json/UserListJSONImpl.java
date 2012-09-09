@@ -42,6 +42,10 @@ import twitter4j.internal.http.HttpResponse;
  */
 /* package */class UserListJSONImpl extends TwitterResponseImpl implements UserList {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2682622238509440140L;
 	private int id;
 	private String name;
 	private String fullName;
@@ -220,7 +224,7 @@ import twitter4j.internal.http.HttpResponse;
 			final JSONArray list = json.getJSONArray("lists");
 			final int size = list.length();
 			@SuppressWarnings("unchecked")
-			final PagableResponseList<UserList> users = (PagableResponseList<UserList>) new PagableResponseListImpl<UserList>(size, json, res);
+			final PagableResponseList<UserList> users = new PagableResponseListImpl<UserList>(size, json, res);
 			for (int i = 0; i < size; i++) {
 				final JSONObject userListJson = list.getJSONObject(i);
 				final UserList userList = new UserListJSONImpl(userListJson);

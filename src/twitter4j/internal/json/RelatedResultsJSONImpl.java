@@ -37,6 +37,10 @@ import twitter4j.internal.http.HttpResponse;
  */
 /* package */final class RelatedResultsJSONImpl extends TwitterResponseImpl implements RelatedResults {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6254836381994721166L;
 	private static final String TWEETS_WITH_CONVERSATION = "TweetsWithConversation";
 	private static final String TWEETS_WITH_REPLY = "TweetsWithReply";
 	private static final String TWEETS_FROM_USER = "TweetsFromUser";

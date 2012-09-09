@@ -46,11 +46,11 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import twitter4j.HostAddressResolver;
 import twitter4j.TwitterException;
 import twitter4j.conf.ConfigurationContext;
 import twitter4j.internal.logging.Logger;
 import twitter4j.internal.util.z_T4JInternalStringUtil;
-import twitter4j.HostAddressResolver;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
@@ -77,7 +77,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 	private static final SSLSocketFactory IGNORE_ERROR_SSL_FACTORY;
 
 	static {
-		System.setProperty("http.keepAlive", "false");
+		// System.setProperty("http.keepAlive", "false");
 		SSLSocketFactory factory = null;
 		try {
 			final SSLContext sc = SSLContext.getInstance("TLS");
@@ -260,12 +260,12 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 			proxy = Proxy.NO_PROXY;
 		}
 		final HostAddressResolver resolver = CONF.getHostAddressResolver();
-		
+
 		final URL url_orig = new URL(url_string);
 		final String host = url_orig.getHost();
 		final String resolved_host = resolver != null ? resolver.resolve(host) : null;
-		con = (HttpURLConnection) new URL(resolved_host != null ? url_string.replace("://" + host, "://" + resolved_host) 
-			: url_string).openConnection(proxy);
+		con = (HttpURLConnection) new URL(resolved_host != null ? url_string.replace("://" + host, "://"
+				+ resolved_host) : url_string).openConnection(proxy);
 		if (resolved_host != null) {
 			con.setRequestProperty("Host", host);
 		}

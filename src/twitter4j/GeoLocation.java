@@ -16,13 +16,19 @@
 
 package twitter4j;
 
+import java.io.Serializable;
+
 /**
  * A data class representing geo location.
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-public class GeoLocation {
+public class GeoLocation implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4603460402828968366L;
 	protected double latitude;
 	protected double longitude;
 

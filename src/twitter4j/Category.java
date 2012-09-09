@@ -16,11 +16,13 @@
 
 package twitter4j;
 
+import java.io.Serializable;
+
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.1
  */
-public interface Category {
+public interface Category extends Serializable {
 	String getName();
 
 	int getSize();

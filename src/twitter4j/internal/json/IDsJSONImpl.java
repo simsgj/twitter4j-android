@@ -35,6 +35,10 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
  */
 /* package */final class IDsJSONImpl extends TwitterResponseImpl implements IDs {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 443834529674409001L;
 	private long[] ids;
 	private long previousCursor = -1;
 	private long nextCursor = -1;

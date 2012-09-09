@@ -40,6 +40,10 @@ import twitter4j.internal.http.HttpResponse;
  */
 /* package */final class SavedSearchJSONImpl extends TwitterResponseImpl implements SavedSearch {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3252481061731777994L;
 	private Date createdAt;
 	private String query;
 	private int position;

@@ -35,6 +35,10 @@ import twitter4j.TwitterException;
  */
 public class MediaEntityJSONImpl implements MediaEntity {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1634113112942821363L;
 	private long id;
 	private int start = -1;
 	private int end = -1;
@@ -210,6 +214,10 @@ public class MediaEntityJSONImpl implements MediaEntity {
 
 	static class Size implements MediaEntity.Size {
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 5638836742331957957L;
 		int width;
 		int height;
 		int resize;

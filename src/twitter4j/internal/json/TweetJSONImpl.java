@@ -47,6 +47,10 @@ import twitter4j.conf.Configuration;
 @SuppressWarnings("deprecation")
 final class TweetJSONImpl implements Tweet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2591994365939561781L;
 	private String text;
 	private String rawText;
 	private long toUserId = -1;
@@ -289,6 +293,11 @@ final class TweetJSONImpl implements Tweet {
 		return profileImageUrl;
 	}
 
+	@Override
+	public String getRawText() {
+		return rawText;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -384,10 +393,5 @@ final class TweetJSONImpl implements Tweet {
 				+ (urlEntities == null ? null : Arrays.asList(urlEntities)) + ", hashtagEntities="
 				+ (hashtagEntities == null ? null : Arrays.asList(hashtagEntities)) + ", mediaEntities="
 				+ (mediaEntities == null ? null : Arrays.asList(mediaEntities)) + '}';
-	}
-
-	@Override
-	public String getRawText() {
-		return rawText;
 	}
 }

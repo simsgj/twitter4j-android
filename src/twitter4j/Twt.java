@@ -15,14 +15,15 @@
  */
 package twitter4j;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.2.6
  */
-public interface Twt {
-	
+public interface Twt extends Serializable {
+
 	/**
 	 * Returns the annotations of the tweet. At the moment this code is written
 	 * (2010-08-18), Twitter Search API does not support annotations yet (so
@@ -34,7 +35,7 @@ public interface Twt {
 	 */
 	@Deprecated
 	Annotations getAnnotations();
-	
+
 	/**
 	 * returns the created_at
 	 * 
@@ -72,6 +73,13 @@ public interface Twt {
 	Place getPlace();
 
 	/**
+	 * returns the raw text
+	 * 
+	 * @return the raw text
+	 */
+	String getRawText();
+
+	/**
 	 * returns the source of the tweet
 	 * 
 	 * @return the source of the tweet
@@ -84,11 +92,4 @@ public interface Twt {
 	 * @return the text
 	 */
 	String getText();
-	
-	/**
-	 * returns the raw text
-	 * 
-	 * @return the raw text
-	 */
-	String getRawText();
 }

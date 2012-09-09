@@ -29,6 +29,10 @@ import twitter4j.Trend;
  * @since Twitter4J 2.0.2
  */
 /* package */final class TrendJSONImpl implements Trend {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2205410210175259078L;
 	private String name;
 	private String url = null;
 	private String query = null;

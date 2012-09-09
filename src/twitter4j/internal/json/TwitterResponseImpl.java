@@ -32,6 +32,11 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
  */
 /* package */abstract class TwitterResponseImpl implements TwitterResponse {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8016245009711538262L;
+
 	private transient RateLimitStatus rateLimitStatus = null;
 
 	private transient int accessLevel;

@@ -34,6 +34,10 @@ import twitter4j.URLEntity;
  */
 /* package */final class URLEntityJSONImpl implements URLEntity {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1326410198426703277L;
 	private int start = -1;
 	private int end = -1;
 	private URL url;

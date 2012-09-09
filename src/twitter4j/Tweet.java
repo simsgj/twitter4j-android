@@ -16,12 +16,14 @@
 
 package twitter4j;
 
+import java.io.Serializable;
+
 /**
  * A data class representing a Tweet in the search response
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-public interface Tweet extends Comparable<Tweet>, EntitySupport, Twt {
+public interface Tweet extends Comparable<Tweet>, EntitySupport, Twt, Serializable {
 
 	/**
 	 * returns the from_user

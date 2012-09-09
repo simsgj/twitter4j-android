@@ -16,6 +16,7 @@
 
 package twitter4j;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -25,7 +26,7 @@ import java.util.Date;
  * @since Twitter4J 2.0.2
  */
 
-public interface Trends extends TwitterResponse, Comparable<Trends> {
+public interface Trends extends TwitterResponse, Comparable<Trends>, Serializable {
 	Date getAsOf();
 
 	/**

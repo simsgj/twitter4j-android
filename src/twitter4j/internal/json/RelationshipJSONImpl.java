@@ -41,6 +41,10 @@ import twitter4j.internal.http.HttpResponse;
  */
 /* package */class RelationshipJSONImpl extends TwitterResponseImpl implements Relationship {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2816753598969317818L;
 	private final long targetUserId;
 	private final String targetUserScreenName;
 	private final boolean sourceBlockingTarget;

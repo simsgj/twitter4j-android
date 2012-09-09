@@ -31,6 +31,10 @@ import twitter4j.internal.http.HttpResponse;
  */
 class AccountTotalsJSONImpl extends TwitterResponseImpl implements AccountTotals {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1766976816658998807L;
 	private final int updates;
 	private final int followers;
 	private final int favorites;

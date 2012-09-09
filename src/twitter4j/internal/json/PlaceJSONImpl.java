@@ -37,6 +37,10 @@ import twitter4j.internal.http.HttpResponse;
  * @since Twitter4J 2.1.1
  */
 final class PlaceJSONImpl extends TwitterResponseImpl implements Place {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2733342903542563480L;
 	private String name;
 	private String streetAddress;
 	private String countryCode;

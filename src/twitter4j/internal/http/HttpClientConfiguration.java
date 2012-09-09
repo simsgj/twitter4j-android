@@ -23,6 +23,8 @@ import twitter4j.HostAddressResolver;
  */
 public interface HttpClientConfiguration {
 
+	HostAddressResolver getHostAddressResolver();
+
 	int getHttpConnectionTimeout();
 
 	int getHttpDefaultMaxPerRoute();
@@ -48,6 +50,4 @@ public interface HttpClientConfiguration {
 	boolean isPrettyDebugEnabled();
 
 	boolean isSSLErrorIgnored();
-	
-	HostAddressResolver getHostAddressResolver();
 }

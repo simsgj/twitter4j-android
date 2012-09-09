@@ -18,6 +18,7 @@ package twitter4j;
 
 import java.io.File;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +28,12 @@ import twitter4j.internal.http.HttpParameter;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.1
  */
-public final class StatusUpdate {
+public final class StatusUpdate implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2522880289943829826L;
 	private String status;
 	private long inReplyToStatusId = -1l;
 	private GeoLocation location = null;

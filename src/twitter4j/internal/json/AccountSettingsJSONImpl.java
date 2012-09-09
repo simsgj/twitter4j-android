@@ -35,6 +35,10 @@ import twitter4j.internal.http.HttpResponse;
  */
 class AccountSettingsJSONImpl extends TwitterResponseImpl implements AccountSettings {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3364568117893571939L;
 	private final boolean SLEEP_TIME_ENABLED;
 	private final String SLEEP_START_TIME;
 	private final String SLEEP_END_TIME;
@@ -44,7 +48,7 @@ class AccountSettingsJSONImpl extends TwitterResponseImpl implements AccountSett
 	private final TimeZone TIMEZONE;
 	private final boolean ALWAYS_USE_HTTPS;
 	private final boolean DISCOVERABLE_BY_EMAIL;
-
+	
 	private AccountSettingsJSONImpl(HttpResponse res, JSONObject json) throws TwitterException {
 		super(res);
 		try {

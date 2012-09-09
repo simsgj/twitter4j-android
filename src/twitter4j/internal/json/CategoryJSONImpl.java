@@ -33,6 +33,10 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
  */
 final class CategoryJSONImpl implements Category {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2315575353091021075L;
 	private String name;
 	private String slug;
 	private int size;

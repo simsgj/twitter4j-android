@@ -43,6 +43,10 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
  * @since Twitter4J 2.0.2
  */
 /* package */final class TrendsJSONImpl extends TwitterResponseImpl implements Trends {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9046543905431036999L;
 	private Date asOf;
 	private Date trendAt;
 	private Trend[] trends;

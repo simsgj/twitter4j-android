@@ -16,12 +16,14 @@
 
 package twitter4j;
 
+import java.io.Serializable;
+
 /**
  * A data interface representing one single status of a user.
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-public interface Status extends Comparable<Status>, TwitterResponse, EntitySupport, Twt {
+public interface Status extends Comparable<Status>, TwitterResponse, EntitySupport, Twt, Serializable {
 
 	/**
 	 * Returns an array of contributors, or null if no contributor is associated
@@ -49,6 +51,7 @@ public interface Status extends Comparable<Status>, TwitterResponse, EntitySuppo
 
 	Status getMyRetweetedStatus();
 
+	@Override
 	String getRawText();
 
 	/**

@@ -22,9 +22,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import twitter4j.HostAddressResolver;
 import twitter4j.TwitterConstants;
 import twitter4j.Version;
-import twitter4j.HostAddressResolver;
 
 /**
  * Configuration base class with default settings.
@@ -91,7 +91,7 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 	private String clientVersion;
 	private String clientURL;
 	private String clientName;
-	
+
 	private HostAddressResolver hostAddressResolver;
 
 	// method for HttpRequestFactoryConfiguration
@@ -143,14 +143,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		setSigningUploadBaseURL(DEFAULT_SIGNING_UPLOAD_BASE_URL);
 
 		setIncludeRTsEnbled(true);
-	}
-
-	public void setHostAddressResolver(HostAddressResolver resolver) {
-		hostAddressResolver = resolver;
-	}
-
-	public HostAddressResolver getHostAddressResolver() {
-		return hostAddressResolver;
 	}
 
 	@Override
@@ -248,6 +240,11 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 	}
 
 	@Override
+	public HostAddressResolver getHostAddressResolver() {
+		return hostAddressResolver;
+	}
+
+	@Override
 	public final int getHttpConnectionTimeout() {
 		return httpConnectionTimeout;
 	}
@@ -297,12 +294,12 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		return httpRetryIntervalSeconds;
 	}
 
-	// methods for HttpClientConfiguration
-
 	@Override
 	public int getHttpStreamingReadTimeout() {
 		return httpStreamingReadTimeout;
 	}
+
+	// methods for HttpClientConfiguration
 
 	@Override
 	public String getOAuthAccessToken() {
@@ -517,6 +514,10 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 	@Override
 	public final boolean isSSLErrorIgnored() {
 		return ignoreSSLError;
+	}
+
+	public void setHostAddressResolver(HostAddressResolver resolver) {
+		hostAddressResolver = resolver;
 	}
 
 	@Override
