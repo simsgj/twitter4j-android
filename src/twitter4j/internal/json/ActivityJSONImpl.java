@@ -106,6 +106,15 @@ public final class ActivityJSONImpl extends TwitterResponseImpl implements Activ
 		return targetUsers;
 	}
 
+	@Override
+	public String toString() {
+		return "ActivityJSONImpl{action=" + action + ", createdAt=" + createdAt + ", sources=" + sources
+				+ ", targetUsers=" + targetUsers + ", targetObjects=" + targetObjects + ", targetStatuses="
+				+ targetStatuses + ", maxPosition=" + maxPosition + ", minPosition=" + minPosition
+				+ ", targetObjectsSize=" + targetObjectsSize + ", targetsSize=" + targetsSize + ", sourcesSize="
+				+ sourcesSize + "}";
+	}
+
 	final void init(JSONObject json) throws TwitterException {
 		try {
 			action = Action.fromString(getRawString("action", json));

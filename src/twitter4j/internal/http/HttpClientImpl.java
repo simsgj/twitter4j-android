@@ -197,7 +197,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 					if (responseCode < OK || responseCode != FOUND && MULTIPLE_CHOICES <= responseCode) {
 						if (responseCode == ENHANCE_YOUR_CLAIM || responseCode == BAD_REQUEST
 								|| responseCode < INTERNAL_SERVER_ERROR || retriedCount == CONF.getHttpRetryCount())
-							throw new TwitterException(res.asString(), res);
+							throw new TwitterException(res.asString(), req, res);
 					} else {
 						break;
 					}
@@ -210,7 +210,9 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 			} catch (final IOException ioe) {
 				// connection timeout or read timeout
 				if (retriedCount == CONF.getHttpRetryCount())
-					throw new TwitterException(ioe.getMessage(), ioe, responseCode);
+				// throw new TwitterException(ioe.getMessage(), ioe,
+				// responseCode);
+					throw new TwitterException(ioe.getMessage(), req, res);
 			} catch (final OutOfMemoryError e) {
 				throw new TwitterException(e.getMessage(), e);
 			}
@@ -266,7 +268,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 		final String resolved_host = resolver != null ? resolver.resolve(host) : null;
 		con = (HttpURLConnection) new URL(resolved_host != null ? url_string.replace("://" + host, "://"
 				+ resolved_host) : url_string).openConnection(proxy);
-		if (resolved_host != null) {
+		if (resolved_host != null && !host.equals(resolved_host)) {
 			con.setRequestProperty("Host", host);
 		}
 		if (CONF.getHttpConnectionTimeout() > 0) {

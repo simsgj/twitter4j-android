@@ -48,7 +48,7 @@ class AccountSettingsJSONImpl extends TwitterResponseImpl implements AccountSett
 	private final TimeZone TIMEZONE;
 	private final boolean ALWAYS_USE_HTTPS;
 	private final boolean DISCOVERABLE_BY_EMAIL;
-	
+
 	private AccountSettingsJSONImpl(HttpResponse res, JSONObject json) throws TwitterException {
 		super(res);
 		try {

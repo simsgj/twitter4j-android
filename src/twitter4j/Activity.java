@@ -47,12 +47,12 @@ public interface Activity extends TwitterResponse, Comparable<Activity>, Seriali
 		}
 
 		public static Action fromString(String string) {
-			if ("favorite".equals(string)) return FAVORITE;
-			if ("follow".equals(string)) return FOLLOW;
-			if ("mention".equals(string)) return MENTION;
-			if ("reply".equals(string)) return REPLY;
-			if ("retweet".equals(string)) return RETWEET;
-			return null;
+			if ("favorite".equalsIgnoreCase(string)) return FAVORITE;
+			if ("follow".equalsIgnoreCase(string)) return FOLLOW;
+			if ("mention".equalsIgnoreCase(string)) return MENTION;
+			if ("reply".equalsIgnoreCase(string)) return REPLY;
+			if ("retweet".equalsIgnoreCase(string)) return RETWEET;
+			throw new IllegalArgumentException("Unknown action " + string);
 		}
 	}
 }

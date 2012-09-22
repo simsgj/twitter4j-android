@@ -21,6 +21,7 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import twitter4j.internal.http.HttpRequest;
 import twitter4j.internal.http.HttpResponse;
 import twitter4j.internal.http.HttpResponseCode;
 import twitter4j.internal.json.z_T4JInternalJSONImplFactory;
@@ -40,6 +41,7 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 
 	private ExceptionDiagnosis exceptionDiagnosis = null;
 	private HttpResponse response;
+	private HttpRequest request;
 	private String errorMessage = null;
 	private String requestPath = null;
 
@@ -63,10 +65,11 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 		this.statusCode = statusCode;
 	}
 
-	public TwitterException(String message, HttpResponse res) {
+	public TwitterException(String message, HttpRequest req, HttpResponse res) {
 		this(message);
+		request = req;
 		response = res;
-		statusCode = res.getStatusCode();
+		statusCode = res != null ? res.getStatusCode() : - 1;
 	}
 
 	public TwitterException(String message, Throwable cause) {
@@ -88,6 +91,7 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 				: that.exceptionDiagnosis != null) return false;
 		if (requestPath != null ? !requestPath.equals(that.requestPath) : that.requestPath != null) return false;
 		if (response != null ? !response.equals(that.response) : that.response != null) return false;
+		if (request != null ? !request.equals(that.request) : that.request != null) return false;
 
 		return true;
 	}
@@ -152,13 +156,17 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 		return z_T4JInternalJSONImplFactory.createFeatureSpecificRateLimitStatusFromResponseHeader(response);
 	}
 
+	public HttpRequest getHttpRequest() {
+		return request;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public String getMessage() {
 		final StringBuffer value = new StringBuffer();
-		if (errorMessage != null && requestPath != null) {
+		if (errorMessage != null && request != null) {
 			value.append("error - ").append(errorMessage).append("\n");
 			value.append("request - ").append(requestPath).append("\n");
 		} else {
@@ -246,6 +254,7 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	public int hashCode() {
 		int result = statusCode;
 		result = 31 * result + (exceptionDiagnosis != null ? exceptionDiagnosis.hashCode() : 0);
+		result = 31 * result + (request != null ? request.hashCode() : 0);
 		result = 31 * result + (response != null ? response.hashCode() : 0);
 		result = 31 * result + (errorMessage != null ? errorMessage.hashCode() : 0);
 		result = 31 * result + (requestPath != null ? requestPath.hashCode() : 0);
