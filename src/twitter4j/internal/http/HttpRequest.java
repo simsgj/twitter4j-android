@@ -112,6 +112,7 @@ public final class HttpRequest {
 	public int hashCode() {
 		int result = method != null ? method.hashCode() : 0;
 		result = 31 * result + (url != null ? url.hashCode() : 0);
+		result = 31 * result + (sign_url != null ? sign_url.hashCode() : 0);
 		result = 31 * result + (parameters != null ? Arrays.hashCode(parameters) : 0);
 		result = 31 * result + (authorization != null ? authorization.hashCode() : 0);
 		result = 31 * result + (requestHeaders != null ? requestHeaders.hashCode() : 0);
@@ -120,8 +121,8 @@ public final class HttpRequest {
 
 	@Override
 	public String toString() {
-		return "HttpRequest{" + "requestMethod=" + method + ", url='" + url + '\'' + ", postParams="
-				+ (parameters == null ? null : Arrays.asList(parameters)) + ", authentication=" + authorization
-				+ ", requestHeaders=" + requestHeaders + '}';
+		return "HttpRequest{" + "requestMethod=" + method + ", url='" + url + '\'' + ", sign_url='" + sign_url + '\''
+				+ ", postParams=" + (parameters == null ? null : Arrays.asList(parameters)) + ", authentication="
+				+ authorization + ", requestHeaders=" + requestHeaders + '}';
 	}
 }
