@@ -28,13 +28,14 @@ public interface Activity extends TwitterResponse, Comparable<Activity>, Seriali
 	public User[] getTargetUsers();
 
 	public static enum Action implements Serializable {
-		FAVORITE(0x1), FOLLOW(0x2), MENTION(0x3), REPLY(0x4), RETWEET(0x5);
+		FAVORITE(0x1), FOLLOW(0x2), MENTION(0x3), REPLY(0x4), RETWEET(0x5), LIST_MEMBER_ADDED(0x06);
 
 		public final static int ACTION_FAVORITE = 0x01;
 		public final static int ACTION_FOLLOW = 0x02;
 		public final static int ACTION_MENTION = 0x03;
 		public final static int ACTION_REPLY = 0x04;
 		public final static int ACTION_RETWEET = 0x05;
+		public final static int ACTION_LIST_MEMBER_ADDED = 0x06;
 
 		private final int actionId;
 
@@ -52,6 +53,7 @@ public interface Activity extends TwitterResponse, Comparable<Activity>, Seriali
 			if ("mention".equalsIgnoreCase(string)) return MENTION;
 			if ("reply".equalsIgnoreCase(string)) return REPLY;
 			if ("retweet".equalsIgnoreCase(string)) return RETWEET;
+			if ("list_member_added".equalsIgnoreCase(string) return LIST_MEMBER_ADDED;
 			throw new IllegalArgumentException("Unknown action " + string);
 		}
 	}

@@ -19,7 +19,7 @@ import twitter4j.User;
 import twitter4j.conf.Configuration;
 import twitter4j.internal.http.HttpResponse;
 
-public final class ActivityJSONImpl extends TwitterResponseImpl implements Activity {
+class ActivityJSONImpl extends TwitterResponseImpl implements Activity {
 
 	/**
 	 * 
@@ -127,7 +127,7 @@ public final class ActivityJSONImpl extends TwitterResponseImpl implements Activ
 			final JSONArray targets_array = json.getJSONArray("targets");
 			final int sources_size = sources_array.length();
 			final int targets_size = targets_array.length();
-			if (action == Action.FOLLOW || action == Action.MENTION) {
+			if (action == Action.FOLLOW || action == Action.MENTION || action == Action.LIST_MEMBER_ADDED) {
 				targetUsers = new User[targets_size];
 				for (int i = 0; i < targets_size; i++) {
 					targetUsers[i] = new UserJSONImpl(targets_array.getJSONObject(i));
