@@ -213,6 +213,9 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 				// throw new TwitterException(ioe.getMessage(), ioe,
 				// responseCode);
 					throw new TwitterException(ioe.getMessage(), req, res);
+			} catch (final NullPointerException e) {
+				// This exception will be thown when URL is invalid.		
+				throw new TwitterException("The URL requested is invalid.", e);
 			} catch (final OutOfMemoryError e) {
 				throw new TwitterException(e.getMessage(), e);
 			}

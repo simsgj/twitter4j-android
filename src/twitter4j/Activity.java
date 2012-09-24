@@ -53,7 +53,7 @@ public interface Activity extends TwitterResponse, Comparable<Activity>, Seriali
 			if ("mention".equalsIgnoreCase(string)) return MENTION;
 			if ("reply".equalsIgnoreCase(string)) return REPLY;
 			if ("retweet".equalsIgnoreCase(string)) return RETWEET;
-			if ("list_member_added".equalsIgnoreCase(string) return LIST_MEMBER_ADDED;
+			if ("list_member_added".equalsIgnoreCase(string)) return LIST_MEMBER_ADDED;
 			throw new IllegalArgumentException("Unknown action " + string);
 		}
 	}
