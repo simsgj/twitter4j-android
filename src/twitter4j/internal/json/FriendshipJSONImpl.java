@@ -40,7 +40,7 @@ class FriendshipJSONImpl implements Friendship {
 	private boolean following = false;
 	private boolean followedBy = false;
 
-	/* package */FriendshipJSONImpl(JSONObject json) throws TwitterException {
+	/* package */FriendshipJSONImpl(final JSONObject json) throws TwitterException {
 		super();
 		try {
 			id = getLong("id", json);
@@ -61,7 +61,7 @@ class FriendshipJSONImpl implements Friendship {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
@@ -118,24 +118,16 @@ class FriendshipJSONImpl implements Friendship {
 	}
 
 	/* package */
-	static ResponseList<Friendship> createFriendshipList(HttpResponse res, Configuration conf) throws TwitterException {
+	static ResponseList<Friendship> createFriendshipList(final HttpResponse res, final Configuration conf)
+			throws TwitterException {
 		try {
-			if (conf.isJSONStoreEnabled()) {
-				DataObjectFactoryUtil.clearThreadLocalMap();
-			}
 			final JSONArray list = res.asJSONArray();
 			final int size = list.length();
 			final ResponseList<Friendship> friendshipList = new ResponseListImpl<Friendship>(size, res);
 			for (int i = 0; i < size; i++) {
 				final JSONObject json = list.getJSONObject(i);
 				final Friendship friendship = new FriendshipJSONImpl(json);
-				if (conf.isJSONStoreEnabled()) {
-					DataObjectFactoryUtil.registerJSONObject(friendship, json);
-				}
 				friendshipList.add(friendship);
-			}
-			if (conf.isJSONStoreEnabled()) {
-				DataObjectFactoryUtil.registerJSONObject(friendshipList, list);
 			}
 			return friendshipList;
 		} catch (final JSONException jsone) {

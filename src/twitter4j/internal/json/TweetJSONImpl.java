@@ -51,21 +51,21 @@ final class TweetJSONImpl implements Tweet {
 	 * 
 	 */
 	private static final long serialVersionUID = -2591994365939561781L;
-	private String text;
-	private String rawText;
+	private final String text;
+	private final String rawText;
 	private long toUserId = -1;
 	private String toUser = null;
 	private String toUserName = null;
 	private String fromUser = null;
 	private String fromUserName = null;
-	private long id;
-	private long fromUserId;
+	private final long id;
+	private final long fromUserId;
 	private String isoLanguageCode = null;
-	private String source;
+	private final String source;
 	private long inReplyToStatusId = -1;
-	private String profileImageUrl;
-	private Date createdAt;
-	private String location;
+	private final String profileImageUrl;
+	private final Date createdAt;
+	private final String location;
 	private Place place;
 
 	private GeoLocation geoLocation = null;
@@ -75,7 +75,7 @@ final class TweetJSONImpl implements Tweet {
 	private HashtagEntity[] hashtagEntities;
 	private MediaEntity[] mediaEntities;
 
-	/* package */TweetJSONImpl(JSONObject tweet) throws TwitterException {
+	/* package */TweetJSONImpl(final JSONObject tweet) throws TwitterException {
 		text = getUnescapedString("text", tweet);
 		rawText = getRawString("text", tweet);
 		toUserId = getLong("to_user_id", tweet);
@@ -153,15 +153,12 @@ final class TweetJSONImpl implements Tweet {
 		}
 	}
 
-	/* package */TweetJSONImpl(JSONObject tweet, Configuration conf) throws TwitterException {
+	/* package */TweetJSONImpl(final JSONObject tweet, final Configuration conf) throws TwitterException {
 		this(tweet);
-		if (conf.isJSONStoreEnabled()) {
-			DataObjectFactoryUtil.registerJSONObject(this, tweet);
-		}
 	}
 
 	@Override
-	public int compareTo(Tweet that) {
+	public int compareTo(final Tweet that) {
 		final long delta = id - that.getId();
 		if (delta < Integer.MIN_VALUE)
 			return Integer.MIN_VALUE;
@@ -170,7 +167,7 @@ final class TweetJSONImpl implements Tweet {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (!(o instanceof Tweet)) return false;
 

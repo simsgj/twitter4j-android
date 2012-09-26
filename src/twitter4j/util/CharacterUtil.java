@@ -31,7 +31,7 @@ public final class CharacterUtil {
 	 * @param text tweet to be counted
 	 * @return the length of the tweet
 	 */
-	public static int count(String text) {
+	public static int count(final String text) {
 		return text.length();
 	}
 
@@ -41,7 +41,7 @@ public final class CharacterUtil {
 	 * @param text String to be examined
 	 * @return if the length of the string is exceeding length limitation
 	 */
-	public static boolean isExceedingLengthLimitation(String text) {
+	public static boolean isExceedingLengthLimitation(final String text) {
 		return count(text) > 140;
 	}
 }

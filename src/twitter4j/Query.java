@@ -66,12 +66,12 @@ public final class Query {
 	public Query() {
 	}
 
-	public Query(String query) {
+	public Query(final String query) {
 		this.query = query;
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
@@ -103,7 +103,7 @@ public final class Query {
 	 * @return the instance
 	 * @since Twitter4J 2.1.0
 	 */
-	public Query geoCode(GeoLocation location, double radius, String unit) {
+	public Query geoCode(final GeoLocation location, final double radius, final String unit) {
 		setGeoCode(location, radius, unit);
 		return this;
 	}
@@ -241,7 +241,7 @@ public final class Query {
 	 * @return the instance
 	 * @since Twitter4J 2.1.0
 	 */
-	public Query lang(String lang) {
+	public Query lang(final String lang) {
 		setLang(lang);
 		return this;
 	}
@@ -255,7 +255,7 @@ public final class Query {
 	 * @return the instance
 	 * @since Twitter4J 2.1.1
 	 */
-	public Query locale(String locale) {
+	public Query locale(final String locale) {
 		setLocale(locale);
 		return this;
 	}
@@ -267,7 +267,7 @@ public final class Query {
 	 * @return this instance
 	 * @since Twitter4J 2.1.1
 	 */
-	public Query maxId(long maxId) {
+	public Query maxId(final long maxId) {
 		setMaxId(maxId);
 		return this;
 	}
@@ -280,7 +280,7 @@ public final class Query {
 	 * @return the instance
 	 * @since Twitter4J 2.1.0
 	 */
-	public Query page(int page) {
+	public Query page(final int page) {
 		setPage(page);
 		return this;
 	}
@@ -296,7 +296,7 @@ public final class Query {
 	 *      Operators</a>
 	 * @since Twitter4J 2.1.0
 	 */
-	public Query query(String query) {
+	public Query query(final String query) {
 		setQuery(query);
 		return this;
 	}
@@ -309,7 +309,7 @@ public final class Query {
 	 * @return the instance
 	 * @since Twitter4J 2.1.3
 	 */
-	public Query resultType(String resultType) {
+	public Query resultType(final String resultType) {
 		setResultType(resultType);
 		return this;
 	}
@@ -321,7 +321,7 @@ public final class Query {
 	 * @return the instance
 	 * @since Twitter4J 2.1.0
 	 */
-	public Query rpp(int rpp) {
+	public Query rpp(final int rpp) {
 		setRpp(rpp);
 		return this;
 	}
@@ -335,7 +335,7 @@ public final class Query {
 	 * @param radius radius
 	 * @param unit Query.MILES or Query.KILOMETERS
 	 */
-	public void setGeoCode(GeoLocation location, double radius, String unit) {
+	public void setGeoCode(final GeoLocation location, final double radius, final String unit) {
 		geocode = location.getLatitude() + "," + location.getLongitude() + "," + radius + unit;
 	}
 
@@ -346,7 +346,7 @@ public final class Query {
 	 * @param lang an <a href="http://en.wikipedia.org/wiki/ISO_639-1">ISO 639-1
 	 *            code</a>
 	 */
-	public void setLang(String lang) {
+	public void setLang(final String lang) {
 		this.lang = lang;
 	}
 
@@ -358,7 +358,7 @@ public final class Query {
 	 * @param locale the locale
 	 * @since Twitter4J 2.1.1
 	 */
-	public void setLocale(String locale) {
+	public void setLocale(final String locale) {
 		this.locale = locale;
 	}
 
@@ -368,7 +368,7 @@ public final class Query {
 	 * @param maxId maxId
 	 * @since Twitter4J 2.1.1
 	 */
-	public void setMaxId(long maxId) {
+	public void setMaxId(final long maxId) {
 		this.maxId = maxId;
 	}
 
@@ -378,7 +378,7 @@ public final class Query {
 	 * 
 	 * @param page the page number (starting at 1) to return
 	 */
-	public void setPage(int page) {
+	public void setPage(final int page) {
 		this.page = page;
 	}
 
@@ -391,7 +391,7 @@ public final class Query {
 	 * @see <a href="http://search.twitter.com/operators">Twitter API / Search
 	 *      Operators</a>
 	 */
-	public void setQuery(String query) {
+	public void setQuery(final String query) {
 		this.query = query;
 	}
 
@@ -401,7 +401,7 @@ public final class Query {
 	 * @param resultType Query.MIXED or Query.POPULAR or Query.RECENT
 	 * @since Twitter4J 2.1.3
 	 */
-	public void setResultType(String resultType) {
+	public void setResultType(final String resultType) {
 		this.resultType = resultType;
 	}
 
@@ -410,7 +410,7 @@ public final class Query {
 	 * 
 	 * @param rpp the number of tweets to return per page
 	 */
-	public void setRpp(int rpp) {
+	public void setRpp(final int rpp) {
 		this.rpp = rpp;
 	}
 
@@ -421,7 +421,7 @@ public final class Query {
 	 * @param since since
 	 * @since Twitter4J 2.1.1
 	 */
-	public void setSince(String since) {
+	public void setSince(final String since) {
 		this.since = since;
 	}
 
@@ -430,7 +430,7 @@ public final class Query {
 	 * 
 	 * @param sinceId returns tweets with status ids greater than the given id
 	 */
-	public void setSinceId(long sinceId) {
+	public void setSinceId(final long sinceId) {
 		this.sinceId = sinceId;
 	}
 
@@ -441,7 +441,7 @@ public final class Query {
 	 * @param until until
 	 * @since Twitter4J 2.1.1
 	 */
-	public void setUntil(String until) {
+	public void setUntil(final String until) {
 		this.until = until;
 	}
 
@@ -453,7 +453,7 @@ public final class Query {
 	 * @return since
 	 * @since Twitter4J 2.1.1
 	 */
-	public Query since(String since) {
+	public Query since(final String since) {
 		setSince(since);
 		return this;
 	}
@@ -465,7 +465,7 @@ public final class Query {
 	 * @return the instance
 	 * @since Twitter4J 2.1.0
 	 */
-	public Query sinceId(long sinceId) {
+	public Query sinceId(final long sinceId) {
 		setSinceId(sinceId);
 		return this;
 	}
@@ -486,24 +486,24 @@ public final class Query {
 	 * @return the instance
 	 * @since Twitter4J 2.1.1
 	 */
-	public Query until(String until) {
+	public Query until(final String until) {
 		setUntil(until);
 		return this;
 	}
 
-	private void appendParameter(String name, long value, List<HttpParameter> params) {
+	private void appendParameter(final String name, final long value, final List<HttpParameter> params) {
 		if (0 <= value) {
 			params.add(new HttpParameter(name, String.valueOf(value)));
 		}
 	}
 
-	private void appendParameter(String name, String value, List<HttpParameter> params) {
+	private void appendParameter(final String name, final String value, final List<HttpParameter> params) {
 		if (value != null) {
 			params.add(new HttpParameter(name, value));
 		}
 	}
 
-	/* package */HttpParameter[] asHttpParameterArray(HttpParameter includeEntities) {
+	/* package */HttpParameter[] asHttpParameterArray(final HttpParameter includeEntities) {
 		final ArrayList<HttpParameter> params = new ArrayList<HttpParameter>();
 		appendParameter("q", query, params);
 		appendParameter("lang", lang, params);

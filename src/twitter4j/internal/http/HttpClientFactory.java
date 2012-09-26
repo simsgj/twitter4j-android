@@ -22,7 +22,7 @@ package twitter4j.internal.http;
  */
 public final class HttpClientFactory {
 
-	public static HttpClient getInstance(HttpClientConfiguration conf) {
+	public static HttpClient getInstance(final HttpClientConfiguration conf) {
 		return new HttpClientImpl(conf);
 	}
 }

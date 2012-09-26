@@ -64,7 +64,7 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 	/**
 	 * @param conf configuration
 	 */
-	public OAuthAuthorization(Configuration conf) {
+	public OAuthAuthorization(final Configuration conf) {
 		this.conf = conf;
 		http = new HttpClientWrapper(conf);
 		setOAuthConsumer(conf.getOAuthConsumerKey(), conf.getOAuthConsumerSecret());
@@ -74,7 +74,7 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (!(o instanceof OAuthSupport)) return false;
 
@@ -88,7 +88,7 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 		return true;
 	}
 
-	public List<HttpParameter> generateOAuthSignatureHttpParams(String method, String sign_url) {
+	public List<HttpParameter> generateOAuthSignatureHttpParams(final String method, final String sign_url) {
 		final long timestamp = System.currentTimeMillis() / 1000;
 		final long nonce = timestamp + RAND.nextInt();
 
@@ -122,7 +122,7 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 
 	// implementations for Authorization
 	@Override
-	public String getAuthorizationHeader(HttpRequest req) {
+	public String getAuthorizationHeader(final HttpRequest req) {
 		return generateAuthorizationHeader(req.getMethod().name(), req.getSignURL(), req.getParameters(), oauthToken);
 	}
 
@@ -142,7 +142,7 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public AccessToken getOAuthAccessToken(RequestToken requestToken) throws TwitterException {
+	public AccessToken getOAuthAccessToken(final RequestToken requestToken) throws TwitterException {
 		oauthToken = requestToken;
 		return getOAuthAccessToken();
 	}
@@ -151,7 +151,8 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public AccessToken getOAuthAccessToken(RequestToken requestToken, String oauthVerifier) throws TwitterException {
+	public AccessToken getOAuthAccessToken(final RequestToken requestToken, final String oauthVerifier)
+			throws TwitterException {
 		oauthToken = requestToken;
 		return getOAuthAccessToken(oauthVerifier);
 	}
@@ -160,7 +161,7 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public AccessToken getOAuthAccessToken(String oauthVerifier) throws TwitterException {
+	public AccessToken getOAuthAccessToken(final String oauthVerifier) throws TwitterException {
 		ensureTokenIsAvailable();
 		final String url = conf.getOAuthAccessTokenURL();
 		if (0 == url.indexOf("http://")) {
@@ -183,7 +184,7 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public AccessToken getOAuthAccessToken(String screenName, String password) throws TwitterException {
+	public AccessToken getOAuthAccessToken(final String screenName, final String password) throws TwitterException {
 		try {
 			final String url = conf.getOAuthAccessTokenURL();
 			if (0 == url.indexOf("http://")) {
@@ -219,7 +220,7 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public RequestToken getOAuthRequestToken(String callbackURL) throws TwitterException {
+	public RequestToken getOAuthRequestToken(final String callbackURL) throws TwitterException {
 		return getOAuthRequestToken(callbackURL, null);
 	}
 
@@ -227,7 +228,8 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public RequestToken getOAuthRequestToken(String callbackURL, String xAuthAccessType) throws TwitterException {
+	public RequestToken getOAuthRequestToken(final String callbackURL, final String xAuthAccessType)
+			throws TwitterException {
 		if (oauthToken instanceof AccessToken) throw new IllegalStateException("Access token already available.");
 		final List<HttpParameter> params = new ArrayList<HttpParameter>();
 		if (callbackURL != null) {
@@ -273,12 +275,12 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setOAuthAccessToken(AccessToken accessToken) {
+	public void setOAuthAccessToken(final AccessToken accessToken) {
 		oauthToken = accessToken;
 	}
 
 	@Override
-	public void setOAuthConsumer(String consumerKey, String consumerSecret) {
+	public void setOAuthConsumer(final String consumerKey, final String consumerSecret) {
 		this.consumerKey = consumerKey != null ? consumerKey : "";
 		this.consumerSecret = consumerSecret != null ? consumerSecret : "";
 	}
@@ -289,7 +291,7 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 	 * @param realm OAuth realm
 	 * @since Twitter 2.1.4
 	 */
-	public void setOAuthRealm(String realm) {
+	public void setOAuthRealm(final String realm) {
 		this.realm = realm;
 	}
 
@@ -305,7 +307,7 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 
 	/* package */
 
-	private void parseGetParameters(String url, List<HttpParameter> signatureBaseParams) {
+	private void parseGetParameters(final String url, final List<HttpParameter> signatureBaseParams) {
 		final int queryStart = url.indexOf("?");
 		if (-1 != queryStart) {
 			final String[] queryStrs = z_T4JInternalStringUtil.split(url.substring(queryStart + 1), "&");
@@ -331,16 +333,16 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 	 * @see <a href="http://oauth.net/core/1.0a/#rfc.section.5.4.1">OAuth Core -
 	 *      5.4.1. Authorization Header</a>
 	 */
-	/* package */String generateAuthorizationHeader(String method, String sign_url, HttpParameter[] params,
-			OAuthToken token) {
+	/* package */String generateAuthorizationHeader(final String method, final String sign_url,
+			final HttpParameter[] params, final OAuthToken token) {
 		final long timestamp = System.currentTimeMillis() / 1000;
 		final long nonce = timestamp + RAND.nextInt();
 		return generateAuthorizationHeader(method, sign_url, params, String.valueOf(nonce), String.valueOf(timestamp),
 				token);
 	}
 
-	/* package */String generateAuthorizationHeader(String method, String sign_url, HttpParameter[] params,
-			String nonce, String timestamp, OAuthToken otoken) {
+	/* package */String generateAuthorizationHeader(final String method, final String sign_url, HttpParameter[] params,
+			final String nonce, final String timestamp, final OAuthToken otoken) {
 		if (null == params) {
 			params = new HttpParameter[0];
 		}
@@ -377,7 +379,7 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 		return "OAuth " + encodeParameters(oauthHeaderParams, ",", true);
 	}
 
-	String generateSignature(String data) {
+	String generateSignature(final String data) {
 		return generateSignature(data, null);
 	}
 
@@ -390,7 +392,7 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 	 * @see <a href="http://oauth.net/core/1.0a/#rfc.section.9.2.1">OAuth Core -
 	 *      9.2.1. Generating Signature</a>
 	 */
-	/* package */String generateSignature(String data, OAuthToken token) {
+	/* package */String generateSignature(final String data, final OAuthToken token) {
 		byte[] byteHMAC = null;
 		try {
 			final Mac mac = Mac.getInstance(HMAC_SHA1);
@@ -477,11 +479,12 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 	 *      href="http://groups.google.com/group/oauth/browse_thread/thread/a8398d0521f4ae3d/9d79b698ab217df2?hl=en&lnk=gst&q=space+encoding#9d79b698ab217df2">Space
 	 *      encoding - OAuth | Google Groups</a>
 	 */
-	public static String encodeParameters(List<HttpParameter> httpParams) {
+	public static String encodeParameters(final List<HttpParameter> httpParams) {
 		return encodeParameters(httpParams, "&", false);
 	}
 
-	public static String encodeParameters(List<HttpParameter> httpParams, String splitter, boolean quot) {
+	public static String encodeParameters(final List<HttpParameter> httpParams, final String splitter,
+			final boolean quot) {
 		final StringBuffer buf = new StringBuffer();
 		for (final HttpParameter param : httpParams) {
 			if (!param.isFile()) {
@@ -506,7 +509,7 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 		return buf.toString();
 	}
 
-	public static String normalizeAuthorizationHeaders(List<HttpParameter> params) {
+	public static String normalizeAuthorizationHeaders(final List<HttpParameter> params) {
 		Collections.sort(params);
 		return encodeParameters(params);
 	}
@@ -541,16 +544,16 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 	 * @see <a href="http://oauth.net/core/1.0#rfc.section.9.1.1">OAuth Core -
 	 *      9.1.1. Normalize Request Parameters</a>
 	 */
-	public static String normalizeRequestParameters(HttpParameter[] params) {
+	public static String normalizeRequestParameters(final HttpParameter[] params) {
 		return normalizeRequestParameters(toParamList(params));
 	}
 
-	public static String normalizeRequestParameters(List<HttpParameter> params) {
+	public static String normalizeRequestParameters(final List<HttpParameter> params) {
 		Collections.sort(params);
 		return encodeParameters(params);
 	}
 
-	public static List<HttpParameter> toParamList(HttpParameter[] params) {
+	public static List<HttpParameter> toParamList(final HttpParameter[] params) {
 		final List<HttpParameter> paramList = new ArrayList<HttpParameter>(params.length);
 		paramList.addAll(Arrays.asList(params));
 		return paramList;

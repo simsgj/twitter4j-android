@@ -56,7 +56,7 @@ public final class TwitterFactory {
 	 * @param conf the configuration to use
 	 * @since Twitter4J 2.1.1
 	 */
-	public TwitterFactory(Configuration conf) {
+	public TwitterFactory(final Configuration conf) {
 		if (conf == null) throw new NullPointerException("configuration cannot be null");
 		this.conf = conf;
 	}
@@ -82,7 +82,7 @@ public final class TwitterFactory {
 	 * @return an instance
 	 * @since Twitter4J 2.1.9
 	 */
-	public Twitter getInstance(AccessToken accessToken) {
+	public Twitter getInstance(final AccessToken accessToken) {
 		final String consumerKey = conf.getOAuthConsumerKey();
 		final String consumerSecret = conf.getOAuthConsumerSecret();
 		if (null == consumerKey && null == consumerSecret)
@@ -92,7 +92,7 @@ public final class TwitterFactory {
 		return getInstance(oauth);
 	}
 
-	public Twitter getInstance(Authorization auth) {
+	public Twitter getInstance(final Authorization auth) {
 		return new TwitterImpl(conf, auth);
 	}
 

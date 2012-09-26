@@ -24,10 +24,10 @@ public interface TwitterConstants {
 	public static final String DEFAULT_SIGNING_OAUTH_AUTHENTICATION_URL = DEFAULT_SIGNING_OAUTH_BASE_URL
 			+ PATH_SEGMENT_AUTHENTICATION;
 
-	public static final String DEFAULT_REST_BASE_URL = "https://api.twitter.com/1/";
+	public static final String DEFAULT_REST_BASE_URL = "https://api.twitter.com/1.1/";
 	public static final String DEFAULT_SIGNING_REST_BASE_URL = DEFAULT_REST_BASE_URL;
 	public static final String DEFAULT_SEARCH_BASE_URL = "https://search.twitter.com/";
 	public static final String DEFAULT_SIGNING_SEARCH_BASE_URL = DEFAULT_SEARCH_BASE_URL;
-	public static final String DEFAULT_UPLOAD_BASE_URL = "https://upload.twitter.com/1/";
+	public static final String DEFAULT_UPLOAD_BASE_URL = "https://upload.twitter.com/1.1/";
 	public static final String DEFAULT_SIGNING_UPLOAD_BASE_URL = DEFAULT_UPLOAD_BASE_URL;
 }

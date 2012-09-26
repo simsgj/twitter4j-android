@@ -56,22 +56,18 @@ import twitter4j.internal.http.HttpResponse;
 
 	private User recipient;
 
-	/* package */DirectMessageJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
+	/* package */DirectMessageJSONImpl(final HttpResponse res, final Configuration conf) throws TwitterException {
 		super(res);
 		final JSONObject json = res.asJSONObject();
 		init(json);
-		if (conf.isJSONStoreEnabled()) {
-			DataObjectFactoryUtil.clearThreadLocalMap();
-			DataObjectFactoryUtil.registerJSONObject(this, json);
-		}
 	}
 
-	/* package */DirectMessageJSONImpl(JSONObject json) throws TwitterException {
+	/* package */DirectMessageJSONImpl(final JSONObject json) throws TwitterException {
 		init(json);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (null == obj) return false;
 		if (this == obj) return true;
 		return obj instanceof DirectMessage && ((DirectMessage) obj).getId() == id;
@@ -162,7 +158,7 @@ import twitter4j.internal.http.HttpResponse;
 				+ sender + ", recipient=" + recipient + '}';
 	}
 
-	private void init(JSONObject json) throws TwitterException {
+	private void init(final JSONObject json) throws TwitterException {
 		id = getLong("id", json);
 		text = getUnescapedString("text", json);
 		senderId = getLong("sender_id", json);
@@ -179,12 +175,9 @@ import twitter4j.internal.http.HttpResponse;
 	}
 
 	/* package */
-	static ResponseList<DirectMessage> createDirectMessageList(HttpResponse res, Configuration conf)
+	static ResponseList<DirectMessage> createDirectMessageList(final HttpResponse res, final Configuration conf)
 			throws TwitterException {
 		try {
-			if (conf.isJSONStoreEnabled()) {
-				DataObjectFactoryUtil.clearThreadLocalMap();
-			}
 			final JSONArray list = res.asJSONArray();
 			final int size = list.length();
 			final ResponseList<DirectMessage> directMessages = new ResponseListImpl<DirectMessage>(size, res);
@@ -192,12 +185,6 @@ import twitter4j.internal.http.HttpResponse;
 				final JSONObject json = list.getJSONObject(i);
 				final DirectMessage directMessage = new DirectMessageJSONImpl(json);
 				directMessages.add(directMessage);
-				if (conf.isJSONStoreEnabled()) {
-					DataObjectFactoryUtil.registerJSONObject(directMessage, json);
-				}
-			}
-			if (conf.isJSONStoreEnabled()) {
-				DataObjectFactoryUtil.registerJSONObject(directMessages, list);
 			}
 			return directMessages;
 		} catch (final JSONException jsone) {

@@ -726,13 +726,13 @@ public final class HTMLEntity {
 		}
 	}
 
-	public static String escape(String original) {
+	public static String escape(final String original) {
 		final StringBuffer buf = new StringBuffer(original);
 		escape(buf);
 		return buf.toString();
 	}
 
-	public static void escape(StringBuffer original) {
+	public static void escape(final StringBuffer original) {
 		int index = 0;
 		String escaped;
 		while (index < original.length()) {
@@ -746,7 +746,7 @@ public final class HTMLEntity {
 		}
 	}
 
-	public static String unescape(String original) {
+	public static String unescape(final String original) {
 		String returnValue = null;
 		if (original != null) {
 			final StringBuffer buf = new StringBuffer(original);
@@ -756,7 +756,7 @@ public final class HTMLEntity {
 		return returnValue;
 	}
 
-	public static void unescape(StringBuffer original) {
+	public static void unescape(final StringBuffer original) {
 		int index = 0;
 		int semicolonIndex;
 		String escaped;

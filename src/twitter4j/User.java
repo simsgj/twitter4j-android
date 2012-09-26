@@ -91,6 +91,8 @@ public interface User extends Comparable<User>, TwitterResponse, Serializable {
 
 	String getProfileBackgroundImageUrlHttps();
 
+	String getProfileBannerImageUrl();
+
 	/**
 	 * Returns the profile image url of the user
 	 * 

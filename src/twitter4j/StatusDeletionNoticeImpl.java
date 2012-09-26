@@ -29,16 +29,16 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
  */
 class StatusDeletionNoticeImpl implements StatusDeletionNotice {
 
-	private long statusId;
-	private long userId;
+	private final long statusId;
+	private final long userId;
 
-	/* package */StatusDeletionNoticeImpl(JSONObject status) {
+	/* package */StatusDeletionNoticeImpl(final JSONObject status) {
 		statusId = z_T4JInternalParseUtil.getLong("id", status);
 		userId = z_T4JInternalParseUtil.getLong("user_id", status);
 	}
 
 	@Override
-	public int compareTo(StatusDeletionNotice that) {
+	public int compareTo(final StatusDeletionNotice that) {
 		final long delta = statusId - that.getStatusId();
 		if (delta < Integer.MIN_VALUE)
 			return Integer.MIN_VALUE;
@@ -47,7 +47,7 @@ class StatusDeletionNoticeImpl implements StatusDeletionNotice {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 

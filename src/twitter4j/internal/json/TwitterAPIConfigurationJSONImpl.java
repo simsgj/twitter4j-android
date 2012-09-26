@@ -50,7 +50,7 @@ class TwitterAPIConfigurationJSONImpl extends TwitterResponseImpl implements Twi
 	private String[] nonUsernamePaths;
 	private int maxMediaPerUpload;
 
-	TwitterAPIConfigurationJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
+	TwitterAPIConfigurationJSONImpl(final HttpResponse res, final Configuration conf) throws TwitterException {
 		super(res);
 		try {
 			final JSONObject json = res.asJSONObject();
@@ -72,10 +72,6 @@ class TwitterAPIConfigurationJSONImpl extends TwitterResponseImpl implements Twi
 			photoSizes.put(MediaEntity.Size.MEDIUM, new MediaEntityJSONImpl.Size(medium));
 			photoSizes.put(MediaEntity.Size.SMALL, new MediaEntityJSONImpl.Size(sizes.getJSONObject("small")));
 			photoSizes.put(MediaEntity.Size.THUMB, new MediaEntityJSONImpl.Size(sizes.getJSONObject("thumb")));
-			if (conf.isJSONStoreEnabled()) {
-				DataObjectFactoryUtil.clearThreadLocalMap();
-				DataObjectFactoryUtil.registerJSONObject(this, res.asJSONObject());
-			}
 			final JSONArray nonUsernamePathsJSONArray = json.getJSONArray("non_username_paths");
 			nonUsernamePaths = new String[nonUsernamePathsJSONArray.length()];
 			for (int i = 0; i < nonUsernamePathsJSONArray.length(); i++) {
@@ -88,7 +84,7 @@ class TwitterAPIConfigurationJSONImpl extends TwitterResponseImpl implements Twi
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (!(o instanceof TwitterAPIConfigurationJSONImpl)) return false;
 

@@ -32,12 +32,12 @@ public class TwipOModeAuthorization implements Authorization {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		return SINGLETON == o;
 	}
 
 	@Override
-	public String getAuthorizationHeader(HttpRequest req) {
+	public String getAuthorizationHeader(final HttpRequest req) {
 		return null;
 	}
 

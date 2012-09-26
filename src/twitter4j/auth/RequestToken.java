@@ -29,35 +29,35 @@ import twitter4j.internal.http.HttpResponse;
 public final class RequestToken extends OAuthToken {
 	private final Configuration conf;
 
-	public RequestToken(Configuration conf, String token, String tokenSecret) {
+	public RequestToken(final Configuration conf, final String token, final String tokenSecret) {
 		super(token, tokenSecret);
 		this.conf = conf;
 	}
 
 	@Deprecated
-	public RequestToken(String token, String tokenSecret) {
+	public RequestToken(final String token, final String tokenSecret) {
 		super(token, tokenSecret);
 		conf = ConfigurationContext.getInstance();
 	}
 
-	RequestToken(Configuration conf, HttpResponse res, OAuthSupport oauth) throws TwitterException {
+	RequestToken(final Configuration conf, final HttpResponse res, final OAuthSupport oauth) throws TwitterException {
 		super(res);
 		this.conf = conf;
 	}
 
-	RequestToken(Configuration conf, String token, String tokenSecret, OAuthSupport oauth) {
+	RequestToken(final Configuration conf, final String token, final String tokenSecret, final OAuthSupport oauth) {
 		super(token, tokenSecret);
 		this.conf = conf;
 	}
 
 	@Deprecated
-	RequestToken(HttpResponse res, OAuthSupport oauth) throws TwitterException {
+	RequestToken(final HttpResponse res, final OAuthSupport oauth) throws TwitterException {
 		super(res);
 		conf = ConfigurationContext.getInstance();
 	}
 
 	@Deprecated
-	RequestToken(String token, String tokenSecret, OAuthSupport oauth) {
+	RequestToken(final String token, final String tokenSecret, final OAuthSupport oauth) {
 		super(token, tokenSecret);
 		conf = ConfigurationContext.getInstance();
 	}

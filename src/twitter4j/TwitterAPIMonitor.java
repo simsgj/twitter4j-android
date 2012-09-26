@@ -53,7 +53,7 @@ public class TwitterAPIMonitor {
 		return STATISTICS;
 	}
 
-	void methodCalled(String twitterUrl, long elapsedTime, boolean success) {
+	void methodCalled(final String twitterUrl, final long elapsedTime, final boolean success) {
 		final Matcher matcher = pattern.matcher(twitterUrl);
 		if (matcher.matches() && matcher.groupCount() > 0) {
 			final String method = matcher.group();

@@ -33,13 +33,13 @@ public final class RequestMethod {
 	public static final RequestMethod HEAD = new RequestMethod("HEAD");
 	public static final RequestMethod PUT = new RequestMethod("PUT");
 
-	private RequestMethod(String name) {
+	private RequestMethod(final String name) {
 		this.name = name;
 		instances.put(name, this);
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (!(o instanceof RequestMethod)) return false;
 
@@ -68,7 +68,7 @@ public final class RequestMethod {
 		return getInstance(name);
 	}
 
-	private static RequestMethod getInstance(String name) {
+	private static RequestMethod getInstance(final String name) {
 		return instances.get(name);
 	}
 }

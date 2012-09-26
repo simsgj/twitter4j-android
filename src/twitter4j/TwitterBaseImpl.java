@@ -60,7 +60,7 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 
 	protected Authorization auth;
 
-	/* package */TwitterBaseImpl(Configuration conf, Authorization auth) {
+	/* package */TwitterBaseImpl(final Configuration conf, final Authorization auth) {
 		this.conf = conf;
 		this.auth = auth;
 		init();
@@ -69,12 +69,12 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void addRateLimitStatusListener(RateLimitStatusListener listener) {
+	public void addRateLimitStatusListener(final RateLimitStatusListener listener) {
 		rateLimitStatusListeners.add(listener);
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (!(o instanceof TwitterBaseImpl)) return false;
 
@@ -174,7 +174,7 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 	 *             or set
 	 */
 	@Override
-	public synchronized AccessToken getOAuthAccessToken(RequestToken requestToken) throws TwitterException {
+	public synchronized AccessToken getOAuthAccessToken(final RequestToken requestToken) throws TwitterException {
 		final OAuthSupport oauth = getOAuth();
 		final AccessToken oauthAccessToken = oauth.getOAuthAccessToken(requestToken);
 		screenName = oauthAccessToken.getScreenName();
@@ -188,7 +188,7 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 	 *             or set
 	 */
 	@Override
-	public synchronized AccessToken getOAuthAccessToken(RequestToken requestToken, String oauthVerifier)
+	public synchronized AccessToken getOAuthAccessToken(final RequestToken requestToken, final String oauthVerifier)
 			throws TwitterException {
 		return getOAuth().getOAuthAccessToken(requestToken, oauthVerifier);
 	}
@@ -200,7 +200,7 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 	 *             or set
 	 */
 	@Override
-	public synchronized AccessToken getOAuthAccessToken(String oauthVerifier) throws TwitterException {
+	public synchronized AccessToken getOAuthAccessToken(final String oauthVerifier) throws TwitterException {
 		final AccessToken oauthAccessToken = getOAuth().getOAuthAccessToken(oauthVerifier);
 		screenName = oauthAccessToken.getScreenName();
 		return oauthAccessToken;
@@ -210,7 +210,8 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public synchronized AccessToken getOAuthAccessToken(String screenName, String password) throws TwitterException {
+	public synchronized AccessToken getOAuthAccessToken(final String screenName, final String password)
+			throws TwitterException {
 		return getOAuth().getOAuthAccessToken(screenName, password);
 	}
 
@@ -228,7 +229,7 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public RequestToken getOAuthRequestToken(String callbackUrl) throws TwitterException {
+	public RequestToken getOAuthRequestToken(final String callbackUrl) throws TwitterException {
 		return getOAuth().getOAuthRequestToken(callbackUrl);
 	}
 
@@ -236,7 +237,8 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public RequestToken getOAuthRequestToken(String callbackUrl, String xAuthAccessType) throws TwitterException {
+	public RequestToken getOAuthRequestToken(final String callbackUrl, final String xAuthAccessType)
+			throws TwitterException {
 		return getOAuth().getOAuthRequestToken(callbackUrl, xAuthAccessType);
 	}
 
@@ -275,7 +277,7 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 	}
 
 	@Override
-	public void httpResponseReceived(HttpResponseEvent event) {
+	public void httpResponseReceived(final HttpResponseEvent event) {
 		if (rateLimitStatusListeners.size() != 0) {
 			final HttpResponse res = event.getResponse();
 			final TwitterException te = event.getTwitterException();
@@ -311,7 +313,7 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public synchronized void setOAuthAccessToken(AccessToken accessToken) {
+	public synchronized void setOAuthAccessToken(final AccessToken accessToken) {
 		getOAuth().setOAuthAccessToken(accessToken);
 	}
 
@@ -319,7 +321,7 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public synchronized void setOAuthConsumer(String consumerKey, String consumerSecret) {
+	public synchronized void setOAuthConsumer(final String consumerKey, final String consumerSecret) {
 		if (null == consumerKey) throw new NullPointerException("consumer key is null");
 		if (null == consumerSecret) throw new NullPointerException("consumer secret is null");
 		if (auth instanceof NullAuthorization) {
@@ -408,7 +410,7 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void readObject(ObjectInputStream stream) throws IOException, ClassNotFoundException {
+	private void readObject(final ObjectInputStream stream) throws IOException, ClassNotFoundException {
 		conf = (Configuration) stream.readObject();
 		auth = (Authorization) stream.readObject();
 		rateLimitStatusListeners = (List<RateLimitStatusListener>) stream.readObject();
@@ -417,7 +419,7 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 		setFactory();
 	}
 
-	private void writeObject(ObjectOutputStream out) throws IOException {
+	private void writeObject(final ObjectOutputStream out) throws IOException {
 		out.writeObject(conf);
 		out.writeObject(auth);
 		final List<RateLimitStatusListener> serializableRateLimitStatusListeners = new ArrayList<RateLimitStatusListener>(

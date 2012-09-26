@@ -41,229 +41,223 @@ public final class ConfigurationBuilder {
 		}
 	}
 
-	public ConfigurationBuilder setClientName(String clientName) {
+	public ConfigurationBuilder setClientName(final String clientName) {
 		checkNotBuilt();
 		configuration.setClientName(clientName);
 		return this;
 	}
 
-	public ConfigurationBuilder setClientURL(String clientURL) {
+	public ConfigurationBuilder setClientURL(final String clientURL) {
 		checkNotBuilt();
 		configuration.setClientURL(clientURL);
 		return this;
 	}
 
-	public ConfigurationBuilder setClientVersion(String clientVersion) {
+	public ConfigurationBuilder setClientVersion(final String clientVersion) {
 		checkNotBuilt();
 		configuration.setClientVersion(clientVersion);
 		return this;
 	}
 
-	public ConfigurationBuilder setDebugEnabled(boolean debugEnabled) {
+	public ConfigurationBuilder setDebugEnabled(final boolean debugEnabled) {
 		checkNotBuilt();
 		configuration.setDebug(debugEnabled);
 		return this;
 	}
 
-	public ConfigurationBuilder setGZIPEnabled(boolean gzipEnabled) {
+	public ConfigurationBuilder setGZIPEnabled(final boolean gzipEnabled) {
 		checkNotBuilt();
 		configuration.setGZIPEnabled(gzipEnabled);
 		return this;
 	}
 
-	public ConfigurationBuilder setHostAddressResolver(HostAddressResolver resolver) {
+	public ConfigurationBuilder setHostAddressResolver(final HostAddressResolver resolver) {
 		checkNotBuilt();
 		configuration.setHostAddressResolver(resolver);
 		return this;
 	}
 
-	public ConfigurationBuilder setHttpConnectionTimeout(int httpConnectionTimeout) {
+	public ConfigurationBuilder setHttpConnectionTimeout(final int httpConnectionTimeout) {
 		checkNotBuilt();
 		configuration.setHttpConnectionTimeout(httpConnectionTimeout);
 		return this;
 	}
 
-	public ConfigurationBuilder setHttpDefaultMaxPerRoute(int httpDefaultMaxPerRoute) {
+	public ConfigurationBuilder setHttpDefaultMaxPerRoute(final int httpDefaultMaxPerRoute) {
 		checkNotBuilt();
 		configuration.setHttpDefaultMaxPerRoute(httpDefaultMaxPerRoute);
 		return this;
 	}
 
-	public ConfigurationBuilder setHttpMaxTotalConnections(int httpMaxConnections) {
+	public ConfigurationBuilder setHttpMaxTotalConnections(final int httpMaxConnections) {
 		checkNotBuilt();
 		configuration.setHttpMaxTotalConnections(httpMaxConnections);
 		return this;
 	}
 
-	public ConfigurationBuilder setHttpProxyHost(String httpProxyHost) {
+	public ConfigurationBuilder setHttpProxyHost(final String httpProxyHost) {
 		checkNotBuilt();
 		configuration.setHttpProxyHost(httpProxyHost);
 		return this;
 	}
 
-	public ConfigurationBuilder setHttpProxyPassword(String httpProxyPassword) {
+	public ConfigurationBuilder setHttpProxyPassword(final String httpProxyPassword) {
 		checkNotBuilt();
 		configuration.setHttpProxyPassword(httpProxyPassword);
 		return this;
 	}
 
-	public ConfigurationBuilder setHttpProxyPort(int httpProxyPort) {
+	public ConfigurationBuilder setHttpProxyPort(final int httpProxyPort) {
 		checkNotBuilt();
 		configuration.setHttpProxyPort(httpProxyPort);
 		return this;
 	}
 
-	public ConfigurationBuilder setHttpProxyUser(String httpProxyUser) {
+	public ConfigurationBuilder setHttpProxyUser(final String httpProxyUser) {
 		checkNotBuilt();
 		configuration.setHttpProxyUser(httpProxyUser);
 		return this;
 	}
 
-	public ConfigurationBuilder setHttpReadTimeout(int httpReadTimeout) {
+	public ConfigurationBuilder setHttpReadTimeout(final int httpReadTimeout) {
 		checkNotBuilt();
 		configuration.setHttpReadTimeout(httpReadTimeout);
 		return this;
 	}
 
-	public ConfigurationBuilder setHttpRetryCount(int httpRetryCount) {
+	public ConfigurationBuilder setHttpRetryCount(final int httpRetryCount) {
 		checkNotBuilt();
 		configuration.setHttpRetryCount(httpRetryCount);
 		return this;
 	}
 
-	public ConfigurationBuilder setHttpRetryIntervalSeconds(int httpRetryIntervalSeconds) {
+	public ConfigurationBuilder setHttpRetryIntervalSeconds(final int httpRetryIntervalSeconds) {
 		checkNotBuilt();
 		configuration.setHttpRetryIntervalSeconds(httpRetryIntervalSeconds);
 		return this;
 	}
 
-	public ConfigurationBuilder setHttpStreamingReadTimeout(int httpStreamingReadTimeout) {
+	public ConfigurationBuilder setHttpStreamingReadTimeout(final int httpStreamingReadTimeout) {
 		checkNotBuilt();
 		configuration.setHttpStreamingReadTimeout(httpStreamingReadTimeout);
 		return this;
 	}
 
-	public ConfigurationBuilder setIgnoreSSLError(boolean ignoreSSLError) {
+	public ConfigurationBuilder setIgnoreSSLError(final boolean ignoreSSLError) {
 		checkNotBuilt();
 		configuration.setIgnoreSSLError(ignoreSSLError);
 		return this;
 	}
 
-	public ConfigurationBuilder setIncludeEntitiesEnabled(boolean enabled) {
+	public ConfigurationBuilder setIncludeEntitiesEnabled(final boolean enabled) {
 		checkNotBuilt();
 		configuration.setIncludeEntitiesEnbled(enabled);
 		return this;
 	}
 
-	public ConfigurationBuilder setIncludeRTsEnabled(boolean enabled) {
+	public ConfigurationBuilder setIncludeRTsEnabled(final boolean enabled) {
 		checkNotBuilt();
 		configuration.setIncludeRTsEnbled(enabled);
 		return this;
 	}
 
-	public ConfigurationBuilder setJSONStoreEnabled(boolean enabled) {
-		checkNotBuilt();
-		configuration.setJSONStoreEnabled(enabled);
-		return this;
-	}
-
-	public ConfigurationBuilder setOAuthAccessToken(String oAuthAccessToken) {
+	public ConfigurationBuilder setOAuthAccessToken(final String oAuthAccessToken) {
 		checkNotBuilt();
 		configuration.setOAuthAccessToken(oAuthAccessToken);
 		return this;
 	}
 
-	public ConfigurationBuilder setOAuthAccessTokenSecret(String oAuthAccessTokenSecret) {
+	public ConfigurationBuilder setOAuthAccessTokenSecret(final String oAuthAccessTokenSecret) {
 		checkNotBuilt();
 		configuration.setOAuthAccessTokenSecret(oAuthAccessTokenSecret);
 		return this;
 	}
 
-	public ConfigurationBuilder setOAuthBaseURL(String oAuthBaseURL) {
+	public ConfigurationBuilder setOAuthBaseURL(final String oAuthBaseURL) {
 		checkNotBuilt();
 		configuration.setOAuthBaseURL(oAuthBaseURL);
 		return this;
 	}
 
-	public ConfigurationBuilder setOAuthConsumerKey(String oAuthConsumerKey) {
+	public ConfigurationBuilder setOAuthConsumerKey(final String oAuthConsumerKey) {
 		checkNotBuilt();
 		configuration.setOAuthConsumerKey(oAuthConsumerKey);
 		return this;
 	}
 
-	public ConfigurationBuilder setOAuthConsumerSecret(String oAuthConsumerSecret) {
+	public ConfigurationBuilder setOAuthConsumerSecret(final String oAuthConsumerSecret) {
 		checkNotBuilt();
 		configuration.setOAuthConsumerSecret(oAuthConsumerSecret);
 		return this;
 	}
 
-	public ConfigurationBuilder setPassword(String password) {
+	public ConfigurationBuilder setPassword(final String password) {
 		checkNotBuilt();
 		configuration.setPassword(password);
 		return this;
 	}
 
-	public ConfigurationBuilder setPrettyDebugEnabled(boolean prettyDebugEnabled) {
+	public ConfigurationBuilder setPrettyDebugEnabled(final boolean prettyDebugEnabled) {
 		checkNotBuilt();
 		configuration.setPrettyDebugEnabled(prettyDebugEnabled);
 		return this;
 	}
 
-	public ConfigurationBuilder setRestBaseURL(String restBaseURL) {
+	public ConfigurationBuilder setRestBaseURL(final String restBaseURL) {
 		checkNotBuilt();
 		configuration.setRestBaseURL(restBaseURL);
 		return this;
 	}
 
-	public ConfigurationBuilder setSearchBaseURL(String searchBaseURL) {
+	public ConfigurationBuilder setSearchBaseURL(final String searchBaseURL) {
 		checkNotBuilt();
 		configuration.setSearchBaseURL(searchBaseURL);
 		return this;
 	}
 
-	public ConfigurationBuilder setSigningOAuthBaseURL(String signingOAuthBaseURL) {
+	public ConfigurationBuilder setSigningOAuthBaseURL(final String signingOAuthBaseURL) {
 		checkNotBuilt();
 		configuration.setSigningOAuthBaseURL(signingOAuthBaseURL);
 		return this;
 	}
 
-	public ConfigurationBuilder setSigningRestBaseURL(String signingRestBaseURL) {
+	public ConfigurationBuilder setSigningRestBaseURL(final String signingRestBaseURL) {
 		checkNotBuilt();
 		configuration.setSigningRestBaseURL(signingRestBaseURL);
 		return this;
 	}
 
-	public ConfigurationBuilder setSigningSearchBaseURL(String signingSearchBaseURL) {
+	public ConfigurationBuilder setSigningSearchBaseURL(final String signingSearchBaseURL) {
 		checkNotBuilt();
 		configuration.setSigningSearchBaseURL(signingSearchBaseURL);
 		return this;
 	}
 
-	public ConfigurationBuilder setSigningUploadBaseURL(String signingUploadURL) {
+	public ConfigurationBuilder setSigningUploadBaseURL(final String signingUploadURL) {
 		checkNotBuilt();
 		configuration.setSigningUploadBaseURL(signingUploadURL);
 		return this;
 	}
 
-	public ConfigurationBuilder setUploadBaseURL(String uploadURL) {
+	public ConfigurationBuilder setUploadBaseURL(final String uploadURL) {
 		checkNotBuilt();
 		configuration.setUploadBaseURL(uploadURL);
 		return this;
 	}
 
-	public ConfigurationBuilder setUser(String user) {
+	public ConfigurationBuilder setUser(final String user) {
 		checkNotBuilt();
 		configuration.setUser(user);
 		return this;
 	}
 
-	public ConfigurationBuilder setUserAgent(String userAgent) {
+	public ConfigurationBuilder setUserAgent(final String userAgent) {
 		checkNotBuilt();
 		configuration.setUserAgent(userAgent);
 		return this;
 	}
 
-	public ConfigurationBuilder setUseSSL(boolean useSSL) {
+	public ConfigurationBuilder setUseSSL(final boolean useSSL) {
 		checkNotBuilt();
 		configuration.setUseSSL(useSSL);
 		return this;

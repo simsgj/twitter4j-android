@@ -47,23 +47,20 @@ import twitter4j.internal.http.HttpResponse;
 
 	private Map<String, ResponseList<Status>> tweetsMap;
 
-	/* package */RelatedResultsJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
+	/* package */RelatedResultsJSONImpl(final HttpResponse res, final Configuration conf) throws TwitterException {
 		super(res);
-		if (conf.isJSONStoreEnabled()) {
-			DataObjectFactoryUtil.clearThreadLocalMap();
-		}
 		final JSONArray jsonArray = res.asJSONArray();
-		init(jsonArray, res, conf.isJSONStoreEnabled());
+		init(jsonArray, res);
 	}
 
-	/* package */RelatedResultsJSONImpl(JSONArray jsonArray) throws TwitterException {
+	/* package */RelatedResultsJSONImpl(final JSONArray jsonArray) throws TwitterException {
 		super();
-		init(jsonArray, null, false);
+		init(jsonArray, null);
 
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (obj instanceof RelatedResultsJSONImpl) {
 			final RelatedResultsJSONImpl other = (RelatedResultsJSONImpl) obj;
 			if (tweetsMap == null) {
@@ -123,7 +120,8 @@ import twitter4j.internal.http.HttpResponse;
 		return "RelatedResultsJSONImpl {tweetsMap=" + tweetsMap + "}";
 	}
 
-	private void init(JSONArray jsonArray, HttpResponse res, boolean registerRawJSON) throws TwitterException {
+	private void init(final JSONArray jsonArray, final HttpResponse res)
+			throws TwitterException {
 		tweetsMap = new HashMap<String, ResponseList<Status>>(2);
 		try {
 			for (int i = 0, listLen = jsonArray.length(); i < listLen; ++i) {
@@ -149,13 +147,7 @@ import twitter4j.internal.http.HttpResponse;
 				for (int j = 0, resultsLen = results.length(); j < resultsLen; ++j) {
 					final JSONObject json = results.getJSONObject(j).getJSONObject("value");
 					final Status status = new StatusJSONImpl(json);
-					if (registerRawJSON) {
-						DataObjectFactoryUtil.registerJSONObject(status, json);
-					}
 					statuses.add(status);
-				}
-				if (registerRawJSON) {
-					DataObjectFactoryUtil.registerJSONObject(statuses, results);
 				}
 			}
 		} catch (final JSONException jsone) {

@@ -54,7 +54,7 @@ public final class TimeSpanConverter {
 	 * 
 	 * @param locale locale
 	 */
-	public TimeSpanConverter(Locale locale) {
+	public TimeSpanConverter(final Locale locale) {
 		final String language = locale.getLanguage();
 		if ("it".equals(language)) {
 			formats[NOW] = new MessageFormat("Ora");
@@ -122,11 +122,11 @@ public final class TimeSpanConverter {
 		}
 	}
 
-	public String toTimeSpanString(Date date) {
+	public String toTimeSpanString(final Date date) {
 		return toTimeSpanString(date.getTime());
 	}
 
-	public String toTimeSpanString(long milliseconds) {
+	public String toTimeSpanString(final long milliseconds) {
 		final int deltaInSeconds = (int) ((System.currentTimeMillis() - milliseconds) / 1000);
 		if (deltaInSeconds >= ONE_DAY_IN_SECONDS) {
 			if (deltaInSeconds >= ONE_MONTH_IN_SECONDS)
@@ -137,7 +137,7 @@ public final class TimeSpanConverter {
 		return toTimeSpanString(deltaInSeconds);
 	}
 
-	private String toTimeSpanString(int deltaInSeconds) {
+	private String toTimeSpanString(final int deltaInSeconds) {
 		if (deltaInSeconds <= 1)
 			return formats[NOW].format(null);
 		else if (deltaInSeconds < 60) return formats[N_SECONDS_AGO].format(new Object[] { deltaInSeconds });

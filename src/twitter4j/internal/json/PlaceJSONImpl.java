@@ -60,33 +60,29 @@ final class PlaceJSONImpl extends TwitterResponseImpl implements Place {
 
 	}
 
-	/* package */PlaceJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
+	/* package */PlaceJSONImpl(final HttpResponse res, final Configuration conf) throws TwitterException {
 		super(res);
 		final JSONObject json = res.asJSONObject();
 		init(json);
-		if (conf.isJSONStoreEnabled()) {
-			DataObjectFactoryUtil.clearThreadLocalMap();
-			DataObjectFactoryUtil.registerJSONObject(this, json);
-		}
 	}
 
-	PlaceJSONImpl(JSONObject json) throws TwitterException {
+	PlaceJSONImpl(final JSONObject json) throws TwitterException {
 		super();
 		init(json);
 	}
 
-	PlaceJSONImpl(JSONObject json, HttpResponse res) throws TwitterException {
+	PlaceJSONImpl(final JSONObject json, final HttpResponse res) throws TwitterException {
 		super(res);
 		init(json);
 	}
 
 	@Override
-	public int compareTo(Place that) {
+	public int compareTo(final Place that) {
 		return id.compareTo(that.getId());
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (null == obj) return false;
 		if (this == obj) return true;
 		return obj instanceof Place && ((Place) obj).getId().equals(id);
@@ -174,7 +170,7 @@ final class PlaceJSONImpl extends TwitterResponseImpl implements Place {
 				+ (containedWithIn == null ? null : Arrays.asList(containedWithIn)) + '}';
 	}
 
-	private void init(JSONObject json) throws TwitterException {
+	private void init(final JSONObject json) throws TwitterException {
 		try {
 			name = getUnescapedString("name", json);
 			streetAddress = getUnescapedString("street_address", json);
@@ -232,7 +228,8 @@ final class PlaceJSONImpl extends TwitterResponseImpl implements Place {
 	}
 
 	/* package */
-	static ResponseList<Place> createPlaceList(HttpResponse res, Configuration conf) throws TwitterException {
+	static ResponseList<Place> createPlaceList(final HttpResponse res, final Configuration conf)
+			throws TwitterException {
 		JSONObject json = null;
 		try {
 			json = res.asJSONObject();
@@ -243,11 +240,8 @@ final class PlaceJSONImpl extends TwitterResponseImpl implements Place {
 	}
 
 	/* package */
-	static ResponseList<Place> createPlaceList(JSONArray list, HttpResponse res, Configuration conf)
+	static ResponseList<Place> createPlaceList(final JSONArray list, final HttpResponse res, final Configuration conf)
 			throws TwitterException {
-		if (conf.isJSONStoreEnabled()) {
-			DataObjectFactoryUtil.clearThreadLocalMap();
-		}
 		try {
 			final int size = list.length();
 			final ResponseList<Place> places = new ResponseListImpl<Place>(size, res);
@@ -255,12 +249,6 @@ final class PlaceJSONImpl extends TwitterResponseImpl implements Place {
 				final JSONObject json = list.getJSONObject(i);
 				final Place place = new PlaceJSONImpl(json);
 				places.add(place);
-				if (conf.isJSONStoreEnabled()) {
-					DataObjectFactoryUtil.registerJSONObject(place, json);
-				}
-			}
-			if (conf.isJSONStoreEnabled()) {
-				DataObjectFactoryUtil.registerJSONObject(places, list);
 			}
 			return places;
 		} catch (final JSONException jsone) {

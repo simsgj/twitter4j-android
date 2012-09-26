@@ -85,31 +85,26 @@ import twitter4j.internal.http.HttpResponse;
 	private boolean translator;
 	private int listedCount;
 	private boolean isFollowRequestSent;
+	private String profileBannerImageUrl;
 
-	/* package */UserJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
+	/* package */UserJSONImpl(final HttpResponse res, final Configuration conf) throws TwitterException {
 		super(res);
-		if (conf.isJSONStoreEnabled()) {
-			DataObjectFactoryUtil.clearThreadLocalMap();
-		}
 		final JSONObject json = res.asJSONObject();
 		init(json);
-		if (conf.isJSONStoreEnabled()) {
-			DataObjectFactoryUtil.registerJSONObject(this, json);
-		}
 	}
 
-	/* package */UserJSONImpl(JSONObject json) throws TwitterException {
+	/* package */UserJSONImpl(final JSONObject json) throws TwitterException {
 		super();
 		init(json);
 	}
 
 	@Override
-	public int compareTo(User that) {
+	public int compareTo(final User that) {
 		return (int) (id - that.getId());
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (null == obj) return false;
 		if (this == obj) return true;
 		return obj instanceof User && ((User) obj).getId() == id;
@@ -217,6 +212,11 @@ import twitter4j.internal.http.HttpResponse;
 	@Override
 	public String getProfileBackgroundImageUrlHttps() {
 		return profileBackgroundImageUrlHttps;
+	}
+
+	@Override
+	public String getProfileBannerImageUrl() {
+		return profileBannerImageUrl;
 	}
 
 	/**
@@ -422,7 +422,7 @@ import twitter4j.internal.http.HttpResponse;
 				+ translator + ", listedCount=" + listedCount + ", isFollowRequestSent=" + isFollowRequestSent + '}';
 	}
 
-	private void init(JSONObject json) throws TwitterException {
+	private void init(final JSONObject json) throws TwitterException {
 		try {
 			id = getLong("id", json);
 			name = getRawString("name", json);
@@ -438,7 +438,7 @@ import twitter4j.internal.http.HttpResponse;
 			isVerified = getBoolean("verified", json);
 			translator = getBoolean("is_translator", json);
 			followersCount = getInt("followers_count", json);
-
+			profileBannerImageUrl = getRawString("profile_banner_url", json);
 			profileBackgroundColor = getRawString("profile_background_color", json);
 			profileTextColor = getRawString("profile_text_color", json);
 			profileLinkColor = getRawString("profile_link_color", json);
@@ -468,12 +468,9 @@ import twitter4j.internal.http.HttpResponse;
 	}
 
 	/* package */
-	static PagableResponseList<User> createPagableUserList(HttpResponse res, Configuration conf)
+	static PagableResponseList<User> createPagableUserList(final HttpResponse res, final Configuration conf)
 			throws TwitterException {
 		try {
-			if (conf.isJSONStoreEnabled()) {
-				DataObjectFactoryUtil.clearThreadLocalMap();
-			}
 			final JSONObject json = res.asJSONObject();
 			final JSONArray list = json.getJSONArray("users");
 			final int size = list.length();
@@ -482,13 +479,7 @@ import twitter4j.internal.http.HttpResponse;
 			for (int i = 0; i < size; i++) {
 				final JSONObject userJson = list.getJSONObject(i);
 				final User user = new UserJSONImpl(userJson);
-				if (conf.isJSONStoreEnabled()) {
-					DataObjectFactoryUtil.registerJSONObject(user, userJson);
-				}
 				users.add(user);
-			}
-			if (conf.isJSONStoreEnabled()) {
-				DataObjectFactoryUtil.registerJSONObject(users, json);
 			}
 			return users;
 		} catch (final JSONException jsone) {
@@ -499,29 +490,20 @@ import twitter4j.internal.http.HttpResponse;
 	}
 
 	/* package */
-	static ResponseList<User> createUserList(HttpResponse res, Configuration conf) throws TwitterException {
+	static ResponseList<User> createUserList(final HttpResponse res, final Configuration conf) throws TwitterException {
 		return createUserList(res.asJSONArray(), res, conf);
 	}
 
 	/* package */
-	static ResponseList<User> createUserList(JSONArray list, HttpResponse res, Configuration conf)
+	static ResponseList<User> createUserList(final JSONArray list, final HttpResponse res, final Configuration conf)
 			throws TwitterException {
 		try {
-			if (conf.isJSONStoreEnabled()) {
-				DataObjectFactoryUtil.clearThreadLocalMap();
-			}
 			final int size = list.length();
 			final ResponseList<User> users = new ResponseListImpl<User>(size, res);
 			for (int i = 0; i < size; i++) {
 				final JSONObject json = list.getJSONObject(i);
 				final User user = new UserJSONImpl(json);
 				users.add(user);
-				if (conf.isJSONStoreEnabled()) {
-					DataObjectFactoryUtil.registerJSONObject(user, json);
-				}
-			}
-			if (conf.isJSONStoreEnabled()) {
-				DataObjectFactoryUtil.registerJSONObject(users, list);
 			}
 			return users;
 		} catch (final JSONException jsone) {

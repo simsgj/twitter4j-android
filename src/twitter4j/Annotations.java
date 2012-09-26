@@ -53,7 +53,7 @@ public class Annotations {
 	 * 
 	 * @param jsonArray - the JSON Array
 	 */
-	public Annotations(JSONArray jsonArray) {
+	public Annotations(final JSONArray jsonArray) {
 		setAnnotations(null);
 		try {
 			for (int i = 0; i < jsonArray.length(); i++) {
@@ -71,7 +71,7 @@ public class Annotations {
 	 * 
 	 * @param annotations - the List of Annotation instances
 	 */
-	public Annotations(List<Annotation> annotations) {
+	public Annotations(final List<Annotation> annotations) {
 		setAnnotations(annotations);
 	}
 
@@ -80,7 +80,7 @@ public class Annotations {
 	 * 
 	 * @param annotation - the Annotation to add
 	 */
-	public void addAnnotation(Annotation annotation) {
+	public void addAnnotation(final Annotation annotation) {
 		annotations.add(annotation);
 	}
 
@@ -90,7 +90,7 @@ public class Annotations {
 	 * @param annotation - the Annotation to add
 	 * @return this (for coding convenience)
 	 */
-	public Annotations annotation(Annotation annotation) {
+	public Annotations annotation(final Annotation annotation) {
 		addAnnotation(annotation);
 		return this;
 	}
@@ -101,7 +101,7 @@ public class Annotations {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (null == obj) return false;
 		if (this == obj) return true;
 		// shouldn't use the List directly as the Annotations are equal
@@ -148,7 +148,7 @@ public class Annotations {
 	 * 
 	 * @param annotations - the List of Annotation instances
 	 */
-	public void setAnnotations(List<Annotation> annotations) {
+	public void setAnnotations(final List<Annotation> annotations) {
 		this.annotations = annotations == null ? new ArrayList<Annotation>() : annotations;
 	}
 
@@ -208,7 +208,7 @@ public class Annotations {
 	 * @return true if the JSON String representation of the instance exceeds
 	 *         the limit imposed by Twitter, false otherwise
 	 */
-	public static boolean isExceedingLengthLimit(Annotations annotations) {
+	public static boolean isExceedingLengthLimit(final Annotations annotations) {
 		return annotations.asParameterValue().length() > lengthLimit;
 	}
 

@@ -41,12 +41,12 @@ final class CategoryJSONImpl implements Category {
 	private String slug;
 	private int size;
 
-	CategoryJSONImpl(JSONObject json) throws JSONException {
+	CategoryJSONImpl(final JSONObject json) throws JSONException {
 		init(json);
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
@@ -91,33 +91,25 @@ final class CategoryJSONImpl implements Category {
 		return "CategoryJSONImpl{" + "name='" + name + '\'' + ", slug='" + slug + '\'' + ", size=" + size + '}';
 	}
 
-	void init(JSONObject json) throws JSONException {
+	void init(final JSONObject json) throws JSONException {
 		name = json.getString("name");
 		slug = json.getString("slug");
 		size = z_T4JInternalParseUtil.getInt("size", json);
 	}
 
-	static ResponseList<Category> createCategoriesList(HttpResponse res, Configuration conf) throws TwitterException {
+	static ResponseList<Category> createCategoriesList(final HttpResponse res, final Configuration conf)
+			throws TwitterException {
 		return createCategoriesList(res.asJSONArray(), res, conf);
 	}
 
-	static ResponseList<Category> createCategoriesList(JSONArray array, HttpResponse res, Configuration conf)
-			throws TwitterException {
+	static ResponseList<Category> createCategoriesList(final JSONArray array, final HttpResponse res,
+			final Configuration conf) throws TwitterException {
 		try {
-			if (conf.isJSONStoreEnabled()) {
-				DataObjectFactoryUtil.clearThreadLocalMap();
-			}
 			final ResponseList<Category> categories = new ResponseListImpl<Category>(array.length(), res);
 			for (int i = 0; i < array.length(); i++) {
 				final JSONObject json = array.getJSONObject(i);
 				final Category category = new CategoryJSONImpl(json);
 				categories.add(category);
-				if (conf.isJSONStoreEnabled()) {
-					DataObjectFactoryUtil.registerJSONObject(category, json);
-				}
-			}
-			if (conf.isJSONStoreEnabled()) {
-				DataObjectFactoryUtil.registerJSONObject(categories, array);
 			}
 			return categories;
 		} catch (final JSONException jsone) {

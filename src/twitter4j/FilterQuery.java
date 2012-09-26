@@ -51,7 +51,7 @@ public final class FilterQuery {
 	 *            transitioning to the live stream.
 	 * @param follow Specifies the users, by ID, to receive public tweets from.
 	 */
-	public FilterQuery(int count, long[] follow) {
+	public FilterQuery(final int count, final long[] follow) {
 		this();
 		this.count = count;
 		this.follow = follow;
@@ -65,7 +65,7 @@ public final class FilterQuery {
 	 * @param follow Specifies the users, by ID, to receive public tweets from.
 	 * @param track Specifies keywords to track.
 	 */
-	public FilterQuery(int count, long[] follow, String[] track) {
+	public FilterQuery(final int count, final long[] follow, final String[] track) {
 		this();
 		this.count = count;
 		this.follow = follow;
@@ -81,7 +81,7 @@ public final class FilterQuery {
 	 * @param track Specifies keywords to track.
 	 * @param locations Specifies the locations to track. 2D array
 	 */
-	public FilterQuery(int count, long[] follow, String[] track, double[][] locations) {
+	public FilterQuery(final int count, final long[] follow, final String[] track, final double[][] locations) {
 		this.count = count;
 		this.follow = follow;
 		this.track = track;
@@ -93,7 +93,7 @@ public final class FilterQuery {
 	 * 
 	 * @param follow Specifies the users, by ID, to receive public tweets from.
 	 */
-	public FilterQuery(long[] follow) {
+	public FilterQuery(final long[] follow) {
 		this();
 		count = 0;
 		this.follow = follow;
@@ -106,13 +106,13 @@ public final class FilterQuery {
 	 *            transitioning to the live stream.
 	 * @return this instance
 	 */
-	public FilterQuery count(int count) {
+	public FilterQuery count(final int count) {
 		this.count = count;
 		return this;
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
@@ -131,7 +131,7 @@ public final class FilterQuery {
 	 * @param follow Specifies the users, by ID, to receive public tweets from.
 	 * @return this instance
 	 */
-	public FilterQuery follow(long[] follow) {
+	public FilterQuery follow(final long[] follow) {
 		this.follow = follow;
 		return this;
 	}
@@ -150,7 +150,7 @@ public final class FilterQuery {
 	 * @param locations Specifies the locations to track. 2D array
 	 * @return this instance
 	 */
-	public FilterQuery locations(double[][] locations) {
+	public FilterQuery locations(final double[][] locations) {
 		this.locations = locations;
 		return this;
 	}
@@ -162,7 +162,7 @@ public final class FilterQuery {
 	 * @return this instance
 	 * @since Twitter4J 2.1.4
 	 */
-	public FilterQuery setIncludeEntities(boolean include) {
+	public FilterQuery setIncludeEntities(final boolean include) {
 		includeEntities = include;
 		return this;
 	}
@@ -180,7 +180,7 @@ public final class FilterQuery {
 	 * @param track Specifies keywords to track.
 	 * @return this instance
 	 */
-	public FilterQuery track(String[] track) {
+	public FilterQuery track(final String[] track) {
 		this.track = track;
 		return this;
 	}

@@ -28,7 +28,7 @@ public class z_T4JInternalStringUtil {
 		throw new AssertionError();
 	}
 
-	public static String join(int[] follows) {
+	public static String join(final int[] follows) {
 		final StringBuffer buf = new StringBuffer(11 * follows.length);
 		for (final int follow : follows) {
 			if (0 != buf.length()) {
@@ -41,7 +41,7 @@ public class z_T4JInternalStringUtil {
 
 	// for JDK1.4 compatibility
 
-	public static String join(long[] follows) {
+	public static String join(final long[] follows) {
 		final StringBuffer buf = new StringBuffer(11 * follows.length);
 		for (final long follow : follows) {
 			if (0 != buf.length()) {
@@ -52,7 +52,7 @@ public class z_T4JInternalStringUtil {
 		return buf.toString();
 	}
 
-	public static String join(String[] track) {
+	public static String join(final String[] track) {
 		final StringBuffer buf = new StringBuffer(11 * track.length);
 		for (final String str : track) {
 			if (0 != buf.length()) {
@@ -63,7 +63,7 @@ public class z_T4JInternalStringUtil {
 		return buf.toString();
 	}
 
-	public static String maskString(String str) {
+	public static String maskString(final String str) {
 		final StringBuffer buf = new StringBuffer(str.length());
 		for (int i = 0; i < str.length(); i++) {
 			buf.append("*");
@@ -71,12 +71,12 @@ public class z_T4JInternalStringUtil {
 		return buf.toString();
 	}
 
-	public static String replaceLast(String text, String regex, String replacement) {
+	public static String replaceLast(final String text, final String regex, final String replacement) {
 		if (text == null || regex == null || replacement == null) return text;
 		return text.replaceFirst("(?s)" + regex + "(?!.*?" + regex + ")", replacement);
 	}
 
-	public static String[] split(String str, String separator) {
+	public static String[] split(final String str, final String separator) {
 		String[] returnValue;
 		int index = str.indexOf(separator);
 		if (index == -1) {

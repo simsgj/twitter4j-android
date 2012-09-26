@@ -85,8 +85,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 
 	private boolean includeEntitiesEnabled;
 
-	private boolean jsonStoreEnabled;
-
 	// hidden portion
 	private String clientVersion;
 	private String clientURL;
@@ -130,8 +128,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 
 		setIncludeEntitiesEnbled(true);
 
-		setJSONStoreEnabled(false);
-
 		setOAuthBaseURL(DEFAULT_OAUTH_BASE_URL);
 		setSigningOAuthBaseURL(DEFAULT_SIGNING_OAUTH_BASE_URL);
 
@@ -150,7 +146,7 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		if (this == obj) return true;
 		if (obj == null) return false;
 		if (!(obj instanceof ConfigurationBase)) return false;
-		final ConfigurationBase other = (ConfigurationBase) obj;
+		ConfigurationBase other = (ConfigurationBase) obj;
 		if (clientName == null) {
 			if (other.clientName != null) return false;
 		} else if (!clientName.equals(other.clientName)) return false;
@@ -184,7 +180,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		if (ignoreSSLError != other.ignoreSSLError) return false;
 		if (includeEntitiesEnabled != other.includeEntitiesEnabled) return false;
 		if (includeRTsEnabled != other.includeRTsEnabled) return false;
-		if (jsonStoreEnabled != other.jsonStoreEnabled) return false;
 		if (maxTotalConnections != other.maxTotalConnections) return false;
 		if (oAuthAccessToken == null) {
 			if (other.oAuthAccessToken != null) return false;
@@ -464,18 +459,18 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (clientName == null ? 0 : clientName.hashCode());
-		result = prime * result + (clientURL == null ? 0 : clientURL.hashCode());
-		result = prime * result + (clientVersion == null ? 0 : clientVersion.hashCode());
+		result = prime * result + ((clientName == null) ? 0 : clientName.hashCode());
+		result = prime * result + ((clientURL == null) ? 0 : clientURL.hashCode());
+		result = prime * result + ((clientVersion == null) ? 0 : clientVersion.hashCode());
 		result = prime * result + (debug ? 1231 : 1237);
 		result = prime * result + defaultMaxPerRoute;
 		result = prime * result + (gzipEnabled ? 1231 : 1237);
-		result = prime * result + (hostAddressResolver == null ? 0 : hostAddressResolver.hashCode());
+		result = prime * result + ((hostAddressResolver == null) ? 0 : hostAddressResolver.hashCode());
 		result = prime * result + httpConnectionTimeout;
-		result = prime * result + (httpProxyHost == null ? 0 : httpProxyHost.hashCode());
-		result = prime * result + (httpProxyPassword == null ? 0 : httpProxyPassword.hashCode());
+		result = prime * result + ((httpProxyHost == null) ? 0 : httpProxyHost.hashCode());
+		result = prime * result + ((httpProxyPassword == null) ? 0 : httpProxyPassword.hashCode());
 		result = prime * result + httpProxyPort;
-		result = prime * result + (httpProxyUser == null ? 0 : httpProxyUser.hashCode());
+		result = prime * result + ((httpProxyUser == null) ? 0 : httpProxyUser.hashCode());
 		result = prime * result + httpReadTimeout;
 		result = prime * result + httpRetryCount;
 		result = prime * result + httpRetryIntervalSeconds;
@@ -483,35 +478,35 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		result = prime * result + (ignoreSSLError ? 1231 : 1237);
 		result = prime * result + (includeEntitiesEnabled ? 1231 : 1237);
 		result = prime * result + (includeRTsEnabled ? 1231 : 1237);
-		result = prime * result + (jsonStoreEnabled ? 1231 : 1237);
 		result = prime * result + maxTotalConnections;
-		result = prime * result + (oAuthAccessToken == null ? 0 : oAuthAccessToken.hashCode());
-		result = prime * result + (oAuthAccessTokenSecret == null ? 0 : oAuthAccessTokenSecret.hashCode());
-		result = prime * result + (oAuthAccessTokenURL == null ? 0 : oAuthAccessTokenURL.hashCode());
-		result = prime * result + (oAuthAuthenticationURL == null ? 0 : oAuthAuthenticationURL.hashCode());
-		result = prime * result + (oAuthAuthorizationURL == null ? 0 : oAuthAuthorizationURL.hashCode());
-		result = prime * result + (oAuthBaseURL == null ? 0 : oAuthBaseURL.hashCode());
-		result = prime * result + (oAuthConsumerKey == null ? 0 : oAuthConsumerKey.hashCode());
-		result = prime * result + (oAuthConsumerSecret == null ? 0 : oAuthConsumerSecret.hashCode());
-		result = prime * result + (oAuthRequestTokenURL == null ? 0 : oAuthRequestTokenURL.hashCode());
-		result = prime * result + (password == null ? 0 : password.hashCode());
+		result = prime * result + ((oAuthAccessToken == null) ? 0 : oAuthAccessToken.hashCode());
+		result = prime * result + ((oAuthAccessTokenSecret == null) ? 0 : oAuthAccessTokenSecret.hashCode());
+		result = prime * result + ((oAuthAccessTokenURL == null) ? 0 : oAuthAccessTokenURL.hashCode());
+		result = prime * result + ((oAuthAuthenticationURL == null) ? 0 : oAuthAuthenticationURL.hashCode());
+		result = prime * result + ((oAuthAuthorizationURL == null) ? 0 : oAuthAuthorizationURL.hashCode());
+		result = prime * result + ((oAuthBaseURL == null) ? 0 : oAuthBaseURL.hashCode());
+		result = prime * result + ((oAuthConsumerKey == null) ? 0 : oAuthConsumerKey.hashCode());
+		result = prime * result + ((oAuthConsumerSecret == null) ? 0 : oAuthConsumerSecret.hashCode());
+		result = prime * result + ((oAuthRequestTokenURL == null) ? 0 : oAuthRequestTokenURL.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + (prettyDebug ? 1231 : 1237);
-		result = prime * result + (requestHeaders == null ? 0 : requestHeaders.hashCode());
-		result = prime * result + (restBaseURL == null ? 0 : restBaseURL.hashCode());
-		result = prime * result + (searchBaseURL == null ? 0 : searchBaseURL.hashCode());
-		result = prime * result + (signingOAuthAccessTokenURL == null ? 0 : signingOAuthAccessTokenURL.hashCode());
+		result = prime * result + ((requestHeaders == null) ? 0 : requestHeaders.hashCode());
+		result = prime * result + ((restBaseURL == null) ? 0 : restBaseURL.hashCode());
+		result = prime * result + ((searchBaseURL == null) ? 0 : searchBaseURL.hashCode());
+		result = prime * result + ((signingOAuthAccessTokenURL == null) ? 0 : signingOAuthAccessTokenURL.hashCode());
 		result = prime * result
-				+ (signingOAuthAuthenticationURL == null ? 0 : signingOAuthAuthenticationURL.hashCode());
-		result = prime * result + (signingOAuthAuthorizationURL == null ? 0 : signingOAuthAuthorizationURL.hashCode());
-		result = prime * result + (signingOAuthBaseURL == null ? 0 : signingOAuthBaseURL.hashCode());
-		result = prime * result + (signingOAuthRequestTokenURL == null ? 0 : signingOAuthRequestTokenURL.hashCode());
-		result = prime * result + (signingRestBaseURL == null ? 0 : signingRestBaseURL.hashCode());
-		result = prime * result + (signingSearchBaseURL == null ? 0 : signingSearchBaseURL.hashCode());
-		result = prime * result + (signingUploadBaseURL == null ? 0 : signingUploadBaseURL.hashCode());
-		result = prime * result + (uploadBaseURL == null ? 0 : uploadBaseURL.hashCode());
+				+ ((signingOAuthAuthenticationURL == null) ? 0 : signingOAuthAuthenticationURL.hashCode());
+		result = prime * result
+				+ ((signingOAuthAuthorizationURL == null) ? 0 : signingOAuthAuthorizationURL.hashCode());
+		result = prime * result + ((signingOAuthBaseURL == null) ? 0 : signingOAuthBaseURL.hashCode());
+		result = prime * result + ((signingOAuthRequestTokenURL == null) ? 0 : signingOAuthRequestTokenURL.hashCode());
+		result = prime * result + ((signingRestBaseURL == null) ? 0 : signingRestBaseURL.hashCode());
+		result = prime * result + ((signingSearchBaseURL == null) ? 0 : signingSearchBaseURL.hashCode());
+		result = prime * result + ((signingUploadBaseURL == null) ? 0 : signingUploadBaseURL.hashCode());
+		result = prime * result + ((uploadBaseURL == null) ? 0 : uploadBaseURL.hashCode());
 		result = prime * result + (useSSL ? 1231 : 1237);
-		result = prime * result + (user == null ? 0 : user.hashCode());
-		result = prime * result + (userAgent == null ? 0 : userAgent.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
+		result = prime * result + ((userAgent == null) ? 0 : userAgent.hashCode());
 		return result;
 	}
 
@@ -536,11 +531,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 	}
 
 	@Override
-	public boolean isJSONStoreEnabled() {
-		return jsonStoreEnabled;
-	}
-
-	@Override
 	public boolean isPrettyDebugEnabled() {
 		return prettyDebug;
 	}
@@ -560,7 +550,7 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		return ignoreSSLError;
 	}
 
-	public void setHostAddressResolver(HostAddressResolver resolver) {
+	public void setHostAddressResolver(final HostAddressResolver resolver) {
 		hostAddressResolver = resolver;
 	}
 
@@ -585,9 +575,9 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 				+ ", signingSearchBaseURL=" + signingSearchBaseURL + ", signingUploadBaseURL=" + signingUploadBaseURL
 				+ ", restBaseURL=" + restBaseURL + ", searchBaseURL=" + searchBaseURL + ", uploadBaseURL="
 				+ uploadBaseURL + ", includeRTsEnabled=" + includeRTsEnabled + ", includeEntitiesEnabled="
-				+ includeEntitiesEnabled + ", jsonStoreEnabled=" + jsonStoreEnabled + ", clientVersion="
-				+ clientVersion + ", clientURL=" + clientURL + ", clientName=" + clientName + ", hostAddressResolver="
-				+ hostAddressResolver + ", requestHeaders=" + requestHeaders + "}";
+				+ includeEntitiesEnabled + ", clientVersion=" + clientVersion + ", clientURL=" + clientURL
+				+ ", clientName=" + clientName + ", hostAddressResolver=" + hostAddressResolver + ", requestHeaders="
+				+ requestHeaders + "}";
 	}
 
 	protected void cacheInstance() {
@@ -599,98 +589,94 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		return getInstance(this);
 	}
 
-	protected final void setClientName(String clientName) {
+	protected final void setClientName(final String clientName) {
 		this.clientName = clientName;
 		initRequestHeaders();
 	}
 
-	protected final void setClientURL(String clientURL) {
+	protected final void setClientURL(final String clientURL) {
 		this.clientURL = clientURL;
 		initRequestHeaders();
 	}
 
-	protected final void setClientVersion(String clientVersion) {
+	protected final void setClientVersion(final String clientVersion) {
 		this.clientVersion = clientVersion;
 		initRequestHeaders();
 	}
 
-	protected final void setDebug(boolean debug) {
+	protected final void setDebug(final boolean debug) {
 		this.debug = debug;
 	}
 
-	protected final void setGZIPEnabled(boolean gzipEnabled) {
+	protected final void setGZIPEnabled(final boolean gzipEnabled) {
 		this.gzipEnabled = gzipEnabled;
 		initRequestHeaders();
 	}
 
-	protected final void setHttpConnectionTimeout(int connectionTimeout) {
+	protected final void setHttpConnectionTimeout(final int connectionTimeout) {
 		httpConnectionTimeout = connectionTimeout;
 	}
 
-	protected final void setHttpDefaultMaxPerRoute(int defaultMaxPerRoute) {
+	protected final void setHttpDefaultMaxPerRoute(final int defaultMaxPerRoute) {
 		this.defaultMaxPerRoute = defaultMaxPerRoute;
 	}
 
-	protected final void setHttpMaxTotalConnections(int maxTotalConnections) {
+	protected final void setHttpMaxTotalConnections(final int maxTotalConnections) {
 		this.maxTotalConnections = maxTotalConnections;
 	}
 
-	protected final void setHttpProxyHost(String proxyHost) {
+	protected final void setHttpProxyHost(final String proxyHost) {
 		httpProxyHost = proxyHost;
 		initRequestHeaders();
 	}
 
-	protected final void setHttpProxyPassword(String proxyPassword) {
+	protected final void setHttpProxyPassword(final String proxyPassword) {
 		httpProxyPassword = proxyPassword;
 	}
 
-	protected final void setHttpProxyPort(int proxyPort) {
+	protected final void setHttpProxyPort(final int proxyPort) {
 		httpProxyPort = proxyPort;
 		initRequestHeaders();
 	}
 
-	protected final void setHttpProxyUser(String proxyUser) {
+	protected final void setHttpProxyUser(final String proxyUser) {
 		httpProxyUser = proxyUser;
 	}
 
-	protected final void setHttpReadTimeout(int readTimeout) {
+	protected final void setHttpReadTimeout(final int readTimeout) {
 		httpReadTimeout = readTimeout;
 	}
 
-	protected final void setHttpRetryCount(int retryCount) {
+	protected final void setHttpRetryCount(final int retryCount) {
 		httpRetryCount = retryCount;
 	}
 
-	protected final void setHttpRetryIntervalSeconds(int retryIntervalSeconds) {
+	protected final void setHttpRetryIntervalSeconds(final int retryIntervalSeconds) {
 		httpRetryIntervalSeconds = retryIntervalSeconds;
 	}
 
-	protected final void setHttpStreamingReadTimeout(int httpStreamingReadTimeout) {
+	protected final void setHttpStreamingReadTimeout(final int httpStreamingReadTimeout) {
 		this.httpStreamingReadTimeout = httpStreamingReadTimeout;
 	}
 
-	protected final void setIgnoreSSLError(boolean ignoreSSLError) {
+	protected final void setIgnoreSSLError(final boolean ignoreSSLError) {
 		this.ignoreSSLError = ignoreSSLError;
 		initRequestHeaders();
 	}
 
-	protected final void setIncludeEntitiesEnbled(boolean enabled) {
+	protected final void setIncludeEntitiesEnbled(final boolean enabled) {
 		includeEntitiesEnabled = enabled;
 	}
 
-	protected final void setIncludeRTsEnbled(boolean enabled) {
+	protected final void setIncludeRTsEnbled(final boolean enabled) {
 		includeRTsEnabled = enabled;
 	}
 
-	protected final void setJSONStoreEnabled(boolean enabled) {
-		jsonStoreEnabled = enabled;
-	}
-
-	protected final void setOAuthAccessToken(String oAuthAccessToken) {
+	protected final void setOAuthAccessToken(final String oAuthAccessToken) {
 		this.oAuthAccessToken = oAuthAccessToken;
 	}
 
-	protected final void setOAuthAccessTokenSecret(String oAuthAccessTokenSecret) {
+	protected final void setOAuthAccessTokenSecret(final String oAuthAccessTokenSecret) {
 		this.oAuthAccessTokenSecret = oAuthAccessTokenSecret;
 	}
 
@@ -709,21 +695,21 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		fixOAuthBaseURL();
 	}
 
-	protected final void setOAuthConsumerKey(String oAuthConsumerKey) {
+	protected final void setOAuthConsumerKey(final String oAuthConsumerKey) {
 		this.oAuthConsumerKey = oAuthConsumerKey;
 		fixRestBaseURL();
 	}
 
-	protected final void setOAuthConsumerSecret(String oAuthConsumerSecret) {
+	protected final void setOAuthConsumerSecret(final String oAuthConsumerSecret) {
 		this.oAuthConsumerSecret = oAuthConsumerSecret;
 		fixRestBaseURL();
 	}
 
-	protected final void setPassword(String password) {
+	protected final void setPassword(final String password) {
 		this.password = password;
 	}
 
-	protected final void setPrettyDebugEnabled(boolean prettyDebug) {
+	protected final void setPrettyDebugEnabled(final boolean prettyDebug) {
 		this.prettyDebug = prettyDebug;
 	}
 
@@ -789,16 +775,16 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		fixUploadBaseURL();
 	}
 
-	protected final void setUser(String user) {
+	protected final void setUser(final String user) {
 		this.user = user;
 	}
 
-	protected final void setUserAgent(String userAgent) {
+	protected final void setUserAgent(final String userAgent) {
 		this.userAgent = userAgent;
 		initRequestHeaders();
 	}
 
-	protected final void setUseSSL(boolean useSSL) {
+	protected final void setUseSSL(final boolean useSSL) {
 		this.useSSL = useSSL;
 		fixRestBaseURL();
 	}
@@ -894,13 +880,13 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		requestHeaders.put("Connection", "keep-alive");
 	}
 
-	private static void cacheInstance(ConfigurationBase conf) {
+	private static void cacheInstance(final ConfigurationBase conf) {
 		if (!instances.contains(conf)) {
 			instances.add(conf);
 		}
 	}
 
-	private static ConfigurationBase getInstance(ConfigurationBase configurationBase) {
+	private static ConfigurationBase getInstance(final ConfigurationBase configurationBase) {
 		int index;
 		if ((index = instances.indexOf(configurationBase)) == -1) {
 			instances.add(configurationBase);
@@ -909,7 +895,7 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 			return instances.get(index);
 	}
 
-	static String fixURL(boolean useSSL, String url) {
+	static String fixURL(final boolean useSSL, String url) {
 		if (null == url) return null;
 		if (!url.startsWith("http://") || !url.startsWith("https://")) {
 			url = "https://" + url;
@@ -923,13 +909,13 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 			return "http://" + hostAndLater;
 	}
 
-	static String fixURLSlash(String urlOrig) {
+	static String fixURLSlash(final String urlOrig) {
 		if (urlOrig == null) return null;
 		if (!urlOrig.endsWith("/")) return urlOrig + "/";
 		return urlOrig;
 	}
 
-	static boolean isNullOrEmpty(String string) {
+	static boolean isNullOrEmpty(final String string) {
 		if (string == null) return true;
 		if (string.length() == 0) return true;
 		return false;

@@ -52,7 +52,7 @@ public class Annotation implements Comparable<Annotation>, Serializable {
 	 * 
 	 * @param type - the type
 	 */
-	public Annotation(String type) {
+	public Annotation(final String type) {
 		setType(type);
 		setAttributes(null);
 	}
@@ -63,7 +63,7 @@ public class Annotation implements Comparable<Annotation>, Serializable {
 	 * @param type
 	 * @param attributes
 	 */
-	public Annotation(String type, Map<String, String> attributes) {
+	public Annotation(final String type, final Map<String, String> attributes) {
 		setType(type);
 		setAttributes(attributes);
 	}
@@ -75,7 +75,7 @@ public class Annotation implements Comparable<Annotation>, Serializable {
 	 * @param jsonObject - the JSON Object
 	 */
 	@SuppressWarnings("unchecked")
-	Annotation(JSONObject jsonObject) {
+	Annotation(final JSONObject jsonObject) {
 		String typ = null;
 		Map<String, String> attrs = null;
 		Iterator<String> it = jsonObject.keys();
@@ -112,7 +112,7 @@ public class Annotation implements Comparable<Annotation>, Serializable {
 	 * @param name - the attribute name
 	 * @param value - the attribute value
 	 */
-	public void addAttribute(String name, String value) {
+	public void addAttribute(final String name, final String value) {
 		attributes.put(name, value);
 	}
 
@@ -123,7 +123,7 @@ public class Annotation implements Comparable<Annotation>, Serializable {
 	 * @param value - the attribute value
 	 * @return this (for coding convenience)
 	 */
-	public Annotation attribute(String name, String value) {
+	public Annotation attribute(final String name, final String value) {
 		addAttribute(name, value);
 		return this;
 	}
@@ -134,7 +134,7 @@ public class Annotation implements Comparable<Annotation>, Serializable {
 	 * @param attributes - the attributes
 	 * @return this (for coding convenience)
 	 */
-	public Annotation attributes(Map<String, String> attributes) {
+	public Annotation attributes(final Map<String, String> attributes) {
 		setAttributes(attributes);
 		return this;
 	}
@@ -145,7 +145,7 @@ public class Annotation implements Comparable<Annotation>, Serializable {
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
-	public int compareTo(Annotation other) {
+	public int compareTo(final Annotation other) {
 		// Precedence of order:
 		// 1. Type
 		// 2. Number of attributes
@@ -179,7 +179,7 @@ public class Annotation implements Comparable<Annotation>, Serializable {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (null == obj) return false;
 		if (this == obj) return true;
 		if (!(obj instanceof Annotation)) return false;
@@ -225,7 +225,7 @@ public class Annotation implements Comparable<Annotation>, Serializable {
 	 * 
 	 * @param attributes - the attributes
 	 */
-	public void setAttributes(Map<String, String> attributes) {
+	public void setAttributes(final Map<String, String> attributes) {
 		this.attributes = attributes == null ? new LinkedHashMap<String, String>() : attributes;
 	}
 
@@ -234,7 +234,7 @@ public class Annotation implements Comparable<Annotation>, Serializable {
 	 * 
 	 * @param type - the type
 	 */
-	public void setType(String type) {
+	public void setType(final String type) {
 		this.type = type == null ? "" : type;
 	}
 
@@ -268,7 +268,7 @@ public class Annotation implements Comparable<Annotation>, Serializable {
 	 * @param type - the type
 	 * @return this (for coding convenience)
 	 */
-	public Annotation type(String type) {
+	public Annotation type(final String type) {
 		setType(type);
 		return this;
 	}

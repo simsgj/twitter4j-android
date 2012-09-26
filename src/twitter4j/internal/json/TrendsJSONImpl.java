@@ -52,37 +52,29 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 	private Trend[] trends;
 	private Location location;
 
-	/* package */TrendsJSONImpl(Date asOf, Location location, Date trendAt, Trend[] trends) {
+	/* package */TrendsJSONImpl(final Date asOf, final Location location, final Date trendAt, final Trend[] trends) {
 		this.asOf = asOf;
 		this.location = location;
 		this.trendAt = trendAt;
 		this.trends = trends;
 	}
 
-	TrendsJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
+	TrendsJSONImpl(final HttpResponse res, final Configuration conf) throws TwitterException {
 		super(res);
-		init(res.asString(), conf.isJSONStoreEnabled());
-		if (conf.isJSONStoreEnabled()) {
-			DataObjectFactoryUtil.clearThreadLocalMap();
-			DataObjectFactoryUtil.registerJSONObject(this, res.asString());
-		}
+		init(res.asString());
 	}
 
-	TrendsJSONImpl(String jsonStr) throws TwitterException {
-		this(jsonStr, false);
-	}
-
-	TrendsJSONImpl(String jsonStr, boolean storeJSON) throws TwitterException {
-		init(jsonStr, storeJSON);
+	TrendsJSONImpl(final String jsonStr) throws TwitterException {
+		init(jsonStr);
 	}
 
 	@Override
-	public int compareTo(Trends that) {
+	public int compareTo(final Trends that) {
 		return trendAt.compareTo(that.getTrendAt());
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (!(o instanceof Trends)) return false;
 
@@ -141,7 +133,7 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 				+ (trends == null ? null : Arrays.asList(trends)) + '}';
 	}
 
-	void init(String jsonStr, boolean storeJSON) throws TwitterException {
+	void init(final String jsonStr) throws TwitterException {
 		try {
 			JSONObject json;
 			if (jsonStr.startsWith("[")) {
@@ -154,20 +146,20 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 				json = new JSONObject(jsonStr);
 			}
 			asOf = z_T4JInternalParseUtil.parseTrendsDate(json.getString("as_of"));
-			location = extractLocation(json, storeJSON);
+			location = extractLocation(json);
 			final JSONArray array = json.getJSONArray("trends");
 			trendAt = asOf;
-			trends = jsonArrayToTrendArray(array, storeJSON);
+			trends = jsonArrayToTrendArray(array);
 		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone.getMessage(), jsone);
 		}
 	}
 
-	private static Location extractLocation(JSONObject json, boolean storeJSON) throws TwitterException {
+	private static Location extractLocation(final JSONObject json) throws TwitterException {
 		if (json.isNull("locations")) return null;
 		ResponseList<Location> locations;
 		try {
-			locations = LocationJSONImpl.createLocationList(json.getJSONArray("locations"), storeJSON);
+			locations = LocationJSONImpl.createLocationList(json.getJSONArray("locations"));
 		} catch (final JSONException e) {
 			throw new AssertionError("locations can't be null");
 		}
@@ -180,30 +172,31 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 		return location;
 	}
 
-	private static Trend[] jsonArrayToTrendArray(JSONArray array, boolean storeJSON) throws JSONException {
+	private static Trend[] jsonArrayToTrendArray(final JSONArray array) throws JSONException {
 		final Trend[] trends = new Trend[array.length()];
 		for (int i = 0; i < array.length(); i++) {
 			final JSONObject trend = array.getJSONObject(i);
-			trends[i] = new TrendJSONImpl(trend, storeJSON);
+			trends[i] = new TrendJSONImpl(trend);
 		}
 		return trends;
 	}
 
 	/* package */
-	static ResponseList<Trends> createTrendsList(HttpResponse res, boolean storeJSON) throws TwitterException {
+	static ResponseList<Trends> createTrendsList(final HttpResponse res, final boolean storeJSON)
+			throws TwitterException {
 		final JSONObject json = res.asJSONObject();
 		ResponseList<Trends> trends;
 		try {
 			final Date asOf = z_T4JInternalParseUtil.parseTrendsDate(json.getString("as_of"));
 			final JSONObject trendsJson = json.getJSONObject("trends");
-			final Location location = extractLocation(json, storeJSON);
+			final Location location = extractLocation(json);
 			trends = new ResponseListImpl<Trends>(trendsJson.length(), res);
 			@SuppressWarnings("unchecked")
 			final Iterator<String> ite = trendsJson.keys();
 			while (ite.hasNext()) {
 				final String key = ite.next();
 				final JSONArray array = trendsJson.getJSONArray(key);
-				final Trend[] trendsArray = jsonArrayToTrendArray(array, storeJSON);
+				final Trend[] trendsArray = jsonArrayToTrendArray(array);
 				if (key.length() == 19) {
 					// current trends
 					trends.add(new TrendsJSONImpl(asOf, location, getDate(key, "yyyy-MM-dd HH:mm:ss"), trendsArray));

@@ -45,7 +45,7 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 		accessLevel = NONE;
 	}
 
-	public TwitterResponseImpl(HttpResponse res) {
+	public TwitterResponseImpl(final HttpResponse res) {
 		rateLimitStatus = RateLimitStatusJSONImpl.createFromResponseHeader(res);
 		accessLevel = z_T4JInternalParseUtil.toAccessLevel(res);
 	}

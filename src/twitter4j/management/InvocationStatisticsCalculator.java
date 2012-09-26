@@ -23,7 +23,7 @@ package twitter4j.management;
  * @author Nick Dellamaggiore (nick.dellamaggiore <at> gmail.com)
  */
 public class InvocationStatisticsCalculator implements InvocationStatistics {
-	private String name;
+	private final String name;
 	private long[] times;
 	private int index;
 	private long callCount;
@@ -35,7 +35,7 @@ public class InvocationStatisticsCalculator implements InvocationStatistics {
 	 * @param historySize the number of calls to track (for invocation time
 	 *            averaging)
 	 */
-	public InvocationStatisticsCalculator(String name, int historySize) {
+	public InvocationStatisticsCalculator(final String name, final int historySize) {
 		this.name = name;
 		times = new long[historySize];
 	}
@@ -73,7 +73,7 @@ public class InvocationStatisticsCalculator implements InvocationStatistics {
 		return totalTime;
 	}
 
-	public void increment(long time, boolean success) {
+	public void increment(final long time, final boolean success) {
 		callCount++;
 		errorCount += success ? 0 : 1;
 		totalTime += time;

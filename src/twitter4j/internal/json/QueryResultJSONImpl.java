@@ -54,7 +54,7 @@ import twitter4j.internal.http.HttpResponse;
 	private String query;
 	private List<Tweet> tweets;
 
-	/* package */QueryResultJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
+	/* package */QueryResultJSONImpl(final HttpResponse res, final Configuration conf) throws TwitterException {
 		final JSONObject json = res.asJSONObject();
 		try {
 			sinceId = getLong("since_id", json);
@@ -68,9 +68,6 @@ import twitter4j.internal.http.HttpResponse;
 			query = getURLDecodedString("query", json);
 			final JSONArray array = json.getJSONArray("results");
 			tweets = new ArrayList<Tweet>(array.length());
-			if (conf.isJSONStoreEnabled()) {
-				DataObjectFactoryUtil.clearThreadLocalMap();
-			}
 			for (int i = 0; i < array.length(); i++) {
 				final JSONObject tweet = array.getJSONObject(i);
 				tweets.add(new TweetJSONImpl(tweet, conf));
@@ -80,7 +77,7 @@ import twitter4j.internal.http.HttpResponse;
 		}
 	}
 
-	/* package */QueryResultJSONImpl(Query query) {
+	/* package */QueryResultJSONImpl(final Query query) {
 		super();
 		sinceId = query.getSinceId();
 		resultsPerPage = query.getRpp();
@@ -89,7 +86,7 @@ import twitter4j.internal.http.HttpResponse;
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 

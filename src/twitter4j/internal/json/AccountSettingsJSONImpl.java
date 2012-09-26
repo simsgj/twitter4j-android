@@ -49,7 +49,7 @@ class AccountSettingsJSONImpl extends TwitterResponseImpl implements AccountSett
 	private final boolean ALWAYS_USE_HTTPS;
 	private final boolean DISCOVERABLE_BY_EMAIL;
 
-	private AccountSettingsJSONImpl(HttpResponse res, JSONObject json) throws TwitterException {
+	private AccountSettingsJSONImpl(final HttpResponse res, final JSONObject json) throws TwitterException {
 		super(res);
 		try {
 			final JSONObject sleepTime = json.getJSONObject("sleep_time");
@@ -75,15 +75,11 @@ class AccountSettingsJSONImpl extends TwitterResponseImpl implements AccountSett
 		}
 	}
 
-	/* package */AccountSettingsJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
+	/* package */AccountSettingsJSONImpl(final HttpResponse res, final Configuration conf) throws TwitterException {
 		this(res, res.asJSONObject());
-		if (conf.isJSONStoreEnabled()) {
-			DataObjectFactoryUtil.clearThreadLocalMap();
-			DataObjectFactoryUtil.registerJSONObject(this, res.asJSONObject());
-		}
 	}
 
-	/* package */AccountSettingsJSONImpl(JSONObject json) throws TwitterException {
+	/* package */AccountSettingsJSONImpl(final JSONObject json) throws TwitterException {
 		this(null, json);
 	}
 

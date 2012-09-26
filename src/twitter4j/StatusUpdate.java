@@ -34,7 +34,7 @@ public final class StatusUpdate implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -2522880289943829826L;
-	private String status;
+	private final String status;
 	private long inReplyToStatusId = -1l;
 	private GeoLocation location = null;
 	private String placeId = null;
@@ -46,12 +46,12 @@ public final class StatusUpdate implements Serializable {
 	private transient InputStream mediaBody;
 	private File mediaFile;
 
-	public StatusUpdate(String status) {
+	public StatusUpdate(final String status) {
 		this.status = status;
 	}
 
 	@Deprecated
-	public void addAnnotation(Annotation annotation) {
+	public void addAnnotation(final Annotation annotation) {
 		if (null == annotations) {
 			annotations = new Annotations();
 		}
@@ -59,25 +59,25 @@ public final class StatusUpdate implements Serializable {
 	}
 
 	@Deprecated
-	public StatusUpdate annotation(Annotation annotation) {
+	public StatusUpdate annotation(final Annotation annotation) {
 		addAnnotation(annotation);
 		return this;
 	}
 
 	@Deprecated
-	public StatusUpdate annotations(Annotations annotations) {
+	public StatusUpdate annotations(final Annotations annotations) {
 		setAnnotations(annotations);
 		return this;
 	}
 
-	public StatusUpdate displayCoordinates(boolean displayCoordinates) {
+	public StatusUpdate displayCoordinates(final boolean displayCoordinates) {
 		setDisplayCoordinates(displayCoordinates);
 		return this;
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
@@ -134,7 +134,7 @@ public final class StatusUpdate implements Serializable {
 		return result;
 	}
 
-	public StatusUpdate inReplyToStatusId(long inReplyToStatusId) {
+	public StatusUpdate inReplyToStatusId(final long inReplyToStatusId) {
 		setInReplyToStatusId(inReplyToStatusId);
 		return this;
 	}
@@ -150,7 +150,7 @@ public final class StatusUpdate implements Serializable {
 		return possiblySensitive;
 	}
 
-	public StatusUpdate location(GeoLocation location) {
+	public StatusUpdate location(final GeoLocation location) {
 		setLocation(location);
 		return this;
 	}
@@ -158,7 +158,7 @@ public final class StatusUpdate implements Serializable {
 	/**
 	 * @since Twitter4J 2.2.5
 	 */
-	public StatusUpdate media(File file) {
+	public StatusUpdate media(final File file) {
 		setMedia(file);
 		return this;
 	}
@@ -166,12 +166,12 @@ public final class StatusUpdate implements Serializable {
 	/**
 	 * @since Twitter4J 2.2.5
 	 */
-	public StatusUpdate media(String name, InputStream body) {
+	public StatusUpdate media(final String name, final InputStream body) {
 		setMedia(name, body);
 		return this;
 	}
 
-	public StatusUpdate placeId(String placeId) {
+	public StatusUpdate placeId(final String placeId) {
 		setPlaceId(placeId);
 		return this;
 	}
@@ -179,51 +179,51 @@ public final class StatusUpdate implements Serializable {
 	/**
 	 * @since Twitter4J 2.2.5
 	 */
-	public StatusUpdate possiblySensitive(boolean possiblySensitive) {
+	public StatusUpdate possiblySensitive(final boolean possiblySensitive) {
 		setPossiblySensitive(possiblySensitive);
 		return this;
 	}
 
 	@Deprecated
-	public void setAnnotations(Annotations annotations) {
+	public void setAnnotations(final Annotations annotations) {
 		this.annotations = annotations;
 	}
 
-	public void setDisplayCoordinates(boolean displayCoordinates) {
+	public void setDisplayCoordinates(final boolean displayCoordinates) {
 		this.displayCoordinates = displayCoordinates;
 	}
 
-	public void setInReplyToStatusId(long inReplyToStatusId) {
+	public void setInReplyToStatusId(final long inReplyToStatusId) {
 		this.inReplyToStatusId = inReplyToStatusId;
 	}
 
-	public void setLocation(GeoLocation location) {
+	public void setLocation(final GeoLocation location) {
 		this.location = location;
 	}
 
 	/**
 	 * @since Twitter4J 2.2.5
 	 */
-	public void setMedia(File file) {
+	public void setMedia(final File file) {
 		mediaFile = file;
 	}
 
 	/**
 	 * @since Twitter4J 2.2.5
 	 */
-	public void setMedia(String name, InputStream body) {
+	public void setMedia(final String name, final InputStream body) {
 		mediaName = name;
 		mediaBody = body;
 	}
 
-	public void setPlaceId(String placeId) {
+	public void setPlaceId(final String placeId) {
 		this.placeId = placeId;
 	}
 
 	/**
 	 * @since Twitter4J 2.2.5
 	 */
-	public void setPossiblySensitive(boolean possiblySensitive) {
+	public void setPossiblySensitive(final boolean possiblySensitive) {
 		this.possiblySensitive = possiblySensitive;
 	}
 
@@ -235,22 +235,22 @@ public final class StatusUpdate implements Serializable {
 				+ ", mediaName='" + mediaName + '\'' + ", mediaBody=" + mediaBody + ", mediaFile=" + mediaFile + '}';
 	}
 
-	private void appendParameter(String name, double value, List<HttpParameter> params) {
+	private void appendParameter(final String name, final double value, final List<HttpParameter> params) {
 		params.add(new HttpParameter(name, String.valueOf(value)));
 	}
 
-	private void appendParameter(String name, long value, List<HttpParameter> params) {
+	private void appendParameter(final String name, final long value, final List<HttpParameter> params) {
 		params.add(new HttpParameter(name, String.valueOf(value)));
 	}
 
-	private void appendParameter(String name, String value, List<HttpParameter> params) {
+	private void appendParameter(final String name, final String value, final List<HttpParameter> params) {
 		if (value != null) {
 			params.add(new HttpParameter(name, value));
 		}
 	}
 
 	@SuppressWarnings("deprecation")
-	/* package */HttpParameter[] asHttpParameterArray(HttpParameter includeEntities) {
+	/* package */HttpParameter[] asHttpParameterArray(final HttpParameter includeEntities) {
 		final ArrayList<HttpParameter> params = new ArrayList<HttpParameter>();
 		appendParameter("status", status, params);
 		if (-1 != inReplyToStatusId) {

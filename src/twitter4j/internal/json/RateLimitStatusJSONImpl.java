@@ -43,7 +43,8 @@ import twitter4j.internal.http.HttpResponse;
 	private int secondsUntilReset;
 	private Date resetTime;
 
-	private RateLimitStatusJSONImpl(int hourlyLimit, int remainingHits, int resetTimeInSeconds, Date resetTime) {
+	private RateLimitStatusJSONImpl(final int hourlyLimit, final int remainingHits, final int resetTimeInSeconds,
+			final Date resetTime) {
 		this.hourlyLimit = hourlyLimit;
 		this.remainingHits = remainingHits;
 		this.resetTime = resetTime;
@@ -51,21 +52,17 @@ import twitter4j.internal.http.HttpResponse;
 		secondsUntilReset = (int) ((resetTime.getTime() - System.currentTimeMillis()) / 1000);
 	}
 
-	RateLimitStatusJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
+	RateLimitStatusJSONImpl(final HttpResponse res, final Configuration conf) throws TwitterException {
 		final JSONObject json = res.asJSONObject();
 		init(json);
-		if (conf.isJSONStoreEnabled()) {
-			DataObjectFactoryUtil.clearThreadLocalMap();
-			DataObjectFactoryUtil.registerJSONObject(this, json);
-		}
 	}
 
-	RateLimitStatusJSONImpl(JSONObject json) throws TwitterException {
+	RateLimitStatusJSONImpl(final JSONObject json) throws TwitterException {
 		init(json);
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (!(o instanceof RateLimitStatusJSONImpl)) return false;
 
@@ -137,7 +134,7 @@ import twitter4j.internal.http.HttpResponse;
 				+ ", resetTime=" + resetTime + '}';
 	}
 
-	void init(JSONObject json) throws TwitterException {
+	void init(final JSONObject json) throws TwitterException {
 		hourlyLimit = getInt("hourly_limit", json);
 		remainingHits = getInt("remaining_hits", json);
 		resetTime = getDate("reset_time", json, "EEE MMM d HH:mm:ss Z yyyy");
@@ -145,7 +142,7 @@ import twitter4j.internal.http.HttpResponse;
 		secondsUntilReset = (int) ((resetTime.getTime() - System.currentTimeMillis()) / 1000);
 	}
 
-	static RateLimitStatus createFeatureSpecificRateLimitStatusFromResponseHeader(HttpResponse res) {
+	static RateLimitStatus createFeatureSpecificRateLimitStatusFromResponseHeader(final HttpResponse res) {
 		if (null == res) return null;
 		int remainingHits;// "X-FeatureRateLimit-Remaining"
 		int hourlyLimit;// "X-FeatureRateLimit-Limit"
@@ -173,7 +170,7 @@ import twitter4j.internal.http.HttpResponse;
 		return new RateLimitStatusJSONImpl(hourlyLimit, remainingHits, resetTimeInSeconds, resetTime);
 	}
 
-	static RateLimitStatus createFromResponseHeader(HttpResponse res) {
+	static RateLimitStatus createFromResponseHeader(final HttpResponse res) {
 		if (null == res) return null;
 		int remainingHits;// "X-RateLimit-Remaining"
 		int hourlyLimit;// "X-RateLimit-Limit"

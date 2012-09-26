@@ -52,17 +52,17 @@ public final class z_T4JInternalParseUtil {
 		throw new AssertionError();
 	}
 
-	public static boolean getBoolean(String name, JSONObject json) {
+	public static boolean getBoolean(final String name, final JSONObject json) {
 		final String str = getRawString(name, json);
 		if (null == str || "null".equals(str)) return false;
 		return Boolean.valueOf(str);
 	}
 
-	public static Date getDate(String name, JSONObject json) throws TwitterException {
+	public static Date getDate(final String name, final JSONObject json) throws TwitterException {
 		return getDate(name, json, "EEE MMM d HH:mm:ss z yyyy");
 	}
 
-	public static Date getDate(String name, JSONObject json, String format) throws TwitterException {
+	public static Date getDate(final String name, final JSONObject json, final String format) throws TwitterException {
 		final String dateStr = getUnescapedString(name, json);
 		if ("null".equals(dateStr) || null == dateStr)
 			return null;
@@ -70,7 +70,7 @@ public final class z_T4JInternalParseUtil {
 			return getDate(dateStr, format);
 	}
 
-	public static Date getDate(String name, String format) throws TwitterException {
+	public static Date getDate(final String name, final String format) throws TwitterException {
 		SimpleDateFormat sdf = formatMap.get().get(format);
 		if (null == sdf) {
 			sdf = new SimpleDateFormat(format, Locale.ENGLISH);
@@ -84,7 +84,7 @@ public final class z_T4JInternalParseUtil {
 		}
 	}
 
-	public static double getDouble(String name, JSONObject json) {
+	public static double getDouble(final String name, final JSONObject json) {
 		final String str2 = getRawString(name, json);
 		if (null == str2 || "".equals(str2) || "null".equals(str2))
 			return -1;
@@ -92,7 +92,7 @@ public final class z_T4JInternalParseUtil {
 			return Double.valueOf(str2);
 	}
 
-	public static int getInt(String str) {
+	public static int getInt(final String str) {
 		if (null == str || "".equals(str) || "null".equals(str))
 			return -1;
 		else {
@@ -106,7 +106,7 @@ public final class z_T4JInternalParseUtil {
 		}
 	}
 
-	public static int getInt(String name, JSONObject json) {
+	public static int getInt(final String name, final JSONObject json) {
 		return getInt(getRawString(name, json));
 	}
 
@@ -123,11 +123,11 @@ public final class z_T4JInternalParseUtil {
 		}
 	}
 
-	public static long getLong(String name, JSONObject json) {
+	public static long getLong(final String name, final JSONObject json) {
 		return getLong(getRawString(name, json));
 	}
 
-	public static String getRawString(String name, JSONObject json) {
+	public static String getRawString(final String name, final JSONObject json) {
 		try {
 			if (json.isNull(name))
 				return null;
@@ -138,11 +138,11 @@ public final class z_T4JInternalParseUtil {
 		}
 	}
 
-	public static String getUnescapedString(String str, JSONObject json) {
+	public static String getUnescapedString(final String str, final JSONObject json) {
 		return HTMLEntity.unescape(getRawString(str, json));
 	}
 
-	public static String getURLDecodedString(String name, JSONObject json) {
+	public static String getURLDecodedString(final String name, final JSONObject json) {
 		String returnValue = getRawString(name, json);
 		if (returnValue != null) {
 			try {
@@ -153,7 +153,7 @@ public final class z_T4JInternalParseUtil {
 		return returnValue;
 	}
 
-	public static Date parseTrendsDate(String asOfStr) throws TwitterException {
+	public static Date parseTrendsDate(final String asOfStr) throws TwitterException {
 		Date parsed;
 		switch (asOfStr.length()) {
 			case 10:
@@ -168,7 +168,7 @@ public final class z_T4JInternalParseUtil {
 		return parsed;
 	}
 
-	public static int toAccessLevel(HttpResponse res) {
+	public static int toAccessLevel(final HttpResponse res) {
 		if (null == res) return -1;
 		final String xAccessLevel = res.getResponseHeader("X-Access-Level");
 		int accessLevel;

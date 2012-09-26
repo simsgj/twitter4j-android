@@ -74,8 +74,6 @@ public interface Configuration extends HttpClientConfiguration, HttpClientWrappe
 
 	boolean isIncludeRTsEnabled();
 
-	boolean isJSONStoreEnabled();
-
 	boolean isProxyConfigured();
 
 	boolean isSSLEnabled();

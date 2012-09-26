@@ -26,11 +26,11 @@ final class ExceptionDiagnosis {
 	String hexString = "";
 	Throwable th;
 
-	ExceptionDiagnosis(Throwable th) {
+	ExceptionDiagnosis(final Throwable th) {
 		this(th, new String[] {});
 	}
 
-	ExceptionDiagnosis(Throwable th, String[] inclusionFilter) {
+	ExceptionDiagnosis(final Throwable th, final String[] inclusionFilter) {
 		this.th = th;
 
 		final StackTraceElement[] stackTrace = th.getStackTrace();
@@ -55,7 +55,7 @@ final class ExceptionDiagnosis {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
@@ -79,7 +79,7 @@ final class ExceptionDiagnosis {
 		return "ExceptionDiagnosis{" + "stackLineHash=" + stackLineHash + ", lineNumberHash=" + lineNumberHash + '}';
 	}
 
-	private String toHexString(int value) {
+	private String toHexString(final int value) {
 		final String str = "0000000" + Integer.toHexString(value);
 		return str.substring(str.length() - 8, str.length());
 	}

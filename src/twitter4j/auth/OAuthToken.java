@@ -24,29 +24,29 @@ import twitter4j.internal.util.z_T4JInternalStringUtil;
 
 abstract class OAuthToken {
 
-	private String token;
-	private String tokenSecret;
+	private final String token;
+	private final String tokenSecret;
 
 	private transient SecretKeySpec secretKeySpec;
 	String[] responseStr = null;
 
-	public OAuthToken(String token, String tokenSecret) {
+	public OAuthToken(final String token, final String tokenSecret) {
 		this.token = token;
 		this.tokenSecret = tokenSecret;
 	}
 
-	OAuthToken(HttpResponse response) throws TwitterException {
+	OAuthToken(final HttpResponse response) throws TwitterException {
 		this(response.asString());
 	}
 
-	OAuthToken(String string) {
+	OAuthToken(final String string) {
 		responseStr = z_T4JInternalStringUtil.split(string, "&");
 		tokenSecret = getParameter("oauth_token_secret");
 		token = getParameter("oauth_token");
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (!(o instanceof OAuthToken)) return false;
 
@@ -58,7 +58,7 @@ abstract class OAuthToken {
 		return true;
 	}
 
-	public String getParameter(String parameter) {
+	public String getParameter(final String parameter) {
 		String value = null;
 		for (final String str : responseStr) {
 			if (str.startsWith(parameter + '=')) {
@@ -94,7 +94,7 @@ abstract class OAuthToken {
 		return secretKeySpec;
 	}
 
-	/* package */void setSecretKeySpec(SecretKeySpec secretKeySpec) {
+	/* package */void setSecretKeySpec(final SecretKeySpec secretKeySpec) {
 		this.secretKeySpec = secretKeySpec;
 	}
 }

@@ -37,7 +37,7 @@ public final class BASE64Encoder {
 	private BASE64Encoder() {
 	}
 
-	public static String encode(byte[] from) {
+	public static String encode(final byte[] from) {
 		final StringBuffer to = new StringBuffer((int) (from.length * 1.34) + 3);
 		int num = 0;
 		char currentByte = 0;

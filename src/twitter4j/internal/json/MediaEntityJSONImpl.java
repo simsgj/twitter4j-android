@@ -50,7 +50,7 @@ public class MediaEntityJSONImpl implements MediaEntity {
 	private Map<Integer, MediaEntity.Size> sizes;
 	private String type;
 
-	public MediaEntityJSONImpl(JSONObject json) throws TwitterException {
+	public MediaEntityJSONImpl(final JSONObject json) throws TwitterException {
 		try {
 			final JSONArray indicesArray = json.getJSONArray("indices");
 			start = indicesArray.getInt(0);
@@ -104,7 +104,7 @@ public class MediaEntityJSONImpl implements MediaEntity {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (!(o instanceof MediaEntityJSONImpl)) return false;
 
@@ -204,8 +204,8 @@ public class MediaEntityJSONImpl implements MediaEntity {
 				+ ", displayURL='" + displayURL + '\'' + ", sizes=" + sizes + ", type=" + type + '}';
 	}
 
-	private void addMediaEntitySizeIfNotNull(Map<Integer, MediaEntity.Size> sizes, JSONObject sizes_json, Integer size,
-			String key) throws JSONException {
+	private void addMediaEntitySizeIfNotNull(final Map<Integer, MediaEntity.Size> sizes, final JSONObject sizes_json,
+			final Integer size, final String key) throws JSONException {
 		final JSONObject size_json = sizes_json.optJSONObject(key);
 		if (size_json != null) {
 			sizes.put(size, new Size(size_json));
@@ -222,14 +222,14 @@ public class MediaEntityJSONImpl implements MediaEntity {
 		int height;
 		int resize;
 
-		Size(JSONObject json) throws JSONException {
+		Size(final JSONObject json) throws JSONException {
 			width = json.getInt("w");
 			height = json.getInt("h");
 			resize = "fit".equals(json.getString("resize")) ? MediaEntity.Size.FIT : MediaEntity.Size.CROP;
 		}
 
 		@Override
-		public boolean equals(Object o) {
+		public boolean equals(final Object o) {
 			if (this == o) return true;
 			if (!(o instanceof Size)) return false;
 

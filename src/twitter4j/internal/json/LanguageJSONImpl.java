@@ -34,7 +34,7 @@ public class LanguageJSONImpl implements HelpMethods.Language {
 	private String code;
 	private String status;
 
-	LanguageJSONImpl(JSONObject json) throws TwitterException {
+	LanguageJSONImpl(final JSONObject json) throws TwitterException {
 		super();
 		init(json);
 	}
@@ -54,7 +54,7 @@ public class LanguageJSONImpl implements HelpMethods.Language {
 		return status;
 	}
 
-	private void init(JSONObject json) throws TwitterException {
+	private void init(final JSONObject json) throws TwitterException {
 		try {
 			name = json.getString("name");
 			code = json.getString("code");
@@ -65,17 +65,14 @@ public class LanguageJSONImpl implements HelpMethods.Language {
 		}
 	}
 
-	static ResponseList<HelpMethods.Language> createLanguageList(HttpResponse res, Configuration conf)
+	static ResponseList<HelpMethods.Language> createLanguageList(final HttpResponse res, final Configuration conf)
 			throws TwitterException {
 		return createLanguageList(res.asJSONArray(), res, conf);
 	}
 
 	/* package */
-	static ResponseList<HelpMethods.Language> createLanguageList(JSONArray list, HttpResponse res, Configuration conf)
-			throws TwitterException {
-		if (conf.isJSONStoreEnabled()) {
-			DataObjectFactoryUtil.clearThreadLocalMap();
-		}
+	static ResponseList<HelpMethods.Language> createLanguageList(final JSONArray list, final HttpResponse res,
+			final Configuration conf) throws TwitterException {
 		try {
 			final int size = list.length();
 			final ResponseList<HelpMethods.Language> languages = new ResponseListImpl<HelpMethods.Language>(size, res);
@@ -83,12 +80,6 @@ public class LanguageJSONImpl implements HelpMethods.Language {
 				final JSONObject json = list.getJSONObject(i);
 				final HelpMethods.Language language = new LanguageJSONImpl(json);
 				languages.add(language);
-				if (conf.isJSONStoreEnabled()) {
-					DataObjectFactoryUtil.registerJSONObject(language, json);
-				}
-			}
-			if (conf.isJSONStoreEnabled()) {
-				DataObjectFactoryUtil.registerJSONObject(languages, list);
 			}
 			return languages;
 		} catch (final JSONException jsone) {

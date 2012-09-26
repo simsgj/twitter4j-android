@@ -51,7 +51,7 @@ public abstract class HttpResponse {
 	private JSONObject json = null;
 	private JSONArray jsonArray = null;
 
-	public HttpResponse(HttpClientConfiguration conf) {
+	public HttpResponse(final HttpClientConfiguration conf) {
 		CONF = conf;
 	}
 

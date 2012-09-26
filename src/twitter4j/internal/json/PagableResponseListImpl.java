@@ -33,14 +33,14 @@ class PagableResponseListImpl<T> extends ResponseListImpl implements PagableResp
 	private final long previousCursor;
 	private final long nextCursor;
 
-	PagableResponseListImpl(int size, JSONObject json, HttpResponse res) {
+	PagableResponseListImpl(final int size, final JSONObject json, final HttpResponse res) {
 		super(size, res);
 		this.previousCursor = z_T4JInternalParseUtil.getLong("previous_cursor", json);
 		this.nextCursor = z_T4JInternalParseUtil.getLong("next_cursor", json);
 	}
 
-	PagableResponseListImpl(RateLimitStatus rateLimitStatus, RateLimitStatus featureSpecificRateLimitStatus,
-			int accessLevel) {
+	PagableResponseListImpl(final RateLimitStatus rateLimitStatus,
+			final RateLimitStatus featureSpecificRateLimitStatus, final int accessLevel) {
 		super(rateLimitStatus, featureSpecificRateLimitStatus, accessLevel);
 		previousCursor = 0;
 		nextCursor = 0;

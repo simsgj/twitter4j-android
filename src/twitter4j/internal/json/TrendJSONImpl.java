@@ -33,25 +33,18 @@ import twitter4j.Trend;
 	 * 
 	 */
 	private static final long serialVersionUID = -2205410210175259078L;
-	private String name;
+	private final String name;
 	private String url = null;
 	private String query = null;
 
-	/* package */TrendJSONImpl(JSONObject json) {
-		this(json, false);
-	}
-
-	/* package */TrendJSONImpl(JSONObject json, boolean storeJSON) {
+	/* package */TrendJSONImpl(final JSONObject json) {
 		name = getRawString("name", json);
 		url = getRawString("url", json);
 		query = getRawString("query", json);
-		if (storeJSON) {
-			DataObjectFactoryUtil.registerJSONObject(this, json);
-		}
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (!(o instanceof Trend)) return false;
 

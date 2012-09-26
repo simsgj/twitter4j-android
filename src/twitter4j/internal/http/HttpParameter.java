@@ -41,44 +41,44 @@ public final class HttpParameter implements Comparable<HttpParameter> {
 
 	private static final String OCTET = "application/octet-stream";
 
-	public HttpParameter(String name, boolean value) {
+	public HttpParameter(final String name, final boolean value) {
 		this.name = name;
 		this.value = String.valueOf(value);
 	}
 
-	public HttpParameter(String name, double value) {
+	public HttpParameter(final String name, final double value) {
 		this.name = name;
 		this.value = String.valueOf(value);
 	}
 
-	public HttpParameter(String name, File file) {
+	public HttpParameter(final String name, final File file) {
 		this.name = name;
 		this.file = file;
 	}
 
-	public HttpParameter(String name, int value) {
+	public HttpParameter(final String name, final int value) {
 		this.name = name;
 		this.value = String.valueOf(value);
 	}
 
-	public HttpParameter(String name, long value) {
+	public HttpParameter(final String name, final long value) {
 		this.name = name;
 		this.value = String.valueOf(value);
 	}
 
-	public HttpParameter(String name, String value) {
+	public HttpParameter(final String name, final String value) {
 		this.name = name;
 		this.value = value;
 	}
 
-	public HttpParameter(String name, String fileName, InputStream fileBody) {
+	public HttpParameter(final String name, final String fileName, final InputStream fileBody) {
 		this.name = name;
 		file = new File(fileName);
 		this.fileBody = fileBody;
 	}
 
 	@Override
-	public int compareTo(HttpParameter o) {
+	public int compareTo(final HttpParameter o) {
 		int compared;
 		final HttpParameter that = o;
 		compared = name.compareTo(that.name);
@@ -89,7 +89,7 @@ public final class HttpParameter implements Comparable<HttpParameter> {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (!(o instanceof HttpParameter)) return false;
 
@@ -178,7 +178,7 @@ public final class HttpParameter implements Comparable<HttpParameter> {
 				+ ", fileBody=" + fileBody + '}';
 	}
 
-	public static boolean containsFile(HttpParameter[] params) {
+	public static boolean containsFile(final HttpParameter[] params) {
 		boolean containsFile = false;
 		if (null == params) return false;
 		for (final HttpParameter param : params) {
@@ -201,7 +201,7 @@ public final class HttpParameter implements Comparable<HttpParameter> {
 	 *      Uniform Resource Identifier (URI): Generic Syntax - 2.1.
 	 *      Percent-Encoding</a>
 	 */
-	public static String encode(String value) {
+	public static String encode(final String value) {
 		String encoded = null;
 		try {
 			encoded = URLEncoder.encode(value, "UTF-8");
@@ -226,7 +226,7 @@ public final class HttpParameter implements Comparable<HttpParameter> {
 		return buf.toString();
 	}
 
-	public static String encodeParameters(HttpParameter[] httpParams) {
+	public static String encodeParameters(final HttpParameter[] httpParams) {
 		if (null == httpParams) return "";
 		final StringBuffer buf = new StringBuffer();
 		for (int j = 0; j < httpParams.length; j++) {
@@ -240,24 +240,26 @@ public final class HttpParameter implements Comparable<HttpParameter> {
 		return buf.toString();
 	}
 
-	public static HttpParameter[] getParameterArray(String name, int value) {
+	public static HttpParameter[] getParameterArray(final String name, final int value) {
 		return getParameterArray(name, String.valueOf(value));
 	}
 
-	public static HttpParameter[] getParameterArray(String name1, int value1, String name2, int value2) {
+	public static HttpParameter[] getParameterArray(final String name1, final int value1, final String name2,
+			final int value2) {
 		return getParameterArray(name1, String.valueOf(value1), name2, String.valueOf(value2));
 	}
 
-	public static HttpParameter[] getParameterArray(String name, String value) {
+	public static HttpParameter[] getParameterArray(final String name, final String value) {
 		return new HttpParameter[] { new HttpParameter(name, value) };
 	}
 
-	public static HttpParameter[] getParameterArray(String name1, String value1, String name2, String value2) {
+	public static HttpParameter[] getParameterArray(final String name1, final String value1, final String name2,
+			final String value2) {
 		return new HttpParameter[] { new HttpParameter(name1, value1), new HttpParameter(name2, value2) };
 	}
 
 	/* package */
-	static boolean containsFile(List<HttpParameter> params) {
+	static boolean containsFile(final List<HttpParameter> params) {
 		boolean containsFile = false;
 		for (final HttpParameter param : params) {
 			if (param.isFile()) {

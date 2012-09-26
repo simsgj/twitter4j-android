@@ -40,7 +40,7 @@ class AccountTotalsJSONImpl extends TwitterResponseImpl implements AccountTotals
 	private final int favorites;
 	private final int friends;
 
-	private AccountTotalsJSONImpl(HttpResponse res, JSONObject json) {
+	private AccountTotalsJSONImpl(final HttpResponse res, final JSONObject json) {
 		super(res);
 		updates = getInt("updates", json);
 		followers = getInt("followers", json);
@@ -48,20 +48,16 @@ class AccountTotalsJSONImpl extends TwitterResponseImpl implements AccountTotals
 		friends = getInt("friends", json);
 	}
 
-	/* package */AccountTotalsJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
+	/* package */AccountTotalsJSONImpl(final HttpResponse res, final Configuration conf) throws TwitterException {
 		this(res, res.asJSONObject());
-		if (conf.isJSONStoreEnabled()) {
-			DataObjectFactoryUtil.clearThreadLocalMap();
-			DataObjectFactoryUtil.registerJSONObject(this, res.asJSONObject());
-		}
 	}
 
-	/* package */AccountTotalsJSONImpl(JSONObject json) throws TwitterException {
+	/* package */AccountTotalsJSONImpl(final JSONObject json) throws TwitterException {
 		this(null, json);
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 

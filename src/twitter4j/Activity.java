@@ -17,7 +17,9 @@ public interface Activity extends TwitterResponse, Comparable<Activity>, Seriali
 
 	public int getSourcesSize();
 
-	public Status[] getTargetObjects();
+	public Status[] getTargetObjectStatuses();
+	
+	public UserList[] getTargetObjectUserLists();
 
 	public int getTargetObjectsSize();
 
@@ -39,7 +41,7 @@ public interface Activity extends TwitterResponse, Comparable<Activity>, Seriali
 
 		private final int actionId;
 
-		private Action(int action) {
+		private Action(final int action) {
 			actionId = action;
 		}
 
@@ -47,7 +49,7 @@ public interface Activity extends TwitterResponse, Comparable<Activity>, Seriali
 			return actionId;
 		}
 
-		public static Action fromString(String string) {
+		public static Action fromString(final String string) {
 			if ("favorite".equalsIgnoreCase(string)) return FAVORITE;
 			if ("follow".equalsIgnoreCase(string)) return FOLLOW;
 			if ("mention".equalsIgnoreCase(string)) return MENTION;

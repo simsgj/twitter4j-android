@@ -24,17 +24,17 @@ import twitter4j.auth.BasicAuthorization;
  * @since Twitter4J 2.1.3
  */
 public class XAuthAuthorization implements Authorization {
-	private BasicAuthorization basic;
+	private final BasicAuthorization basic;
 
 	private String consumerKey;
 	private String consumerSecret;
 
-	public XAuthAuthorization(BasicAuthorization basic) {
+	public XAuthAuthorization(final BasicAuthorization basic) {
 		this.basic = basic;
 	}
 
 	@Override
-	public String getAuthorizationHeader(HttpRequest req) {
+	public String getAuthorizationHeader(final HttpRequest req) {
 		return basic.getAuthorizationHeader(req);
 	}
 
@@ -59,7 +59,7 @@ public class XAuthAuthorization implements Authorization {
 		return basic.isEnabled();
 	}
 
-	public synchronized void setOAuthConsumer(String consumerKey, String consumerSecret) {
+	public synchronized void setOAuthConsumer(final String consumerKey, final String consumerSecret) {
 		this.consumerKey = consumerKey;
 		this.consumerSecret = consumerSecret;
 	}

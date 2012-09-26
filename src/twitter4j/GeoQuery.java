@@ -27,8 +27,8 @@ import twitter4j.internal.http.HttpParameter;
  */
 public final class GeoQuery {
 
-	private GeoLocation location;
-	private String ip;
+	private final GeoLocation location;
+	private final String ip;
 	private String accuracy;
 	private String granularity;
 	private int maxResults;
@@ -40,7 +40,7 @@ public final class GeoQuery {
 	 * 
 	 * @param location
 	 */
-	public GeoQuery(GeoLocation location) {
+	public GeoQuery(final GeoLocation location) {
 		this.location = location;
 		ip = null;
 	}
@@ -50,18 +50,18 @@ public final class GeoQuery {
 	 * 
 	 * @param ip IP address
 	 */
-	public GeoQuery(String ip) {
+	public GeoQuery(final String ip) {
 		this.ip = ip;
 		location = null;
 	}
 
-	public GeoQuery accuracy(String accuracy) {
+	public GeoQuery accuracy(final String accuracy) {
 		setAccuracy(accuracy);
 		return this;
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
@@ -97,7 +97,7 @@ public final class GeoQuery {
 		return maxResults;
 	}
 
-	public GeoQuery granularity(String granularity) {
+	public GeoQuery granularity(final String granularity) {
 		setGranularity(granularity);
 		return this;
 	}
@@ -112,7 +112,7 @@ public final class GeoQuery {
 		return result;
 	}
 
-	public GeoQuery maxResults(int maxResults) {
+	public GeoQuery maxResults(final int maxResults) {
 		setMaxResults(maxResults);
 		return this;
 	}
@@ -127,7 +127,7 @@ public final class GeoQuery {
 	 * 
 	 * @param accuracy a hint on the "region" in which to search.
 	 */
-	public void setAccuracy(String accuracy) {
+	public void setAccuracy(final String accuracy) {
 		this.accuracy = accuracy;
 	}
 
@@ -137,7 +137,7 @@ public final class GeoQuery {
 	 * 
 	 * @param granularity the minimal granularity of data to return
 	 */
-	public void setGranularity(String granularity) {
+	public void setGranularity(final String granularity) {
 		this.granularity = granularity;
 	}
 
@@ -149,7 +149,7 @@ public final class GeoQuery {
 	 * 
 	 * @param maxResults A hint as to the number of results to return.
 	 */
-	public void setMaxResults(int maxResults) {
+	public void setMaxResults(final int maxResults) {
 		this.maxResults = maxResults;
 	}
 
@@ -159,17 +159,17 @@ public final class GeoQuery {
 				+ ", granularity='" + granularity + '\'' + ", maxResults=" + maxResults + '}';
 	}
 
-	private void appendParameter(String name, double value, List<HttpParameter> params) {
+	private void appendParameter(final String name, final double value, final List<HttpParameter> params) {
 		params.add(new HttpParameter(name, String.valueOf(value)));
 	}
 
-	private void appendParameter(String name, int value, List<HttpParameter> params) {
+	private void appendParameter(final String name, final int value, final List<HttpParameter> params) {
 		if (0 < value) {
 			params.add(new HttpParameter(name, String.valueOf(value)));
 		}
 	}
 
-	private void appendParameter(String name, String value, List<HttpParameter> params) {
+	private void appendParameter(final String name, final String value, final List<HttpParameter> params) {
 		if (value != null) {
 			params.add(new HttpParameter(name, value));
 		}

@@ -44,20 +44,20 @@ import twitter4j.TwitterException;
 
 	}
 
-	/* package */HashtagEntityJSONImpl(int start, int end, String text) {
+	/* package */HashtagEntityJSONImpl(final int start, final int end, final String text) {
 		super();
 		this.start = start;
 		this.end = end;
 		this.text = text;
 	}
 
-	/* package */HashtagEntityJSONImpl(JSONObject json) throws TwitterException {
+	/* package */HashtagEntityJSONImpl(final JSONObject json) throws TwitterException {
 		super();
 		init(json);
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
@@ -107,7 +107,7 @@ import twitter4j.TwitterException;
 		return "HashtagEntityJSONImpl{" + "start=" + start + ", end=" + end + ", text='" + text + '\'' + '}';
 	}
 
-	private void init(JSONObject json) throws TwitterException {
+	private void init(final JSONObject json) throws TwitterException {
 		try {
 			final JSONArray indicesArray = json.getJSONArray("indices");
 			start = indicesArray.getInt(0);

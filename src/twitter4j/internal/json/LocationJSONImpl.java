@@ -42,7 +42,7 @@ import twitter4j.internal.http.HttpResponse;
 	private final String name;
 	private final String url;
 
-	/* package */LocationJSONImpl(JSONObject location) throws TwitterException {
+	/* package */LocationJSONImpl(final JSONObject location) throws TwitterException {
 		try {
 			woeid = getInt("woeid", location);
 			countryName = getUnescapedString("country", location);
@@ -63,7 +63,7 @@ import twitter4j.internal.http.HttpResponse;
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (!(o instanceof LocationJSONImpl)) return false;
 
@@ -143,15 +143,14 @@ import twitter4j.internal.http.HttpResponse;
 	}
 
 	/* package */
-	static ResponseList<Location> createLocationList(HttpResponse res, Configuration conf) throws TwitterException {
-		if (conf.isJSONStoreEnabled()) {
-			DataObjectFactoryUtil.clearThreadLocalMap();
-		}
-		return createLocationList(res.asJSONArray(), conf.isJSONStoreEnabled());
+	static ResponseList<Location> createLocationList(final HttpResponse res, final Configuration conf)
+			throws TwitterException {
+		return createLocationList(res.asJSONArray());
 	}
 
 	/* package */
-	static ResponseList<Location> createLocationList(JSONArray list, boolean storeJSON) throws TwitterException {
+	static ResponseList<Location> createLocationList(final JSONArray list)
+			throws TwitterException {
 		try {
 			final int size = list.length();
 			final ResponseList<Location> locations = new ResponseListImpl<Location>(size, null);
@@ -159,12 +158,6 @@ import twitter4j.internal.http.HttpResponse;
 				final JSONObject json = list.getJSONObject(i);
 				final Location location = new LocationJSONImpl(json);
 				locations.add(location);
-				if (storeJSON) {
-					DataObjectFactoryUtil.registerJSONObject(location, json);
-				}
-			}
-			if (storeJSON) {
-				DataObjectFactoryUtil.registerJSONObject(locations, list);
 			}
 			return locations;
 		} catch (final JSONException jsone) {

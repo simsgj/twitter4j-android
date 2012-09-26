@@ -23,20 +23,20 @@ import twitter4j.TwitterException;
  */
 public final class HttpResponseEvent {
 
-	private HttpRequest request;
+	private final HttpRequest request;
 
-	private HttpResponse response;
+	private final HttpResponse response;
 
-	private TwitterException twitterException;
+	private final TwitterException twitterException;
 
-	HttpResponseEvent(HttpRequest request, HttpResponse response, TwitterException te) {
+	HttpResponseEvent(final HttpRequest request, final HttpResponse response, final TwitterException te) {
 		this.request = request;
 		this.response = response;
 		twitterException = te;
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 

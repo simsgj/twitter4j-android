@@ -30,7 +30,7 @@ final class AndroidLogger extends Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void debug(String message) {
+	public void debug(final String message) {
 		if (isDebugEnabled()) {
 			Log.d(LOGTAG, message);
 		}
@@ -40,7 +40,7 @@ final class AndroidLogger extends Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void debug(String message, String message2) {
+	public void debug(final String message, final String message2) {
 		if (isDebugEnabled()) {
 			Log.d(LOGTAG, message + message2);
 		}
@@ -50,7 +50,7 @@ final class AndroidLogger extends Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void error(String message) {
+	public void error(final String message) {
 		if (isErrorEnabled()) {
 			Log.e(LOGTAG, message);
 		}
@@ -60,7 +60,7 @@ final class AndroidLogger extends Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void error(String message, Throwable th) {
+	public void error(final String message, final Throwable th) {
 		if (isErrorEnabled()) {
 			Log.e(LOGTAG, message, th);
 		}
@@ -70,7 +70,7 @@ final class AndroidLogger extends Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void info(String message) {
+	public void info(final String message) {
 		if (isInfoEnabled()) {
 			Log.i(LOGTAG, message);
 		}
@@ -80,7 +80,7 @@ final class AndroidLogger extends Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void info(String message, String message2) {
+	public void info(final String message, final String message2) {
 		if (isInfoEnabled()) {
 			Log.i(LOGTAG, message + message2);
 		}
@@ -124,7 +124,7 @@ final class AndroidLogger extends Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void warn(String message) {
+	public void warn(final String message) {
 		if (isWarnEnabled()) {
 			Log.w(LOGTAG, message);
 		}
@@ -134,7 +134,7 @@ final class AndroidLogger extends Logger {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void warn(String message, String message2) {
+	public void warn(final String message, final String message2) {
 		if (isWarnEnabled()) {
 			Log.w(LOGTAG, message + message2);
 		}

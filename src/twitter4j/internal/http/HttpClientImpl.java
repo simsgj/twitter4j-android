@@ -61,11 +61,11 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 
 	private static final TrustManager[] TRUST_ALL_CERTS = new TrustManager[] { new X509TrustManager() {
 		@Override
-		public void checkClientTrusted(X509Certificate[] chain, String authType) {
+		public void checkClientTrusted(final X509Certificate[] chain, final String authType) {
 		}
 
 		@Override
-		public void checkServerTrusted(X509Certificate[] chain, String authType) {
+		public void checkServerTrusted(final X509Certificate[] chain, final String authType) {
 		}
 
 		@Override
@@ -91,7 +91,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 
 	private static final HostnameVerifier ALLOW_ALL_HOSTNAME_VERIFIER = new HostnameVerifier() {
 		@Override
-		public boolean verify(String hostname, SSLSession session) {
+		public boolean verify(final String hostname, final SSLSession session) {
 			return true;
 		}
 	};
@@ -103,20 +103,21 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 		super(ConfigurationContext.getInstance());
 	}
 
-	public HttpClientImpl(HttpClientConfiguration conf) {
+	public HttpClientImpl(final HttpClientConfiguration conf) {
 		super(conf);
 	}
 
-	public HttpResponse get(String url, String sign_url) throws TwitterException {
+	public HttpResponse get(final String url, final String sign_url) throws TwitterException {
 		return request(new HttpRequest(RequestMethod.GET, url, sign_url, null, null, null));
 	}
 
-	public HttpResponse post(String url, String sign_url, HttpParameter[] params) throws TwitterException {
+	public HttpResponse post(final String url, final String sign_url, final HttpParameter[] params)
+			throws TwitterException {
 		return request(new HttpRequest(RequestMethod.POST, url, sign_url, params, null, null));
 	}
 
 	@Override
-	public HttpResponse request(HttpRequest req) throws TwitterException {
+	public HttpResponse request(final HttpRequest req) throws TwitterException {
 		int retriedCount;
 		final int retry = CONF.getHttpRetryCount() + 1;
 		HttpResponse res = null;
@@ -214,7 +215,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 				// responseCode);
 					throw new TwitterException(ioe.getMessage(), req, res);
 			} catch (final NullPointerException e) {
-				// This exception will be thown when URL is invalid.		
+				// This exception will be thown when URL is invalid.
 				throw new TwitterException("The URL requested is invalid.", e);
 			} catch (final OutOfMemoryError e) {
 				throw new TwitterException(e.getMessage(), e);
@@ -232,7 +233,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 		return res;
 	}
 
-	private HttpURLConnection getConnection(String url_string) throws IOException {
+	private HttpURLConnection getConnection(final String url_string) throws IOException {
 
 		final HttpURLConnection con;
 		final Proxy proxy;
@@ -296,7 +297,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 	 * @param req The request
 	 * @param connection HttpURLConnection
 	 */
-	private void setHeaders(HttpRequest req, HttpURLConnection connection) {
+	private void setHeaders(final HttpRequest req, final HttpURLConnection connection) {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Request: ");
 			logger.debug(req.getMethod().name() + " ", req.getURL());
@@ -319,7 +320,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 		}
 	}
 
-	public static String encode(String str) {
+	public static String encode(final String str) {
 		try {
 			return URLEncoder.encode(str, "UTF-8");
 		} catch (final java.io.UnsupportedEncodingException neverHappen) {
@@ -327,7 +328,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 		}
 	}
 
-	public static HttpClient getInstance(HttpClientConfiguration conf) {
+	public static HttpClient getInstance(final HttpClientConfiguration conf) {
 		HttpClient client = instanceMap.get(conf);
 		if (null == client) {
 			client = new HttpClientImpl(conf);

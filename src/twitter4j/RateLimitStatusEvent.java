@@ -27,11 +27,12 @@ public final class RateLimitStatusEvent extends java.util.EventObject {
 
 	private static final long serialVersionUID = 3749366911109722414L;
 
-	private RateLimitStatus rateLimitStatus;
+	private final RateLimitStatus rateLimitStatus;
 
-	private boolean isAccountRateLimitStatus;
+	private final boolean isAccountRateLimitStatus;
 
-	RateLimitStatusEvent(Object source, RateLimitStatus rateLimitStatus, boolean isAccountRateLimitStatus) {
+	RateLimitStatusEvent(final Object source, final RateLimitStatus rateLimitStatus,
+			final boolean isAccountRateLimitStatus) {
 		super(source);
 		this.rateLimitStatus = rateLimitStatus;
 		this.isAccountRateLimitStatus = isAccountRateLimitStatus;

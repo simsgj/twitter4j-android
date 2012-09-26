@@ -43,13 +43,13 @@ public interface ProfileImage extends TwitterResponse {
 			throw new AssertionError();
 		}
 
-		private ImageSize(String name) {
+		private ImageSize(final String name) {
 			this.name = name;
 			instances.put(name, this);
 		}
 
 		@Override
-		public boolean equals(Object o) {
+		public boolean equals(final Object o) {
 			if (this == o) return true;
 			if (o == null || getClass() != o.getClass()) return false;
 
@@ -78,7 +78,7 @@ public interface ProfileImage extends TwitterResponse {
 			return getInstance(name);
 		}
 
-		private static ImageSize getInstance(String name) {
+		private static ImageSize getInstance(final String name) {
 			return instances.get(name);
 		}
 	}

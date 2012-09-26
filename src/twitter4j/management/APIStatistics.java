@@ -34,7 +34,7 @@ public class APIStatistics implements APIStatisticsMBean {
 	 * @param historySize the number of calls to track (for invocation time
 	 *            averaging)
 	 */
-	public APIStatistics(int historySize) {
+	public APIStatistics(final int historySize) {
 		API_STATS_CALCULATOR = new InvocationStatisticsCalculator("API", historySize);
 		METHOD_STATS_MAP = new HashMap<String, InvocationStatisticsCalculator>(100);
 		HISTORY_SIZE = historySize;
@@ -73,7 +73,7 @@ public class APIStatistics implements APIStatisticsMBean {
 	}
 
 	@Override
-	public synchronized String getMethodLevelSummary(String methodName) {
+	public synchronized String getMethodLevelSummary(final String methodName) {
 		return METHOD_STATS_MAP.get(methodName).toString();
 	}
 
@@ -95,7 +95,7 @@ public class APIStatistics implements APIStatisticsMBean {
 	 * @param method the method invoked
 	 * @param time the method execution time
 	 */
-	public synchronized void methodCalled(String method, long time, boolean success) {
+	public synchronized void methodCalled(final String method, final long time, final boolean success) {
 		getMethodStatistics(method).increment(time, success);
 
 		// increment for entire API
@@ -108,7 +108,7 @@ public class APIStatistics implements APIStatisticsMBean {
 		METHOD_STATS_MAP.clear();
 	}
 
-	private synchronized InvocationStatisticsCalculator getMethodStatistics(String method) {
+	private synchronized InvocationStatisticsCalculator getMethodStatistics(final String method) {
 		InvocationStatisticsCalculator methodStats = METHOD_STATS_MAP.get(method);
 
 		if (methodStats == null) {

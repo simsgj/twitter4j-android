@@ -50,29 +50,23 @@ import twitter4j.internal.http.HttpResponse;
 	private String name;
 	private int id;
 
-	/* package */SavedSearchJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
+	/* package */SavedSearchJSONImpl(final HttpResponse res, final Configuration conf) throws TwitterException {
 		super(res);
-		if (conf.isJSONStoreEnabled()) {
-			DataObjectFactoryUtil.clearThreadLocalMap();
-		}
 		final JSONObject json = res.asJSONObject();
 		init(json);
-		if (conf.isJSONStoreEnabled()) {
-			DataObjectFactoryUtil.registerJSONObject(this, json);
-		}
 	}
 
-	/* package */SavedSearchJSONImpl(JSONObject savedSearch) throws TwitterException {
+	/* package */SavedSearchJSONImpl(final JSONObject savedSearch) throws TwitterException {
 		init(savedSearch);
 	}
 
 	@Override
-	public int compareTo(SavedSearch that) {
+	public int compareTo(final SavedSearch that) {
 		return id - that.getId();
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (!(o instanceof SavedSearch)) return false;
 
@@ -139,7 +133,7 @@ import twitter4j.internal.http.HttpResponse;
 				+ position + ", name='" + name + '\'' + ", id=" + id + '}';
 	}
 
-	private void init(JSONObject savedSearch) throws TwitterException {
+	private void init(final JSONObject savedSearch) throws TwitterException {
 		createdAt = getDate("created_at", savedSearch, "EEE MMM dd HH:mm:ss z yyyy");
 		query = getUnescapedString("query", savedSearch);
 		position = getInt("position", savedSearch);
@@ -148,11 +142,8 @@ import twitter4j.internal.http.HttpResponse;
 	}
 
 	/* package */
-	static ResponseList<SavedSearch> createSavedSearchList(HttpResponse res, Configuration conf)
+	static ResponseList<SavedSearch> createSavedSearchList(final HttpResponse res, final Configuration conf)
 			throws TwitterException {
-		if (conf.isJSONStoreEnabled()) {
-			DataObjectFactoryUtil.clearThreadLocalMap();
-		}
 		final JSONArray json = res.asJSONArray();
 		ResponseList<SavedSearch> savedSearches;
 		try {
@@ -161,12 +152,6 @@ import twitter4j.internal.http.HttpResponse;
 				final JSONObject savedSearchesJSON = json.getJSONObject(i);
 				final SavedSearch savedSearch = new SavedSearchJSONImpl(savedSearchesJSON);
 				savedSearches.add(savedSearch);
-				if (conf.isJSONStoreEnabled()) {
-					DataObjectFactoryUtil.registerJSONObject(savedSearch, savedSearchesJSON);
-				}
-			}
-			if (conf.isJSONStoreEnabled()) {
-				DataObjectFactoryUtil.registerJSONObject(savedSearches, json);
 			}
 			return savedSearches;
 		} catch (final JSONException jsone) {

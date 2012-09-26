@@ -28,7 +28,7 @@ import java.util.Map;
 public class HttpResponseImpl extends HttpResponse {
 	private HttpURLConnection con;
 
-	HttpResponseImpl(HttpURLConnection con, HttpClientConfiguration conf) throws IOException {
+	HttpResponseImpl(final HttpURLConnection con, final HttpClientConfiguration conf) throws IOException {
 		super(conf);
 		this.con = con;
 		if (con == null) return;
@@ -43,7 +43,7 @@ public class HttpResponseImpl extends HttpResponse {
 	}
 
 	// for test purpose
-	/* package */HttpResponseImpl(String content) {
+	/* package */HttpResponseImpl(final String content) {
 		super();
 		responseAsString = content;
 	}
@@ -57,7 +57,7 @@ public class HttpResponseImpl extends HttpResponse {
 	}
 
 	@Override
-	public String getResponseHeader(String name) {
+	public String getResponseHeader(final String name) {
 		return con.getHeaderField(name);
 	}
 

@@ -85,23 +85,19 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 
 	private User user = null;
 
-	/* package */StatusJSONImpl(HttpResponse res, Configuration conf) throws TwitterException {
+	/* package */StatusJSONImpl(final HttpResponse res, final Configuration conf) throws TwitterException {
 		super(res);
 		final JSONObject json = res.asJSONObject();
 		init(json);
-		if (conf.isJSONStoreEnabled()) {
-			DataObjectFactoryUtil.clearThreadLocalMap();
-			DataObjectFactoryUtil.registerJSONObject(this, json);
-		}
 	}
 
-	/* package */StatusJSONImpl(JSONObject json) throws TwitterException {
+	/* package */StatusJSONImpl(final JSONObject json) throws TwitterException {
 		super();
 		init(json);
 	}
 
 	@Override
-	public int compareTo(Status that) {
+	public int compareTo(final Status that) {
 		final long delta = id - that.getId();
 		if (delta < Integer.MIN_VALUE)
 			return Integer.MIN_VALUE;
@@ -110,7 +106,7 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (null == obj) return false;
 		if (this == obj) return true;
 		return obj instanceof Status && ((Status) obj).getId() == id;
@@ -334,7 +330,7 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 				+ myRetweetedStatus + ", user=" + user + "}";
 	}
 
-	private void init(JSONObject json) throws TwitterException {
+	private void init(final JSONObject json) throws TwitterException {
 		id = getLong("id", json);
 		text = getUnescapedString("text", json);
 		rawText = getRawString("text", json);
@@ -450,24 +446,16 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 	}
 
 	/* package */
-	static ResponseList<Status> createStatusList(HttpResponse res, Configuration conf) throws TwitterException {
+	static ResponseList<Status> createStatusList(final HttpResponse res, final Configuration conf)
+			throws TwitterException {
 		try {
-			if (conf.isJSONStoreEnabled()) {
-				DataObjectFactoryUtil.clearThreadLocalMap();
-			}
 			final JSONArray list = res.asJSONArray();
 			final int size = list.length();
 			final ResponseList<Status> statuses = new ResponseListImpl<Status>(size, res);
 			for (int i = 0; i < size; i++) {
 				final JSONObject json = list.getJSONObject(i);
 				final Status status = new StatusJSONImpl(json);
-				if (conf.isJSONStoreEnabled()) {
-					DataObjectFactoryUtil.registerJSONObject(status, json);
-				}
 				statuses.add(status);
-			}
-			if (conf.isJSONStoreEnabled()) {
-				DataObjectFactoryUtil.registerJSONObject(statuses, list);
 			}
 			return statuses;
 		} catch (final JSONException jsone) {

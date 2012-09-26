@@ -47,7 +47,8 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 
 	}
 
-	/* package */UserMentionEntityJSONImpl(int start, int end, String name, String screenName, long id) {
+	/* package */UserMentionEntityJSONImpl(final int start, final int end, final String name, final String screenName,
+			final long id) {
 		super();
 		this.start = start;
 		this.end = end;
@@ -56,13 +57,13 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 		this.id = id;
 	}
 
-	/* package */UserMentionEntityJSONImpl(JSONObject json) throws TwitterException {
+	/* package */UserMentionEntityJSONImpl(final JSONObject json) throws TwitterException {
 		super();
 		init(json);
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
@@ -133,7 +134,7 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 				+ ", screenName='" + screenName + '\'' + ", id=" + id + '}';
 	}
 
-	private void init(JSONObject json) throws TwitterException {
+	private void init(final JSONObject json) throws TwitterException {
 		try {
 			final JSONArray indicesArray = json.getJSONArray("indices");
 			start = indicesArray.getInt(0);

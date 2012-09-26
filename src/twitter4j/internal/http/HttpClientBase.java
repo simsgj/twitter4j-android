@@ -10,12 +10,12 @@ public class HttpClientBase {
 	private static final Logger logger = Logger.getLogger();
 	protected final HttpClientConfiguration CONF;
 
-	public HttpClientBase(HttpClientConfiguration conf) {
+	public HttpClientBase(final HttpClientConfiguration conf) {
 		CONF = conf;
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (!(o instanceof HttpClientBase)) return false;
 
@@ -39,7 +39,7 @@ public class HttpClientBase {
 		return "HttpClientBase{" + "CONF=" + CONF + '}';
 	}
 
-	public void write(DataOutputStream out, String outStr) throws IOException {
+	public void write(final DataOutputStream out, final String outStr) throws IOException {
 		out.writeBytes(outStr);
 		logger.debug(outStr);
 	}

@@ -31,7 +31,7 @@ public class AccessToken extends OAuthToken {
 	private String screenName;
 	private long userId;
 
-	public AccessToken(String token, String tokenSecret) {
+	public AccessToken(final String token, final String tokenSecret) {
 		super(token, tokenSecret);
 		String sUserId;
 		try {
@@ -44,11 +44,11 @@ public class AccessToken extends OAuthToken {
 		}
 	}
 
-	AccessToken(HttpResponse res) throws TwitterException {
+	AccessToken(final HttpResponse res) throws TwitterException {
 		this(res.asString());
 	}
 
-	AccessToken(String str) {
+	AccessToken(final String str) {
 		super(str);
 		screenName = getParameter("screen_name");
 		final String sUserId = getParameter("user_id");
@@ -58,7 +58,7 @@ public class AccessToken extends OAuthToken {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		if (!super.equals(o)) return false;

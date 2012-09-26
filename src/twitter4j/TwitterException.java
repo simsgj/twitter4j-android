@@ -49,36 +49,36 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 
 	boolean nested = false;
 
-	public TwitterException(Exception cause) {
+	public TwitterException(final Exception cause) {
 		this(cause.getMessage(), cause);
 		if (cause instanceof TwitterException) {
 			((TwitterException) cause).setNested();
 		}
 	}
 
-	public TwitterException(String message) {
+	public TwitterException(final String message) {
 		this(message, (Throwable) null);
 	}
 
-	public TwitterException(String message, Exception cause, int statusCode) {
+	public TwitterException(final String message, final Exception cause, final int statusCode) {
 		this(message, cause);
 		this.statusCode = statusCode;
 	}
 
-	public TwitterException(String message, HttpRequest req, HttpResponse res) {
+	public TwitterException(final String message, final HttpRequest req, final HttpResponse res) {
 		this(message);
 		request = req;
 		response = res;
-		statusCode = res != null ? res.getStatusCode() : - 1;
+		statusCode = res != null ? res.getStatusCode() : -1;
 	}
 
-	public TwitterException(String message, Throwable cause) {
+	public TwitterException(final String message, final Throwable cause) {
 		super(message, cause);
 		decode(message);
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (!(o instanceof TwitterException)) return false;
 
@@ -199,7 +199,7 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 		return requestPath;
 	}
 
-	public String getResponseHeader(String name) {
+	public String getResponseHeader(final String name) {
 		String value = null;
 		if (response != null) {
 			final List<String> header = response.getResponseHeaderFields().get(name);
@@ -297,7 +297,7 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 		return getMessage();
 	}
 
-	private void decode(String str) {
+	private void decode(final String str) {
 		if (str != null && str.startsWith("{")) {
 			try {
 				final JSONObject json = new JSONObject(str);
@@ -323,7 +323,7 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 		nested = true;
 	}
 
-	private static String getCause(int statusCode) {
+	private static String getCause(final int statusCode) {
 		String cause;
 		// https://dev.twitter.com/docs/error-codes-responses
 		switch (statusCode) {

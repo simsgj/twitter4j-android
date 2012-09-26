@@ -29,9 +29,9 @@ class ProfileImageImpl extends TwitterResponseImpl implements ProfileImage {
 	 * 
 	 */
 	private static final long serialVersionUID = 519484877188098901L;
-	private String url;
+	private final String url;
 
-	ProfileImageImpl(HttpResponse res) {
+	ProfileImageImpl(final HttpResponse res) {
 		super(res);
 		url = res.getResponseHeader("Location");
 	}

@@ -36,7 +36,7 @@ public final class HttpRequest {
 
 	private final Authorization authorization;
 
-	private Map<String, String> requestHeaders;
+	private final Map<String, String> requestHeaders;
 
 	private static final HttpParameter[] NULL_PARAMETERS = new HttpParameter[0];
 
@@ -49,8 +49,9 @@ public final class HttpRequest {
 	 *            NullAuthentication are supported.
 	 * @param requestHeaders
 	 */
-	public HttpRequest(RequestMethod method, String url, String sign_url, HttpParameter[] parameters,
-			Authorization authorization, Map<String, String> requestHeaders) {
+	public HttpRequest(final RequestMethod method, final String url, final String sign_url,
+			final HttpParameter[] parameters, final Authorization authorization,
+			final Map<String, String> requestHeaders) {
 		this.method = method;
 		if (method != RequestMethod.POST && parameters != null && parameters.length != 0) {
 			final String param_string = HttpParameter.encodeParameters(parameters);
@@ -67,7 +68,7 @@ public final class HttpRequest {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 
