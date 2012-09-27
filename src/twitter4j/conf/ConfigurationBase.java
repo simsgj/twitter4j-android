@@ -74,12 +74,8 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 
 	private String signingOAuthBaseURL;
 	private String signingRestBaseURL;
-	private String signingSearchBaseURL;
-	private String signingUploadBaseURL;
 
 	private String restBaseURL;
-	private String searchBaseURL;
-	private String uploadBaseURL;
 
 	private boolean includeRTsEnabled;
 
@@ -133,11 +129,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 
 		setRestBaseURL(DEFAULT_REST_BASE_URL);
 		setSigningRestBaseURL(DEFAULT_SIGNING_REST_BASE_URL);
-		setSearchBaseURL(DEFAULT_SEARCH_BASE_URL);
-		setSigningSearchBaseURL(DEFAULT_SIGNING_SEARCH_BASE_URL);
-		setUploadBaseURL(DEFAULT_UPLOAD_BASE_URL);
-		setSigningUploadBaseURL(DEFAULT_SIGNING_UPLOAD_BASE_URL);
-
 		setIncludeRTsEnbled(true);
 	}
 
@@ -218,9 +209,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		if (restBaseURL == null) {
 			if (other.restBaseURL != null) return false;
 		} else if (!restBaseURL.equals(other.restBaseURL)) return false;
-		if (searchBaseURL == null) {
-			if (other.searchBaseURL != null) return false;
-		} else if (!searchBaseURL.equals(other.searchBaseURL)) return false;
 		if (signingOAuthAccessTokenURL == null) {
 			if (other.signingOAuthAccessTokenURL != null) return false;
 		} else if (!signingOAuthAccessTokenURL.equals(other.signingOAuthAccessTokenURL)) return false;
@@ -239,15 +227,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		if (signingRestBaseURL == null) {
 			if (other.signingRestBaseURL != null) return false;
 		} else if (!signingRestBaseURL.equals(other.signingRestBaseURL)) return false;
-		if (signingSearchBaseURL == null) {
-			if (other.signingSearchBaseURL != null) return false;
-		} else if (!signingSearchBaseURL.equals(other.signingSearchBaseURL)) return false;
-		if (signingUploadBaseURL == null) {
-			if (other.signingUploadBaseURL != null) return false;
-		} else if (!signingUploadBaseURL.equals(other.signingUploadBaseURL)) return false;
-		if (uploadBaseURL == null) {
-			if (other.uploadBaseURL != null) return false;
-		} else if (!uploadBaseURL.equals(other.uploadBaseURL)) return false;
 		if (useSSL != other.useSSL) return false;
 		if (user == null) {
 			if (other.user != null) return false;
@@ -396,11 +375,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 	}
 
 	@Override
-	public String getSearchBaseURL() {
-		return searchBaseURL;
-	}
-
-	@Override
 	public String getSigningOAuthAccessTokenURL() {
 		return signingOAuthAccessTokenURL != null ? signingOAuthAccessTokenURL : oAuthAccessTokenURL;
 	}
@@ -428,21 +402,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 	@Override
 	public String getSigningRestBaseURL() {
 		return signingRestBaseURL != null ? signingRestBaseURL : restBaseURL;
-	}
-
-	@Override
-	public String getSigningSearchBaseURL() {
-		return signingSearchBaseURL != null ? signingSearchBaseURL : searchBaseURL;
-	}
-
-	@Override
-	public String getSigningUploadBaseURL() {
-		return signingUploadBaseURL != null ? signingUploadBaseURL : uploadBaseURL;
-	}
-
-	@Override
-	public String getUploadBaseURL() {
-		return uploadBaseURL;
 	}
 
 	@Override
@@ -492,7 +451,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		result = prime * result + (prettyDebug ? 1231 : 1237);
 		result = prime * result + ((requestHeaders == null) ? 0 : requestHeaders.hashCode());
 		result = prime * result + ((restBaseURL == null) ? 0 : restBaseURL.hashCode());
-		result = prime * result + ((searchBaseURL == null) ? 0 : searchBaseURL.hashCode());
 		result = prime * result + ((signingOAuthAccessTokenURL == null) ? 0 : signingOAuthAccessTokenURL.hashCode());
 		result = prime * result
 				+ ((signingOAuthAuthenticationURL == null) ? 0 : signingOAuthAuthenticationURL.hashCode());
@@ -501,9 +459,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		result = prime * result + ((signingOAuthBaseURL == null) ? 0 : signingOAuthBaseURL.hashCode());
 		result = prime * result + ((signingOAuthRequestTokenURL == null) ? 0 : signingOAuthRequestTokenURL.hashCode());
 		result = prime * result + ((signingRestBaseURL == null) ? 0 : signingRestBaseURL.hashCode());
-		result = prime * result + ((signingSearchBaseURL == null) ? 0 : signingSearchBaseURL.hashCode());
-		result = prime * result + ((signingUploadBaseURL == null) ? 0 : signingUploadBaseURL.hashCode());
-		result = prime * result + ((uploadBaseURL == null) ? 0 : uploadBaseURL.hashCode());
 		result = prime * result + (useSSL ? 1231 : 1237);
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		result = prime * result + ((userAgent == null) ? 0 : userAgent.hashCode());
@@ -572,9 +527,7 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 				+ signingOAuthAuthorizationURL + ", signingOAuthAccessTokenURL=" + signingOAuthAccessTokenURL
 				+ ", signingOAuthAuthenticationURL=" + signingOAuthAuthenticationURL + ", oAuthBaseURL=" + oAuthBaseURL
 				+ ", signingOAuthBaseURL=" + signingOAuthBaseURL + ", signingRestBaseURL=" + signingRestBaseURL
-				+ ", signingSearchBaseURL=" + signingSearchBaseURL + ", signingUploadBaseURL=" + signingUploadBaseURL
-				+ ", restBaseURL=" + restBaseURL + ", searchBaseURL=" + searchBaseURL + ", uploadBaseURL="
-				+ uploadBaseURL + ", includeRTsEnabled=" + includeRTsEnabled + ", includeEntitiesEnabled="
+				+ ", restBaseURL=" + restBaseURL + ", includeRTsEnabled=" + includeRTsEnabled + ", includeEntitiesEnabled="
 				+ includeEntitiesEnabled + ", clientVersion=" + clientVersion + ", clientURL=" + clientURL
 				+ ", clientName=" + clientName + ", hostAddressResolver=" + hostAddressResolver + ", requestHeaders="
 				+ requestHeaders + "}";
@@ -721,14 +674,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		fixRestBaseURL();
 	}
 
-	protected final void setSearchBaseURL(String searchBaseURL) {
-		if (isNullOrEmpty(searchBaseURL)) {
-			searchBaseURL = DEFAULT_SEARCH_BASE_URL;
-		}
-		this.searchBaseURL = fixURLSlash(searchBaseURL);
-		fixSearchBaseURL();
-	}
-
 	protected final void setSigningOAuthBaseURL(String signingOAuthBaseURL) {
 		if (isNullOrEmpty(signingOAuthBaseURL)) {
 			signingOAuthBaseURL = DEFAULT_SIGNING_OAUTH_BASE_URL;
@@ -749,30 +694,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		}
 		this.signingRestBaseURL = fixURLSlash(signingRestBaseURL);
 		fixRestBaseURL();
-	}
-
-	protected final void setSigningSearchBaseURL(String signingSearchBaseURL) {
-		if (isNullOrEmpty(signingSearchBaseURL)) {
-			signingSearchBaseURL = DEFAULT_SIGNING_SEARCH_BASE_URL;
-		}
-		this.signingSearchBaseURL = fixURLSlash(signingSearchBaseURL);
-		fixSearchBaseURL();
-	}
-
-	protected final void setSigningUploadBaseURL(String signingUploadBaseURL) {
-		if (isNullOrEmpty(signingUploadBaseURL)) {
-			signingUploadBaseURL = DEFAULT_SIGNING_UPLOAD_BASE_URL;
-		}
-		this.signingUploadBaseURL = fixURLSlash(signingUploadBaseURL);
-		fixUploadBaseURL();
-	}
-
-	protected final void setUploadBaseURL(String uploadBaseURL) {
-		if (isNullOrEmpty(uploadBaseURL)) {
-			uploadBaseURL = DEFAULT_UPLOAD_BASE_URL;
-		}
-		this.uploadBaseURL = fixURLSlash(uploadBaseURL);
-		fixUploadBaseURL();
 	}
 
 	protected final void setUser(final String user) {
@@ -841,26 +762,6 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		}
 		if (restBaseURL != null && restBaseURL.equals(fixURL(DEFAULT_USE_SSL, signingRestBaseURL))) {
 			signingRestBaseURL = fixURL(useSSL, signingRestBaseURL);
-		}
-		initRequestHeaders();
-	}
-
-	private void fixSearchBaseURL() {
-		if (DEFAULT_SEARCH_BASE_URL.equals(fixURL(DEFAULT_USE_SSL, searchBaseURL))) {
-			searchBaseURL = fixURL(useSSL, searchBaseURL);
-		}
-		if (searchBaseURL != null && searchBaseURL.equals(fixURL(DEFAULT_USE_SSL, signingSearchBaseURL))) {
-			signingSearchBaseURL = fixURL(useSSL, signingSearchBaseURL);
-		}
-		initRequestHeaders();
-	}
-
-	private void fixUploadBaseURL() {
-		if (DEFAULT_UPLOAD_BASE_URL.equals(fixURL(DEFAULT_USE_SSL, uploadBaseURL))) {
-			uploadBaseURL = fixURL(useSSL, uploadBaseURL);
-		}
-		if (uploadBaseURL != null && uploadBaseURL.equals(fixURL(DEFAULT_USE_SSL, signingUploadBaseURL))) {
-			signingUploadBaseURL = fixURL(useSSL, signingUploadBaseURL);
 		}
 		initRequestHeaders();
 	}

@@ -32,10 +32,11 @@ import org.json.JSONObject;
 
 import twitter4j.Query;
 import twitter4j.QueryResult;
-import twitter4j.Tweet;
+import twitter4j.Status;
 import twitter4j.TwitterException;
 import twitter4j.conf.Configuration;
 import twitter4j.internal.http.HttpResponse;
+import java.util.Arrays;
 
 /**
  * A data class representing search API response
@@ -52,25 +53,27 @@ import twitter4j.internal.http.HttpResponse;
 	private double completedIn;
 	private int page;
 	private String query;
-	private List<Tweet> tweets;
+	private Status[] statuses;
 
-	/* package */QueryResultJSONImpl(final HttpResponse res, final Configuration conf) throws TwitterException {
+	/* package */QueryResultJSONImpl(final HttpResponse res) throws TwitterException {
 		final JSONObject json = res.asJSONObject();
 		try {
-			sinceId = getLong("since_id", json);
-			maxId = getLong("max_id", json);
-			refreshUrl = getUnescapedString("refresh_url", json);
+			final JSONObject search_metadata = json.getJSONObject("search_metadata");
+			sinceId = getLong("since_id", search_metadata);
+			maxId = getLong("max_id", search_metadata);
+			refreshUrl = getUnescapedString("refresh_url", search_metadata);
 
-			resultsPerPage = getInt("results_per_page", json);
-			warning = getRawString("warning", json);
-			completedIn = getDouble("completed_in", json);
-			page = getInt("page", json);
-			query = getURLDecodedString("query", json);
-			final JSONArray array = json.getJSONArray("results");
-			tweets = new ArrayList<Tweet>(array.length());
-			for (int i = 0; i < array.length(); i++) {
+			resultsPerPage = getInt("results_per_page", search_metadata);
+			warning = getRawString("warning", search_metadata);
+			completedIn = getDouble("completed_in", search_metadata);
+			page = getInt("page", search_metadata);
+			query = getURLDecodedString("query", search_metadata);
+			final JSONArray array = json.getJSONArray("statuses");
+			final int statuses_length = array.length();
+			statuses = new Status[statuses_length];
+			for (int i = 0; i < statuses_length; i++) {
 				final JSONObject tweet = array.getJSONObject(i);
-				tweets.add(new TweetJSONImpl(tweet, conf));
+				statuses[i] = (new StatusJSONImpl(tweet));
 			}
 		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone.getMessage() + ":" + json.toString(), jsone);
@@ -82,7 +85,7 @@ import twitter4j.internal.http.HttpResponse;
 		sinceId = query.getSinceId();
 		resultsPerPage = query.getRpp();
 		page = query.getPage();
-		tweets = new ArrayList<Tweet>(0);
+		statuses = new Status[0];
 	}
 
 	@Override
@@ -99,7 +102,7 @@ import twitter4j.internal.http.HttpResponse;
 		if (sinceId != that.getSinceId()) return false;
 		if (!query.equals(that.getQuery())) return false;
 		if (refreshUrl != null ? !refreshUrl.equals(that.getRefreshUrl()) : that.getRefreshUrl() != null) return false;
-		if (tweets != null ? !tweets.equals(that.getTweets()) : that.getTweets() != null) return false;
+		if (statuses != null ? !Arrays.equals(statuses, that.getStatuses()) : that.getStatuses() != null) return false;
 		if (warning != null ? !warning.equals(that.getWarning()) : that.getWarning() != null) return false;
 
 		return true;
@@ -165,8 +168,8 @@ import twitter4j.internal.http.HttpResponse;
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Tweet> getTweets() {
-		return tweets;
+	public Status[] getStatuses() {
+		return statuses;
 	}
 
 	/**
@@ -190,7 +193,7 @@ import twitter4j.internal.http.HttpResponse;
 		result = 31 * result + (int) (temp ^ temp >>> 32);
 		result = 31 * result + page;
 		result = 31 * result + query.hashCode();
-		result = 31 * result + (tweets != null ? tweets.hashCode() : 0);
+		result = 31 * result + (statuses != null ? Arrays.hashCode(statuses) : 0);
 		return result;
 	}
 
@@ -198,6 +201,6 @@ import twitter4j.internal.http.HttpResponse;
 	public String toString() {
 		return "QueryResultJSONImpl{" + "sinceId=" + sinceId + ", maxId=" + maxId + ", refreshUrl='" + refreshUrl
 				+ '\'' + ", resultsPerPage=" + resultsPerPage + ", warning='" + warning + '\'' + ", completedIn="
-				+ completedIn + ", page=" + page + ", query='" + query + '\'' + ", tweets=" + tweets + '}';
+				+ completedIn + ", page=" + page + ", query='" + query + '\'' + ", statuses=" + statuses + '}';
 	}
 }

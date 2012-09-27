@@ -1526,7 +1526,7 @@ final class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	@Override
 	public QueryResult search(final Query query) throws TwitterException {
 		return factory.createQueryResult(
-				get(conf.getSearchBaseURL() + "search.json", conf.getSigningSearchBaseURL() + "search.json",
+				get(conf.getRestBaseURL() + "search/tweets.json", conf.getSigningRestBaseURL() + "search/tweets.json",
 						query.asHttpParameterArray(INCLUDE_ENTITIES)), query);
 	}
 
@@ -1859,10 +1859,8 @@ final class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	@Override
 	public Status updateStatus(final StatusUpdate status) throws TwitterException {
 		ensureAuthorizationEnabled();
-		final String url = status.isWithMedia() ? conf.getUploadBaseURL() + "statuses/update_with_media.json" : conf
-				.getRestBaseURL() + "statuses/update.json";
-		final String sign_url = status.isWithMedia() ? conf.getSigningUploadBaseURL()
-				+ "statuses/update_with_media.json" : conf.getSigningRestBaseURL() + "statuses/update.json";
+		final String url = conf.getRestBaseURL() + (status.isWithMedia() ? "statuses/update_with_media.json" : "statuses/update.json");
+		final String sign_url = conf.getSigningRestBaseURL() + (status.isWithMedia() ? "statuses/update_with_media.json" : "statuses/update.json");
 		return factory.createStatus(post(url, sign_url, status.asHttpParameterArray(INCLUDE_ENTITIES)));
 	}
 

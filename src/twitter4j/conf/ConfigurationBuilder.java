@@ -209,12 +209,6 @@ public final class ConfigurationBuilder {
 		return this;
 	}
 
-	public ConfigurationBuilder setSearchBaseURL(final String searchBaseURL) {
-		checkNotBuilt();
-		configuration.setSearchBaseURL(searchBaseURL);
-		return this;
-	}
-
 	public ConfigurationBuilder setSigningOAuthBaseURL(final String signingOAuthBaseURL) {
 		checkNotBuilt();
 		configuration.setSigningOAuthBaseURL(signingOAuthBaseURL);
@@ -224,24 +218,6 @@ public final class ConfigurationBuilder {
 	public ConfigurationBuilder setSigningRestBaseURL(final String signingRestBaseURL) {
 		checkNotBuilt();
 		configuration.setSigningRestBaseURL(signingRestBaseURL);
-		return this;
-	}
-
-	public ConfigurationBuilder setSigningSearchBaseURL(final String signingSearchBaseURL) {
-		checkNotBuilt();
-		configuration.setSigningSearchBaseURL(signingSearchBaseURL);
-		return this;
-	}
-
-	public ConfigurationBuilder setSigningUploadBaseURL(final String signingUploadURL) {
-		checkNotBuilt();
-		configuration.setSigningUploadBaseURL(signingUploadURL);
-		return this;
-	}
-
-	public ConfigurationBuilder setUploadBaseURL(final String uploadURL) {
-		checkNotBuilt();
-		configuration.setUploadBaseURL(uploadURL);
 		return this;
 	}
 

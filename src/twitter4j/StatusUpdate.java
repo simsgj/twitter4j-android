@@ -259,7 +259,6 @@ public final class StatusUpdate implements Serializable {
 		if (location != null) {
 			appendParameter("lat", location.getLatitude(), params);
 			appendParameter("long", location.getLongitude(), params);
-
 		}
 		appendParameter("place_id", placeId, params);
 		if (!displayCoordinates) {

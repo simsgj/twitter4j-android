@@ -46,8 +46,6 @@ public interface Configuration extends HttpClientConfiguration, HttpClientWrappe
 
 	String getRestBaseURL();
 
-	String getSearchBaseURL();
-
 	String getSigningOAuthAccessTokenURL();
 
 	String getSigningOAuthAuthenticationURL();
@@ -59,12 +57,6 @@ public interface Configuration extends HttpClientConfiguration, HttpClientWrappe
 	String getSigningOAuthRequestTokenURL();
 
 	String getSigningRestBaseURL();
-
-	String getSigningSearchBaseURL();
-
-	String getSigningUploadBaseURL();
-
-	String getUploadBaseURL();
 
 	String getUserAgent();
 

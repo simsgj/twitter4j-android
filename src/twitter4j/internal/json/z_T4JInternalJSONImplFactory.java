@@ -171,7 +171,7 @@ public class z_T4JInternalJSONImplFactory implements z_T4JInternalFactory {
 	@Override
 	public QueryResult createQueryResult(final HttpResponse res, final Query query) throws TwitterException {
 		try {
-			return new QueryResultJSONImpl(res, conf);
+			return new QueryResultJSONImpl(res);
 		} catch (final TwitterException te) {
 			if (404 == te.getStatusCode())
 				return new QueryResultJSONImpl(query);

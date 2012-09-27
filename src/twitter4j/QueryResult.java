@@ -38,7 +38,7 @@ public interface QueryResult {
 
 	long getSinceId();
 
-	List<Tweet> getTweets();
+	Status[] getStatuses();
 
 	String getWarning();
 }
