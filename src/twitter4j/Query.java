@@ -28,7 +28,7 @@ import twitter4j.internal.http.HttpParameter;
  * search is ongoing.
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
- * @see <a href="https://dev.twitter.com/docs/api/1/get/search">GET search |
+ * @see <a href="https://dev.twitter.com/docs/api/1.1/get/search">GET search |
  *      Twitter Developers</a>
  * @see <a href="http://search.twitter.com/operators">Twitter API / Search
  *      Operators</a>
@@ -290,8 +290,8 @@ public final class Query {
 	 * 
 	 * @param query the query string
 	 * @return the instance
-	 * @see <a href="https://dev.twitter.com/docs/api/1/get/search">GET search |
-	 *      Twitter Developers</a>
+	 * @see <a href="https://dev.twitter.com/docs/api/1.1/get/search">GET search
+	 *      | Twitter Developers</a>
 	 * @see <a href="http://search.twitter.com/operators">Twitter API / Search
 	 *      Operators</a>
 	 * @since Twitter4J 2.1.0
@@ -386,8 +386,8 @@ public final class Query {
 	 * Sets the query string
 	 * 
 	 * @param query the query string
-	 * @see <a href="https://dev.twitter.com/docs/api/1/get/search">GET search |
-	 *      Twitter Developers</a>
+	 * @see <a href="https://dev.twitter.com/docs/api/1.1/get/search">GET search
+	 *      | Twitter Developers</a>
 	 * @see <a href="http://search.twitter.com/operators">Twitter API / Search
 	 *      Operators</a>
 	 */

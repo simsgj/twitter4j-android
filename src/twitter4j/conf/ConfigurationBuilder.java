@@ -137,12 +137,6 @@ public final class ConfigurationBuilder {
 		return this;
 	}
 
-	public ConfigurationBuilder setHttpStreamingReadTimeout(final int httpStreamingReadTimeout) {
-		checkNotBuilt();
-		configuration.setHttpStreamingReadTimeout(httpStreamingReadTimeout);
-		return this;
-	}
-
 	public ConfigurationBuilder setIgnoreSSLError(final boolean ignoreSSLError) {
 		checkNotBuilt();
 		configuration.setIgnoreSSLError(ignoreSSLError);

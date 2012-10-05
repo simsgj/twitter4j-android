@@ -18,6 +18,7 @@ package twitter4j;
 
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -42,12 +43,13 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	private ExceptionDiagnosis exceptionDiagnosis = null;
 	private HttpResponse response;
 	private HttpRequest request;
-	private String errorMessage = null;
-	private String requestPath = null;
+	private final String requestPath = null;
 
 	private final static String[] FILTER = new String[] { "twitter4j" };
 
 	boolean nested = false;
+
+	private ErrorMessage[] errorMessages;
 
 	public TwitterException(final Exception cause) {
 		this(cause.getMessage(), cause);
@@ -86,7 +88,6 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 
 		if (nested != that.nested) return false;
 		if (statusCode != that.statusCode) return false;
-		if (errorMessage != null ? !errorMessage.equals(that.errorMessage) : that.errorMessage != null) return false;
 		if (exceptionDiagnosis != null ? !exceptionDiagnosis.equals(that.exceptionDiagnosis)
 				: that.exceptionDiagnosis != null) return false;
 		if (requestPath != null ? !requestPath.equals(that.requestPath) : that.requestPath != null) return false;
@@ -115,16 +116,6 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	@Override
 	public int getAccessLevel() {
 		return z_T4JInternalParseUtil.toAccessLevel(response);
-	}
-
-	/**
-	 * Returns error message from the API if available.
-	 * 
-	 * @return error message from the API
-	 * @since Twitter4J 2.2.3
-	 */
-	public String getErrorMessage() {
-		return errorMessage;
 	}
 
 	/**
@@ -165,17 +156,12 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	 */
 	@Override
 	public String getMessage() {
-		final StringBuffer value = new StringBuffer();
-		if (errorMessage != null && request != null) {
-			value.append("error - ").append(errorMessage).append("\n");
-			value.append("request - ").append(requestPath).append("\n");
-		} else {
-			value.append(super.getMessage());
+		if (errorMessages != null && errorMessages.length > 0) {
+			final ErrorMessage errorMessage = errorMessages[0];
+			return "Error " + errorMessage.getCode() + " - " + errorMessage.getMessage();
 		}
-		if (statusCode != -1)
-			return errorMessage != null ? errorMessage : getCause(statusCode) + "\n" + value.toString();
-		else
-			return value.toString();
+		if (statusCode != -1) return getCause(statusCode);
+		return super.getMessage();
 	}
 
 	/**
@@ -256,7 +242,6 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 		result = 31 * result + (exceptionDiagnosis != null ? exceptionDiagnosis.hashCode() : 0);
 		result = 31 * result + (request != null ? request.hashCode() : 0);
 		result = 31 * result + (response != null ? response.hashCode() : 0);
-		result = 31 * result + (errorMessage != null ? errorMessage.hashCode() : 0);
 		result = 31 * result + (requestPath != null ? requestPath.hashCode() : 0);
 		result = 31 * result + (nested ? 1 : 0);
 		return result;
@@ -270,16 +255,6 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	 */
 	public boolean isCausedByNetworkIssue() {
 		return getCause() instanceof java.io.IOException;
-	}
-
-	/**
-	 * Tests if error message from the API is available
-	 * 
-	 * @return true if error message from the API is available
-	 * @since Twitter4J 2.2.3
-	 */
-	public boolean isErrorMessageAvailable() {
-		return errorMessage != null;
 	}
 
 	/**
@@ -301,11 +276,13 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 		if (str != null && str.startsWith("{")) {
 			try {
 				final JSONObject json = new JSONObject(str);
-				if (!json.isNull("error")) {
-					errorMessage = json.getString("error");
-				}
-				if (!json.isNull("request")) {
-					requestPath = json.getString("request");
+				if (!json.isNull("errors")) {
+					final JSONArray array = json.getJSONArray("errors");
+					final int length = array.length();
+					errorMessages = new ErrorMessage[length];
+					for (int i = 0; i < length; i++) {
+						errorMessages[i] = new ErrorMessage(array.getJSONObject(i));
+					}
 				}
 			} catch (final JSONException ignore) {
 			}
@@ -374,5 +351,29 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 				cause = "";
 		}
 		return statusCode + ":" + cause;
+	}
+
+	public final static class ErrorMessage {
+
+		private final int code;
+		private final String message;
+
+		public ErrorMessage(final JSONObject json) throws JSONException {
+			code = json.getInt("code");
+			message = json.getString("message");
+		}
+
+		public int getCode() {
+			return code;
+		}
+
+		public String getMessage() {
+			return message;
+		}
+
+		@Override
+		public String toString() {
+			return "ErrorMessage{code=" + code + ", message=" + message + "}";
+		}
 	}
 }
