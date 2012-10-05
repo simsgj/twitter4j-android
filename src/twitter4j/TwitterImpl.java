@@ -837,8 +837,8 @@ final class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	@Override
 	public ResponseList<Status> getMentions(final Paging paging) throws TwitterException {
 		ensureAuthorizationEnabled();
-		return factory.createStatusList(get(conf.getRestBaseURL() + "statuses/mentions.json",
-				conf.getSigningRestBaseURL() + "statuses/mentions.json",
+		return factory.createStatusList(get(conf.getRestBaseURL() + "statuses/mentions_timeline.json",
+				conf.getSigningRestBaseURL() + "statuses/mentions_timeline.json",
 				mergeParameters(paging.asPostParameterArray(), INCLUDE_RTS, INCLUDE_ENTITIES)));
 	}
 
