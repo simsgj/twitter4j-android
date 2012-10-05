@@ -738,7 +738,11 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		}
 		// I found this may cause "Socket is closed" error in Android, so I
 		// changed it to "keep-alive".
-		requestHeaders.put("Connection", "keep-alive");
+		if (!isNullOrEmpty(httpProxyHost) && httpProxyPort > 0) {
+			requestHeaders.put("Connection", "keep-alive");
+		} else {	
+			requestHeaders.put("Connection", "close");
+		}
 	}
 
 	private static void cacheInstance(final ConfigurationBase conf) {

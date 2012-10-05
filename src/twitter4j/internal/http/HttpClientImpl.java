@@ -77,7 +77,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 	private static final SSLSocketFactory IGNORE_ERROR_SSL_FACTORY;
 
 	static {
-		// System.setProperty("http.keepAlive", "false");
+		System.setProperty("http.keepAlive", "false");
 		SSLSocketFactory factory = null;
 		try {
 			final SSLContext sc = SSLContext.getInstance("TLS");
