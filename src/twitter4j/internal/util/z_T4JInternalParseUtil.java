@@ -117,9 +117,21 @@ public final class z_T4JInternalParseUtil {
 			// some count over 100 will be expressed as "100+"
 			if (str.endsWith("+")) {
 				str = str.substring(0, str.length() - 1);
-				return Long.valueOf(str) + 1;
+				try {
+					return Integer.valueOf(str) + 1;
+				} catch (final NumberFormatException nfe) {
+					// workaround for the API side issue
+					// http://twitter4j.org/jira/browse/TFJ-484
+					return -1;
+				}
 			}
-			return Long.valueOf(str);
+			try {
+				return Long.valueOf(str);
+			} catch (final NumberFormatException nfe) {
+				// workaround for the API side issue
+				// http://twitter4j.org/jira/browse/TFJ-484
+				return -1;
+			}
 		}
 	}
 

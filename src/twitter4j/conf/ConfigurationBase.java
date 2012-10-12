@@ -740,7 +740,7 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		// changed it to "keep-alive".
 		if (!isNullOrEmpty(httpProxyHost) && httpProxyPort > 0) {
 			requestHeaders.put("Connection", "keep-alive");
-		} else {	
+		} else {
 			requestHeaders.put("Connection", "close");
 		}
 	}
