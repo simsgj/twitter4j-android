@@ -106,8 +106,8 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	 * @since Twitter4J 2.1.2
 	 */
 	public boolean exceededRateLimitation() {
-		return statusCode == 400 && getRateLimitStatus() != null // REST API
-				|| statusCode == 420; // Search API
+		return getRateLimitStatus() != null && errorMessages.length > 0 
+				&& errorMessages[0].getCode() == 88;
 	}
 
 	/**
@@ -118,6 +118,10 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 		return z_T4JInternalParseUtil.toAccessLevel(response);
 	}
 
+	public ErrorMessage[] getErrorMessages() {
+		return errorMessages;
+	}
+	
 	/**
 	 * Returns a hexadecimal representation of this exception stacktrace.<br>
 	 * An exception code is a hexadecimal representation of the stacktrace which
@@ -149,6 +153,10 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 
 	public HttpRequest getHttpRequest() {
 		return request;
+	}
+	
+	public HttpResponse getHttpResponse() {
+		return response;
 	}
 
 	/**

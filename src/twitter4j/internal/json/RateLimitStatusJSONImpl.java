@@ -178,17 +178,17 @@ import twitter4j.internal.http.HttpResponse;
 								// be calculated.
 		Date resetTime;// new Date("X-RateLimit-Reset")
 
-		final String limit = res.getResponseHeader("X-RateLimit-Limit");
+		final String limit = res.getResponseHeader("X-Rate-Limit-Limit");
 		if (limit != null) {
 			hourlyLimit = Integer.parseInt(limit);
 		} else
 			return null;
-		final String remaining = res.getResponseHeader("X-RateLimit-Remaining");
+		final String remaining = res.getResponseHeader("X-Rate-Limit-Remaining");
 		if (remaining != null) {
 			remainingHits = Integer.parseInt(remaining);
 		} else
 			return null;
-		final String reset = res.getResponseHeader("X-RateLimit-Reset");
+		final String reset = res.getResponseHeader("X-Rate-Limit-Reset");
 		if (reset != null) {
 			final long longReset = Long.parseLong(reset);
 			resetTimeInSeconds = (int) (longReset / 1000);
