@@ -16,8 +16,8 @@
 
 package twitter4j.auth;
 
-import twitter4j.internal.http.BASE64Encoder;
-import twitter4j.internal.http.HttpRequest;
+import twitter4j.http.BASE64Encoder;
+import twitter4j.http.HttpRequest;
 
 /**
  * An authentication implementation implements Basic authentication

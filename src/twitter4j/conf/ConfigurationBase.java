@@ -22,9 +22,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import twitter4j.HostAddressResolver;
 import twitter4j.TwitterConstants;
 import twitter4j.Version;
+import twitter4j.http.HostAddressResolver;
 
 /**
  * Configuration base class with default settings.

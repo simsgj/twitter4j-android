@@ -19,7 +19,7 @@ package twitter4j.auth;
 import javax.crypto.spec.SecretKeySpec;
 
 import twitter4j.TwitterException;
-import twitter4j.internal.http.HttpResponse;
+import twitter4j.http.HttpResponse;
 import twitter4j.internal.util.z_T4JInternalStringUtil;
 
 abstract class OAuthToken {

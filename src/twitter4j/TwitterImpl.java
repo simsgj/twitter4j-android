@@ -17,7 +17,7 @@
 
 package twitter4j;
 
-import static twitter4j.internal.http.HttpParameter.getParameterArray;
+import static twitter4j.http.HttpParameter.getParameterArray;
 import static twitter4j.internal.util.z_T4JInternalStringUtil.replaceLast;
 
 import java.io.File;
@@ -31,8 +31,8 @@ import org.json.JSONException;
 
 import twitter4j.auth.Authorization;
 import twitter4j.conf.Configuration;
-import twitter4j.internal.http.HttpParameter;
-import twitter4j.internal.http.HttpResponse;
+import twitter4j.http.HttpParameter;
+import twitter4j.http.HttpResponse;
 import twitter4j.internal.util.z_T4JInternalStringUtil;
 
 /**

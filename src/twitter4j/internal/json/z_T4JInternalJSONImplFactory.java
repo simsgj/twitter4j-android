@@ -50,7 +50,7 @@ import twitter4j.UserList;
 import twitter4j.UserMentionEntity;
 import twitter4j.api.HelpMethods;
 import twitter4j.conf.Configuration;
-import twitter4j.internal.http.HttpResponse;
+import twitter4j.http.HttpResponse;
 import twitter4j.internal.util.z_T4JInternalStringUtil;
 
 /**

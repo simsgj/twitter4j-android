@@ -1,4 +1,4 @@
-package twitter4j;
+package twitter4j.http;
 
 import java.io.IOException;
 

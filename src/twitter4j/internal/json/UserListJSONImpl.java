@@ -33,7 +33,7 @@ import twitter4j.TwitterException;
 import twitter4j.User;
 import twitter4j.UserList;
 import twitter4j.conf.Configuration;
-import twitter4j.internal.http.HttpResponse;
+import twitter4j.http.HttpResponse;
 
 /**
  * A data class representing Basic list information element

@@ -22,7 +22,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import twitter4j.internal.http.HttpParameter;
+import twitter4j.http.HttpParameter;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com

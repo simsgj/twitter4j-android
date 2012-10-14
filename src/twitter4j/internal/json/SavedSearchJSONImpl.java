@@ -30,7 +30,7 @@ import twitter4j.ResponseList;
 import twitter4j.SavedSearch;
 import twitter4j.TwitterException;
 import twitter4j.conf.Configuration;
-import twitter4j.internal.http.HttpResponse;
+import twitter4j.http.HttpResponse;
 
 /**
  * A data class representing a Saved Search

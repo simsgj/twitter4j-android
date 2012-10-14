@@ -26,7 +26,7 @@ import org.json.JSONObject;
 import twitter4j.RateLimitStatus;
 import twitter4j.TwitterException;
 import twitter4j.conf.Configuration;
-import twitter4j.internal.http.HttpResponse;
+import twitter4j.http.HttpResponse;
 
 /**
  * A data class representing Twitter REST API's rate limit status

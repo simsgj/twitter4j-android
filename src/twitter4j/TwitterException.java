@@ -22,9 +22,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import twitter4j.internal.http.HttpRequest;
-import twitter4j.internal.http.HttpResponse;
-import twitter4j.internal.http.HttpResponseCode;
+import twitter4j.http.HttpRequest;
+import twitter4j.http.HttpResponse;
+import twitter4j.http.HttpResponseCode;
 import twitter4j.internal.json.z_T4JInternalJSONImplFactory;
 import twitter4j.internal.util.z_T4JInternalParseUtil;
 
@@ -106,8 +106,7 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	 * @since Twitter4J 2.1.2
 	 */
 	public boolean exceededRateLimitation() {
-		return getRateLimitStatus() != null && errorMessages.length > 0 
-				&& errorMessages[0].getCode() == 88;
+		return getRateLimitStatus() != null && errorMessages.length > 0 && errorMessages[0].getCode() == 88;
 	}
 
 	/**
@@ -121,7 +120,7 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	public ErrorMessage[] getErrorMessages() {
 		return errorMessages;
 	}
-	
+
 	/**
 	 * Returns a hexadecimal representation of this exception stacktrace.<br>
 	 * An exception code is a hexadecimal representation of the stacktrace which
@@ -154,7 +153,7 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	public HttpRequest getHttpRequest() {
 		return request;
 	}
-	
+
 	public HttpResponse getHttpResponse() {
 		return response;
 	}

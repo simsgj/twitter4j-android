@@ -28,7 +28,7 @@ import twitter4j.Relationship;
 import twitter4j.ResponseList;
 import twitter4j.TwitterException;
 import twitter4j.conf.Configuration;
-import twitter4j.internal.http.HttpResponse;
+import twitter4j.http.HttpResponse;
 
 /**
  * A data class that has detailed information about a relationship between two

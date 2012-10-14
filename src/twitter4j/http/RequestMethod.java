@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package twitter4j.internal.http;
+package twitter4j.http;
 
 import java.io.ObjectStreamException;
 import java.util.HashMap;

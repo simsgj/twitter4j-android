@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package twitter4j.internal.http;
+package twitter4j.http;
 
 import twitter4j.TwitterException;
 

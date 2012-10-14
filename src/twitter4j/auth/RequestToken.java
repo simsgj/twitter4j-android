@@ -19,7 +19,7 @@ package twitter4j.auth;
 import twitter4j.TwitterException;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationContext;
-import twitter4j.internal.http.HttpResponse;
+import twitter4j.http.HttpResponse;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com representing unauthorized Request

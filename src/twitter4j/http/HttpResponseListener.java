@@ -1,4 +1,4 @@
-package twitter4j.internal.http;
+package twitter4j.http;
 
 /**
  * @author Andrew Hedges - andrew.hedges at gmail.com

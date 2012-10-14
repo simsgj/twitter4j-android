@@ -14,18 +14,39 @@
  * limitations under the License.
  */
 
-package twitter4j.internal.http;
+package twitter4j.http;
 
-import twitter4j.TwitterException;
 
 /**
- * A utility class to handle HTTP request/response.
- * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-public interface HttpClient {
+public interface HttpClientConfiguration {
 
-	HttpResponse request(HttpRequest req) throws TwitterException;
+	HostAddressResolver getHostAddressResolver();
 
-	void shutdown();
+	int getHttpConnectionTimeout();
+
+	int getHttpDefaultMaxPerRoute();
+
+	int getHttpMaxTotalConnections();
+
+	String getHttpProxyHost();
+
+	String getHttpProxyPassword();
+
+	int getHttpProxyPort();
+
+	String getHttpProxyUser();
+
+	int getHttpReadTimeout();
+
+	int getHttpRetryCount();
+
+	int getHttpRetryIntervalSeconds();
+
+	boolean isGZIPEnabled();
+
+	boolean isPrettyDebugEnabled();
+
+	boolean isSSLErrorIgnored();
 }

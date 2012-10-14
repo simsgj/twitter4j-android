@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package twitter4j.internal.http;
+package twitter4j.http;
 
-import static twitter4j.internal.http.RequestMethod.POST;
+import static twitter4j.http.RequestMethod.POST;
 
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
@@ -46,7 +46,6 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
-import twitter4j.HostAddressResolver;
 import twitter4j.TwitterException;
 import twitter4j.conf.ConfigurationContext;
 import twitter4j.internal.logging.Logger;

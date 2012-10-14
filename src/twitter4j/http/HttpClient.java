@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
-package twitter4j.internal.http;
+package twitter4j.http;
+
+import twitter4j.TwitterException;
 
 /**
+ * A utility class to handle HTTP request/response.
+ * 
  * @author Yusuke Yamamoto - yusuke at mac.com
- * @since Twitter4J 2.1.2
  */
-public final class HttpClientFactory {
+public interface HttpClient {
 
-	public static HttpClient getInstance(final HttpClientConfiguration conf) {
-		return new HttpClientImpl(conf);
-	}
+	HttpResponse request(HttpRequest req) throws TwitterException;
+
+	void shutdown();
 }

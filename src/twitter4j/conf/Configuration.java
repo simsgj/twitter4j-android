@@ -17,8 +17,8 @@
 package twitter4j.conf;
 
 import twitter4j.auth.AuthorizationConfiguration;
-import twitter4j.internal.http.HttpClientConfiguration;
-import twitter4j.internal.http.HttpClientWrapperConfiguration;
+import twitter4j.http.HttpClientConfiguration;
+import twitter4j.http.HttpClientWrapperConfiguration;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com

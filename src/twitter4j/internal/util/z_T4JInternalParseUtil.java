@@ -31,8 +31,8 @@ import org.json.JSONObject;
 
 import twitter4j.TwitterException;
 import twitter4j.TwitterResponse;
-import twitter4j.internal.http.HTMLEntity;
-import twitter4j.internal.http.HttpResponse;
+import twitter4j.http.HTMLEntity;
+import twitter4j.http.HttpResponse;
 
 /**
  * A tiny parse utility class.

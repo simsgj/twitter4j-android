@@ -31,10 +31,10 @@ import javax.crypto.spec.SecretKeySpec;
 
 import twitter4j.TwitterException;
 import twitter4j.conf.Configuration;
-import twitter4j.internal.http.BASE64Encoder;
-import twitter4j.internal.http.HttpClientWrapper;
-import twitter4j.internal.http.HttpParameter;
-import twitter4j.internal.http.HttpRequest;
+import twitter4j.http.BASE64Encoder;
+import twitter4j.http.HttpClientWrapper;
+import twitter4j.http.HttpParameter;
+import twitter4j.http.HttpRequest;
 import twitter4j.internal.logging.Logger;
 import twitter4j.internal.util.z_T4JInternalStringUtil;
 

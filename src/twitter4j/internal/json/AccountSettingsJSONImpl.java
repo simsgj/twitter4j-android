@@ -27,7 +27,7 @@ import twitter4j.Location;
 import twitter4j.TimeZone;
 import twitter4j.TwitterException;
 import twitter4j.conf.Configuration;
-import twitter4j.internal.http.HttpResponse;
+import twitter4j.http.HttpResponse;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com

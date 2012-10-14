@@ -20,7 +20,7 @@ import org.json.JSONObject;
 
 import twitter4j.PagableResponseList;
 import twitter4j.RateLimitStatus;
-import twitter4j.internal.http.HttpResponse;
+import twitter4j.http.HttpResponse;
 import twitter4j.internal.util.z_T4JInternalParseUtil;
 
 /**

@@ -19,7 +19,7 @@ package twitter4j;
 import java.util.ArrayList;
 import java.util.List;
 
-import twitter4j.internal.http.HttpParameter;
+import twitter4j.http.HttpParameter;
 
 /**
  * A data class represents search query.<br>

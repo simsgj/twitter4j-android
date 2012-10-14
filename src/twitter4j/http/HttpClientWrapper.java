@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package twitter4j.internal.http;
+package twitter4j.http;
 
-import static twitter4j.internal.http.RequestMethod.DELETE;
-import static twitter4j.internal.http.RequestMethod.GET;
-import static twitter4j.internal.http.RequestMethod.HEAD;
-import static twitter4j.internal.http.RequestMethod.POST;
-import static twitter4j.internal.http.RequestMethod.PUT;
+import static twitter4j.http.RequestMethod.DELETE;
+import static twitter4j.http.RequestMethod.GET;
+import static twitter4j.http.RequestMethod.HEAD;
+import static twitter4j.http.RequestMethod.POST;
+import static twitter4j.http.RequestMethod.PUT;
 
 import java.util.HashMap;
 import java.util.Map;

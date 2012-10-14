@@ -17,7 +17,7 @@
 package twitter4j.internal.json;
 
 import twitter4j.ProfileImage;
-import twitter4j.internal.http.HttpResponse;
+import twitter4j.http.HttpResponse;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com

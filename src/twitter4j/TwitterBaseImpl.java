@@ -16,8 +16,8 @@
 
 package twitter4j;
 
-import static twitter4j.internal.http.HttpResponseCode.ENHANCE_YOUR_CLAIM;
-import static twitter4j.internal.http.HttpResponseCode.SERVICE_UNAVAILABLE;
+import static twitter4j.http.HttpResponseCode.ENHANCE_YOUR_CLAIM;
+import static twitter4j.http.HttpResponseCode.SERVICE_UNAVAILABLE;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -35,11 +35,11 @@ import twitter4j.auth.OAuthAuthorization;
 import twitter4j.auth.OAuthSupport;
 import twitter4j.auth.RequestToken;
 import twitter4j.conf.Configuration;
-import twitter4j.internal.http.HttpClientWrapper;
-import twitter4j.internal.http.HttpResponse;
-import twitter4j.internal.http.HttpResponseEvent;
-import twitter4j.internal.http.HttpResponseListener;
-import twitter4j.internal.http.XAuthAuthorization;
+import twitter4j.http.HttpClientWrapper;
+import twitter4j.http.HttpResponse;
+import twitter4j.http.HttpResponseEvent;
+import twitter4j.http.HttpResponseListener;
+import twitter4j.http.XAuthAuthorization;
 import twitter4j.internal.json.z_T4JInternalFactory;
 import twitter4j.internal.json.z_T4JInternalJSONImplFactory;
 
