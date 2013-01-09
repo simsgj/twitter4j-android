@@ -16,7 +16,7 @@
 
 package twitter4j.internal.json;
 
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
+import static twitter4j.internal.util.InternalParseUtil.getRawString;
 
 import org.json.JSONObject;
 

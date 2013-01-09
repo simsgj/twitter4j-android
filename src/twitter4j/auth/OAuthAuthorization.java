@@ -36,7 +36,7 @@ import twitter4j.http.HttpClientWrapper;
 import twitter4j.http.HttpParameter;
 import twitter4j.http.HttpRequest;
 import twitter4j.internal.logging.Logger;
-import twitter4j.internal.util.z_T4JInternalStringUtil;
+import twitter4j.internal.util.InternalStringUtil;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
@@ -48,7 +48,7 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 
 	private static final String HMAC_SHA1 = "HmacSHA1";
 	private static final HttpParameter OAUTH_SIGNATURE_METHOD = new HttpParameter("oauth_signature_method", "HMAC-SHA1");
-	private static final Logger logger = Logger.getLogger();
+	private static final Logger logger = Logger.getLogger(OAuthAuthorization.class);
 
 	private String consumerKey = "";
 	private String consumerSecret;
@@ -310,10 +310,10 @@ public class OAuthAuthorization implements Authorization, OAuthSupport {
 	private void parseGetParameters(final String url, final List<HttpParameter> signatureBaseParams) {
 		final int queryStart = url.indexOf("?");
 		if (-1 != queryStart) {
-			final String[] queryStrs = z_T4JInternalStringUtil.split(url.substring(queryStart + 1), "&");
+			final String[] queryStrs = InternalStringUtil.split(url.substring(queryStart + 1), "&");
 			try {
 				for (final String query : queryStrs) {
-					final String[] split = z_T4JInternalStringUtil.split(query, "=");
+					final String[] split = InternalStringUtil.split(query, "=");
 					if (split.length == 2) {
 						signatureBaseParams.add(new HttpParameter(URLDecoder.decode(split[0], "UTF-8"), URLDecoder
 								.decode(split[1], "UTF-8")));

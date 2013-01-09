@@ -27,7 +27,7 @@ import twitter4j.TwitterException;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.1
  */
-public interface GeoMethods {
+public interface PlacesGeoResources {
 	/**
 	 * Creates a new place at the given latitude and longitude. <br>
 	 * This method calls http://api.twitter.com/1.1/geo/place.json
@@ -55,7 +55,7 @@ public interface GeoMethods {
 
 	/**
 	 * Find out more details of a place that was returned from the
-	 * {@link twitter4j.api.GeoMethods#reverseGeoCode(twitter4j.GeoQuery)}
+	 * {@link twitter4j.api.PlacesGeoResources#reverseGeoCode(twitter4j.GeoQuery)}
 	 * method. <br>
 	 * This method calls http://api.twitter.com/1.1/geo/id/:id.json
 	 * 

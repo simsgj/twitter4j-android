@@ -23,7 +23,7 @@ import twitter4j.TwitterException;
 /**
  * @author Joern Huxhorn - jhuxhorn at googlemail.com
  */
-public interface SavedSearchesMethods {
+public interface SavedSearchesResources {
 	/**
 	 * Creates a saved search for the authenticated user. <br>
 	 * This method calls

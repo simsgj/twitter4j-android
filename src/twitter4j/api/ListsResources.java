@@ -21,12 +21,67 @@ import twitter4j.Paging;
 import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.TwitterException;
+import twitter4j.User;
 import twitter4j.UserList;
 
 /**
  * @author Joern Huxhorn - jhuxhorn at googlemail.com
  */
-public interface ListMethods {
+public interface ListsResources {
+	/**
+	 * Adds a member to a list. The authenticated user must own the list to be
+	 * able to add members to it. Lists are limited to having 500 members. <br>
+	 * This method calls http://api.twitter.com/1.1/lists/members/create.json
+	 * 
+	 * @param listId The id of the list.
+	 * @param userId The id of the user to add as a member of the list.
+	 * @return the updated list
+	 * @throws TwitterException when Twitter service or network is unavailable
+	 * @see <a
+	 *      href="https://dev.twitter.com/docs/api/1.1/post/lists/members/create">POST
+	 *      lists/members/create | Twitter Developers</a>
+	 * @since Twitter4J 2.1.0
+	 */
+	UserList addUserListMember(int listId, long userId) throws TwitterException;
+
+	/**
+	 * Adds multiple members to a list, by specifying a comma-separated list of
+	 * member ids or screen names. The authenticated user must own the list to
+	 * be able to add members to it. Lists are limited to having 500 members,
+	 * and you are limited to adding up to 100 members to a list at a time with
+	 * this method. <br>
+	 * This method calls
+	 * http://api.twitter.com/1.1/lists/members/create_all.json
+	 * 
+	 * @param listId The id of the list.
+	 * @param userIds The array of ids of the user to add as member of the list.
+	 *            up to 100 are allowed in a single request.
+	 * @see <a
+	 *      href="https://dev.twitter.com/docs/api/1.1/post/lists/members/create_all">POST
+	 *      lists/members/create_all | Twitter Developers</a>
+	 * @since Twitter4J 2.1.7
+	 */
+	UserList addUserListMembers(int listId, long[] userIds) throws TwitterException;
+
+	/**
+	 * Adds multiple members to a list, by specifying a comma-separated list of
+	 * member ids or screen names. The authenticated user must own the list to
+	 * be able to add members to it. Lists are limited to having 500 members,
+	 * and you are limited to adding up to 100 members to a list at a time with
+	 * this method. <br>
+	 * This method calls
+	 * http://api.twitter.com/1.1/lists/members/create_all.json
+	 * 
+	 * @param listId The id of the list.
+	 * @param screenNames The array of screen names of the user to add as member
+	 *            of the list. up to 100 are allowed in a single request.
+	 * @see <a
+	 *      href="https://dev.twitter.com/docs/api/1.1/post/lists/members/create_all">POST
+	 *      lists/members/create_all | Twitter Developers</a>
+	 * @since Twitter4J 2.1.7
+	 */
+	UserList addUserListMembers(int listId, String[] screenNames) throws TwitterException;
+
 	/**
 	 * Creates a new list for the authenticated user. Accounts are limited to 20
 	 * lists. <br>
@@ -48,6 +103,37 @@ public interface ListMethods {
 	UserList createUserList(String listName, boolean isPublicList, String description) throws TwitterException;
 
 	/**
+	 * Make the authenticated user follow the specified list. <br>
+	 * This method calls http://api.twitter.com/1.1/list/subscribers/create.json
+	 * 
+	 * @param listId The id of the list.
+	 * @return the updated list
+	 * @throws TwitterException when Twitter service or network is unavailable
+	 * @see <a
+	 *      href="https://dev.twitter.com/docs/api/1.1/post/lists/subscribers/create">POST
+	 *      lists/subscribers/create | Twitter Developers</a>
+	 * @since Twitter4J 2.2.3
+	 */
+	UserList createUserListSubscription(int listId) throws TwitterException;
+
+	/**
+	 * Removes the specified member from the list. The authenticated user must
+	 * be the list's owner to remove members from the list. <br>
+	 * This method calls http://api.twitter.com/1.1/lists/members/destroy.json
+	 * 
+	 * @param listId The id of the list.
+	 * @param userId The screen name of the member you wish to remove from the
+	 *            list.
+	 * @return the updated list
+	 * @throws TwitterException when Twitter service or network is unavailable
+	 * @see <a
+	 *      href="https://dev.twitter.com/docs/api/1.1/post/lists/members/destroy">POST
+	 *      lists/members/destroy | Twitter Developers</a>
+	 * @since Twitter4J 2.1.0
+	 */
+	UserList deleteUserListMember(int listId, long userId) throws TwitterException;
+
+	/**
 	 * Deletes the specified list. Must be owned by the authenticated user. <br>
 	 * This method calls http://api.twitter.com/1.1/lists/destroy.json
 	 * 
@@ -62,32 +148,35 @@ public interface ListMethods {
 	UserList destroyUserList(int listId) throws TwitterException;
 
 	/**
-	 * Returns all lists the authenticating or specified user subscribes to,
-	 * including their own. <br>
-	 * This method has not been finalized and the interface is subject to change
-	 * in incompatible ways. <br>
-	 * This method calls http://api.twitter.com/1.1/lists/all.json
+	 * Unsubscribes the authenticated user form the specified list. <br>
+	 * This method calls http://api.twitter.com/1.1/subscribers/destroy.json
 	 * 
-	 * @param userId user id to look up
-	 * @return list of lists
+	 * @param listId The id of the list.
+	 * @return the updated list
 	 * @throws TwitterException when Twitter service or network is unavailable
-	 * @since Twitter4J 2.1.9
+	 * @see <a
+	 *      href="https://dev.twitter.com/docs/api/1.1/post/lists/subscribers/destroy">POST
+	 *      lists/subscribers/destroy | Twitter Developers</a>
+	 * @since Twitter4J 2.2.3
 	 */
-	ResponseList<UserList> getAllUserLists(long userId) throws TwitterException;
+	UserList destroyUserListSubscription(int listId) throws TwitterException;
 
 	/**
-	 * Returns all lists the authenticating or specified user subscribes to,
-	 * including their own. <br>
-	 * This method has not been finalized and the interface is subject to change
-	 * in incompatible ways. <br>
-	 * This method calls http://api.twitter.com/1.1/lists/all.json
+	 * Returns the members of the specified list. <br>
+	 * This method calls http://api.twitter.com/1.1/lists/members.json
 	 * 
-	 * @param screenName screen name to look up
-	 * @return list of lists
+	 * @param listId The id of the list
+	 * @param cursor Breaks the results into pages. A single page contains 20
+	 *            lists. Provide a value of -1 to begin paging. Provide values
+	 *            as returned to in the response body's next_cursor and
+	 *            previous_cursor attributes to page back and forth in the list.
+	 * @return the members of the specified list.
 	 * @throws TwitterException when Twitter service or network is unavailable
-	 * @since Twitter4J 2.1.9
+	 * @see <a href="https://dev.twitter.com/docs/api/1.1/get/lists/members">GET
+	 *      lists/members | Twitter Developers</a>
+	 * @since Twitter4J 2.2.3
 	 */
-	ResponseList<UserList> getAllUserLists(String screenName) throws TwitterException;
+	PagableResponseList<User> getUserListMembers(int listId, long cursor) throws TwitterException;
 
 	/**
 	 * List the lists the authenticating user has been added to. <br>
@@ -239,6 +328,25 @@ public interface ListMethods {
 	ResponseList<Status> getUserListStatuses(int listId, Paging paging) throws TwitterException;
 
 	/**
+	 * Returns the subscribers of the specified list. <br>
+	 * This method calls http://api.twitter.com/1.1/lists/subscribers.json
+	 * 
+	 * @param listId The id of the list
+	 * @param cursor Breaks the results into pages. A single page contains 20
+	 *            lists. Provide a value of -1 to begin paging. Provide values
+	 *            as returned to in the response body's next_cursor and
+	 *            previous_cursor attributes to page back and forth in the list.
+	 * @return the members of the specified list.
+	 * @throws twitter4j.TwitterException when Twitter service or network is
+	 *             unavailable
+	 * @see <a
+	 *      href="https://dev.twitter.com/docs/api/1.1/get/lists/subscribers">GET
+	 *      lists/subscribers | Twitter Developers</a>
+	 * @since Twitter4J 2.2.3
+	 */
+	PagableResponseList<User> getUserListSubscribers(int listId, long cursor) throws TwitterException;
+
+	/**
 	 * List the lists the specified user follows. <br>
 	 * This method calls http://api.twitter.com/1.1/lists/subscriptions.json
 	 * 
@@ -270,6 +378,45 @@ public interface ListMethods {
 	 * @since Twitter4J 2.2.3
 	 */
 	UserList showUserList(int listId) throws TwitterException;
+
+	/**
+	 * Check if a user is a member of the specified list.<br>
+	 * <br>
+	 * This method calls http://api.twitter.com/1.1/lists/members/show.json
+	 * 
+	 * @param listId The id of the list.
+	 * @param userId The id of the user who you want to know is a member or not
+	 *            of the specified list.
+	 * @return the updated list
+	 * @throws TwitterException when Twitter service or network is unavailable ,
+	 *             or the user is not a member of the specified
+	 *             list(TwitterException.getStatusCode() returns 404 in that
+	 *             case.)
+	 * @see <a
+	 *      href="https://dev.twitter.com/docs/api/1.1/get/lists/members/show">GET
+	 *      lists/members/show | Twitter Developers</a>
+	 * @since Twitter4J 2.2.3
+	 */
+	User showUserListMembership(int listId, long userId) throws TwitterException;
+
+	/**
+	 * Check if the specified user is a subscriber of the specified list. <br>
+	 * This method calls http://api.twitter.com/1.1/lists/subscribers/show.json
+	 * 
+	 * @param listId The id of the list.
+	 * @param userId The id of the user who you want to know is a member or not
+	 *            of the specified list.
+	 * @return the updated list
+	 * @throws TwitterException when Twitter service or network is unavailable ,
+	 *             or the user is not a member of the specified
+	 *             list(TwitterException.getStatusCode() returns 404 in that
+	 *             case.)
+	 * @see <a
+	 *      href="https://dev.twitter.com/docs/api/1.1/get/lists/subscribers/show">GET
+	 *      lists/subscribers/show | Twitter Developers</a>
+	 * @since Twitter4J 2.2.3
+	 */
+	User showUserListSubscription(int listId, long userId) throws TwitterException;
 
 	/**
 	 * Updates the specified list. <br>

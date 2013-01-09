@@ -24,7 +24,7 @@ import twitter4j.TwitterException;
 /**
  * @author Joern Huxhorn - jhuxhorn at googlemail.com
  */
-public interface TimelineMethods {
+public interface TimelinesResources {
 	/**
 	 * Returns the 20 most recent statuses, including retweets, posted by the
 	 * authenticating user and that user's friends. This is the equivalent of
@@ -72,32 +72,64 @@ public interface TimelineMethods {
 	/**
 	 * Returns the 20 most recent mentions (status containing @username) for the
 	 * authenticating user. <br>
-	 * This method calls http://api.twitter.com/1.1/statuses/mentions
+	 * This method calls http://api.twitter.com/1.1/statuses/mentions_timeline
 	 * 
 	 * @return the 20 most recent replies
 	 * @throws TwitterException when Twitter service or network is unavailable
 	 * @see <a
-	 *      href="https://dev.twitter.com/docs/api/1.1/get/statuses/mentions">GET
+	 *      href="https://dev.twitter.com/docs/api/1.1/get/statuses/mentions_timeline">GET
 	 *      statuses/mentions | Twitter Developers</a>
 	 * @since Twitter4J 2.0.1
 	 */
-	ResponseList<Status> getMentions() throws TwitterException;
+	ResponseList<Status> getMentionsTimeline() throws TwitterException;
 
 	/**
 	 * Returns the 20 most recent mentions (status containing @username) for the
 	 * authenticating user. <br>
-	 * This method calls http://api.twitter.com/1.1/statuses/mentions
+	 * This method calls http://api.twitter.com/1.1/statuses/mentions_timeline
 	 * 
 	 * @param paging controls pagination. Supports since_id, max_id, count and
 	 *            page parameters.
 	 * @return the 20 most recent replies
 	 * @throws TwitterException when Twitter service or network is unavailable
 	 * @see <a
-	 *      href="https://dev.twitter.com/docs/api/1.1/get/statuses/mentions">GET
+	 *      href="https://dev.twitter.com/docs/api/1.1/get/statuses/mentions_timeline">GET
 	 *      statuses/mentions | Twitter Developers</a>
 	 * @since Twitter4J 2.0.1
 	 */
-	ResponseList<Status> getMentions(Paging paging) throws TwitterException;
+	ResponseList<Status> getMentionsTimeline(Paging paging) throws TwitterException;
+
+	/**
+	 * Returns the 20 most recent tweets of the authenticated user that have
+	 * been retweeted by others. <br>
+	 * This method calls http://api.twitter.com/1.1/statuses/retweets_of_me.json
+	 * 
+	 * @return the 20 most recent tweets of the authenticated user that have
+	 *         been retweeted by others.
+	 * @throws TwitterException when Twitter service or network is unavailable
+	 * @see <a
+	 *      href="https://dev.twitter.com/docs/api/1.1/get/statuses/retweets_of_me">GET
+	 *      statuses/retweets_of_me | Twitter Developers</a>
+	 * @since Twitter4J 2.0.10
+	 */
+	ResponseList<Status> getRetweetsOfMe() throws TwitterException;
+
+	/**
+	 * Returns the 20 most recent tweets of the authenticated user that have
+	 * been retweeted by others. <br>
+	 * This method calls http://api.twitter.com/1.1/statuses/retweets_of_me.json
+	 * 
+	 * @param paging controls pagination. Supports since_id, max_id, count and
+	 *            page parameters.
+	 * @return the 20 most recent tweets of the authenticated user that have
+	 *         been retweeted by others.
+	 * @throws TwitterException when Twitter service or network is unavailable
+	 * @see <a
+	 *      href="https://dev.twitter.com/docs/api/1.1/get/statuses/retweets_of_me">GET
+	 *      statuses/retweets_of_me | Twitter Developers</a>
+	 * @since Twitter4J 2.0.10
+	 */
+	ResponseList<Status> getRetweetsOfMe(Paging paging) throws TwitterException;
 
 	/**
 	 * Returns the 20 most recent statuses posted from the authenticating user.

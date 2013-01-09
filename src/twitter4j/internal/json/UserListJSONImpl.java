@@ -16,9 +16,9 @@
 
 package twitter4j.internal.json;
 
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getBoolean;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getInt;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
+import static twitter4j.internal.util.InternalParseUtil.getBoolean;
+import static twitter4j.internal.util.InternalParseUtil.getInt;
+import static twitter4j.internal.util.InternalParseUtil.getRawString;
 
 import java.net.URI;
 import java.net.URISyntaxException;

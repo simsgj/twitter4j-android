@@ -25,7 +25,7 @@ import org.json.JSONObject;
 import twitter4j.IDs;
 import twitter4j.TwitterException;
 import twitter4j.http.HttpResponse;
-import twitter4j.internal.util.z_T4JInternalParseUtil;
+import twitter4j.internal.util.InternalParseUtil;
 
 /**
  * A data class representing array of numeric IDs.
@@ -129,8 +129,8 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 						throw new TwitterException("Twitter API returned malformed response: " + json, nfe);
 					}
 				}
-				previousCursor = z_T4JInternalParseUtil.getLong("previous_cursor", json);
-				nextCursor = z_T4JInternalParseUtil.getLong("next_cursor", json);
+				previousCursor = InternalParseUtil.getLong("previous_cursor", json);
+				nextCursor = InternalParseUtil.getLong("next_cursor", json);
 			} else {
 				idList = new JSONArray(jsonStr);
 				ids = new long[idList.length()];

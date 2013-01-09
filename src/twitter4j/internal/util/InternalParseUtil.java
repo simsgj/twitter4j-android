@@ -39,7 +39,7 @@ import twitter4j.http.HttpResponse;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-public final class z_T4JInternalParseUtil {
+public final class InternalParseUtil {
 	private static ThreadLocal<Map<String, SimpleDateFormat>> formatMap = new ThreadLocal<Map<String, SimpleDateFormat>>() {
 		@Override
 		protected Map<String, SimpleDateFormat> initialValue() {
@@ -47,7 +47,7 @@ public final class z_T4JInternalParseUtil {
 		}
 	};
 
-	private z_T4JInternalParseUtil() {
+	private InternalParseUtil() {
 		// should never be instantiated
 		throw new AssertionError();
 	}
@@ -90,6 +90,10 @@ public final class z_T4JInternalParseUtil {
 			return -1;
 		else
 			return Double.valueOf(str2);
+	}
+
+	public static String getHTMLUnescapedString(final String name, final JSONObject json) {
+		return HTMLEntity.unescape(getRawString(name, json));
 	}
 
 	public static int getInt(final String str) {
@@ -150,8 +154,10 @@ public final class z_T4JInternalParseUtil {
 		}
 	}
 
-	public static String getUnescapedString(final String str, final JSONObject json) {
-		return HTMLEntity.unescape(getRawString(str, json));
+	public static String getUnescapedString(final String name, final JSONObject json) {
+		final String str = getRawString(name, json);
+		if (str == null) return null;
+		return str.replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">");
 	}
 
 	public static String getURLDecodedString(final String name, final JSONObject json) {

@@ -16,17 +16,18 @@
 
 package twitter4j;
 
+import static twitter4j.internal.util.InternalParseUtil.getInt;
+
 import java.util.List;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import twitter4j.http.HttpRequest;
 import twitter4j.http.HttpResponse;
 import twitter4j.http.HttpResponseCode;
-import twitter4j.internal.json.z_T4JInternalJSONImplFactory;
-import twitter4j.internal.util.z_T4JInternalParseUtil;
+import twitter4j.internal.json.InternalJSONImplFactory;
+import twitter4j.internal.util.InternalParseUtil;
 
 /**
  * An exception class that will be thrown when TwitterAPI calls are failed.<br>
@@ -36,20 +37,17 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
 public class TwitterException extends Exception implements TwitterResponse, HttpResponseCode {
-	private static final long serialVersionUID = 5876311940770455282L;
-
 	private int statusCode = -1;
-
+	private int errorCode = -1;
+	private static final long serialVersionUID = -2623309261327598087L;
 	private ExceptionDiagnosis exceptionDiagnosis = null;
 	private HttpResponse response;
+	private String errorMessage = null;
 	private HttpRequest request;
-	private final String requestPath = null;
 
 	private final static String[] FILTER = new String[] { "twitter4j" };
 
 	boolean nested = false;
-
-	private ErrorMessage[] errorMessages;
 
 	public TwitterException(final Exception cause) {
 		this(cause.getMessage(), cause);
@@ -69,9 +67,13 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 
 	public TwitterException(final String message, final HttpRequest req, final HttpResponse res) {
 		this(message);
-		request = req;
 		response = res;
+		request = req;
 		statusCode = res != null ? res.getStatusCode() : -1;
+	}
+
+	public TwitterException(final String message, final HttpResponse res) {
+		this(message, null, res);
 	}
 
 	public TwitterException(final String message, final Throwable cause) {
@@ -82,17 +84,17 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	@Override
 	public boolean equals(final Object o) {
 		if (this == o) return true;
-		if (!(o instanceof TwitterException)) return false;
+		if (o == null || getClass() != o.getClass()) return false;
 
 		final TwitterException that = (TwitterException) o;
 
+		if (errorCode != that.errorCode) return false;
 		if (nested != that.nested) return false;
 		if (statusCode != that.statusCode) return false;
+		if (errorMessage != null ? !errorMessage.equals(that.errorMessage) : that.errorMessage != null) return false;
 		if (exceptionDiagnosis != null ? !exceptionDiagnosis.equals(that.exceptionDiagnosis)
 				: that.exceptionDiagnosis != null) return false;
-		if (requestPath != null ? !requestPath.equals(that.requestPath) : that.requestPath != null) return false;
 		if (response != null ? !response.equals(that.response) : that.response != null) return false;
-		if (request != null ? !request.equals(that.request) : that.request != null) return false;
 
 		return true;
 	}
@@ -106,7 +108,9 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	 * @since Twitter4J 2.1.2
 	 */
 	public boolean exceededRateLimitation() {
-		return getRateLimitStatus() != null && errorMessages.length > 0 && errorMessages[0].getCode() == 88;
+		return statusCode == 400 && getRateLimitStatus() != null // REST API
+				|| statusCode == ENHANCE_YOUR_CLAIM // Streaming API
+				|| statusCode == TOO_MANY_REQUESTS; // API 1.1
 	}
 
 	/**
@@ -114,11 +118,21 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	 */
 	@Override
 	public int getAccessLevel() {
-		return z_T4JInternalParseUtil.toAccessLevel(response);
+		return InternalParseUtil.toAccessLevel(response);
 	}
 
-	public ErrorMessage[] getErrorMessages() {
-		return errorMessages;
+	public int getErrorCode() {
+		return errorCode;
+	}
+
+	/**
+	 * Returns error message from the API if available.
+	 * 
+	 * @return error message from the API
+	 * @since Twitter4J 2.2.3
+	 */
+	public String getErrorMessage() {
+		return errorMessage;
 	}
 
 	/**
@@ -136,20 +150,6 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 		return getExceptionDiagnosis().asHexString();
 	}
 
-	/**
-	 * Returns the current feature-specific rate limit status if available.<br>
-	 * This method is available in conjunction with Twitter#searchUsers()<br>
-	 * 
-	 * @return current rate limit status
-	 * @see <a href="https://dev.twitter.com/docs/rate-limiting">Rate Limiting |
-	 *      Twitter Developers</a>
-	 * @since Twitter4J 2.1.2
-	 */
-	public RateLimitStatus getFeatureSpecificRateLimitStatus() {
-		if (null == response) return null;
-		return z_T4JInternalJSONImplFactory.createFeatureSpecificRateLimitStatusFromResponseHeader(response);
-	}
-
 	public HttpRequest getHttpRequest() {
 		return request;
 	}
@@ -163,12 +163,17 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	 */
 	@Override
 	public String getMessage() {
-		if (errorMessages != null && errorMessages.length > 0) {
-			final ErrorMessage errorMessage = errorMessages[0];
-			return "Error " + errorMessage.getCode() + " - " + errorMessage.getMessage();
+		final StringBuilder value = new StringBuilder();
+		if (errorMessage != null && errorCode != -1) {
+			value.append("message - ").append(errorMessage).append("\n");
+			value.append("code - ").append(errorCode).append("\n");
+		} else {
+			value.append(super.getMessage());
 		}
-		if (statusCode != -1) return getCause(statusCode);
-		return super.getMessage();
+		if (statusCode != -1)
+			return getCause(statusCode) + "\n" + value.toString();
+		else
+			return value.toString();
 	}
 
 	/**
@@ -179,17 +184,7 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	@Override
 	public RateLimitStatus getRateLimitStatus() {
 		if (null == response) return null;
-		return z_T4JInternalJSONImplFactory.createRateLimitStatusFromResponseHeader(response);
-	}
-
-	/**
-	 * Returns the request path returned by the API.
-	 * 
-	 * @return the request path returned by the API
-	 * @since Twitter4J 2.2.3
-	 */
-	public String getRequestPath() {
-		return requestPath;
+		return InternalJSONImplFactory.createRateLimitStatusFromResponseHeader(response);
 	}
 
 	public String getResponseHeader(final String name) {
@@ -246,10 +241,10 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	@Override
 	public int hashCode() {
 		int result = statusCode;
+		result = 31 * result + errorCode;
 		result = 31 * result + (exceptionDiagnosis != null ? exceptionDiagnosis.hashCode() : 0);
-		result = 31 * result + (request != null ? request.hashCode() : 0);
 		result = 31 * result + (response != null ? response.hashCode() : 0);
-		result = 31 * result + (requestPath != null ? requestPath.hashCode() : 0);
+		result = 31 * result + (errorMessage != null ? errorMessage.hashCode() : 0);
 		result = 31 * result + (nested ? 1 : 0);
 		return result;
 	}
@@ -265,18 +260,35 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	}
 
 	/**
+	 * Tests if error message from the API is available
+	 * 
+	 * @return true if error message from the API is available
+	 * @since Twitter4J 2.2.3
+	 */
+	public boolean isErrorMessageAvailable() {
+		return errorMessage != null;
+	}
+
+	/**
 	 * Tests if the exception is caused by non-existing resource
 	 * 
 	 * @return if the exception is caused by non-existing resource
 	 * @since Twitter4J 2.1.2
 	 */
 	public boolean resourceNotFound() {
-		return statusCode == 404;
+		return statusCode == NOT_FOUND;
 	}
 
 	@Override
 	public String toString() {
-		return getMessage();
+		return getMessage()
+				+ (nested ? "" : "\nRelevant discussions can be found on the Internet at:\n"
+						+ "\thttp://www.google.co.jp/search?q=" + getExceptionDiagnosis().getStackLineHashAsHex()
+						+ " or\n\thttp://www.google.co.jp/search?q=" + getExceptionDiagnosis().getLineNumberHashAsHex())
+				+ "\nTwitterException{" + (nested ? "" : "exceptionCode=[" + getExceptionCode() + "], ")
+				+ "statusCode=" + statusCode + ", message=" + errorMessage + ", code=" + errorCode + ", retryAfter="
+				+ getRetryAfter() + ", rateLimitStatus=" + getRateLimitStatus() + ", version=" + Version.getVersion()
+				+ '}';
 	}
 
 	private void decode(final String str) {
@@ -284,12 +296,9 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 			try {
 				final JSONObject json = new JSONObject(str);
 				if (!json.isNull("errors")) {
-					final JSONArray array = json.getJSONArray("errors");
-					final int length = array.length();
-					errorMessages = new ErrorMessage[length];
-					for (int i = 0; i < length; i++) {
-						errorMessages[i] = new ErrorMessage(array.getJSONObject(i));
-					}
+					final JSONObject error = json.getJSONArray("errors").getJSONObject(0);
+					errorMessage = error.getString("message");
+					errorCode = getInt("code", error);
 				}
 			} catch (final JSONException ignore) {
 			}
@@ -315,16 +324,16 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 				cause = "There was no new data to return.";
 				break;
 			case BAD_REQUEST:
-				cause = "The request was invalid. An accompanying error message will explain why. This is the status code that will be returned during rate limiting (https://dev.twitter.com/pages/rate-limiting).";
+				cause = "The request was invalid. An accompanying error message will explain why. This is the status code will be returned during version 1.0 rate limiting(https://dev.twitter.com/pages/rate-limiting). In API v1.1, a request without authentication is considered invalid and you will get this response.";
 				break;
 			case UNAUTHORIZED:
-				cause = "Authentication credentials (https://dev.twitter.com/docs/auth) were missing or incorrect. Ensure that you have set valid consumer key/secret, access token/secret, and the system clock is in sync.";
+				cause = "Authentication credentials (https://dev.twitter.com/pages/auth) were missing or incorrect. Ensure that you have set valid consumer key/secret, access token/secret, and the system clock is in sync.";
 				break;
 			case FORBIDDEN:
 				cause = "The request is understood, but it has been refused. An accompanying error message will explain why. This code is used when requests are being denied due to update limits (https://support.twitter.com/articles/15364-about-twitter-limits-update-api-dm-and-following).";
 				break;
 			case NOT_FOUND:
-				cause = "The URI requested is invalid or the resource requested, such as a user, does not exist.";
+				cause = "The URI requested is invalid or the resource requested, such as a user, does not exists. Also returned when the requested format is not supported by the requested method.";
 				break;
 			case NOT_ACCEPTABLE:
 				cause = "Returned by the Search API when an invalid format is specified in the request.\n"
@@ -334,16 +343,16 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 						+ " No predicates defined for filtered resource, for example, neither track nor follow parameter defined.\n"
 						+ " Follow userid cannot be read.";
 				break;
-			case TOO_LONG:
-				cause = "A parameter list is too long. The track parameter, for example, would throw this error if:\n"
-						+ " Too many track tokens specified for role; contact API team for increased access.\n"
-						+ " Too many bounding boxes specified for role; contact API team for increased access.\n"
-						+ " Too many follow userids specified for role; contact API team for increased access.";
-				break;
 			case ENHANCE_YOUR_CLAIM:
 				cause = "Returned by the Search and Trends API when you are being rate limited (https://dev.twitter.com/docs/rate-limiting).\n"
 						+ "Returned by the Streaming API:\n Too many login attempts in a short period of time.\n"
 						+ " Running too many copies of the same application authenticating with the same account name.";
+				break;
+			case UNPROCESSABLE_ENTITY:
+				cause = "Returned when an image uploaded to POST account/update_profile_banner(https://dev.twitter.com/docs/api/1/post/account/update_profile_banner) is unable to be processed.";
+				break;
+			case TOO_MANY_REQUESTS:
+				cause = "Returned in API v1.1 when a request cannot be served due to the application's rate limit having been exhausted for the resource. See Rate Limiting in API v1.1.(https://dev.twitter.com/docs/rate-limiting/1.1)";
 				break;
 			case INTERNAL_SERVER_ERROR:
 				cause = "Something is broken. Please post to the group (https://dev.twitter.com/docs/support) so the Twitter team can investigate.";
@@ -354,33 +363,12 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 			case SERVICE_UNAVAILABLE:
 				cause = "The Twitter servers are up, but overloaded with requests. Try again later.";
 				break;
+			case GATEWAY_TIMEOUT:
+				cause = "The Twitter servers are up, but the request couldn't be serviced due to some failure within our stack. Try again later.";
+				break;
 			default:
 				cause = "";
 		}
 		return statusCode + ":" + cause;
-	}
-
-	public final static class ErrorMessage {
-
-		private final int code;
-		private final String message;
-
-		public ErrorMessage(final JSONObject json) throws JSONException {
-			code = json.getInt("code");
-			message = json.getString("message");
-		}
-
-		public int getCode() {
-			return code;
-		}
-
-		public String getMessage() {
-			return message;
-		}
-
-		@Override
-		public String toString() {
-			return "ErrorMessage{code=" + code + ", message=" + message + "}";
-		}
 	}
 }

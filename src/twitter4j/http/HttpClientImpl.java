@@ -49,29 +49,16 @@ import javax.net.ssl.X509TrustManager;
 import twitter4j.TwitterException;
 import twitter4j.conf.ConfigurationContext;
 import twitter4j.internal.logging.Logger;
-import twitter4j.internal.util.z_T4JInternalStringUtil;
+import twitter4j.internal.util.InternalStringUtil;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.2
  */
 public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpResponseCode {
-	private static final Logger logger = Logger.getLogger();
+	private static final Logger logger = Logger.getLogger(HttpClientImpl.class);
 
-	private static final TrustManager[] TRUST_ALL_CERTS = new TrustManager[] { new X509TrustManager() {
-		@Override
-		public void checkClientTrusted(final X509Certificate[] chain, final String authType) {
-		}
-
-		@Override
-		public void checkServerTrusted(final X509Certificate[] chain, final String authType) {
-		}
-
-		@Override
-		public X509Certificate[] getAcceptedIssuers() {
-			return new X509Certificate[] {};
-		}
-	} };
+	private static final TrustManager[] TRUST_ALL_CERTS = new TrustManager[] { new TrustAllX509TrustManager() };
 
 	private static final SSLSocketFactory IGNORE_ERROR_SSL_FACTORY;
 
@@ -88,19 +75,14 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 		IGNORE_ERROR_SSL_FACTORY = factory;
 	}
 
-	private static final HostnameVerifier ALLOW_ALL_HOSTNAME_VERIFIER = new HostnameVerifier() {
-		@Override
-		public boolean verify(final String hostname, final SSLSession session) {
-			return true;
-		}
-	};
+	private static final HostnameVerifier ALLOW_ALL_HOSTNAME_VERIFIER = new AllowAllHostnameVerifier();
 
 	private static final Map<HttpClientConfiguration, HttpClient> instanceMap = new HashMap<HttpClientConfiguration, HttpClient>(
 			1);
 
 	public HttpClientImpl() {
 		super(ConfigurationContext.getInstance());
-	}
+	};
 
 	public HttpClientImpl(final HttpClientConfiguration conf) {
 		super(conf);
@@ -130,15 +112,16 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 					con.setDoInput(true);
 					setHeaders(req, con);
 					con.setRequestMethod(req.getMethod().name());
+					final HttpParameter[] params = req.getParameters();
 					if (req.getMethod() == POST) {
-						if (HttpParameter.containsFile(req.getParameters())) {
+						if (HttpParameter.containsFile(params)) {
 							String boundary = "----Twitter4J-upload" + System.currentTimeMillis();
 							con.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
 							boundary = "--" + boundary;
 							con.setDoOutput(true);
 							os = con.getOutputStream();
 							final DataOutputStream out = new DataOutputStream(os);
-							for (final HttpParameter param : req.getParameters()) {
+							for (final HttpParameter param : params) {
 								if (param.isFile()) {
 									write(out, boundary + "\r\n");
 									write(out, "Content-Disposition: form-data; name=\"" + param.getName()
@@ -194,7 +177,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 							}
 						}
 					}
-					if (responseCode < OK || responseCode != FOUND && MULTIPLE_CHOICES <= responseCode) {
+					if (responseCode < OK || responseCode > ACCEPTED) {
 						if (responseCode == ENHANCE_YOUR_CLAIM || responseCode == BAD_REQUEST
 								|| responseCode < INTERNAL_SERVER_ERROR || retriedCount == CONF.getHttpRetryCount())
 							throw new TwitterException(res.asString(), req, res);
@@ -240,8 +223,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 			if (CONF.getHttpProxyUser() != null && !CONF.getHttpProxyUser().equals("")) {
 				if (logger.isDebugEnabled()) {
 					logger.debug("Proxy AuthUser: " + CONF.getHttpProxyUser());
-					logger.debug("Proxy AuthPassword: "
-							+ z_T4JInternalStringUtil.maskString(CONF.getHttpProxyPassword()));
+					logger.debug("Proxy AuthPassword: " + InternalStringUtil.maskString(CONF.getHttpProxyPassword()));
 				}
 				Authenticator.setDefault(new Authenticator() {
 					@Override
@@ -306,7 +288,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 		if (req.getAuthorization() != null
 				&& (authorizationHeader = req.getAuthorization().getAuthorizationHeader(req)) != null) {
 			if (logger.isDebugEnabled()) {
-				logger.debug("Authorization: ", z_T4JInternalStringUtil.maskString(authorizationHeader));
+				logger.debug("Authorization: ", InternalStringUtil.maskString(authorizationHeader));
 			}
 			connection.addRequestProperty("Authorization", authorizationHeader);
 		}
@@ -334,5 +316,27 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 			instanceMap.put(conf, client);
 		}
 		return client;
+	}
+
+	static class AllowAllHostnameVerifier implements HostnameVerifier {
+		@Override
+		public boolean verify(final String hostname, final SSLSession session) {
+			return true;
+		}
+	}
+
+	final static class TrustAllX509TrustManager implements X509TrustManager {
+		@Override
+		public void checkClientTrusted(final X509Certificate[] chain, final String authType) {
+		}
+
+		@Override
+		public void checkServerTrusted(final X509Certificate[] chain, final String authType) {
+		}
+
+		@Override
+		public X509Certificate[] getAcceptedIssuers() {
+			return new X509Certificate[] {};
+		}
 	}
 }

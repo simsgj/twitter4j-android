@@ -17,6 +17,7 @@
 package twitter4j.conf;
 
 import twitter4j.http.HostAddressResolver;
+import twitter4j.http.HttpClient;
 
 /**
  * A builder that can be used to construct a twitter4j configuration with
@@ -74,6 +75,12 @@ public final class ConfigurationBuilder {
 	public ConfigurationBuilder setHostAddressResolver(final HostAddressResolver resolver) {
 		checkNotBuilt();
 		configuration.setHostAddressResolver(resolver);
+		return this;
+	}
+
+	public ConfigurationBuilder setHttpClientImplementation(final Class<? extends HttpClient> httpClientImplementation) {
+		checkNotBuilt();
+		configuration.setHttpClientImplementation(httpClientImplementation);
 		return this;
 	}
 

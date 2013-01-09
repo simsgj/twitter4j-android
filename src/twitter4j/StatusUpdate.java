@@ -30,17 +30,12 @@ import twitter4j.http.HttpParameter;
  */
 public final class StatusUpdate implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2522880289943829826L;
 	private final String status;
 	private long inReplyToStatusId = -1l;
 	private GeoLocation location = null;
 	private String placeId = null;
 	private boolean displayCoordinates = true;
-	@Deprecated
-	private Annotations annotations = null;
 	private boolean possiblySensitive;
 	private String mediaName;
 	private transient InputStream mediaBody;
@@ -50,32 +45,11 @@ public final class StatusUpdate implements Serializable {
 		this.status = status;
 	}
 
-	@Deprecated
-	public void addAnnotation(final Annotation annotation) {
-		if (null == annotations) {
-			annotations = new Annotations();
-		}
-		annotations.addAnnotation(annotation);
-	}
-
-	@Deprecated
-	public StatusUpdate annotation(final Annotation annotation) {
-		addAnnotation(annotation);
-		return this;
-	}
-
-	@Deprecated
-	public StatusUpdate annotations(final Annotations annotations) {
-		setAnnotations(annotations);
-		return this;
-	}
-
 	public StatusUpdate displayCoordinates(final boolean displayCoordinates) {
 		setDisplayCoordinates(displayCoordinates);
 		return this;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public boolean equals(final Object o) {
 		if (this == o) return true;
@@ -86,7 +60,6 @@ public final class StatusUpdate implements Serializable {
 		if (displayCoordinates != that.displayCoordinates) return false;
 		if (inReplyToStatusId != that.inReplyToStatusId) return false;
 		if (possiblySensitive != that.possiblySensitive) return false;
-		if (annotations != null ? !annotations.equals(that.annotations) : that.annotations != null) return false;
 		if (location != null ? !location.equals(that.location) : that.location != null) return false;
 		if (mediaBody != null ? !mediaBody.equals(that.mediaBody) : that.mediaBody != null) return false;
 		if (mediaFile != null ? !mediaFile.equals(that.mediaFile) : that.mediaFile != null) return false;
@@ -95,11 +68,6 @@ public final class StatusUpdate implements Serializable {
 		if (status != null ? !status.equals(that.status) : that.status != null) return false;
 
 		return true;
-	}
-
-	@Deprecated
-	public Annotations getAnnotations() {
-		return annotations;
 	}
 
 	public long getInReplyToStatusId() {
@@ -118,7 +86,6 @@ public final class StatusUpdate implements Serializable {
 		return status;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public int hashCode() {
 		int result = status != null ? status.hashCode() : 0;
@@ -126,7 +93,6 @@ public final class StatusUpdate implements Serializable {
 		result = 31 * result + (location != null ? location.hashCode() : 0);
 		result = 31 * result + (placeId != null ? placeId.hashCode() : 0);
 		result = 31 * result + (displayCoordinates ? 1 : 0);
-		result = 31 * result + (annotations != null ? annotations.hashCode() : 0);
 		result = 31 * result + (possiblySensitive ? 1 : 0);
 		result = 31 * result + (mediaName != null ? mediaName.hashCode() : 0);
 		result = 31 * result + (mediaBody != null ? mediaBody.hashCode() : 0);
@@ -184,11 +150,6 @@ public final class StatusUpdate implements Serializable {
 		return this;
 	}
 
-	@Deprecated
-	public void setAnnotations(final Annotations annotations) {
-		this.annotations = annotations;
-	}
-
 	public void setDisplayCoordinates(final boolean displayCoordinates) {
 		this.displayCoordinates = displayCoordinates;
 	}
@@ -231,8 +192,8 @@ public final class StatusUpdate implements Serializable {
 	public String toString() {
 		return "StatusUpdate{" + "status='" + status + '\'' + ", inReplyToStatusId=" + inReplyToStatusId
 				+ ", location=" + location + ", placeId='" + placeId + '\'' + ", displayCoordinates="
-				+ displayCoordinates + ", annotations=" + annotations + ", possiblySensitive=" + possiblySensitive
-				+ ", mediaName='" + mediaName + '\'' + ", mediaBody=" + mediaBody + ", mediaFile=" + mediaFile + '}';
+				+ displayCoordinates + ", possiblySensitive=" + possiblySensitive + ", mediaName='" + mediaName + '\''
+				+ ", mediaBody=" + mediaBody + ", mediaFile=" + mediaFile + '}';
 	}
 
 	private void appendParameter(final String name, final double value, final List<HttpParameter> params) {
@@ -249,7 +210,6 @@ public final class StatusUpdate implements Serializable {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	/* package */HttpParameter[] asHttpParameterArray(final HttpParameter includeEntities) {
 		final ArrayList<HttpParameter> params = new ArrayList<HttpParameter>();
 		appendParameter("status", status, params);
@@ -263,9 +223,6 @@ public final class StatusUpdate implements Serializable {
 		appendParameter("place_id", placeId, params);
 		if (!displayCoordinates) {
 			appendParameter("display_coordinates", "false", params);
-		}
-		if (annotations != null && !annotations.isEmpty()) {
-			appendParameter("annotations", annotations.asParameterValue(), params);
 		}
 		params.add(includeEntities);
 		if (null != mediaFile) {

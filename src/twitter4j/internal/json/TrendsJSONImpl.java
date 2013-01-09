@@ -16,7 +16,7 @@
 
 package twitter4j.internal.json;
 
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getDate;
+import static twitter4j.internal.util.InternalParseUtil.getDate;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -34,7 +34,7 @@ import twitter4j.Trends;
 import twitter4j.TwitterException;
 import twitter4j.conf.Configuration;
 import twitter4j.http.HttpResponse;
-import twitter4j.internal.util.z_T4JInternalParseUtil;
+import twitter4j.internal.util.InternalParseUtil;
 
 /**
  * A data class representing Trends.
@@ -145,7 +145,7 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 			} else {
 				json = new JSONObject(jsonStr);
 			}
-			asOf = z_T4JInternalParseUtil.parseTrendsDate(json.getString("as_of"));
+			asOf = InternalParseUtil.parseTrendsDate(json.getString("as_of"));
 			location = extractLocation(json);
 			final JSONArray array = json.getJSONArray("trends");
 			trendAt = asOf;
@@ -187,7 +187,7 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 		final JSONObject json = res.asJSONObject();
 		ResponseList<Trends> trends;
 		try {
-			final Date asOf = z_T4JInternalParseUtil.parseTrendsDate(json.getString("as_of"));
+			final Date asOf = InternalParseUtil.parseTrendsDate(json.getString("as_of"));
 			final JSONObject trendsJson = json.getJSONObject("trends");
 			final Location location = extractLocation(json);
 			trends = new ResponseListImpl<Trends>(trendsJson.length(), res);

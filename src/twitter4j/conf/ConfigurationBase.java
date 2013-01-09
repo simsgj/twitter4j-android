@@ -25,6 +25,9 @@ import java.util.Map;
 import twitter4j.TwitterConstants;
 import twitter4j.Version;
 import twitter4j.http.HostAddressResolver;
+import twitter4j.http.HttpClient;
+import twitter4j.http.HttpClientConfiguration;
+import twitter4j.http.HttpClientImpl;
 
 /**
  * Configuration base class with default settings.
@@ -49,6 +52,8 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 	private int httpProxyPort;
 	private int httpConnectionTimeout;
 	private int httpReadTimeout;
+
+	private String httpClientImplementation;
 
 	private int httpRetryCount;
 	private int httpRetryIntervalSeconds;
@@ -109,6 +114,7 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 		setHttpRetryIntervalSeconds(5);
 		setHttpMaxTotalConnections(20);
 		setHttpDefaultMaxPerRoute(2);
+		setHttpClientImplementation(null);
 		setOAuthConsumerKey(null);
 		setOAuthConsumerSecret(null);
 		setOAuthAccessToken(null);
@@ -252,6 +258,11 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 	@Override
 	public HostAddressResolver getHostAddressResolver() {
 		return hostAddressResolver;
+	}
+
+	@Override
+	public String getHttpClientImplementation() {
+		return httpClientImplementation;
 	}
 
 	@Override
@@ -495,6 +506,19 @@ class ConfigurationBase implements TwitterConstants, Configuration {
 
 	public void setHostAddressResolver(final HostAddressResolver resolver) {
 		hostAddressResolver = resolver;
+	}
+
+	public void setHttpClientImplementation(final Class<? extends HttpClient> httpClientImplementation) {
+		if (httpClientImplementation != null) {
+			try {
+				httpClientImplementation.getConstructor(HttpClientConfiguration.class);
+				this.httpClientImplementation = httpClientImplementation.getName();
+			} catch (final NoSuchMethodException e) {
+				this.httpClientImplementation = HttpClientImpl.class.getName();
+			}
+		} else {
+			this.httpClientImplementation = HttpClientImpl.class.getName();
+		}
 	}
 
 	protected void cacheInstance() {

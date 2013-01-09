@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 import twitter4j.ResponseList;
 import twitter4j.TwitterException;
-import twitter4j.api.HelpMethods;
+import twitter4j.api.HelpResources;
 import twitter4j.conf.Configuration;
 import twitter4j.http.HttpResponse;
 
@@ -29,7 +29,7 @@ import twitter4j.http.HttpResponse;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.2.3
  */
-public class LanguageJSONImpl implements HelpMethods.Language {
+public class LanguageJSONImpl implements HelpResources.Language {
 	private String name;
 	private String code;
 	private String status;
@@ -65,20 +65,21 @@ public class LanguageJSONImpl implements HelpMethods.Language {
 		}
 	}
 
-	static ResponseList<HelpMethods.Language> createLanguageList(final HttpResponse res, final Configuration conf)
+	static ResponseList<HelpResources.Language> createLanguageList(final HttpResponse res, final Configuration conf)
 			throws TwitterException {
 		return createLanguageList(res.asJSONArray(), res, conf);
 	}
 
 	/* package */
-	static ResponseList<HelpMethods.Language> createLanguageList(final JSONArray list, final HttpResponse res,
+	static ResponseList<HelpResources.Language> createLanguageList(final JSONArray list, final HttpResponse res,
 			final Configuration conf) throws TwitterException {
 		try {
 			final int size = list.length();
-			final ResponseList<HelpMethods.Language> languages = new ResponseListImpl<HelpMethods.Language>(size, res);
+			final ResponseList<HelpResources.Language> languages = new ResponseListImpl<HelpResources.Language>(size,
+					res);
 			for (int i = 0; i < size; i++) {
 				final JSONObject json = list.getJSONObject(i);
-				final HelpMethods.Language language = new LanguageJSONImpl(json);
+				final HelpResources.Language language = new LanguageJSONImpl(json);
 				languages.add(language);
 			}
 			return languages;

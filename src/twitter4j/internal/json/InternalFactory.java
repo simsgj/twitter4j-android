@@ -16,6 +16,8 @@
  */
 package twitter4j.internal.json;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 import twitter4j.AccountSettings;
@@ -26,9 +28,9 @@ import twitter4j.DirectMessage;
 import twitter4j.Friendship;
 import twitter4j.IDs;
 import twitter4j.Location;
+import twitter4j.OEmbed;
 import twitter4j.PagableResponseList;
 import twitter4j.Place;
-import twitter4j.ProfileImage;
 import twitter4j.Query;
 import twitter4j.QueryResult;
 import twitter4j.RateLimitStatus;
@@ -42,14 +44,14 @@ import twitter4j.TwitterAPIConfiguration;
 import twitter4j.TwitterException;
 import twitter4j.User;
 import twitter4j.UserList;
-import twitter4j.api.HelpMethods;
+import twitter4j.api.HelpResources;
 import twitter4j.http.HttpResponse;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.2.4
  */
-public interface z_T4JInternalFactory {
+public interface InternalFactory {
 	AccountSettings createAccountSettings(HttpResponse res) throws TwitterException;
 
 	AccountTotals createAccountTotals(HttpResponse res) throws TwitterException;
@@ -74,9 +76,11 @@ public interface z_T4JInternalFactory {
 
 	IDs createIDs(HttpResponse res) throws TwitterException;
 
-	ResponseList<HelpMethods.Language> createLanguageList(HttpResponse res) throws TwitterException;
+	ResponseList<HelpResources.Language> createLanguageList(HttpResponse res) throws TwitterException;
 
 	ResponseList<Location> createLocationList(HttpResponse res) throws TwitterException;
+
+	OEmbed createOEmbed(HttpResponse httpResponse) throws TwitterException;
 
 	PagableResponseList<User> createPagableUserList(HttpResponse res) throws TwitterException;
 
@@ -86,11 +90,9 @@ public interface z_T4JInternalFactory {
 
 	ResponseList<Place> createPlaceList(HttpResponse res) throws TwitterException;
 
-	ProfileImage createProfileImage(HttpResponse res) throws TwitterException;
-
 	QueryResult createQueryResult(HttpResponse res, Query query) throws TwitterException;
 
-	RateLimitStatus createRateLimitStatus(HttpResponse res) throws TwitterException;
+	Map<String, RateLimitStatus> createRateLimitStatus(HttpResponse res) throws TwitterException;
 
 	Relationship createRelationship(HttpResponse res) throws TwitterException;
 

@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.zip.GZIPInputStream;
 
-final class StreamingGZIPInputStream extends GZIPInputStream {
+public final class StreamingGZIPInputStream extends GZIPInputStream {
 
 	private final InputStream wrapped;
 

@@ -16,6 +16,8 @@
  */
 package twitter4j.internal.json;
 
+import java.util.Map;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,9 +32,9 @@ import twitter4j.GeoLocation;
 import twitter4j.HashtagEntity;
 import twitter4j.IDs;
 import twitter4j.Location;
+import twitter4j.OEmbed;
 import twitter4j.PagableResponseList;
 import twitter4j.Place;
-import twitter4j.ProfileImage;
 import twitter4j.Query;
 import twitter4j.QueryResult;
 import twitter4j.RateLimitStatus;
@@ -48,20 +50,20 @@ import twitter4j.URLEntity;
 import twitter4j.User;
 import twitter4j.UserList;
 import twitter4j.UserMentionEntity;
-import twitter4j.api.HelpMethods;
+import twitter4j.api.HelpResources;
 import twitter4j.conf.Configuration;
 import twitter4j.http.HttpResponse;
-import twitter4j.internal.util.z_T4JInternalStringUtil;
+import twitter4j.internal.util.InternalStringUtil;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.2.4
  */
-public class z_T4JInternalJSONImplFactory implements z_T4JInternalFactory {
+public class InternalJSONImplFactory implements InternalFactory {
 
 	private final Configuration conf;
 
-	public z_T4JInternalJSONImplFactory(final Configuration conf) {
+	public InternalJSONImplFactory(final Configuration conf) {
 		this.conf = conf;
 	}
 
@@ -126,13 +128,18 @@ public class z_T4JInternalJSONImplFactory implements z_T4JInternalFactory {
 	}
 
 	@Override
-	public ResponseList<HelpMethods.Language> createLanguageList(final HttpResponse res) throws TwitterException {
+	public ResponseList<HelpResources.Language> createLanguageList(final HttpResponse res) throws TwitterException {
 		return LanguageJSONImpl.createLanguageList(res, conf);
 	}
 
 	@Override
 	public ResponseList<Location> createLocationList(final HttpResponse res) throws TwitterException {
 		return LocationJSONImpl.createLocationList(res, conf);
+	}
+
+	@Override
+	public OEmbed createOEmbed(final HttpResponse res) throws TwitterException {
+		return new OEmbedJSONImpl(res, conf);
 	}
 
 	@Override
@@ -163,11 +170,6 @@ public class z_T4JInternalJSONImplFactory implements z_T4JInternalFactory {
 	}
 
 	@Override
-	public ProfileImage createProfileImage(final HttpResponse res) throws TwitterException {
-		return new ProfileImageImpl(res);
-	}
-
-	@Override
 	public QueryResult createQueryResult(final HttpResponse res, final Query query) throws TwitterException {
 		try {
 			return new QueryResultJSONImpl(res);
@@ -180,8 +182,8 @@ public class z_T4JInternalJSONImplFactory implements z_T4JInternalFactory {
 	}
 
 	@Override
-	public RateLimitStatus createRateLimitStatus(final HttpResponse res) throws TwitterException {
-		return new RateLimitStatusJSONImpl(res, conf);
+	public Map<String, RateLimitStatus> createRateLimitStatus(final HttpResponse res) throws TwitterException {
+		return RateLimitStatusJSONImpl.createRateLimitStatuses(res, conf);
 	}
 
 	@Override
@@ -271,9 +273,9 @@ public class z_T4JInternalJSONImplFactory implements z_T4JInternalFactory {
 	@Override
 	public boolean equals(final Object o) {
 		if (this == o) return true;
-		if (!(o instanceof z_T4JInternalJSONImplFactory)) return false;
+		if (!(o instanceof InternalJSONImplFactory)) return false;
 
-		final z_T4JInternalJSONImplFactory that = (z_T4JInternalJSONImplFactory) o;
+		final InternalJSONImplFactory that = (InternalJSONImplFactory) o;
 
 		if (conf != null ? !conf.equals(that.conf) : that.conf != null) return false;
 
@@ -288,10 +290,6 @@ public class z_T4JInternalJSONImplFactory implements z_T4JInternalFactory {
 	@Override
 	public String toString() {
 		return "JSONImplFactory{" + "conf=" + conf + '}';
-	}
-
-	public static RateLimitStatus createFeatureSpecificRateLimitStatusFromResponseHeader(final HttpResponse res) {
-		return RateLimitStatusJSONImpl.createFeatureSpecificRateLimitStatusFromResponseHeader(res);
 	}
 
 	/**
@@ -362,7 +360,7 @@ public class z_T4JInternalJSONImplFactory implements z_T4JInternalFactory {
 			if (!json.isNull("geo")) {
 				String coordinates = json.getJSONObject("geo").getString("coordinates");
 				coordinates = coordinates.substring(1, coordinates.length() - 1);
-				final String[] point = z_T4JInternalStringUtil.split(coordinates, ",");
+				final String[] point = InternalStringUtil.split(coordinates, ",");
 				return new GeoLocation(Double.parseDouble(point[0]), Double.parseDouble(point[1]));
 			}
 		} catch (final JSONException jsone) {

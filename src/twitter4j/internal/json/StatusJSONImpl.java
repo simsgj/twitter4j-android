@@ -16,19 +16,20 @@
 
 package twitter4j.internal.json;
 
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getBoolean;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getDate;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getLong;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
+import static twitter4j.internal.util.InternalParseUtil.getBoolean;
+import static twitter4j.internal.util.InternalParseUtil.getDate;
+import static twitter4j.internal.util.InternalParseUtil.getHTMLUnescapedString;
+import static twitter4j.internal.util.InternalParseUtil.getLong;
+import static twitter4j.internal.util.InternalParseUtil.getRawString;
+import static twitter4j.internal.util.InternalParseUtil.getUnescapedString;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import twitter4j.Annotations;
 import twitter4j.GeoLocation;
 import twitter4j.HashtagEntity;
 import twitter4j.MediaEntity;
@@ -48,14 +49,13 @@ import twitter4j.internal.logging.Logger;
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-@SuppressWarnings("deprecation")
 final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8982739445731837548L;
 
-	private static final Logger logger = Logger.getLogger();
+	private static final Logger logger = Logger.getLogger(StatusJSONImpl.class);
 
 	private Date createdAt;
 	private long id;
@@ -65,23 +65,23 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 	private boolean isTruncated;
 	private long inReplyToStatusId;
 	private long inReplyToUserId;
+	private long currentUserRetweet;
 	private boolean isFavorited;
 	private String inReplyToScreenName;
 	private GeoLocation geoLocation = null;
 	private Place place = null;
 	private long retweetCount;
 	private boolean wasRetweetedByMe;
+	private boolean isPossiblySensitive;
 
 	private String[] contributors = null;
 	private long[] contributorsIDs;
-	private Annotations annotations = null;
 
 	private Status retweetedStatus;
 	private UserMentionEntity[] userMentionEntities;
 	private URLEntity[] urlEntities;
 	private HashtagEntity[] hashtagEntities;
 	private MediaEntity[] mediaEntities;
-	private Status myRetweetedStatus;
 
 	private User user = null;
 
@@ -116,14 +116,6 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Annotations getAnnotations() {
-		return annotations;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public long[] getContributors() {
 		if (contributors != null) {
 			// http://twitter4j.org/jira/browse/TFJ-592
@@ -148,6 +140,11 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 	@Override
 	public Date getCreatedAt() {
 		return createdAt;
+	}
+
+	@Override
+	public long getCurrentUserRetweet() {
+		return currentUserRetweet;
 	}
 
 	/**
@@ -204,11 +201,6 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 	@Override
 	public MediaEntity[] getMediaEntities() {
 		return mediaEntities;
-	}
-
-	@Override
-	public Status getMyRetweetedStatus() {
-		return myRetweetedStatus;
 	}
 
 	/**
@@ -293,6 +285,11 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 		return isFavorited;
 	}
 
+	@Override
+	public boolean isPossiblySensitive() {
+		return isPossiblySensitive;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -321,26 +318,29 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 	public String toString() {
 		return "StatusJSONImpl{createdAt=" + createdAt + ", id=" + id + ", text=" + text + ", rawText=" + rawText
 				+ ", source=" + source + ", isTruncated=" + isTruncated + ", inReplyToStatusId=" + inReplyToStatusId
-				+ ", inReplyToUserId=" + inReplyToUserId + ", isFavorited=" + isFavorited + ", inReplyToScreenName="
-				+ inReplyToScreenName + ", geoLocation=" + geoLocation + ", place=" + place + ", retweetCount="
-				+ retweetCount + ", wasRetweetedByMe=" + wasRetweetedByMe + ", contributors=" + contributors
-				+ ", contributorsIDs=" + contributorsIDs + ", annotations=" + annotations + ", retweetedStatus="
-				+ retweetedStatus + ", userMentionEntities=" + userMentionEntities + ", urlEntities=" + urlEntities
-				+ ", hashtagEntities=" + hashtagEntities + ", mediaEntities=" + mediaEntities + ", myRetweetedStatus="
-				+ myRetweetedStatus + ", user=" + user + "}";
+				+ ", inReplyToUserId=" + inReplyToUserId + ", currentUserRetweet=" + currentUserRetweet
+				+ ", isFavorited=" + isFavorited + ", inReplyToScreenName=" + inReplyToScreenName + ", geoLocation="
+				+ geoLocation + ", place=" + place + ", retweetCount=" + retweetCount + ", wasRetweetedByMe="
+				+ wasRetweetedByMe + ", isPossiblySensitive=" + isPossiblySensitive + ", contributors="
+				+ Arrays.toString(contributors) + ", contributorsIDs=" + Arrays.toString(contributorsIDs)
+				+ ", retweetedStatus=" + retweetedStatus + ", userMentionEntities="
+				+ Arrays.toString(userMentionEntities) + ", urlEntities=" + Arrays.toString(urlEntities)
+				+ ", hashtagEntities=" + Arrays.toString(hashtagEntities) + ", mediaEntities="
+				+ Arrays.toString(mediaEntities) + ", user=" + user + "}";
 	}
 
 	private void init(final JSONObject json) throws TwitterException {
 		id = getLong("id", json);
-		text = getUnescapedString("text", json);
 		rawText = getRawString("text", json);
-		source = getUnescapedString("source", json);
+		text = getUnescapedString("text", json);
+		source = getHTMLUnescapedString("source", json);
 		createdAt = getDate("created_at", json);
 		isTruncated = getBoolean("truncated", json);
 		inReplyToStatusId = getLong("in_reply_to_status_id", json);
 		inReplyToUserId = getLong("in_reply_to_user_id", json);
 		isFavorited = getBoolean("favorited", json);
-		inReplyToScreenName = getUnescapedString("in_reply_to_screen_name", json);
+		inReplyToScreenName = getHTMLUnescapedString("in_reply_to_screen_name", json);
+		isPossiblySensitive = getBoolean("possibly_sensitive", json);
 		retweetCount = getLong("retweet_count", json);
 		try {
 			if (!json.isNull("user")) {
@@ -349,7 +349,7 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
 		}
-		geoLocation = z_T4JInternalJSONImplFactory.createGeoLocation(json);
+		geoLocation = InternalJSONImplFactory.createGeoLocation(json);
 		if (!json.isNull("place")) {
 			try {
 				place = new PlaceJSONImpl(json.getJSONObject("place"));
@@ -424,17 +424,10 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 				throw new TwitterException(jsone);
 			}
 		}
-		if (!json.isNull("annotations")) {
-			try {
-				final JSONArray annotationsArray = json.getJSONArray("annotations");
-				annotations = new Annotations(annotationsArray);
-			} catch (final JSONException ignore) {
-			}
-		}
 		if (!json.isNull("current_user_retweet")) {
 			try {
-				myRetweetedStatus = new StatusJSONImpl(json.getJSONObject("current_user_retweet"));
-				wasRetweetedByMe = true;
+				currentUserRetweet = getLong("id", json.getJSONObject("current_user_retweet"));
+				wasRetweetedByMe = currentUserRetweet > 0;
 			} catch (final JSONException ignore) {
 				ignore.printStackTrace();
 				logger.warn("failed to parse current_user_retweet:" + json);

@@ -16,9 +16,9 @@
 
 package twitter4j.internal.json;
 
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getBoolean;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getLong;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
+import static twitter4j.internal.util.InternalParseUtil.getBoolean;
+import static twitter4j.internal.util.InternalParseUtil.getHTMLUnescapedString;
+import static twitter4j.internal.util.InternalParseUtil.getLong;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,8 +66,8 @@ import twitter4j.http.HttpResponse;
 			final JSONObject targetJson = relationship.getJSONObject("target");
 			sourceUserId = getLong("id", sourceJson);
 			targetUserId = getLong("id", targetJson);
-			sourceUserScreenName = getUnescapedString("screen_name", sourceJson);
-			targetUserScreenName = getUnescapedString("screen_name", targetJson);
+			sourceUserScreenName = getHTMLUnescapedString("screen_name", sourceJson);
+			targetUserScreenName = getHTMLUnescapedString("screen_name", targetJson);
 			sourceBlockingTarget = getBoolean("blocking", sourceJson);
 			sourceFollowingTarget = getBoolean("following", sourceJson);
 			sourceFollowedByTarget = getBoolean("followed_by", sourceJson);

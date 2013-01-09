@@ -25,9 +25,9 @@ import twitter4j.User;
 
 /**
  * @author Joern Huxhorn - jhuxhorn at googlemail.com
- * @author Mocel - docel77 at gmail.com
  */
-public interface FriendshipMethods {
+public interface FriendsFollowersResources {
+
 	/**
 	 * Allows the authenticating users to follow the user specified in the ID
 	 * parameter.<br>
@@ -143,22 +143,138 @@ public interface FriendshipMethods {
 	User destroyFriendship(String screenName) throws TwitterException;
 
 	/**
-	 * Tests for the existence of friendship between two users. Will return true
-	 * if user_a follows user_b, otherwise will return false. <br>
-	 * This method calls http://api.twitter.com/1.1/friendships/exists.json
+	 * Returns an array of numeric IDs for every user the specified user is
+	 * followed by. <br>
+	 * This method calls http://api.twitter.com/1.1/followers/ids.json
 	 * 
-	 * @param userA The ID or screen_name of the first user to test friendship
-	 *            for.
-	 * @param userB The ID or screen_name of the second user to test friendship
-	 *            for.
-	 * @return if a friendship exists between two users.
+	 * @param cursor Causes the list of connections to be broken into pages of
+	 *            no more than 5000 IDs at a time. The number of IDs returned is
+	 *            not guaranteed to be 5000 as suspended users are filterd out
+	 *            after connections are queried. <br/>
+	 *            To begin paging provide a value of -1 as the cursor. The
+	 *            response from the API will include a previous_cursor and
+	 *            next_cursor to allow paging back and forth.
+	 * @return The ID or screen_name of the user to retrieve the friends ID list
+	 *         for.
 	 * @throws TwitterException when Twitter service or network is unavailable
-	 * @see <a
-	 *      href="https://dev.twitter.com/docs/api/1.1/get/friendships/exists">GET
-	 *      friendships/exists | Twitter Developers</a>
-	 * @since Twitter4J 2.0.1
+	 * @see <a href="https://dev.twitter.com/docs/api/1.1/get/followers/ids">GET
+	 *      followers/ids | Twitter Developers</a>
+	 * @since Twitter4J 2.0.10
 	 */
-	boolean existsFriendship(String userA, String userB) throws TwitterException;
+	IDs getFollowersIDs(long cursor) throws TwitterException;
+
+	/**
+	 * Returns an array of numeric IDs for every user the specified user is
+	 * followed by. <br>
+	 * This method calls http://api.twitter.com/1.1/followers/ids.json
+	 * 
+	 * @param userId Specifies the ID of the user for whom to return the
+	 *            followers list.
+	 * @param cursor Causes the list of connections to be broken into pages of
+	 *            no more than 5000 IDs at a time. The number of IDs returned is
+	 *            not guaranteed to be 5000 as suspended users are filterd out
+	 *            after connections are queried. <br/>
+	 *            To begin paging provide a value of -1 as the cursor. The
+	 *            response from the API will include a previous_cursor and
+	 *            next_cursor to allow paging back and forth.
+	 * @return The ID or screen_name of the user to retrieve the friends ID list
+	 *         for.
+	 * @throws TwitterException when Twitter service or network is unavailable
+	 * @see <a href="https://dev.twitter.com/docs/api/1.1/get/followers/ids">GET
+	 *      followers/ids | Twitter Developers</a>
+	 * @since Twitter4J 2.0.10
+	 */
+	IDs getFollowersIDs(long userId, long cursor) throws TwitterException;
+
+	/**
+	 * Returns an array of numeric IDs for every user the specified user is
+	 * followed by. <br>
+	 * This method calls http://api.twitter.com/1.1/followers/ids.json
+	 * 
+	 * @param screenName Specifies the screen name of the user for whom to
+	 *            return the followers list.
+	 * @param cursor Causes the list of connections to be broken into pages of
+	 *            no more than 5000 IDs at a time. The number of IDs returned is
+	 *            not guaranteed to be 5000 as suspended users are filterd out
+	 *            after connections are queried. <br/>
+	 *            To begin paging provide a value of -1 as the cursor. The
+	 *            response from the API will include a previous_cursor and
+	 *            next_cursor to allow paging back and forth.
+	 * @return The ID or screen_name of the user to retrieve the friends ID list
+	 *         for.
+	 * @throws TwitterException when Twitter service or network is unavailable
+	 * @see <a href="https://dev.twitter.com/docs/api/1.1/get/followers/ids">GET
+	 *      followers/ids | Twitter Developers</a>
+	 * @since Twitter4J 2.0.10
+	 */
+	IDs getFollowersIDs(String screenName, long cursor) throws TwitterException;
+
+	/**
+	 * Returns an array of numeric IDs for every user the authenticating user is
+	 * following. <br>
+	 * This method calls http://api.twitter.com/1.1/friends/ids.json
+	 * 
+	 * @param cursor Causes the list of connections to be broken into pages of
+	 *            no more than 5000 IDs at a time. The number of IDs returned is
+	 *            not guaranteed to be 5000 as suspended users are filterd out
+	 *            after connections are queried. <br/>
+	 *            To begin paging provide a value of -1 as the cursor. The
+	 *            response from the API will include a previous_cursor and
+	 *            next_cursor to allow paging back and forth.
+	 * @return an array of numeric IDs for every user the authenticating user is
+	 *         following
+	 * @throws TwitterException when Twitter service or network is unavailable
+	 * @see <a href="https://dev.twitter.com/docs/api/1.1/get/friends/ids">GET
+	 *      friends/ids | Twitter Developers</a>
+	 * @since Twitter4J 2.0.10
+	 */
+	IDs getFriendsIDs(long cursor) throws TwitterException;
+
+	/**
+	 * Returns an array of numeric IDs for every user the specified user is
+	 * following. <br>
+	 * This method calls http://api.twitter.com/1.1/friends/ids.json
+	 * 
+	 * @param userId Specifies the ID of the user for whom to return the friends
+	 *            list.
+	 * @param cursor Causes the list of connections to be broken into pages of
+	 *            no more than 5000 IDs at a time. The number of IDs returned is
+	 *            not guaranteed to be 5000 as suspended users are filterd out
+	 *            after connections are queried. <br/>
+	 *            To begin paging provide a value of -1 as the cursor. The
+	 *            response from the API will include a previous_cursor and
+	 *            next_cursor to allow paging back and forth.
+	 * @return an array of numeric IDs for every user the specified user is
+	 *         following
+	 * @throws TwitterException when Twitter service or network is unavailable
+	 * @see <a href="https://dev.twitter.com/docs/api/1.1/get/friends/ids">GET
+	 *      friends/ids | Twitter Developers</a>
+	 * @since Twitter4J 2.0.10
+	 */
+	IDs getFriendsIDs(long userId, long cursor) throws TwitterException;
+
+	/**
+	 * Returns an array of numeric IDs for every user the specified user is
+	 * following. <br>
+	 * This method calls http://api.twitter.com/1.1/friends/ids.json
+	 * 
+	 * @param screenName Specifies the screen name of the user for whom to
+	 *            return the friends list.
+	 * @param cursor Causes the list of connections to be broken into pages of
+	 *            no more than 5000 IDs at a time. The number of IDs returned is
+	 *            not guaranteed to be 5000 as suspended users are filterd out
+	 *            after connections are queried. <br/>
+	 *            To begin paging provide a value of -1 as the cursor. The
+	 *            response from the API will include a previous_cursor and
+	 *            next_cursor to allow paging back and forth.
+	 * @return an array of numeric IDs for every user the specified user is
+	 *         following
+	 * @throws TwitterException when Twitter service or network is unavailable
+	 * @see <a href="https://dev.twitter.com/docs/api/1.1/get/friends/ids">GET
+	 *      friends/ids | Twitter Developers</a>
+	 * @since Twitter4J 2.0.10
+	 */
+	IDs getFriendsIDs(String screenName, long cursor) throws TwitterException;
 
 	/**
 	 * Returns an array of numeric IDs for every user who has a pending request
@@ -176,22 +292,6 @@ public interface FriendshipMethods {
 	 * @since Twitter4J 2.1.2
 	 */
 	IDs getIncomingFriendships(long cursor) throws TwitterException;
-
-	/**
-	 * Returns the list of user_ids for which the authenticating user has said
-	 * they do not want to receive retweets from when successful. <br>
-	 * Now the return value had no data for paging. <br>
-	 * This methos calls
-	 * http://api.twitter.com/1.1/friendships/no_retweet_ids.json
-	 * 
-	 * @return IDs
-	 * @throws TwitterException when Twitter service or network is unavailable
-	 * @see <a
-	 *      href="http://groups.google.com/group/twitter-api-announce/browse_thread/thread/6f734611ac57e281">Some
-	 *      changes and updates to the API and Tweet Button - Twitter API
-	 *      Announcements | Google Groups</a>
-	 */
-	IDs getNoRetweetIds() throws TwitterException;
 
 	/**
 	 * Returns an array of numeric IDs for every protected user for whom the

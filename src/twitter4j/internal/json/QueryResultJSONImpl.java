@@ -16,12 +16,12 @@
 
 package twitter4j.internal.json;
 
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getDouble;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getInt;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getLong;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getURLDecodedString;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
+import static twitter4j.internal.util.InternalParseUtil.getDouble;
+import static twitter4j.internal.util.InternalParseUtil.getHTMLUnescapedString;
+import static twitter4j.internal.util.InternalParseUtil.getInt;
+import static twitter4j.internal.util.InternalParseUtil.getLong;
+import static twitter4j.internal.util.InternalParseUtil.getRawString;
+import static twitter4j.internal.util.InternalParseUtil.getURLDecodedString;
 
 import java.util.Arrays;
 
@@ -58,7 +58,7 @@ import twitter4j.http.HttpResponse;
 			final JSONObject search_metadata = json.getJSONObject("search_metadata");
 			sinceId = getLong("since_id", search_metadata);
 			maxId = getLong("max_id", search_metadata);
-			refreshUrl = getUnescapedString("refresh_url", search_metadata);
+			refreshUrl = getHTMLUnescapedString("refresh_url", search_metadata);
 
 			resultsPerPage = getInt("results_per_page", search_metadata);
 			warning = getRawString("warning", search_metadata);

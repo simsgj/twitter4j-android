@@ -16,7 +16,7 @@
 
 package twitter4j.internal.json;
 
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getLong;
+import static twitter4j.internal.util.InternalParseUtil.getLong;
 
 import org.json.JSONArray;
 import org.json.JSONException;

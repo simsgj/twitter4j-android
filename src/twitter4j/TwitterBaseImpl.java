@@ -19,6 +19,8 @@ package twitter4j;
 import static twitter4j.http.HttpResponseCode.ENHANCE_YOUR_CLAIM;
 import static twitter4j.http.HttpResponseCode.SERVICE_UNAVAILABLE;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -36,12 +38,13 @@ import twitter4j.auth.OAuthSupport;
 import twitter4j.auth.RequestToken;
 import twitter4j.conf.Configuration;
 import twitter4j.http.HttpClientWrapper;
+import twitter4j.http.HttpParameter;
 import twitter4j.http.HttpResponse;
 import twitter4j.http.HttpResponseEvent;
 import twitter4j.http.HttpResponseListener;
 import twitter4j.http.XAuthAuthorization;
-import twitter4j.internal.json.z_T4JInternalFactory;
-import twitter4j.internal.json.z_T4JInternalJSONImplFactory;
+import twitter4j.internal.json.InternalFactory;
+import twitter4j.internal.json.InternalJSONImplFactory;
 
 /**
  * Base class of Twitter / AsyncTwitter / TwitterStream supports OAuth.
@@ -56,7 +59,7 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 	protected transient HttpClientWrapper http;
 	private List<RateLimitStatusListener> rateLimitStatusListeners = new ArrayList<RateLimitStatusListener>(0);
 
-	protected z_T4JInternalFactory factory;
+	protected InternalFactory factory;
 
 	protected Authorization auth;
 
@@ -287,7 +290,7 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 				rateLimitStatus = te.getRateLimitStatus();
 				statusCode = te.getStatusCode();
 			} else {
-				rateLimitStatus = z_T4JInternalJSONImplFactory.createRateLimitStatusFromResponseHeader(res);
+				rateLimitStatus = InternalJSONImplFactory.createRateLimitStatusFromResponseHeader(res);
 				statusCode = res.getStatusCode();
 			}
 			if (rateLimitStatus != null) {
@@ -351,6 +354,46 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 				+ rateLimitStatusListeners + ", auth=" + auth + '}';
 	}
 
+	protected void addParameterToList(final List<HttpParameter> params, final String paramName, final Boolean param) {
+		if (param != null) {
+			params.add(new HttpParameter(paramName, param));
+		}
+	}
+
+	protected void addParameterToList(final List<HttpParameter> params, final String paramName, final Double param) {
+		if (param != null) {
+			params.add(new HttpParameter(paramName, param));
+		}
+	}
+
+	protected void addParameterToList(final List<HttpParameter> params, final String paramName, final Integer param) {
+		if (param != null) {
+			params.add(new HttpParameter(paramName, param));
+		}
+	}
+
+	protected void addParameterToList(final List<HttpParameter> params, final String paramName, final String param) {
+		if (param != null) {
+			params.add(new HttpParameter(paramName, param));
+		}
+	}
+
+	/**
+	 * Check the existence, and the type of the specified file.
+	 * 
+	 * @param image image to be uploaded
+	 * @throws TwitterException when the specified file is not found
+	 *             (FileNotFoundException will be nested) , or when the
+	 *             specified file object is not representing a file(IOException
+	 *             will be nested).
+	 */
+	protected void checkFileValidity(final File image) throws TwitterException {
+		if (!image.exists()) // noinspection ThrowableInstanceNeverThrown
+			throw new TwitterException(new FileNotFoundException(image + " is not found."));
+		if (!image.isFile()) // noinspection ThrowableInstanceNeverThrown
+			throw new TwitterException(new IOException(image + " is not a file."));
+	}
+
 	protected final void ensureAuthorizationEnabled() {
 		if (!auth.isEnabled())
 			throw new IllegalStateException(
@@ -375,8 +418,54 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 		return user;
 	}
 
+	protected HttpResponse get(final String url, final String sign_url, final HttpParameter... parameters)
+			throws TwitterException {
+		// intercept HTTP call for monitoring purposes
+		HttpResponse response = null;
+		final long start = System.currentTimeMillis();
+		try {
+			response = http.get(url, sign_url, parameters, auth);
+		} finally {
+			final long elapsedTime = System.currentTimeMillis() - start;
+			TwitterAPIMonitor.getInstance().methodCalled(url, elapsedTime, isOk(response));
+		}
+		return response;
+	}
+
+	protected boolean isOk(final HttpResponse response) {
+		return response != null && response.getStatusCode() < 300;
+	}
+
+	protected HttpParameter[] mergeParameters(final HttpParameter[] params1, final HttpParameter... params2) {
+		if (params1 != null && params2 != null) {
+			final HttpParameter[] params = new HttpParameter[params1.length + params2.length];
+			System.arraycopy(params1, 0, params, 0, params1.length);
+			System.arraycopy(params2, 0, params, params1.length, params2.length);
+			return params;
+		}
+		if (null == params1 && null == params2) return new HttpParameter[0];
+		if (params1 != null)
+			return params1;
+		else
+			return params2;
+	}
+
+	protected HttpResponse post(final String url, final String sign_url, final HttpParameter... parameters)
+			throws TwitterException {
+		// intercept HTTP call for monitoring purposes
+		HttpResponse response = null;
+		final long start = System.currentTimeMillis();
+		try {
+			response = http.post(url, sign_url, parameters, auth);
+		} finally {
+			final long elapsedTime = System.currentTimeMillis() - start;
+			TwitterAPIMonitor.getInstance().methodCalled(url, elapsedTime, isOk(response));
+		}
+		return response;
+	}
+
 	protected void setFactory() {
-		factory = new z_T4JInternalJSONImplFactory(conf);
+		factory = new InternalJSONImplFactory(conf);
 	}
 
 	private OAuthSupport getOAuth() {

@@ -16,8 +16,8 @@
 
 package twitter4j.internal.json;
 
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
+import static twitter4j.internal.util.InternalParseUtil.getHTMLUnescapedString;
+import static twitter4j.internal.util.InternalParseUtil.getRawString;
 
 import java.util.Arrays;
 
@@ -172,8 +172,8 @@ final class PlaceJSONImpl extends TwitterResponseImpl implements Place {
 
 	private void init(final JSONObject json) throws TwitterException {
 		try {
-			name = getUnescapedString("name", json);
-			streetAddress = getUnescapedString("street_address", json);
+			name = getHTMLUnescapedString("name", json);
+			streetAddress = getHTMLUnescapedString("street_address", json);
 			countryCode = getRawString("country_code", json);
 			id = getRawString("id", json);
 			country = getRawString("country", json);
@@ -188,7 +188,7 @@ final class PlaceJSONImpl extends TwitterResponseImpl implements Place {
 				final JSONObject boundingBoxJSON = json.getJSONObject("bounding_box");
 				boundingBoxType = getRawString("type", boundingBoxJSON);
 				final JSONArray array = boundingBoxJSON.getJSONArray("coordinates");
-				boundingBoxCoordinates = z_T4JInternalJSONImplFactory.coordinatesAsGeoLocationArray(array);
+				boundingBoxCoordinates = InternalJSONImplFactory.coordinatesAsGeoLocationArray(array);
 			} else {
 				boundingBoxType = null;
 				boundingBoxCoordinates = null;
@@ -202,7 +202,7 @@ final class PlaceJSONImpl extends TwitterResponseImpl implements Place {
 					geometryCoordinates = new GeoLocation[1][1];
 					geometryCoordinates[0][0] = new GeoLocation(array.getDouble(0), array.getDouble(1));
 				} else if (geometryType.equals("Polygon")) {
-					geometryCoordinates = z_T4JInternalJSONImplFactory.coordinatesAsGeoLocationArray(array);
+					geometryCoordinates = InternalJSONImplFactory.coordinatesAsGeoLocationArray(array);
 				} else {
 					// MultiPolygon currently unsupported.
 					geometryType = null;

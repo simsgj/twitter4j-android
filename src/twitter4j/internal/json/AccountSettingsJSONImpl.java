@@ -16,7 +16,7 @@
 
 package twitter4j.internal.json;
 
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getBoolean;
+import static twitter4j.internal.util.InternalParseUtil.getBoolean;
 
 import org.json.JSONArray;
 import org.json.JSONException;

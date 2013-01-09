@@ -27,18 +27,6 @@ import java.util.Date;
 public interface Status extends Comparable<Status>, TwitterResponse, EntitySupport, Serializable {
 
 	/**
-	 * Returns the annotations of the tweet. At the moment this code is written
-	 * (2010-08-18), Twitter Search API does not support annotations yet (so
-	 * even annotated tweets are returned without the annotations). This method
-	 * is included here for completeness and for future use.
-	 * 
-	 * @return the annotations
-	 * @since Twitter4J 2.1.4
-	 */
-	@Deprecated
-	Annotations getAnnotations();
-
-	/**
 	 * Returns an array of contributors, or null if no contributor is associated
 	 * with this status.
 	 * 
@@ -52,6 +40,8 @@ public interface Status extends Comparable<Status>, TwitterResponse, EntitySuppo
 	 * @return the created_at
 	 */
 	Date getCreatedAt();
+
+	long getCurrentUserRetweet();
 
 	/**
 	 * Returns The location that this tweet refers to if available.
@@ -90,8 +80,6 @@ public interface Status extends Comparable<Status>, TwitterResponse, EntitySuppo
 	 * @since Twitter4J 1.0.4
 	 */
 	long getInReplyToUserId();
-
-	Status getMyRetweetedStatus();
 
 	/**
 	 * Returns the place associated with the Tweet.
@@ -150,6 +138,8 @@ public interface Status extends Comparable<Status>, TwitterResponse, EntitySuppo
 	 */
 	boolean isFavorited();
 
+	boolean isPossiblySensitive();
+
 	/**
 	 * @since Twitter4J 2.0.10
 	 */
@@ -171,4 +161,5 @@ public interface Status extends Comparable<Status>, TwitterResponse, EntitySuppo
 	 * @since Twitter4J 1.0.4
 	 */
 	boolean isTruncated();
+
 }

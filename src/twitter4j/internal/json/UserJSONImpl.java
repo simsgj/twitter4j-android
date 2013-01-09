@@ -16,11 +16,11 @@
 
 package twitter4j.internal.json;
 
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getBoolean;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getDate;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getInt;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getLong;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
+import static twitter4j.internal.util.InternalParseUtil.getBoolean;
+import static twitter4j.internal.util.InternalParseUtil.getDate;
+import static twitter4j.internal.util.InternalParseUtil.getInt;
+import static twitter4j.internal.util.InternalParseUtil.getLong;
+import static twitter4j.internal.util.InternalParseUtil.getRawString;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -45,9 +45,6 @@ import twitter4j.http.HttpResponse;
  */
 /* package */final class UserJSONImpl extends TwitterResponseImpl implements User {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1401119968489672262L;
 	private long id;
 	private String name;
@@ -86,6 +83,7 @@ import twitter4j.http.HttpResponse;
 	private int listedCount;
 	private boolean isFollowRequestSent;
 	private String profileBannerImageUrl;
+	private boolean isDefaultProfileImage;
 
 	/* package */UserJSONImpl(final HttpResponse res, final Configuration conf) throws TwitterException {
 		super(res);
@@ -338,6 +336,11 @@ import twitter4j.http.HttpResponse;
 		return isContributorsEnabled;
 	}
 
+	@Override
+	public boolean isDefaultProfileImage() {
+		return isDefaultProfileImage;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -458,6 +461,7 @@ import twitter4j.http.HttpResponse;
 			statusesCount = getInt("statuses_count", json);
 			listedCount = getInt("listed_count", json);
 			isFollowRequestSent = getBoolean("follow_request_sent", json);
+			isDefaultProfileImage = getBoolean("default_profile_image", json);
 			if (!json.isNull("status")) {
 				final JSONObject statusJSON = json.getJSONObject("status");
 				status = new StatusJSONImpl(statusJSON);

@@ -25,7 +25,7 @@ import twitter4j.ResponseList;
 import twitter4j.TwitterException;
 import twitter4j.conf.Configuration;
 import twitter4j.http.HttpResponse;
-import twitter4j.internal.util.z_T4JInternalParseUtil;
+import twitter4j.internal.util.InternalParseUtil;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
@@ -94,7 +94,7 @@ final class CategoryJSONImpl implements Category {
 	void init(final JSONObject json) throws JSONException {
 		name = json.getString("name");
 		slug = json.getString("slug");
-		size = z_T4JInternalParseUtil.getInt("size", json);
+		size = InternalParseUtil.getInt("size", json);
 	}
 
 	static ResponseList<Category> createCategoriesList(final HttpResponse res, final Configuration conf)

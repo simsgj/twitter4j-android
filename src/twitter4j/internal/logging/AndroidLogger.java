@@ -24,7 +24,17 @@ import android.util.Log;
  */
 final class AndroidLogger extends Logger {
 
-	private static final String LOGTAG = "twitter4j";
+	private static final String DEFAULT_LOGTAG = "Twitter4J";
+
+	private final String logTag;
+
+	AndroidLogger() {
+		logTag = DEFAULT_LOGTAG;
+	}
+
+	AndroidLogger(final String tag) {
+		logTag = tag;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -32,7 +42,7 @@ final class AndroidLogger extends Logger {
 	@Override
 	public void debug(final String message) {
 		if (isDebugEnabled()) {
-			Log.d(LOGTAG, message);
+			Log.d(logTag, message);
 		}
 	}
 
@@ -42,7 +52,7 @@ final class AndroidLogger extends Logger {
 	@Override
 	public void debug(final String message, final String message2) {
 		if (isDebugEnabled()) {
-			Log.d(LOGTAG, message + message2);
+			Log.d(logTag, message + message2);
 		}
 	}
 
@@ -52,7 +62,7 @@ final class AndroidLogger extends Logger {
 	@Override
 	public void error(final String message) {
 		if (isErrorEnabled()) {
-			Log.e(LOGTAG, message);
+			Log.e(logTag, message);
 		}
 	}
 
@@ -62,7 +72,7 @@ final class AndroidLogger extends Logger {
 	@Override
 	public void error(final String message, final Throwable th) {
 		if (isErrorEnabled()) {
-			Log.e(LOGTAG, message, th);
+			Log.e(logTag, message, th);
 		}
 	}
 
@@ -72,7 +82,7 @@ final class AndroidLogger extends Logger {
 	@Override
 	public void info(final String message) {
 		if (isInfoEnabled()) {
-			Log.i(LOGTAG, message);
+			Log.i(logTag, message);
 		}
 	}
 
@@ -82,7 +92,7 @@ final class AndroidLogger extends Logger {
 	@Override
 	public void info(final String message, final String message2) {
 		if (isInfoEnabled()) {
-			Log.i(LOGTAG, message + message2);
+			Log.i(logTag, message + message2);
 		}
 	}
 
@@ -92,7 +102,7 @@ final class AndroidLogger extends Logger {
 	@Override
 	public boolean isDebugEnabled() {
 		return false;
-		// return Log.isLoggable(LOGTAG, Log.DEBUG);
+		// return Log.isLoggable(DEFAULT_LOGTAG, Log.DEBUG);
 	}
 
 	/**
@@ -100,7 +110,7 @@ final class AndroidLogger extends Logger {
 	 */
 	@Override
 	public boolean isErrorEnabled() {
-		return Log.isLoggable(LOGTAG, Log.ERROR);
+		return Log.isLoggable(DEFAULT_LOGTAG, Log.ERROR);
 	}
 
 	/**
@@ -109,7 +119,7 @@ final class AndroidLogger extends Logger {
 	@Override
 	public boolean isInfoEnabled() {
 		return false;
-		// return Log.isLoggable(LOGTAG, Log.INFO);
+		// return Log.isLoggable(DEFAULT_LOGTAG, Log.INFO);
 	}
 
 	/**
@@ -117,7 +127,7 @@ final class AndroidLogger extends Logger {
 	 */
 	@Override
 	public boolean isWarnEnabled() {
-		return Log.isLoggable(LOGTAG, Log.WARN);
+		return Log.isLoggable(DEFAULT_LOGTAG, Log.WARN);
 	}
 
 	/**
@@ -126,7 +136,7 @@ final class AndroidLogger extends Logger {
 	@Override
 	public void warn(final String message) {
 		if (isWarnEnabled()) {
-			Log.w(LOGTAG, message);
+			Log.w(logTag, message);
 		}
 	}
 
@@ -136,7 +146,7 @@ final class AndroidLogger extends Logger {
 	@Override
 	public void warn(final String message, final String message2) {
 		if (isWarnEnabled()) {
-			Log.w(LOGTAG, message + message2);
+			Log.w(logTag, message + message2);
 		}
 	}
 }

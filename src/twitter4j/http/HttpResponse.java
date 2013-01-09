@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -27,7 +27,6 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import twitter4j.TwitterException;
 import twitter4j.conf.ConfigurationContext;
@@ -39,7 +38,7 @@ import twitter4j.internal.logging.Logger;
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
 public abstract class HttpResponse {
-	private static final Logger logger = Logger.getLogger();
+	private static final Logger logger = Logger.getLogger(HttpResponse.class);
 	protected final HttpClientConfiguration CONF;
 
 	protected int statusCode;
@@ -60,22 +59,24 @@ public abstract class HttpResponse {
 	}
 
 	/**
-	 * Returns the response body as {@link JSONArray}.<br>
+	 * Returns the response body as twitter4j.internal.org.json.JSONArray.<br>
 	 * Disconnects the internal HttpURLConnection silently.
 	 * 
-	 * @return response body as {@link JSONArray}
+	 * @return response body as twitter4j.internal.org.json.JSONArray
 	 * @throws TwitterException
 	 */
 	public JSONArray asJSONArray() throws TwitterException {
 		if (jsonArray == null) {
+			final Reader reader = null;
 			try {
 				if (responseAsString == null) {
-					jsonArray = new JSONArray(new JSONTokener(asString()));
-				} else {
-					jsonArray = new JSONArray(responseAsString);
+					responseAsString = asString();
 				}
+				jsonArray = new JSONArray(responseAsString);
 				if (CONF.isPrettyDebugEnabled()) {
 					logger.debug(jsonArray.toString(1));
+				} else {
+					logger.debug(responseAsString != null ? responseAsString : jsonArray.toString());
 				}
 			} catch (final JSONException jsone) {
 				if (logger.isDebugEnabled())
@@ -83,6 +84,12 @@ public abstract class HttpResponse {
 				else
 					throw new TwitterException(jsone.getMessage(), jsone);
 			} finally {
+				if (reader != null) {
+					try {
+						reader.close();
+					} catch (final IOException ignore) {
+					}
+				}
 				disconnectForcibly();
 			}
 		}
@@ -90,22 +97,24 @@ public abstract class HttpResponse {
 	}
 
 	/**
-	 * Returns the response body as {@link JSONObject}.<br>
+	 * Returns the response body as twitter4j.internal.org.json.JSONObject.<br>
 	 * Disconnects the internal HttpURLConnection silently.
 	 * 
-	 * @return response body as {@link JSONObject}
+	 * @return response body as twitter4j.internal.org.json.JSONObject
 	 * @throws TwitterException
 	 */
 	public JSONObject asJSONObject() throws TwitterException {
 		if (json == null) {
+			final Reader reader = null;
 			try {
 				if (responseAsString == null) {
-					json = new JSONObject(new JSONTokener(asString()));
-				} else {
-					json = new JSONObject(responseAsString);
+					responseAsString = asString();
 				}
+				json = new JSONObject(responseAsString);
 				if (CONF.isPrettyDebugEnabled()) {
 					logger.debug(json.toString(1));
+				} else {
+					logger.debug(responseAsString != null ? responseAsString : json.toString());
 				}
 			} catch (final JSONException jsone) {
 				if (responseAsString == null)
@@ -113,6 +122,12 @@ public abstract class HttpResponse {
 				else
 					throw new TwitterException(jsone.getMessage() + ":" + responseAsString, jsone);
 			} finally {
+				if (reader != null) {
+					try {
+						reader.close();
+					} catch (final IOException ignore) {
+					}
+				}
 				disconnectForcibly();
 			}
 		}
@@ -158,7 +173,7 @@ public abstract class HttpResponse {
 				stream = asStream();
 				if (null == stream) return null;
 				br = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
-				final StringBuffer buf = new StringBuffer();
+				final StringBuilder buf = new StringBuilder();
 				String line;
 				while ((line = br.readLine()) != null) {
 					buf.append(line).append("\n");
@@ -169,8 +184,6 @@ public abstract class HttpResponse {
 				streamConsumed = true;
 			} catch (final IOException ioe) {
 				throw new TwitterException(ioe.getMessage(), ioe);
-			} catch (final OutOfMemoryError e) {
-				throw new TwitterException(e.getMessage(), e);
 			} finally {
 				if (stream != null) {
 					try {
@@ -191,6 +204,14 @@ public abstract class HttpResponse {
 	}
 
 	public abstract void disconnect() throws IOException;
+
+	public long getContentLength() {
+		try {
+			return Long.parseLong(getResponseHeader("Content-Length"));
+		} catch (final Exception e) {
+			return -1;
+		}
+	}
 
 	public abstract String getResponseHeader(String name);
 

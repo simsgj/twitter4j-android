@@ -1,9 +1,9 @@
 package twitter4j.internal.json;
 
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getDate;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getInt;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getLong;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
+import static twitter4j.internal.util.InternalParseUtil.getDate;
+import static twitter4j.internal.util.InternalParseUtil.getInt;
+import static twitter4j.internal.util.InternalParseUtil.getLong;
+import static twitter4j.internal.util.InternalParseUtil.getRawString;
 
 import java.util.Date;
 

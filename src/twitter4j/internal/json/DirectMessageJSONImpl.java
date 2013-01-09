@@ -16,10 +16,10 @@
 
 package twitter4j.internal.json;
 
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getDate;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getLong;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getRawString;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getUnescapedString;
+import static twitter4j.internal.util.InternalParseUtil.getDate;
+import static twitter4j.internal.util.InternalParseUtil.getLong;
+import static twitter4j.internal.util.InternalParseUtil.getRawString;
+import static twitter4j.internal.util.InternalParseUtil.getUnescapedString;
 
 import java.util.Date;
 
@@ -204,8 +204,8 @@ import twitter4j.http.HttpResponse;
 		senderId = getLong("sender_id", json);
 		recipientId = getLong("recipient_id", json);
 		createdAt = getDate("created_at", json);
-		senderScreenName = getUnescapedString("sender_screen_name", json);
-		recipientScreenName = getUnescapedString("recipient_screen_name", json);
+		senderScreenName = getRawString("sender_screen_name", json);
+		recipientScreenName = getRawString("recipient_screen_name", json);
 		if (!json.isNull("entities")) {
 			try {
 				final JSONObject entities = json.getJSONObject("entities");

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import twitter4j.RateLimitStatus;
 import twitter4j.ResponseList;
 import twitter4j.http.HttpResponse;
-import twitter4j.internal.util.z_T4JInternalParseUtil;
+import twitter4j.internal.util.InternalParseUtil;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
@@ -30,7 +30,6 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 class ResponseListImpl<T> extends ArrayList<T> implements ResponseList<T> {
 	private static final long serialVersionUID = -7789068763212377625L;
 	private transient RateLimitStatus rateLimitStatus = null;
-	private transient RateLimitStatus featureSpecificRateLimitStatus = null;
 	private transient int accessLevel;
 
 	ResponseListImpl(final HttpResponse res) {
@@ -43,33 +42,11 @@ class ResponseListImpl<T> extends ArrayList<T> implements ResponseList<T> {
 		init(res);
 	}
 
-	ResponseListImpl(final RateLimitStatus rateLimitStatus, final RateLimitStatus featureSpecificRateLimitStatus,
-			final int accessLevel) {
-		super();
-		this.rateLimitStatus = rateLimitStatus;
-		this.featureSpecificRateLimitStatus = featureSpecificRateLimitStatus;
-		this.accessLevel = accessLevel;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public int getAccessLevel() {
 		return accessLevel;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public RateLimitStatus getFeatureSpecificRateLimitStatus() {
-		return featureSpecificRateLimitStatus;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
 	@Override
 	public RateLimitStatus getRateLimitStatus() {
 		return rateLimitStatus;
@@ -77,8 +54,6 @@ class ResponseListImpl<T> extends ArrayList<T> implements ResponseList<T> {
 
 	private void init(final HttpResponse res) {
 		this.rateLimitStatus = RateLimitStatusJSONImpl.createFromResponseHeader(res);
-		this.featureSpecificRateLimitStatus = RateLimitStatusJSONImpl
-				.createFeatureSpecificRateLimitStatusFromResponseHeader(res);
-		accessLevel = z_T4JInternalParseUtil.toAccessLevel(res);
+		accessLevel = InternalParseUtil.toAccessLevel(res);
 	}
 }

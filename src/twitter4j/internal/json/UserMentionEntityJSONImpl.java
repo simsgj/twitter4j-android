@@ -22,7 +22,7 @@ import org.json.JSONObject;
 
 import twitter4j.TwitterException;
 import twitter4j.UserMentionEntity;
-import twitter4j.internal.util.z_T4JInternalParseUtil;
+import twitter4j.internal.util.InternalParseUtil;
 
 /**
  * A data interface representing one single user mention entity.
@@ -146,7 +146,7 @@ import twitter4j.internal.util.z_T4JInternalParseUtil;
 			if (!json.isNull("screen_name")) {
 				screenName = json.getString("screen_name");
 			}
-			id = z_T4JInternalParseUtil.getLong("id", json);
+			id = InternalParseUtil.getLong("id", json);
 		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
 		}

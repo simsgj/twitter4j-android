@@ -30,4 +30,14 @@ final class NullLoggerFactory extends LoggerFactory {
 	public Logger getLogger() {
 		return SINGLETON;
 	}
+
+	@Override
+	public Logger getLogger(final Class<?> clz) {
+		return SINGLETON;
+	}
+
+	@Override
+	public Logger getLogger(final String tag) {
+		return SINGLETON;
+	}
 }

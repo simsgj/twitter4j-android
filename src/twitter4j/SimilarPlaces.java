@@ -25,11 +25,11 @@ import java.io.Serializable;
 public interface SimilarPlaces extends ResponseList<Place>, Serializable {
 	/**
 	 * Returns the token needed to be able to create a new place with
-	 * {@link twitter4j.api.GeoMethods#createPlace(String, String, String, GeoLocation, String)}
+	 * {@link twitter4j.api.PlacesGeoResources#createPlace(String, String, String, GeoLocation, String)}
 	 * .
 	 * 
 	 * @return token the token needed to be able to create a new place with
-	 *         {@link twitter4j.api.GeoMethods#createPlace(String, String, String, GeoLocation, String)}
+	 *         {@link twitter4j.api.PlacesGeoResources#createPlace(String, String, String, GeoLocation, String)}
 	 */
 	String getToken();
 }

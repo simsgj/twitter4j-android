@@ -101,8 +101,17 @@ public abstract class Logger {
 	 * @param clazz class
 	 * @return logger instance
 	 */
+	@Deprecated
 	public static Logger getLogger() {
 		return LOGGER_FACTORY.getLogger();
+	}
+
+	public static Logger getLogger(final Class<?> clz) {
+		return LOGGER_FACTORY.getLogger(clz);
+	}
+
+	public static Logger getLogger(final String tag) {
+		return LOGGER_FACTORY.getLogger(tag);
 	}
 
 }

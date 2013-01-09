@@ -22,7 +22,7 @@ import twitter4j.User;
 /**
  * @author Joern Huxhorn - jhuxhorn at googlemail.com
  */
-public interface SpamReportingMethods {
+public interface SpamReportingResources {
 
 	/**
 	 * The user specified in the id is blocked by the authenticated user and

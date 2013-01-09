@@ -20,7 +20,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import twitter4j.TwitterException;
 import twitter4j.http.HttpResponse;
-import twitter4j.internal.util.z_T4JInternalStringUtil;
+import twitter4j.internal.util.InternalStringUtil;
 
 abstract class OAuthToken {
 
@@ -40,7 +40,7 @@ abstract class OAuthToken {
 	}
 
 	OAuthToken(final String string) {
-		responseStr = z_T4JInternalStringUtil.split(string, "&");
+		responseStr = InternalStringUtil.split(string, "&");
 		tokenSecret = getParameter("oauth_token_secret");
 		token = getParameter("oauth_token");
 	}
@@ -62,7 +62,7 @@ abstract class OAuthToken {
 		String value = null;
 		for (final String str : responseStr) {
 			if (str.startsWith(parameter + '=')) {
-				value = z_T4JInternalStringUtil.split(str, "=")[1].trim();
+				value = InternalStringUtil.split(str, "=")[1].trim();
 				break;
 			}
 		}

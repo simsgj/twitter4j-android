@@ -152,6 +152,8 @@ public interface User extends Comparable<User>, TwitterResponse, Serializable {
 	 */
 	boolean isContributorsEnabled();
 
+	boolean isDefaultProfileImage();
+
 	/**
 	 * Returns true if the authenticating user has requested to follow this
 	 * user, otherwise false.
@@ -192,4 +194,5 @@ public interface User extends Comparable<User>, TwitterResponse, Serializable {
 	 * @since Twitter4J 2.0.10
 	 */
 	boolean isVerified();
+
 }

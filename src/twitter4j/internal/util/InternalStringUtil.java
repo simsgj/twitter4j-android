@@ -23,8 +23,8 @@ import java.util.List;
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.1.4
  */
-public class z_T4JInternalStringUtil {
-	private z_T4JInternalStringUtil() {
+public class InternalStringUtil {
+	private InternalStringUtil() {
 		throw new AssertionError();
 	}
 

@@ -27,6 +27,7 @@ import java.util.Map;
 
 import twitter4j.TwitterException;
 import twitter4j.auth.Authorization;
+import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationContext;
 
 /**
@@ -35,7 +36,7 @@ import twitter4j.conf.ConfigurationContext;
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
 public final class HttpClientWrapper {
-	private final HttpClientWrapperConfiguration wrapperConf;
+	private final Configuration wrapperConf;
 	private final HttpClient http;
 
 	private final Map<String, String> requestHeaders;
@@ -50,7 +51,7 @@ public final class HttpClientWrapper {
 		http = HttpClientFactory.getInstance(wrapperConf);
 	}
 
-	public HttpClientWrapper(final HttpClientWrapperConfiguration wrapperConf) {
+	public HttpClientWrapper(final Configuration wrapperConf) {
 		this.wrapperConf = wrapperConf;
 		requestHeaders = wrapperConf.getRequestHeaders();
 		http = HttpClientFactory.getInstance(wrapperConf);

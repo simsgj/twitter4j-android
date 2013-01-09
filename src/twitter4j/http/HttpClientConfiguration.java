@@ -16,7 +16,6 @@
 
 package twitter4j.http;
 
-
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
  */

@@ -16,11 +16,14 @@
 
 package twitter4j.internal.json;
 
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getDate;
-import static twitter4j.internal.util.z_T4JInternalParseUtil.getInt;
+import static twitter4j.internal.util.InternalParseUtil.getInt;
 
-import java.util.Date;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import twitter4j.RateLimitStatus;
@@ -35,26 +38,19 @@ import twitter4j.http.HttpResponse;
  * @see <a href="https://dev.twitter.com/docs/rate-limiting">Rate Limiting |
  *      Twitter Developers</a>
  */
-/* package */final class RateLimitStatusJSONImpl implements RateLimitStatus {
+/* package */final class RateLimitStatusJSONImpl implements RateLimitStatus, java.io.Serializable {
 
-	private int remainingHits;
-	private int hourlyLimit;
+	private static final long serialVersionUID = 1625565652687304084L;
+	private int remaining;
+	private int limit;
 	private int resetTimeInSeconds;
 	private int secondsUntilReset;
-	private Date resetTime;
 
-	private RateLimitStatusJSONImpl(final int hourlyLimit, final int remainingHits, final int resetTimeInSeconds,
-			final Date resetTime) {
-		this.hourlyLimit = hourlyLimit;
-		this.remainingHits = remainingHits;
-		this.resetTime = resetTime;
+	private RateLimitStatusJSONImpl(final int limit, final int remaining, final int resetTimeInSeconds) {
+		this.limit = limit;
+		this.remaining = remaining;
 		this.resetTimeInSeconds = resetTimeInSeconds;
-		secondsUntilReset = (int) ((resetTime.getTime() - System.currentTimeMillis()) / 1000);
-	}
-
-	RateLimitStatusJSONImpl(final HttpResponse res, final Configuration conf) throws TwitterException {
-		final JSONObject json = res.asJSONObject();
-		init(json);
+		secondsUntilReset = (int) ((resetTimeInSeconds * 1000L - System.currentTimeMillis()) / 1000);
 	}
 
 	RateLimitStatusJSONImpl(final JSONObject json) throws TwitterException {
@@ -64,15 +60,14 @@ import twitter4j.http.HttpResponse;
 	@Override
 	public boolean equals(final Object o) {
 		if (this == o) return true;
-		if (!(o instanceof RateLimitStatusJSONImpl)) return false;
+		if (o == null || getClass() != o.getClass()) return false;
 
 		final RateLimitStatusJSONImpl that = (RateLimitStatusJSONImpl) o;
 
-		if (hourlyLimit != that.hourlyLimit) return false;
-		if (remainingHits != that.remainingHits) return false;
+		if (limit != that.limit) return false;
+		if (remaining != that.remaining) return false;
 		if (resetTimeInSeconds != that.resetTimeInSeconds) return false;
 		if (secondsUntilReset != that.secondsUntilReset) return false;
-		if (resetTime != null ? !resetTime.equals(that.resetTime) : that.resetTime != null) return false;
 
 		return true;
 	}
@@ -81,8 +76,16 @@ import twitter4j.http.HttpResponse;
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getHourlyLimit() {
-		return hourlyLimit;
+	public int getLimit() {
+		return limit;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int getRemaining() {
+		return remaining;
 	}
 
 	/**
@@ -90,15 +93,7 @@ import twitter4j.http.HttpResponse;
 	 */
 	@Override
 	public int getRemainingHits() {
-		return remainingHits;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Date getResetTime() {
-		return resetTime;
+		return getRemaining();
 	}
 
 	/**
@@ -119,68 +114,36 @@ import twitter4j.http.HttpResponse;
 
 	@Override
 	public int hashCode() {
-		int result = remainingHits;
-		result = 31 * result + hourlyLimit;
+		int result = remaining;
+		result = 31 * result + limit;
 		result = 31 * result + resetTimeInSeconds;
 		result = 31 * result + secondsUntilReset;
-		result = 31 * result + (resetTime != null ? resetTime.hashCode() : 0);
 		return result;
 	}
 
 	@Override
 	public String toString() {
-		return "RateLimitStatusJSONImpl{" + "remainingHits=" + remainingHits + ", hourlyLimit=" + hourlyLimit
-				+ ", resetTimeInSeconds=" + resetTimeInSeconds + ", secondsUntilReset=" + secondsUntilReset
-				+ ", resetTime=" + resetTime + '}';
+		return "RateLimitStatusJSONImpl{" + "remaining=" + remaining + ", limit=" + limit + ", resetTimeInSeconds="
+				+ resetTimeInSeconds + ", secondsUntilReset=" + secondsUntilReset + '}';
 	}
 
 	void init(final JSONObject json) throws TwitterException {
-		hourlyLimit = getInt("hourly_limit", json);
-		remainingHits = getInt("remaining_hits", json);
-		resetTime = getDate("reset_time", json, "EEE MMM d HH:mm:ss Z yyyy");
-		resetTimeInSeconds = getInt("reset_time_in_seconds", json);
-		secondsUntilReset = (int) ((resetTime.getTime() - System.currentTimeMillis()) / 1000);
-	}
-
-	static RateLimitStatus createFeatureSpecificRateLimitStatusFromResponseHeader(final HttpResponse res) {
-		if (null == res) return null;
-		int remainingHits;// "X-FeatureRateLimit-Remaining"
-		int hourlyLimit;// "X-FeatureRateLimit-Limit"
-		int resetTimeInSeconds;// not included in the response header. Need to
-								// be calculated.
-		Date resetTime;// new Date("X-FeatureRateLimit-Reset")
-
-		final String limit = res.getResponseHeader("X-FeatureRateLimit-Limit");
-		if (limit != null) {
-			hourlyLimit = Integer.parseInt(limit);
-		} else
-			return null;
-		final String remaining = res.getResponseHeader("X-FeatureRateLimit-Remaining");
-		if (remaining != null) {
-			remainingHits = Integer.parseInt(remaining);
-		} else
-			return null;
-		final String reset = res.getResponseHeader("X-FeatureRateLimit-Reset");
-		if (reset != null) {
-			final long longReset = Long.parseLong(reset);
-			resetTimeInSeconds = (int) (longReset / 1000);
-			resetTime = new Date(longReset * 1000);
-		} else
-			return null;
-		return new RateLimitStatusJSONImpl(hourlyLimit, remainingHits, resetTimeInSeconds, resetTime);
+		limit = getInt("limit", json);
+		remaining = getInt("remaining", json);
+		resetTimeInSeconds = getInt("reset", json);
+		secondsUntilReset = (int) ((resetTimeInSeconds * 1000L - System.currentTimeMillis()) / 1000);
 	}
 
 	static RateLimitStatus createFromResponseHeader(final HttpResponse res) {
 		if (null == res) return null;
-		int remainingHits;// "X-RateLimit-Remaining"
-		int hourlyLimit;// "X-RateLimit-Limit"
+		int remainingHits;// "X-Rate-Limit-Remaining"
+		int limit;// "X-Rate-Limit-Limit"
 		int resetTimeInSeconds;// not included in the response header. Need to
 								// be calculated.
-		Date resetTime;// new Date("X-RateLimit-Reset")
 
-		final String limit = res.getResponseHeader("X-Rate-Limit-Limit");
-		if (limit != null) {
-			hourlyLimit = Integer.parseInt(limit);
+		final String strLimit = res.getResponseHeader("X-Rate-Limit-Limit");
+		if (strLimit != null) {
+			limit = Integer.parseInt(strLimit);
 		} else
 			return null;
 		final String remaining = res.getResponseHeader("X-Rate-Limit-Remaining");
@@ -191,10 +154,38 @@ import twitter4j.http.HttpResponse;
 		final String reset = res.getResponseHeader("X-Rate-Limit-Reset");
 		if (reset != null) {
 			final long longReset = Long.parseLong(reset);
-			resetTimeInSeconds = (int) (longReset / 1000);
-			resetTime = new Date(longReset * 1000);
+			resetTimeInSeconds = (int) longReset;
 		} else
 			return null;
-		return new RateLimitStatusJSONImpl(hourlyLimit, remainingHits, resetTimeInSeconds, resetTime);
+		return new RateLimitStatusJSONImpl(limit, remainingHits, resetTimeInSeconds);
 	}
+
+	static Map<String, RateLimitStatus> createRateLimitStatuses(final HttpResponse res, final Configuration conf)
+			throws TwitterException {
+		final JSONObject json = res.asJSONObject();
+		final Map<String, RateLimitStatus> map = createRateLimitStatuses(json);
+		return map;
+	}
+
+	static Map<String, RateLimitStatus> createRateLimitStatuses(final JSONObject json) throws TwitterException {
+		final Map<String, RateLimitStatus> map = new HashMap<String, RateLimitStatus>();
+		try {
+			final JSONObject resources = json.getJSONObject("resources");
+			final Iterator<?> resourceKeys = resources.keys();
+			while (resourceKeys.hasNext()) {
+				final JSONObject resource = resources.getJSONObject((String) resourceKeys.next());
+				final Iterator<?> endpointKeys = resource.keys();
+				while (endpointKeys.hasNext()) {
+					final String endpoint = (String) endpointKeys.next();
+					final JSONObject rateLimitStatusJSON = resource.getJSONObject(endpoint);
+					final RateLimitStatus rateLimitStatus = new RateLimitStatusJSONImpl(rateLimitStatusJSON);
+					map.put(endpoint, rateLimitStatus);
+				}
+			}
+			return Collections.unmodifiableMap(map);
+		} catch (final JSONException jsone) {
+			throw new TwitterException(jsone);
+		}
+	}
+
 }

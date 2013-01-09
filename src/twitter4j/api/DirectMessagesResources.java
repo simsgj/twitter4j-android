@@ -24,7 +24,7 @@ import twitter4j.TwitterException;
 /**
  * @author Joern Huxhorn - jhuxhorn at googlemail.com
  */
-public interface DirectMessageMethods {
+public interface DirectMessagesResources {
 	/**
 	 * Destroys the direct message specified in the required ID parameter. The
 	 * authenticating user must be the recipient of the specified direct

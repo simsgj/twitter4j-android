@@ -7,7 +7,7 @@ import twitter4j.internal.logging.Logger;
 
 public class HttpClientBase {
 
-	private static final Logger logger = Logger.getLogger();
+	private static final Logger logger = Logger.getLogger(HttpClientBase.class);
 	protected final HttpClientConfiguration CONF;
 
 	public HttpClientBase(final HttpClientConfiguration conf) {

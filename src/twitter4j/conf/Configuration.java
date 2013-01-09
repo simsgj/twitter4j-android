@@ -32,6 +32,8 @@ public interface Configuration extends HttpClientConfiguration, HttpClientWrappe
 
 	String getClientVersion();
 
+	String getHttpClientImplementation();
+
 	String getOAuthAccessTokenURL();
 
 	String getOAuthAuthenticationURL();

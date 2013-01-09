@@ -22,16 +22,5 @@ package twitter4j;
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
 public interface PagableResponseList<T extends TwitterResponse> extends ResponseList<T>, CursorSupport {
-	@Override
-	long getNextCursor();
-
-	@Override
-	long getPreviousCursor();
-
-	@Override
-	boolean hasNext();
-
-	@Override
-	boolean hasPrevious();
 
 }
