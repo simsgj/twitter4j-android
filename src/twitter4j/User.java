@@ -194,5 +194,11 @@ public interface User extends Comparable<User>, TwitterResponse, Serializable {
 	 * @since Twitter4J 2.0.10
 	 */
 	boolean isVerified();
+	
+	URLEntity[] getURLEntities();
+	
+	URLEntity[] getDescriptionEntities();
+
+	boolean isFollowing();
 
 }

@@ -34,6 +34,7 @@ import twitter4j.PagableResponseList;
 import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.TwitterException;
+import twitter4j.URLEntity;
 import twitter4j.User;
 import twitter4j.conf.Configuration;
 import twitter4j.http.HttpResponse;
@@ -44,10 +45,10 @@ import twitter4j.http.HttpResponse;
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
 /* package */final class UserJSONImpl extends TwitterResponseImpl implements User {
-
 	private static final long serialVersionUID = 1401119968489672262L;
 	private long id;
 	private String name;
+
 	private String screenName;
 	private String location;
 	private String description;
@@ -57,12 +58,12 @@ import twitter4j.http.HttpResponse;
 	private String url;
 	private boolean isProtected;
 	private int followersCount;
-
 	private Status status;
-
 	private String profileBackgroundColor;
 	private String profileTextColor;
+
 	private String profileLinkColor;
+
 	private String profileSidebarFillColor;
 	private String profileSidebarBorderColor;
 	private boolean profileUseBackgroundImage;
@@ -79,11 +80,14 @@ import twitter4j.http.HttpResponse;
 	private int statusesCount;
 	private boolean isGeoEnabled;
 	private boolean isVerified;
-	private boolean translator;
+	private boolean isTranslator;
+	private boolean isFollowing;
 	private int listedCount;
 	private boolean isFollowRequestSent;
 	private String profileBannerImageUrl;
 	private boolean isDefaultProfileImage;
+	private URLEntity[] urlEntities;
+	private URLEntity[] descriptionEntities;
 
 	/* package */UserJSONImpl(final HttpResponse res, final Configuration conf) throws TwitterException {
 		super(res);
@@ -315,6 +319,16 @@ import twitter4j.http.HttpResponse;
 		}
 	}
 
+	@Override
+	public URLEntity[] getURLEntities() {
+		return urlEntities;
+	}
+
+	@Override
+	public URLEntity[] getDescriptionEntities() {
+		return descriptionEntities;
+	}
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -339,6 +353,11 @@ import twitter4j.http.HttpResponse;
 	@Override
 	public boolean isDefaultProfileImage() {
 		return isDefaultProfileImage;
+	}
+
+	@Override
+	public boolean isFollowing() {
+		return isFollowing;
 	}
 
 	/**
@@ -394,7 +413,7 @@ import twitter4j.http.HttpResponse;
 	 */
 	@Override
 	public boolean isTranslator() {
-		return translator;
+		return isTranslator;
 	}
 
 	/**
@@ -421,8 +440,8 @@ import twitter4j.http.HttpResponse;
 				+ timeZone + '\'' + ", profileBackgroundImageUrl='" + profileBackgroundImageUrl + '\''
 				+ ", profileBackgroundImageUrlHttps='" + profileBackgroundImageUrlHttps + '\''
 				+ ", profileBackgroundTiled=" + profileBackgroundTiled + ", lang='" + lang + '\'' + ", statusesCount="
-				+ statusesCount + ", isGeoEnabled=" + isGeoEnabled + ", isVerified=" + isVerified + ", translator="
-				+ translator + ", listedCount=" + listedCount + ", isFollowRequestSent=" + isFollowRequestSent + '}';
+				+ statusesCount + ", isGeoEnabled=" + isGeoEnabled + ", isVerified=" + isVerified + ", isTranslator="
+				+ isTranslator + ", listedCount=" + listedCount + ", isFollowRequestSent=" + isFollowRequestSent + '}';
 	}
 
 	private void init(final JSONObject json) throws TwitterException {
@@ -439,7 +458,8 @@ import twitter4j.http.HttpResponse;
 			isProtected = getBoolean("protected", json);
 			isGeoEnabled = getBoolean("geo_enabled", json);
 			isVerified = getBoolean("verified", json);
-			translator = getBoolean("is_translator", json);
+			isTranslator = getBoolean("is_translator", json);
+			isFollowing = getBoolean("is_following", json);
 			followersCount = getInt("followers_count", json);
 			profileBannerImageUrl = getRawString("profile_banner_url", json);
 			profileBackgroundColor = getRawString("profile_background_color", json);
@@ -465,6 +485,36 @@ import twitter4j.http.HttpResponse;
 			if (!json.isNull("status")) {
 				final JSONObject statusJSON = json.getJSONObject("status");
 				status = new StatusJSONImpl(statusJSON);
+			}
+			if (!json.isNull("entities")) {
+				try {
+					final JSONObject entities = json.getJSONObject("entities");
+					int len;
+					if (!entities.isNull("description")) {
+						final JSONObject description = entities.getJSONObject("description");
+						if (!description.isNull("urls")) {
+							final JSONArray urlsArray = description.getJSONArray("urls");
+							len = urlsArray.length();
+							descriptionEntities = new URLEntity[len];
+							for (int i = 0; i < len; i++) {
+								descriptionEntities[i] = new URLEntityJSONImpl(urlsArray.getJSONObject(i));
+							}
+						}
+					}
+					if (!entities.isNull("url")) {
+						final JSONObject url = entities.getJSONObject("url");
+						if (!url.isNull("urls")) {
+							final JSONArray urlsArray = url.getJSONArray("urls");
+							len = urlsArray.length();
+							urlEntities = new URLEntity[len];
+							for (int i = 0; i < len; i++) {
+								urlEntities[i] = new URLEntityJSONImpl(urlsArray.getJSONObject(i));
+							}
+						}
+					}
+				} catch (final JSONException jsone) {
+					throw new TwitterException(jsone);
+				}
 			}
 		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone.getMessage() + ":" + json.toString(), jsone);

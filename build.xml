@@ -1,0 +1,41 @@
+<project name="twitter4j-android" basedir=".">
+
+	<property name="ant.project.name" value="twitter4j-android"/>
+
+	<property name="ant.project.version" value="3.0.3"/>
+
+	<property name="src.dir" value="src"/>
+
+	<property name="build.dir" value="bin"/>
+
+	<property name="classes.dir" value="${build.dir}/classes"/>
+
+	<property name="android.runtime.jar" value="android.jar"/>
+
+	<target name="clean">
+
+		<delete dir="${build.dir}"/>
+
+	</target>
+
+	<target name="compile">
+
+		<mkdir dir="${classes.dir}"/>
+
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" bootclasspath="${android.runtime.jar}" includeantruntime="false"/>
+
+	</target>
+
+	<target name="jar" depends="compile">
+
+		<mkdir dir="${build.dir}"/>
+
+		<jar destfile="${build.dir}/${ant.project.name}-${ant.project.version}.jar" basedir="${classes.dir}"/>
+
+	</target>
+
+	<target name="clean-build" depends="clean,jar"/>
+
+	<target name="main" depends="jar"/>
+
+</project>

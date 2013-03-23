@@ -182,6 +182,8 @@ public abstract class HttpResponse {
 				logger.debug(responseAsString);
 				stream.close();
 				streamConsumed = true;
+			} catch (final OutOfMemoryError oome) {
+				throw new TwitterException(oome.getMessage(), oome);
 			} catch (final IOException ioe) {
 				throw new TwitterException(ioe.getMessage(), ioe);
 			} finally {
