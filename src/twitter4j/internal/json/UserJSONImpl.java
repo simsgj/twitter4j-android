@@ -459,7 +459,7 @@ import twitter4j.http.HttpResponse;
 			isGeoEnabled = getBoolean("geo_enabled", json);
 			isVerified = getBoolean("verified", json);
 			isTranslator = getBoolean("is_translator", json);
-			isFollowing = getBoolean("is_following", json);
+			isFollowing = getBoolean("following", json);
 			followersCount = getInt("followers_count", json);
 			profileBannerImageUrl = getRawString("profile_banner_url", json);
 			profileBackgroundColor = getRawString("profile_background_color", json);
