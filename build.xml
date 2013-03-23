@@ -1,6 +1,6 @@
-<project name="twitter4j-android" basedir=".">
+<project name="twitter4j-android-core" basedir=".">
 
-	<property name="ant.project.name" value="twitter4j-android"/>
+	<property name="ant.project.name" value="twitter4j-android-core"/>
 
 	<property name="ant.project.version" value="3.0.3"/>
 
@@ -36,6 +36,6 @@
 
 	<target name="clean-build" depends="clean,jar"/>
 
-	<target name="main" depends="jar"/>
+	<target name="build" depends="jar"/>
 
 </project>
