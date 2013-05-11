@@ -35,7 +35,7 @@ class ActivityJSONImpl extends TwitterResponseImpl implements Activity {
 
 	private Status[] targetObjectStatuses, targetStatuses;
 
-	private UserList[] targetObjectUserLists;
+	private UserList[] targetUserLists, targetObjectUserLists;
 
 	private long maxPosition, minPosition;
 
@@ -108,7 +108,12 @@ class ActivityJSONImpl extends TwitterResponseImpl implements Activity {
 	public Status[] getTargetStatuses() {
 		return targetStatuses;
 	}
-
+	
+	@Override
+	public UserList[] getTargetUserLists() {
+		return targetUserLists;
+	}
+	
 	@Override
 	public User[] getTargetUsers() {
 		return targetUsers;
@@ -135,7 +140,9 @@ class ActivityJSONImpl extends TwitterResponseImpl implements Activity {
 			final JSONArray targets_array = json.getJSONArray("targets");
 			final int sources_size = sources_array.length();
 			final int targets_size = targets_array.length();
-			if (action == Action.FOLLOW || action == Action.MENTION || action == Action.LIST_MEMBER_ADDED) {
+			if (action == Action.LIST_CREATED) {
+				
+			} else if (action == Action.FOLLOW || action == Action.MENTION || action == Action.LIST_MEMBER_ADDED) {
 				targetUsers = new User[targets_size];
 				for (int i = 0; i < targets_size; i++) {
 					targetUsers[i] = new UserJSONImpl(targets_array.getJSONObject(i));
@@ -156,6 +163,11 @@ class ActivityJSONImpl extends TwitterResponseImpl implements Activity {
 				targetObjectUserLists = new UserList[target_objects_size];
 				for (int i = 0; i < target_objects_size; i++) {
 					targetObjectUserLists[i] = new UserListJSONImpl(target_objects_array.getJSONObject(i));
+				}
+			} else if (action == Action.LIST_CREATED) {
+				targetUserLists = new UserList[targets_size];
+				for (int i = 0; i < targets_size; i++) {
+					targetUserLists[i] = new UserListJSONImpl(targets_array.getJSONObject(i));
 				}
 			} else {
 				targetObjectStatuses = new Status[target_objects_size];
