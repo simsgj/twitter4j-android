@@ -40,7 +40,7 @@ public interface TwitterConstants {
 
 	static final String ENDPOINT_BLOCKS_CREATE = "blocks/create.json";
 	static final String ENDPOINT_BLOCKS_DESTROY = "blocks/destroy.json";
-	static final String ENDPOINT_BLOCKS_LIST = "blocks/blocking.json";
+	static final String ENDPOINT_BLOCKS_LIST = "blocks/list.json";
 	static final String ENDPOINT_BLOCKS_IDS = "blocks/ids.json";
 
 	static final String ENDPOINT_DIRECT_MESSAGES = "direct_messages.json";
@@ -60,6 +60,8 @@ public interface TwitterConstants {
 
 	static final String ENDPOINT_FOLLOWERS_IDS = "followers/ids.json";
 	static final String ENDPOINT_FRIENDS_IDS = "friends/ids.json";
+	static final String ENDPOINT_FOLLOWERS_LIST = "followers/list.json";
+	static final String ENDPOINT_FRIENDS_LIST = "friends/list.json";
 	static final String ENDPOINT_FRIENDSHIPS_CREATE = "friendships/create.json";
 	static final String ENDPOINT_FRIENDSHIPS_DESTROY = "friendships/destroy.json";
 	static final String ENDPOINT_FRIENDSHIPS_INCOMING = "friendships/incoming.json";
@@ -81,6 +83,7 @@ public interface TwitterConstants {
 	static final String ENDPOINT_LISTS_MEMBERS_CREATE = "lists/members/create.json";
 	static final String ENDPOINT_LISTS_MEMBERS_CREATE_ALL = "lists/members/create_all.json";
 	static final String ENDPOINT_LISTS_MEMBERS_DESTROY = "lists/members/destroy.json";
+	static final String ENDPOINT_LISTS_MEMBERS_DESTROY_ALL = "lists/members/destroy_all.json";
 	static final String ENDPOINT_LISTS_MEMBERS_SHOW = "lists/members/show.json";
 	static final String ENDPOINT_LISTS_SHOW = "lists/show.json";
 	static final String ENDPOINT_LISTS_STATUSES = "lists/statuses.json";
@@ -102,6 +105,7 @@ public interface TwitterConstants {
 	static final String ENDPOINT_STATUSES_MENTIONS_TIMELINE = "statuses/mentions_timeline.json";
 	static final String ENDPOINT_STATUSES_OEMBED = "statuses/oembed.json";
 	static final String ENDPOINT_STATUSES_RETWEETS_OF_ME = "statuses/retweets_of_me.json";
+	static final String ENDPOINT_STATUSES_RETWEETERS_IDS = "statuses/retweeters/ids.json";
 	static final String ENDPOINT_STATUSES_SHOW = "statuses/show.json";
 	static final String ENDPOINT_STATUSES_UPDATE = "statuses/update.json";
 	static final String ENDPOINT_STATUSES_UPDATE_WITH_MEDIA = "statuses/update_with_media.json";

@@ -16,6 +16,7 @@
 
 package twitter4j.api;
 
+import twitter4j.CursorPaging;
 import twitter4j.PagableResponseList;
 import twitter4j.Paging;
 import twitter4j.ResponseList;
@@ -43,6 +44,8 @@ public interface ListsResources {
 	 * @since Twitter4J 2.1.0
 	 */
 	UserList addUserListMember(int listId, long userId) throws TwitterException;
+
+	UserList addUserListMember(int listId, String userScreenName) throws TwitterException;
 
 	/**
 	 * Adds multiple members to a list, by specifying a comma-separated list of
@@ -133,6 +136,12 @@ public interface ListsResources {
 	 */
 	UserList deleteUserListMember(int listId, long userId) throws TwitterException;
 
+	UserList deleteUserListMember(int listId, String screenName) throws TwitterException;
+	
+	UserList deleteUserListMembers(int listId, long[] userIds) throws TwitterException;
+
+	UserList deleteUserListMembers(int listId, String[] screenNames) throws TwitterException;
+	
 	/**
 	 * Deletes the specified list. Must be owned by the authenticated user. <br>
 	 * This method calls http://api.twitter.com/1.1/lists/destroy.json
@@ -176,7 +185,11 @@ public interface ListsResources {
 	 *      lists/members | Twitter Developers</a>
 	 * @since Twitter4J 2.2.3
 	 */
-	PagableResponseList<User> getUserListMembers(int listId, long cursor) throws TwitterException;
+	PagableResponseList<User> getUserListMembers(int listId, CursorPaging paging) throws TwitterException;
+
+	PagableResponseList<User> getUserListMembers(String slug, long ownerId, CursorPaging paging) throws TwitterException;
+
+	PagableResponseList<User> getUserListMembers(String slug, String ownerScreenName, CursorPaging paging) throws TwitterException;
 
 	/**
 	 * List the lists the authenticating user has been added to. <br>
@@ -327,6 +340,10 @@ public interface ListsResources {
 	 */
 	ResponseList<Status> getUserListStatuses(int listId, Paging paging) throws TwitterException;
 
+	ResponseList<Status> getUserListStatuses(String slug, long ownerId, Paging paging) throws TwitterException;
+
+	ResponseList<Status> getUserListStatuses(String slug, String ownerScreenName, Paging paging) throws TwitterException;
+
 	/**
 	 * Returns the subscribers of the specified list. <br>
 	 * This method calls http://api.twitter.com/1.1/lists/subscribers.json
@@ -344,7 +361,11 @@ public interface ListsResources {
 	 *      lists/subscribers | Twitter Developers</a>
 	 * @since Twitter4J 2.2.3
 	 */
-	PagableResponseList<User> getUserListSubscribers(int listId, long cursor) throws TwitterException;
+	PagableResponseList<User> getUserListSubscribers(int listId, CursorPaging paging) throws TwitterException;
+	
+	PagableResponseList<User> getUserListSubscribers(String slug, long ownerId, CursorPaging paging) throws TwitterException;
+
+	PagableResponseList<User> getUserListSubscribers(String slug, String ownerScreenName, CursorPaging paging) throws TwitterException;
 
 	/**
 	 * List the lists the specified user follows. <br>
@@ -378,6 +399,10 @@ public interface ListsResources {
 	 * @since Twitter4J 2.2.3
 	 */
 	UserList showUserList(int listId) throws TwitterException;
+
+	UserList showUserList(String slug, long ownerId) throws TwitterException;
+
+	UserList showUserList(String slug, String ownerScreenName) throws TwitterException;
 
 	/**
 	 * Check if a user is a member of the specified list.<br>

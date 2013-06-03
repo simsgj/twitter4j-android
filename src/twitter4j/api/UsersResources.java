@@ -21,6 +21,7 @@ import java.io.InputStream;
 
 import twitter4j.AccountSettings;
 import twitter4j.Category;
+import twitter4j.CursorPaging;
 import twitter4j.IDs;
 import twitter4j.PagableResponseList;
 import twitter4j.ResponseList;
@@ -123,19 +124,8 @@ public interface UsersResources {
 	 */
 	IDs getBlocksIDs() throws TwitterException;
 
-	/**
-	 * Returns an array of numeric user ids the authenticating user is blocking. <br>
-	 * This method calls http://api.twitter.com/1.1/blocks/ids
-	 * 
-	 * @return Returns an array of numeric user ids the authenticating user is
-	 *         blocking.
-	 * @throws TwitterException when Twitter service or network is unavailable
-	 * @see <a href="https://dev.twitter.com/docs/api/1.1/get/blocks/ids">GET
-	 *      blocks/ids | Twitter Developers</a>
-	 * @since Twitter4J 3.0.2
-	 */
-	IDs getBlocksIDs(long cursor) throws TwitterException;
-
+	IDs getBlocksIDs(CursorPaging paging) throws TwitterException;
+	
 	/**
 	 * Returns a list of user objects that the authenticating user is blocking. <br>
 	 * This method calls http://api.twitter.com/1.1/blocks/blocking.json
@@ -149,24 +139,8 @@ public interface UsersResources {
 	 */
 	PagableResponseList<User> getBlocksList() throws TwitterException;
 
-	/**
-	 * Returns a list of user objects that the authenticating user is blocking. <br>
-	 * This method calls http://api.twitter.com/1.1/blocks/blocking.json
-	 * 
-	 * @param cursor Causes the list of blocked users to be broken into pages of
-	 *            no more than 5000 IDs at a time. The number of IDs returned is
-	 *            not guaranteed to be 5000 as suspended users are filtered out
-	 *            after connections are queried. If no cursor is provided, a
-	 *            value of -1 will be assumed, which is the first "page."
-	 * @return a list of user objects that the authenticating user
-	 * @throws TwitterException when Twitter service or network is unavailable
-	 * @see <a
-	 *      href="https://dev.twitter.com/docs/api/1.1/get/blocks/blocking">GET
-	 *      blocks/blocking | Twitter Developers</a>
-	 * @since Twitter4J 2.0.4
-	 */
-	PagableResponseList<User> getBlocksList(long cursor) throws TwitterException;
-
+	PagableResponseList<User> getBlocksList(CursorPaging paging) throws TwitterException;
+	
 	/**
 	 * Access the users in a given category of the Twitter suggested user list
 	 * and return their most recent status if they are not a protected user. <br>
