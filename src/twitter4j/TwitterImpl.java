@@ -323,13 +323,7 @@ final class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	@Override
 	public ResponseList<Activity> getActivitiesAboutMe(final Paging paging) throws TwitterException {
 		ensureAuthorizationEnabled();
-		final String rest_base = conf.getRestBaseURL();
-		final String sign_rest_base = conf.getSigningRestBaseURL();
-		final String activity_base = rest_base.endsWith("/1/") || rest_base.endsWith("/1.1/") ? replaceLast(rest_base,
-				"\\/1(\\.1)?\\/", "/i/") : rest_base + "i/";
-		final String sign_activity_base = sign_rest_base.endsWith("/1/") || rest_base.endsWith("/1.1/") ? replaceLast(
-				sign_rest_base, "\\/1(\\.1)?\\/", "/i/") : sign_rest_base + "i/";
-		return factory.createActivityList(get(activity_base + ENDPOINT_ACTIVITY_ABOUT_ME, sign_activity_base
+		return factory.createActivityList(get(conf.getRestBaseURL() + ENDPOINT_ACTIVITY_ABOUT_ME, conf.getSigningRestBaseURL()
 				+ ENDPOINT_ACTIVITY_ABOUT_ME,
 				mergeParameters(paging != null ? paging.asPostParameterArray() : null, INCLUDE_ENTITIES)));
 	}
@@ -342,13 +336,7 @@ final class TwitterImpl extends TwitterBaseImpl implements Twitter {
 	@Override
 	public ResponseList<Activity> getActivitiesByFriends(final Paging paging) throws TwitterException {
 		ensureAuthorizationEnabled();
-		final String rest_base = conf.getRestBaseURL();
-		final String sign_rest_base = conf.getSigningRestBaseURL();
-		final String activity_base = rest_base.endsWith("/1/") || rest_base.endsWith("/1.1/") ? replaceLast(rest_base,
-				"\\/1(\\.1)?\\/", "/i/") : rest_base + "i/";
-		final String sign_activity_base = sign_rest_base.endsWith("/1/") || rest_base.endsWith("/1.1/") ? replaceLast(
-				sign_rest_base, "\\/1(\\.1)?\\/", "/i/") : sign_rest_base + "i/";
-		return factory.createActivityList(get(activity_base + ENDPOINT_ACTIVITY_BY_FRIENDS, sign_activity_base
+		return factory.createActivityList(get(conf.getRestBaseURL() + ENDPOINT_ACTIVITY_BY_FRIENDS, conf.getSigningRestBaseURL()
 				+ ENDPOINT_ACTIVITY_BY_FRIENDS,
 				mergeParameters(paging != null ? paging.asPostParameterArray() : null, INCLUDE_ENTITIES)));
 	}
