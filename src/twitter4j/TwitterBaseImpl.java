@@ -18,6 +18,23 @@ package twitter4j;
 
 import static twitter4j.http.HttpResponseCode.ENHANCE_YOUR_CLAIM;
 import static twitter4j.http.HttpResponseCode.SERVICE_UNAVAILABLE;
+import twitter4j.auth.AccessToken;
+import twitter4j.auth.Authorization;
+import twitter4j.auth.AuthorizationFactory;
+import twitter4j.auth.BasicAuthorization;
+import twitter4j.auth.NullAuthorization;
+import twitter4j.auth.OAuthAuthorization;
+import twitter4j.auth.OAuthSupport;
+import twitter4j.auth.RequestToken;
+import twitter4j.auth.XAuthAuthorization;
+import twitter4j.conf.Configuration;
+import twitter4j.http.HttpClientWrapper;
+import twitter4j.http.HttpParameter;
+import twitter4j.http.HttpResponse;
+import twitter4j.http.HttpResponseEvent;
+import twitter4j.http.HttpResponseListener;
+import twitter4j.internal.json.InternalJSONFactory;
+import twitter4j.internal.json.InternalJSONFactoryImpl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,30 +45,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import twitter4j.auth.AccessToken;
-import twitter4j.auth.Authorization;
-import twitter4j.auth.AuthorizationFactory;
-import twitter4j.auth.BasicAuthorization;
-import twitter4j.auth.NullAuthorization;
-import twitter4j.auth.OAuthAuthorization;
-import twitter4j.auth.OAuthSupport;
-import twitter4j.auth.RequestToken;
-import twitter4j.conf.Configuration;
-import twitter4j.http.HttpClientWrapper;
-import twitter4j.http.HttpParameter;
-import twitter4j.http.HttpResponse;
-import twitter4j.http.HttpResponseEvent;
-import twitter4j.http.HttpResponseListener;
-import twitter4j.http.XAuthAuthorization;
-import twitter4j.internal.json.InternalFactory;
-import twitter4j.internal.json.InternalJSONImplFactory;
-
 /**
  * Base class of Twitter / AsyncTwitter / TwitterStream supports OAuth.
  * 
  * @author Yusuke Yamamoto - yusuke at mac.com
  */
-abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
+abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener, TwitterConstants {
 	protected Configuration conf;
 	protected transient String screenName = null;
 	protected transient long id = 0;
@@ -59,7 +58,7 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 	protected transient HttpClientWrapper http;
 	private List<RateLimitStatusListener> rateLimitStatusListeners = new ArrayList<RateLimitStatusListener>(0);
 
-	protected InternalFactory factory;
+	protected InternalJSONFactory factory;
 
 	protected Authorization auth;
 
@@ -290,7 +289,7 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 				rateLimitStatus = te.getRateLimitStatus();
 				statusCode = te.getStatusCode();
 			} else {
-				rateLimitStatus = InternalJSONImplFactory.createRateLimitStatusFromResponseHeader(res);
+				rateLimitStatus = InternalJSONFactoryImpl.createRateLimitStatusFromResponseHeader(res);
 				statusCode = res.getStatusCode();
 			}
 			if (rateLimitStatus != null) {
@@ -408,11 +407,9 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 
 	protected User fillInIDAndScreenName() throws TwitterException {
 		ensureAuthorizationEnabled();
-		final User user = factory.createUser(http.get(
-				conf.getRestBaseURL() + "account/verify_credentials.json?include_entities="
-						+ conf.isIncludeEntitiesEnabled(),
-				conf.getSigningRestBaseURL() + "account/verify_credentials.json?include_entities="
-						+ conf.isIncludeEntitiesEnabled(), auth));
+		final HttpParameter[] params = { new HttpParameter("include_entities", conf.isIncludeEntitiesEnabled()) };
+		final User user = factory.createUser(http.get(conf.getRestBaseURL() + ENDPOINT_ACCOUNT_VERIFY_CREDENTIALS,
+				conf.getSigningRestBaseURL() + ENDPOINT_ACCOUNT_VERIFY_CREDENTIALS, params, auth));
 		screenName = user.getScreenName();
 		id = user.getId();
 		return user;
@@ -465,7 +462,7 @@ abstract class TwitterBaseImpl implements OAuthSupport, HttpResponseListener {
 	}
 
 	protected void setFactory() {
-		factory = new InternalJSONImplFactory(conf);
+		factory = new InternalJSONFactoryImpl(conf);
 	}
 
 	private OAuthSupport getOAuth() {

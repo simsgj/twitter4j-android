@@ -16,10 +16,10 @@
 
 package twitter4j;
 
+import twitter4j.http.HttpParameter;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import twitter4j.http.HttpParameter;
 
 /**
  * Controls pagination.<br>
@@ -43,17 +43,27 @@ public final class CursorPaging {
 	public CursorPaging() {
 	}
 
-	public CursorPaging(final long cursor) {
-		setCursor(cursor);
-	}
-
 	public CursorPaging(final int count) {
 		setCount(count);
+	}
+
+	public CursorPaging(final long cursor) {
+		setCursor(cursor);
 	}
 
 	public CursorPaging(final long cursor, final int count) {
 		setCursor(cursor);
 		setCount(count);
+	}
+
+	public CursorPaging count(final int count) {
+		setCount(count);
+		return this;
+	}
+
+	public CursorPaging cursor(final long cursor) {
+		setCursor(cursor);
+		return this;
 	}
 
 	@Override
@@ -81,23 +91,14 @@ public final class CursorPaging {
 		return result;
 	}
 
-	public CursorPaging count(final int count) {
-		setCount(count);
-		return this;
-	}
-	
-	public CursorPaging cursor(final long cursor) {
-		setCursor(cursor);
-		return this;
-	}
-
 	public void setCount(final int count) {
 		if (count < 1) throw new IllegalArgumentException("count should be positive integer. passed:" + count);
 		this.count = count;
 	}
 
 	public void setCursor(final long cursor) {
-		if (cursor < 1 && cursor != -1) throw new IllegalArgumentException("cursor should be -1 or positive integer. passed:" + cursor);
+		if (cursor < 1 && cursor != -1)
+			throw new IllegalArgumentException("cursor should be -1 or positive integer. passed:" + cursor);
 		this.cursor = cursor;
 	}
 

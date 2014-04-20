@@ -14,9 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package twitter4j.internal.json;
 
-import java.util.Map;
+package twitter4j.internal.json;
 
 import org.json.JSONObject;
 
@@ -39,6 +38,8 @@ import twitter4j.ResponseList;
 import twitter4j.SavedSearch;
 import twitter4j.SimilarPlaces;
 import twitter4j.Status;
+import twitter4j.StatusActivitySummary;
+import twitter4j.TranslationResult;
 import twitter4j.Trends;
 import twitter4j.TwitterAPIConfiguration;
 import twitter4j.TwitterException;
@@ -47,11 +48,13 @@ import twitter4j.UserList;
 import twitter4j.api.HelpResources;
 import twitter4j.http.HttpResponse;
 
+import java.util.Map;
+
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.2.4
  */
-public interface InternalFactory {
+public interface InternalJSONFactory {
 	AccountSettings createAccountSettings(HttpResponse res) throws TwitterException;
 
 	AccountTotals createAccountTotals(HttpResponse res) throws TwitterException;
@@ -106,7 +109,11 @@ public interface InternalFactory {
 
 	Status createStatus(JSONObject json) throws TwitterException;
 
+	StatusActivitySummary createStatusActivitySummary(HttpResponse res) throws TwitterException;
+
 	ResponseList<Status> createStatusList(HttpResponse res) throws TwitterException;
+
+	TranslationResult createTranslationResult(HttpResponse res) throws TwitterException;
 
 	Trends createTrends(HttpResponse res) throws TwitterException;
 

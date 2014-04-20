@@ -5,8 +5,6 @@ import static twitter4j.internal.util.InternalParseUtil.getInt;
 import static twitter4j.internal.util.InternalParseUtil.getLong;
 import static twitter4j.internal.util.InternalParseUtil.getRawString;
 
-import java.util.Date;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,6 +17,8 @@ import twitter4j.User;
 import twitter4j.UserList;
 import twitter4j.conf.Configuration;
 import twitter4j.http.HttpResponse;
+
+import java.util.Date;
 
 class ActivityJSONImpl extends TwitterResponseImpl implements Activity {
 
@@ -108,12 +108,12 @@ class ActivityJSONImpl extends TwitterResponseImpl implements Activity {
 	public Status[] getTargetStatuses() {
 		return targetStatuses;
 	}
-	
+
 	@Override
 	public UserList[] getTargetUserLists() {
 		return targetUserLists;
 	}
-	
+
 	@Override
 	public User[] getTargetUsers() {
 		return targetUsers;
@@ -141,7 +141,7 @@ class ActivityJSONImpl extends TwitterResponseImpl implements Activity {
 			final int sources_size = sources_array.length();
 			final int targets_size = targets_array.length();
 			if (action == Action.LIST_CREATED) {
-				
+
 			} else if (action == Action.FOLLOW || action == Action.MENTION || action == Action.LIST_MEMBER_ADDED) {
 				targetUsers = new User[targets_size];
 				for (int i = 0; i < targets_size; i++) {

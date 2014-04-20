@@ -28,12 +28,11 @@ public interface Activity extends TwitterResponse, Comparable<Activity>, Seriali
 	public Status[] getTargetStatuses();
 
 	public UserList[] getTargetUserLists();
-	
+
 	public User[] getTargetUsers();
 
 	public static enum Action implements Serializable {
-		FAVORITE(0x1), FOLLOW(0x2), MENTION(0x3), REPLY(0x4), RETWEET(0x5), LIST_MEMBER_ADDED(0x06), 
-				LIST_CREATED(0x07);
+		FAVORITE(0x1), FOLLOW(0x2), MENTION(0x3), REPLY(0x4), RETWEET(0x5), LIST_MEMBER_ADDED(0x06), LIST_CREATED(0x07);
 
 		public final static int ACTION_FAVORITE = 0x01;
 		public final static int ACTION_FOLLOW = 0x02;

@@ -20,6 +20,7 @@ import twitter4j.CursorPaging;
 import twitter4j.IDs;
 import twitter4j.OEmbed;
 import twitter4j.OEmbedRequest;
+import twitter4j.ReportAs;
 import twitter4j.ResponseList;
 import twitter4j.Status;
 import twitter4j.StatusUpdate;
@@ -69,6 +70,10 @@ public interface TweetResources {
 	 */
 	OEmbed getOEmbed(OEmbedRequest req) throws TwitterException;
 
+	IDs getRetweetersIDs(long statusId) throws TwitterException;
+
+	IDs getRetweetersIDs(long statusId, CursorPaging paging) throws TwitterException;
+
 	/**
 	 * Returns up to 100 of the first retweets of a given tweet. <br>
 	 * This method calls http://api.twitter.com/1.1/statuses/retweets
@@ -83,10 +88,6 @@ public interface TweetResources {
 	 */
 	ResponseList<Status> getRetweets(long statusId) throws TwitterException;
 
-	IDs getRetweetersIDs(long statusId) throws TwitterException;
-
-	IDs getRetweetersIDs(long statusId, CursorPaging paging) throws TwitterException;
-	
 	/**
 	 * Returns up to 100 of the first retweets of a given tweet. <br>
 	 * This method calls http://api.twitter.com/1.1/statuses/retweets
@@ -168,4 +169,6 @@ public interface TweetResources {
 	 * @since Twitter4J 2.0.1
 	 */
 	Status updateStatus(String status) throws TwitterException;
+	
+	int reportSpam(long statusId, ReportAs reportAs, boolean blockUser) throws TwitterException;
 }

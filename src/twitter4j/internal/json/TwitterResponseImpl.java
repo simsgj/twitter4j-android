@@ -65,4 +65,5 @@ import twitter4j.internal.util.InternalParseUtil;
 	public RateLimitStatus getRateLimitStatus() {
 		return rateLimitStatus;
 	}
+
 }

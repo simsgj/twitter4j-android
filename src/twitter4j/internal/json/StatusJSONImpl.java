@@ -23,9 +23,6 @@ import static twitter4j.internal.util.InternalParseUtil.getLong;
 import static twitter4j.internal.util.InternalParseUtil.getRawString;
 import static twitter4j.internal.util.InternalParseUtil.getUnescapedString;
 
-import java.util.Arrays;
-import java.util.Date;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,6 +40,9 @@ import twitter4j.UserMentionEntity;
 import twitter4j.conf.Configuration;
 import twitter4j.http.HttpResponse;
 import twitter4j.internal.logging.Logger;
+
+import java.util.Arrays;
+import java.util.Date;
 
 /**
  * A data class representing one single status of a user.
@@ -349,7 +349,7 @@ final class StatusJSONImpl extends TwitterResponseImpl implements Status {
 		} catch (final JSONException jsone) {
 			throw new TwitterException(jsone);
 		}
-		geoLocation = InternalJSONImplFactory.createGeoLocation(json);
+		geoLocation = InternalJSONFactoryImpl.createGeoLocation(json);
 		if (!json.isNull("place")) {
 			try {
 				place = new PlaceJSONImpl(json.getJSONObject("place"));

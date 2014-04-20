@@ -22,7 +22,7 @@
 
 		<mkdir dir="${classes.dir}"/>
 
-		<javac srcdir="${src.dir}" destdir="${classes.dir}" bootclasspath="${android.runtime.jar}" includeantruntime="false"/>
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" bootclasspath="${android.runtime.jar}" includeantruntime="false" debug="true"/>
 
 	</target>
 
@@ -30,7 +30,10 @@
 
 		<mkdir dir="${build.dir}"/>
 
-		<jar destfile="${build.dir}/${ant.project.name}-${ant.project.version}.jar" basedir="${classes.dir}"/>
+		 <jar destfile="${build.dir}/${ant.project.name}-${ant.project.version}.jar">
+          <fileset dir="${classes.dir}" />
+          <fileset dir="${src.dir}" includes="**/*.java"/>
+        </jar>
 
 	</target>
 

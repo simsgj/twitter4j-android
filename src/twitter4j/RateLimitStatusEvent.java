@@ -16,6 +16,8 @@
 
 package twitter4j;
 
+import java.util.EventObject;
+
 /**
  * A data interface representing Twitter REST API's rate limit status
  * 
@@ -23,7 +25,7 @@ package twitter4j;
  * @see <a href="https://dev.twitter.com/docs/rate-limiting">Rate Limiting |
  *      Twitter Developers</a>
  */
-public final class RateLimitStatusEvent extends java.util.EventObject {
+public final class RateLimitStatusEvent extends EventObject {
 
 	private static final long serialVersionUID = 3749366911109722414L;
 

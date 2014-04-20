@@ -18,16 +18,17 @@ package twitter4j;
 
 import static twitter4j.internal.util.InternalParseUtil.getInt;
 
-import java.util.List;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import twitter4j.http.HttpRequest;
 import twitter4j.http.HttpResponse;
 import twitter4j.http.HttpResponseCode;
-import twitter4j.internal.json.InternalJSONImplFactory;
+import twitter4j.internal.json.InternalJSONFactoryImpl;
 import twitter4j.internal.util.InternalParseUtil;
+
+import java.util.List;
+import java.util.Locale;
 
 /**
  * An exception class that will be thrown when TwitterAPI calls are failed.<br>
@@ -163,17 +164,12 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	 */
 	@Override
 	public String getMessage() {
-		final StringBuilder value = new StringBuilder();
-		if (errorMessage != null && errorCode != -1) {
-			value.append("message - ").append(errorMessage).append("\n");
-			value.append("code - ").append(errorCode).append("\n");
-		} else {
-			value.append(super.getMessage());
-		}
-		if (statusCode != -1)
-			return getCause(statusCode) + "\n" + value.toString();
+		if (errorMessage != null && errorCode != -1)
+			return String.format(Locale.US, "Error %d: %s", errorCode, errorMessage);
+		else if (statusCode != -1)
+			return String.format(Locale.US, "Error %d", statusCode);
 		else
-			return value.toString();
+			return super.getMessage();
 	}
 
 	/**
@@ -184,7 +180,7 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 	@Override
 	public RateLimitStatus getRateLimitStatus() {
 		if (null == response) return null;
-		return InternalJSONImplFactory.createRateLimitStatusFromResponseHeader(response);
+		return InternalJSONFactoryImpl.createRateLimitStatusFromResponseHeader(response);
 	}
 
 	public String getResponseHeader(final String name) {
@@ -281,14 +277,7 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 
 	@Override
 	public String toString() {
-		return getMessage()
-				+ (nested ? "" : "\nRelevant discussions can be found on the Internet at:\n"
-						+ "\thttp://www.google.co.jp/search?q=" + getExceptionDiagnosis().getStackLineHashAsHex()
-						+ " or\n\thttp://www.google.co.jp/search?q=" + getExceptionDiagnosis().getLineNumberHashAsHex())
-				+ "\nTwitterException{" + (nested ? "" : "exceptionCode=[" + getExceptionCode() + "], ")
-				+ "statusCode=" + statusCode + ", message=" + errorMessage + ", code=" + errorCode + ", retryAfter="
-				+ getRetryAfter() + ", rateLimitStatus=" + getRateLimitStatus() + ", version=" + Version.getVersion()
-				+ '}';
+		return getMessage();
 	}
 
 	private void decode(final String str) {
@@ -314,61 +303,5 @@ public class TwitterException extends Exception implements TwitterResponse, Http
 
 	void setNested() {
 		nested = true;
-	}
-
-	private static String getCause(final int statusCode) {
-		String cause;
-		// https://dev.twitter.com/docs/error-codes-responses
-		switch (statusCode) {
-			case NOT_MODIFIED:
-				cause = "There was no new data to return.";
-				break;
-			case BAD_REQUEST:
-				cause = "The request was invalid. An accompanying error message will explain why. This is the status code will be returned during version 1.0 rate limiting(https://dev.twitter.com/pages/rate-limiting). In API v1.1, a request without authentication is considered invalid and you will get this response.";
-				break;
-			case UNAUTHORIZED:
-				cause = "Authentication credentials (https://dev.twitter.com/pages/auth) were missing or incorrect. Ensure that you have set valid consumer key/secret, access token/secret, and the system clock is in sync.";
-				break;
-			case FORBIDDEN:
-				cause = "The request is understood, but it has been refused. An accompanying error message will explain why. This code is used when requests are being denied due to update limits (https://support.twitter.com/articles/15364-about-twitter-limits-update-api-dm-and-following).";
-				break;
-			case NOT_FOUND:
-				cause = "The URI requested is invalid or the resource requested, such as a user, does not exists. Also returned when the requested format is not supported by the requested method.";
-				break;
-			case NOT_ACCEPTABLE:
-				cause = "Returned by the Search API when an invalid format is specified in the request.\n"
-						+ "Returned by the Streaming API when one or more of the parameters are not suitable for the resource. The track parameter, for example, would throw this error if:\n"
-						+ " The track keyword is too long or too short.\n"
-						+ " The bounding box specified is invalid.\n"
-						+ " No predicates defined for filtered resource, for example, neither track nor follow parameter defined.\n"
-						+ " Follow userid cannot be read.";
-				break;
-			case ENHANCE_YOUR_CLAIM:
-				cause = "Returned by the Search and Trends API when you are being rate limited (https://dev.twitter.com/docs/rate-limiting).\n"
-						+ "Returned by the Streaming API:\n Too many login attempts in a short period of time.\n"
-						+ " Running too many copies of the same application authenticating with the same account name.";
-				break;
-			case UNPROCESSABLE_ENTITY:
-				cause = "Returned when an image uploaded to POST account/update_profile_banner(https://dev.twitter.com/docs/api/1/post/account/update_profile_banner) is unable to be processed.";
-				break;
-			case TOO_MANY_REQUESTS:
-				cause = "Returned in API v1.1 when a request cannot be served due to the application's rate limit having been exhausted for the resource. See Rate Limiting in API v1.1.(https://dev.twitter.com/docs/rate-limiting/1.1)";
-				break;
-			case INTERNAL_SERVER_ERROR:
-				cause = "Something is broken. Please post to the group (https://dev.twitter.com/docs/support) so the Twitter team can investigate.";
-				break;
-			case BAD_GATEWAY:
-				cause = "Twitter is down or being upgraded.";
-				break;
-			case SERVICE_UNAVAILABLE:
-				cause = "The Twitter servers are up, but overloaded with requests. Try again later.";
-				break;
-			case GATEWAY_TIMEOUT:
-				cause = "The Twitter servers are up, but the request couldn't be serviced due to some failure within our stack. Try again later.";
-				break;
-			default:
-				cause = "";
-		}
-		return statusCode + ":" + cause;
 	}
 }

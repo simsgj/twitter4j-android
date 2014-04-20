@@ -35,6 +35,8 @@ public interface User extends Comparable<User>, TwitterResponse, Serializable {
 	 */
 	String getDescription();
 
+	URLEntity[] getDescriptionEntities();
+
 	int getFavouritesCount();
 
 	/**
@@ -142,6 +144,8 @@ public interface User extends Comparable<User>, TwitterResponse, Serializable {
 	 */
 	URL getURL();
 
+	URLEntity[] getURLEntities();
+
 	int getUtcOffset();
 
 	/**
@@ -153,6 +157,8 @@ public interface User extends Comparable<User>, TwitterResponse, Serializable {
 	boolean isContributorsEnabled();
 
 	boolean isDefaultProfileImage();
+
+	boolean isFollowing();
 
 	/**
 	 * Returns true if the authenticating user has requested to follow this
@@ -194,11 +200,5 @@ public interface User extends Comparable<User>, TwitterResponse, Serializable {
 	 * @since Twitter4J 2.0.10
 	 */
 	boolean isVerified();
-	
-	URLEntity[] getURLEntities();
-	
-	URLEntity[] getDescriptionEntities();
-
-	boolean isFollowing();
 
 }

@@ -14,9 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package twitter4j.internal.json;
 
-import java.util.Map;
+package twitter4j.internal.json;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,6 +42,8 @@ import twitter4j.ResponseList;
 import twitter4j.SavedSearch;
 import twitter4j.SimilarPlaces;
 import twitter4j.Status;
+import twitter4j.StatusActivitySummary;
+import twitter4j.TranslationResult;
 import twitter4j.Trends;
 import twitter4j.TwitterAPIConfiguration;
 import twitter4j.TwitterException;
@@ -55,15 +56,17 @@ import twitter4j.conf.Configuration;
 import twitter4j.http.HttpResponse;
 import twitter4j.internal.util.InternalStringUtil;
 
+import java.util.Map;
+
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
  * @since Twitter4J 2.2.4
  */
-public class InternalJSONImplFactory implements InternalFactory {
+public class InternalJSONFactoryImpl implements InternalJSONFactory {
 
 	private final Configuration conf;
 
-	public InternalJSONImplFactory(final Configuration conf) {
+	public InternalJSONFactoryImpl(final Configuration conf) {
 		this.conf = conf;
 	}
 
@@ -217,8 +220,18 @@ public class InternalJSONImplFactory implements InternalFactory {
 	}
 
 	@Override
+	public StatusActivitySummary createStatusActivitySummary(final HttpResponse res) throws TwitterException {
+		return new StatusActivitySummaryJSONImpl(res, conf);
+	}
+
+	@Override
 	public ResponseList<Status> createStatusList(final HttpResponse res) throws TwitterException {
 		return StatusJSONImpl.createStatusList(res, conf);
+	}
+
+	@Override
+	public TranslationResult createTranslationResult(final HttpResponse res) throws TwitterException {
+		return new TranslationResultJSONImpl(res, conf);
 	}
 
 	@Override
@@ -273,9 +286,9 @@ public class InternalJSONImplFactory implements InternalFactory {
 	@Override
 	public boolean equals(final Object o) {
 		if (this == o) return true;
-		if (!(o instanceof InternalJSONImplFactory)) return false;
+		if (!(o instanceof InternalJSONFactoryImpl)) return false;
 
-		final InternalJSONImplFactory that = (InternalJSONImplFactory) o;
+		final InternalJSONFactoryImpl that = (InternalJSONFactoryImpl) o;
 
 		if (conf != null ? !conf.equals(that.conf) : that.conf != null) return false;
 

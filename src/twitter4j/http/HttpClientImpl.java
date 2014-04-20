@@ -17,6 +17,10 @@
 package twitter4j.http;
 
 import static twitter4j.http.RequestMethod.POST;
+import twitter4j.TwitterException;
+import twitter4j.conf.ConfigurationContext;
+import twitter4j.internal.logging.Logger;
+import twitter4j.internal.util.InternalStringUtil;
 
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
@@ -28,6 +32,8 @@ import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.security.KeyManagementException;
@@ -45,11 +51,6 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-
-import twitter4j.TwitterException;
-import twitter4j.conf.ConfigurationContext;
-import twitter4j.internal.logging.Logger;
-import twitter4j.internal.util.InternalStringUtil;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com
@@ -125,7 +126,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 								if (param.isFile()) {
 									write(out, boundary + "\r\n");
 									write(out, "Content-Disposition: form-data; name=\"" + param.getName()
-											+ "\"; filename=\"" + param.getFile().getName() + "\"\r\n");
+											+ "\"; filename=\"" + param.getFileName() + "\"\r\n");
 									write(out, "Content-Type: " + param.getContentType() + "\r\n\r\n");
 									final BufferedInputStream in = new BufferedInputStream(
 											param.hasFileBody() ? param.getFileBody() : new FileInputStream(
@@ -186,8 +187,10 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 					}
 				} finally {
 					try {
-						os.close();
-					} catch (final Exception ignore) {
+						if (os != null) {
+							os.close();
+						}
+					} catch (final IOException ignore) {
 					}
 				}
 			} catch (final IOException ioe) {
@@ -198,6 +201,7 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 					throw new TwitterException(ioe.getMessage(), req, res);
 			} catch (final NullPointerException e) {
 				// This exception will be thown when URL is invalid.
+				e.printStackTrace();
 				throw new TwitterException("The URL requested is invalid.", e);
 			} catch (final OutOfMemoryError e) {
 				throw new TwitterException(e.getMessage(), e);
@@ -246,15 +250,19 @@ public class HttpClientImpl extends HttpClientBase implements HttpClient, HttpRe
 		} else {
 			proxy = Proxy.NO_PROXY;
 		}
-		final HostAddressResolver resolver = CONF.getHostAddressResolver();
-
-		final URL url_orig = new URL(url_string);
-		final String host = url_orig.getHost();
+		final HostAddressResolver resolver = FactoryUtils.getHostAddressResolver(CONF);
+		final URI url_orig;
+		try {
+			url_orig = new URI(url_string);
+		} catch (final URISyntaxException e) {
+			throw new IOException("Invalid URI " + url_string);
+		}
+		final String host = url_orig.getHost(), authority = url_orig.getAuthority();
 		final String resolved_host = resolver != null ? resolver.resolve(host) : null;
 		con = (HttpURLConnection) new URL(resolved_host != null ? url_string.replace("://" + host, "://"
 				+ resolved_host) : url_string).openConnection(proxy);
 		if (resolved_host != null && !host.equals(resolved_host)) {
-			con.setRequestProperty("Host", host);
+			con.setRequestProperty("Host", authority);
 		}
 		if (CONF.getHttpConnectionTimeout() > 0) {
 			con.setConnectTimeout(CONF.getHttpConnectionTimeout());

@@ -150,24 +150,24 @@ public interface FriendsFollowersResources {
 
 	IDs getFollowersIDs(String screenName, CursorPaging paging) throws TwitterException;
 
-	IDs getFriendsIDs(CursorPaging paging) throws TwitterException;
-
-	IDs getFriendsIDs(long userId, CursorPaging paging) throws TwitterException;
-
-	IDs getFriendsIDs(String screenName, CursorPaging paging) throws TwitterException;
-	
 	PagableResponseList<User> getFollowersList(CursorPaging paging) throws TwitterException;
 
 	PagableResponseList<User> getFollowersList(long userId, CursorPaging paging) throws TwitterException;
 
 	PagableResponseList<User> getFollowersList(String screenName, CursorPaging paging) throws TwitterException;
 
+	IDs getFriendsIDs(CursorPaging paging) throws TwitterException;
+
+	IDs getFriendsIDs(long userId, CursorPaging paging) throws TwitterException;
+
+	IDs getFriendsIDs(String screenName, CursorPaging paging) throws TwitterException;
+
 	PagableResponseList<User> getFriendsList(CursorPaging paging) throws TwitterException;
 
 	PagableResponseList<User> getFriendsList(long userId, CursorPaging paging) throws TwitterException;
 
 	PagableResponseList<User> getFriendsList(String screenName, CursorPaging paging) throws TwitterException;
-	
+
 	/**
 	 * Returns an array of numeric IDs for every user who has a pending request
 	 * to follow the authenticating user. <br>

@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package twitter4j.http;
+package twitter4j.auth;
 
-import twitter4j.auth.Authorization;
-import twitter4j.auth.BasicAuthorization;
+import twitter4j.http.HttpRequest;
 
 /**
  * @author Yusuke Yamamoto - yusuke at mac.com

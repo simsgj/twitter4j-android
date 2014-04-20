@@ -18,10 +18,8 @@ package twitter4j.internal.json;
 
 import static twitter4j.internal.util.InternalParseUtil.getBoolean;
 import static twitter4j.internal.util.InternalParseUtil.getInt;
+import static twitter4j.internal.util.InternalParseUtil.getLong;
 import static twitter4j.internal.util.InternalParseUtil.getRawString;
-
-import java.net.URI;
-import java.net.URISyntaxException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +33,9 @@ import twitter4j.UserList;
 import twitter4j.conf.Configuration;
 import twitter4j.http.HttpResponse;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 /**
  * A data class representing Basic list information element
  * 
@@ -46,7 +47,7 @@ import twitter4j.http.HttpResponse;
 	 * 
 	 */
 	private static final long serialVersionUID = 2682622238509440140L;
-	private int id;
+	private long id;
 	private String name;
 	private String fullName;
 	private String slug;
@@ -70,14 +71,17 @@ import twitter4j.http.HttpResponse;
 
 	@Override
 	public int compareTo(final UserList that) {
-		return id - that.getId();
+		return (int) (id - that.getId());
 	}
 
 	@Override
-	public boolean equals(final Object obj) {
-		if (null == obj) return false;
+	public boolean equals(Object obj) {
 		if (this == obj) return true;
-		return obj instanceof UserList && ((UserList) obj).getId() == id;
+		if (obj == null) return false;
+		if (!(obj instanceof UserListJSONImpl)) return false;
+		UserListJSONImpl other = (UserListJSONImpl) obj;
+		if (id != other.id) return false;
+		return true;
 	}
 
 	/**
@@ -100,7 +104,7 @@ import twitter4j.http.HttpResponse;
 	 * {@inheritDoc}
 	 */
 	@Override
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
@@ -160,7 +164,10 @@ import twitter4j.http.HttpResponse;
 
 	@Override
 	public int hashCode() {
-		return id;
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (id ^ (id >>> 32));
+		return result;
 	}
 
 	/**
@@ -188,7 +195,7 @@ import twitter4j.http.HttpResponse;
 	}
 
 	private void init(final JSONObject json) throws TwitterException {
-		id = getInt("id", json);
+		id = getLong("id", json);
 		name = getRawString("name", json);
 		fullName = getRawString("full_name", json);
 		slug = getRawString("slug", json);
